@@ -4973,6 +4973,7 @@ select:focus-visible {
 }
 
 .matrix-preview-cell {
+  position: relative;
   cursor: pointer;
 }
 
