@@ -383,6 +383,10 @@
     return cueSpecText(spec, "explanation") || cueSpecText(spec, "micro_evidence");
   }
 
+  function cueSpecStatement(spec) {
+    return cueSpecText(spec, "micro_evidence") || cueSpecExplanation(spec);
+  }
+
   function localizedCardText(card, field) {
     return card?.[`${field}_${lang}`] || card?.[`${field}_en`] || "";
   }
@@ -1295,7 +1299,11 @@
 
   function renderSpecPanel(config) {
     const spec = config.cueSpec;
-    const title = config.heroQuestionKey ? t(config.heroQuestionKey) : cueSpecText(spec, "question");
+    const title = config.heroQuestionKey
+      ? t(config.heroQuestionKey)
+      : config.panelTitleKey
+        ? t(config.panelTitleKey)
+        : cueSpecStatement(spec);
     const target = cueSpecText(spec, "target_label");
     const specClass = cueSpecClass(spec);
     const compactStageMaterialPanel =
@@ -1863,7 +1871,7 @@
       ...(item || { artwork: artworkId }),
       panel: true,
       matrixPreview: true,
-      panelTitleKey: `lenses.matrix.${artworkId}.${lens}.question`,
+      panelTitleKey: `lenses.matrix.${artworkId}.${lens}.body`,
       panelBodyKey: `lenses.matrix.${artworkId}.${lens}.body`
     });
   }
@@ -1886,7 +1894,7 @@
     const materialEvidence = renderMaterialEvidence(spec);
     const comparativeEvidence = renderComparativeEvidence(spec);
     previewDetails.innerHTML = `
-      <h3>${escapeHtml(cueSpecText(spec, "question"))}</h3>
+      <h3>${escapeHtml(cueSpecStatement(spec))}</h3>
       <p>${escapeHtml(explanation)}</p>
       ${materialEvidence}
       ${comparativeEvidence}

@@ -394,7 +394,7 @@
   "state_specific_display_behavior": {
     "phone": "foreground hand-held phone; copied artwork aspect matches current artwork; top app bar, title, metadata, chips, dense cards, scroll cue, screen glow, and pixel texture pull attention to the screen copy",
     "audio": "side waveform plus artwork-specific transcript and confusion bubble; no target pulse, no pointer, no connector, no panel, and no precise spatial anchor",
-    "look_again": "phone disappears; cue-specific target, connector, and short artwork-specific question attach to a physically plausible detail on the real artwork"
+    "look_again": "phone disappears; cue-specific target, connector, and short artwork-specific explanation attach to a physically plausible detail on the real artwork"
   },
   "lens_matrix": {
     "source_of_truth": "data/lens_cue_specs_v23.json",
@@ -411,9 +411,9 @@
     ],
     "cell_contract": [
       "Target:",
-      "Question:"
+      "Explanation:"
     ],
-    "cell_content_source": "Each matrix cell uses the exact target_label and question from the matching cue spec.",
+    "cell_content_source": "Each matrix cell uses the exact target_label and concise explanation/micro-evidence from the matching cue spec.",
     "preview_rendering_source": "Preview selected cue loads the matching cue spec and renders target pulse, pointer, connector, edge panel, cue type overlays, and source-grounded tag from that data.",
     "no_long_explanations_in_cells": true,
     "understandable_without_clicking": true,
@@ -436,7 +436,7 @@
     ],
     "rows_are": "artworks",
     "columns_are": "Look Again expert viewpoints",
-    "cell_purpose": "show where that expert viewpoint would point first and the short question it would ask",
+    "cell_purpose": "show where that expert viewpoint would point first and the short explanation it would provide",
     "qa_must_fail_if": [
       "matrix is not visible without clicking",
       "matrix does not have 3 artwork rows",

@@ -347,57 +347,57 @@
         social: "objects, status, display"
       },
       targetLabel: "Target:",
-      questionLabel: "Question:",
+      questionLabel: "Explanation:",
       explanationLabel: "Explanation:",
       matrix: {
         lastSupper: {
           artist: {
             target: "Vanishing point and table lines",
-            question: "How is this space constructed?",
+            question: "The painted room is built from lines converging near Christ's head.",
             body: "Coffered ceiling, side-wall tapestry bands, and table recession converge near Christ's head."
           },
           restorer: {
             target: "Wall surface and losses",
-            question: "What survived, and what was rebuilt?",
+            question: "The wall surface records loss, repainting, and repair.",
             body: "A wall painting carries time on its surface: loss, repainting, and repair become part of what is visible."
           },
           social: {
             target: "Table, food, and seating order",
-            question: "Who is included, and who is separated?",
+            question: "The table arrangement makes social and narrative separation visible.",
             body: "The shared table is not neutral; placement, gesture, and separation shape the scene’s order."
           }
         },
         girl: {
           artist: {
             target: "Gaze and light",
-            question: "Where does the gaze begin?",
+            question: "The gaze, light edge, and color contrast pull the viewer into the figure.",
             body: "The gaze, soft light edge, and blue-yellow contrast make a small image feel immediate."
           },
           restorer: {
             target: "Pearl highlight",
-            question: "What is paint, and what is illusion?",
+            question: "A few bright marks and surrounding darkness make paint read as pearl.",
             body: "The pearl is produced by a few bright marks and surrounding darkness."
           },
           social: {
             target: "Tronie pair: Pearl Girl and Young Woman",
-            question: "What changes when two tronies sit side by side?",
+            question: "The paired Vermeer study turns the famous image into a tronie type.",
             body: "A same-period Vermeer head study reveals a repeated type: gaze, costume, dark ground, and viewer address."
           }
         },
         arnolfini: {
           artist: {
             target: "Mirror and composition",
-            question: "Who is placed where?",
+            question: "The mirror and figure placement make looking part of the composition.",
             body: "The mirror, sightlines, and figure placement turn looking into the subject."
           },
           restorer: {
             target: "Textiles and surface detail",
-            question: "What materials carry value?",
+            question: "Oil, panel, textile detail, and small touches make value material.",
             body: "Oil on panel, fine textile detail, and small touches make wealth visible as material precision."
           },
           social: {
             target: "Oranges and costly textiles",
-            question: "What does wealth look like in this room?",
+            question: "Oranges and costly textiles make status visible inside the room.",
             body: "Objects are not background decoration; they make status and display visible."
           }
         }
@@ -406,7 +406,7 @@
     preview: {
       title: "Try one pointer",
       body:
-        "Select a card above. This preview shows one pointer on the artwork, one question, and the moment it gets out of the way.",
+        "Select a card above. This preview shows one pointer on the artwork, one short explanation, and the moment it gets out of the way.",
       controls: {
         viewpoint: "Viewpoint",
         artwork: "Artwork"
@@ -426,8 +426,8 @@
           body: "The pointer belongs to a visible detail, not to a floating web label."
         },
         connector: {
-          title: "One line from place to question",
-          body: "The marked detail connects to a short question at the edge of view."
+          title: "One line from place to explanation",
+          body: "The marked detail connects to a short explanation at the edge of view."
         },
         body: {
           title: "Move only when it matters",
@@ -435,7 +435,7 @@
         },
         disappear: {
           title: "It gets out of the way",
-          body: "The pointer gives one question, then returns attention to the artwork."
+          body: "The pointer gives one concise explanation, then returns attention to the artwork."
         }
       }
     },
@@ -976,57 +976,57 @@
         social: "小物・地位・見せ方"
       },
       targetLabel: "見る場所:",
-      questionLabel: "問い:",
+      questionLabel: "解説:",
       explanationLabel: "解説:",
       matrix: {
         lastSupper: {
           artist: {
             target: "消失点と食卓の線",
-            question: "この空間はどう作られているのか？",
+            question: "描かれた室内は、キリストの頭部付近へ収束する線で組まれている。",
             body: "格天井、側壁のタペストリー、食卓の奥行きがキリストの頭部付近へ収束する。"
           },
           restorer: {
             target: "壁面と損失部分",
-            question: "何が残り、何が修復されたのか？",
+            question: "壁面には、損失・補彩・修復の履歴がそのまま見えている。",
             body: "壁画の表面には、損失・補彩・修復の時間が残っている。"
           },
           social: {
             target: "食卓・食物・座る位置",
-            question: "誰が含まれ、誰が切り離されているのか？",
+            question: "食卓の配置が、物語上のまとまりと分離を見える形にしている。",
             body: "共有された食卓は中立ではない。配置、身振り、分離が場の秩序を作っている。"
           }
         },
         girl: {
           artist: {
             target: "視線と光",
-            question: "視線はどこから始まるのか？",
+            question: "視線、光の境界、色の対比が、人物へ注意を引き寄せる。",
             body: "視線、柔らかな光の境界、青と黄の対比が、小さな像を強く引き寄せる。"
           },
           restorer: {
             target: "真珠のハイライト",
-            question: "これは物体なのか、絵具の効果なのか？",
+            question: "少数の明るい絵具と周囲の暗さが、真珠という錯覚を作っている。",
             body: "真珠は、少数の明るい跡と周囲の暗さで生まれている。"
           },
           social: {
             target: "二つのトローニー：真珠の少女と若い女性",
-            question: "二つのトローニーを並べると何が変わるのか？",
+            question: "同時期の習作と並べると、トローニーという型として読める。",
             body: "同時期のフェルメールの頭部習作を横に出すと、視線・衣装・暗い背景・見る者への向きという型が見えてくる。"
           }
         },
         arnolfini: {
           artist: {
             target: "鏡と構図",
-            question: "誰がどこに置かれているのか？",
+            question: "鏡と人物配置が、見ること自体を構図の主題にしている。",
             body: "鏡、視線の方向、人物配置が「見る/見られる」を絵の主題にしている。"
           },
           restorer: {
             target: "布地と表面の細部",
-            question: "どの素材が価値を担っているのか？",
+            question: "油彩、板、布地の細部、小さな筆触が価値を物質として見せている。",
             body: "板に描かれた油彩、細密な布地、小さな筆触が、富を素材の精度として見せている。"
           },
           social: {
             target: "オレンジと高価な布地",
-            question: "この部屋の富はどこに現れているのか？",
+            question: "オレンジと高価な布地が、室内の地位と富を可視化している。",
             body: "小物は背景ではない。地位と見せるための富を可視化している。"
           }
         }
@@ -1035,7 +1035,7 @@
     preview: {
       title: "一つの指差しを試す",
       body:
-        "上のカードを選ぶと、作品の上に出る一つの指差し、一つの問い、そしてすぐ消える流れを確認できる。",
+        "上のカードを選ぶと、作品の上に出る一つの指差し、一つの短い解説、そしてすぐ消える流れを確認できる。",
       controls: {
         viewpoint: "視点",
         artwork: "作品"
@@ -1055,8 +1055,8 @@
           body: "指差しは、空中のラベルではなく、見えている細部に結びつく。"
         },
         connector: {
-          title: "場所と問いを一本の線で結ぶ",
-          body: "示された細部が、視界の端にある短い問いへつながる。"
+          title: "場所と解説を一本の線で結ぶ",
+          body: "示された細部が、視界の端にある短い解説へつながる。"
         },
         body: {
           title: "必要な時だけ、見る位置を変える",
@@ -1064,7 +1064,7 @@
         },
         disappear: {
           title: "すぐ消えて、邪魔をしない",
-          body: "指差しは問いを一つだけ出し、注意を作品へ戻す。"
+          body: "指差しは短い解説を一つだけ出し、注意を作品へ戻す。"
         }
       }
     },
