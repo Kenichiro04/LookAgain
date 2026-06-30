@@ -1546,6 +1546,58 @@
     end.setAttribute("cy", y2.toFixed(2));
   }
 
+  function positionMatrixConnector(stage) {
+    const scene = stage.querySelector(".stage-scene");
+    const svg = scene?.querySelector(".connector-svg");
+    if (!scene || !svg) return;
+    const line = svg.querySelector("line");
+    const start = svg.querySelector(".connector-start");
+    const end = svg.querySelector(".connector-end");
+    const anchorEl = scene.querySelector(".anchor-target");
+    const panel = scene.querySelector(".matrix-cue-panel");
+
+    if (!line || !start || !end || !anchorEl || !panel) {
+      svg.style.display = "none";
+      return;
+    }
+
+    svg.style.display = "block";
+    const sceneRect = scene.getBoundingClientRect();
+    const anchorRect = anchorEl.getBoundingClientRect();
+    const panelRect = panel.getBoundingClientRect();
+    if (!sceneRect.width || !sceneRect.height) return;
+
+    const anchorCenterX = anchorRect.left + anchorRect.width / 2;
+    const anchorCenterY = anchorRect.top + anchorRect.height / 2;
+    const panelConnectionX = anchorCenterX <= panelRect.left ? panelRect.left : panelRect.right;
+    const panelConnectionY = panelRect.top + panelRect.height / 2;
+    const x1 = ((anchorCenterX - sceneRect.left) / sceneRect.width) * 100;
+    const y1 = ((anchorCenterY - sceneRect.top) / sceneRect.height) * 100;
+    const x2 = ((panelConnectionX - sceneRect.left) / sceneRect.width) * 100;
+    const y2 = ((panelConnectionY - sceneRect.top) / sceneRect.height) * 100;
+
+    line.setAttribute("x1", x1.toFixed(2));
+    line.setAttribute("y1", y1.toFixed(2));
+    line.setAttribute("x2", x2.toFixed(2));
+    line.setAttribute("y2", y2.toFixed(2));
+    start.setAttribute("cx", x1.toFixed(2));
+    start.setAttribute("cy", y1.toFixed(2));
+    end.setAttribute("cx", x2.toFixed(2));
+    end.setAttribute("cy", y2.toFixed(2));
+  }
+
+  function positionMatrixConnectors() {
+    const stages = lensMatrix ? lensMatrix.querySelectorAll(".matrix-mini-stage") : [];
+    stages.forEach(positionMatrixConnector);
+  }
+
+  function scheduleMatrixConnectorPositioning() {
+    requestAnimationFrame(() => {
+      positionMatrixConnectors();
+      requestAnimationFrame(positionMatrixConnectors);
+    });
+  }
+
   const PARALLAX_LERP = 0.16;
   const PARALLAX_RANGE = {
     roomX: 3.2,
@@ -1863,6 +1915,7 @@
         ${cells}
       </div>
     `;
+    scheduleMatrixConnectorPositioning();
   }
 
   function renderMatrixPreview(artworkId, lens) {
@@ -2056,6 +2109,7 @@
     window.addEventListener("resize", () => {
       positionConnector(heroStage);
       positionConnector(explorerStage);
+      scheduleMatrixConnectorPositioning();
     });
   }
 
