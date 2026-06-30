@@ -118,6 +118,41 @@ img {
   color: var(--ink);
 }
 
+.site-nav .nav-plan-link {
+  align-self: center;
+  border: 1px solid rgba(155, 229, 140, 0.66);
+  border-radius: 999px;
+  padding: 7px 13px;
+  color: var(--green);
+  background: rgba(155, 229, 140, 0.055);
+  font-weight: 720;
+  box-shadow: 0 0 0 1px rgba(155, 229, 140, 0.06) inset;
+}
+
+.site-nav .nav-plan-link:hover,
+.site-nav .nav-plan-link:focus-visible {
+  color: #061007;
+  background: var(--green);
+}
+
+.header-plan-link {
+  display: none;
+  border: 1px solid rgba(155, 229, 140, 0.68);
+  border-radius: 999px;
+  padding: 7px 12px;
+  color: var(--green);
+  background: rgba(155, 229, 140, 0.055);
+  font-size: 0.82rem;
+  font-weight: 740;
+  white-space: nowrap;
+}
+
+.header-plan-link:hover,
+.header-plan-link:focus-visible {
+  color: #061007;
+  background: var(--green);
+}
+
 .lang-switch {
   display: inline-grid;
   grid-template-columns: 1fr 1fr;
@@ -3474,6 +3509,51 @@ select:focus-visible {
   line-height: 1.45;
 }
 
+.future-plan-cta {
+  display: grid;
+  gap: 13px;
+  margin-top: 18px;
+  padding: clamp(22px, 3vw, 34px);
+  border: 1px solid rgba(155, 229, 140, 0.28);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(155, 229, 140, 0.12), rgba(155, 229, 140, 0.015) 58%),
+    rgba(255, 255, 255, 0.045);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.24);
+}
+
+.future-plan-cta-kicker {
+  margin: 0;
+  color: var(--green);
+  font-size: 0.72rem;
+  font-weight: 820;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.future-plan-cta h3 {
+  margin: 0;
+  max-width: 780px;
+  color: var(--ink);
+  font-size: clamp(1.55rem, 3vw, 2.6rem);
+  line-height: 1.05;
+  font-weight: 760;
+}
+
+.future-plan-cta p:not(.future-plan-cta-kicker) {
+  margin: 0;
+  max-width: 720px;
+  color: rgba(244, 242, 238, 0.75);
+  font-size: 0.98rem;
+  line-height: 1.55;
+}
+
+.future-plan-cta-link {
+  justify-self: start;
+  margin-top: 4px;
+  min-width: min(100%, 320px);
+}
+
 .large-copy {
   color: var(--muted);
   font-size: 1.12rem;
@@ -5615,7 +5695,12 @@ html[lang="ja"] .edge-panel h3 {
 
 @media (max-width: 1080px) {
   .site-header {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .header-plan-link {
+    display: inline-flex;
+    justify-self: end;
   }
 
   .site-nav {
@@ -5737,6 +5822,7 @@ html[lang="ja"] .edge-panel h3 {
 
 @media (max-width: 760px) {
   .site-header {
+    gap: 8px;
     min-height: 64px;
     padding: 0 16px;
   }
@@ -5746,8 +5832,14 @@ html[lang="ja"] .edge-panel h3 {
   }
 
   .lang-switch button {
-    min-width: 48px;
+    min-width: 42px;
     padding: 6px 8px;
+    font-size: 0.76rem;
+  }
+
+  .header-plan-link {
+    padding: 6px 9px;
+    font-size: 0.74rem;
   }
 
   .hero {

@@ -551,6 +551,9 @@
     document.querySelectorAll("[data-lang-button]").forEach((button) => {
       button.setAttribute("aria-pressed", String(button.dataset.langButton === lang));
     });
+    document.querySelectorAll("[data-plan-link]").forEach((link) => {
+      link.setAttribute("href", `./plan.html?lang=${encodeURIComponent(lang)}`);
+    });
   }
 
   function stateIcon(id) {

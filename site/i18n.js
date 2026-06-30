@@ -5,7 +5,7 @@
       lenses: "Ways to look",
       aura: "XR test",
       plan: "Test plan",
-      planPage: "Plan"
+      planPage: "Roadmap"
     },
     cueUi: {
       discoveryPoint: "Discovery point",
@@ -584,7 +584,14 @@
         }
       },
       note:
-        "Future contexts are examples of the interaction pattern, not current product scope."
+        "Future contexts are examples of the interaction pattern, not current product scope.",
+      planCta: {
+        kicker: "Next page",
+        title: "See the execution plan and roadmap",
+        body:
+          "The next page explains how this becomes a 6-month Android XR prototype, what gets tested, and what stays out of scope.",
+        link: "Open builder readiness and roadmap →"
+      }
     },
     footer: {
       exampleNote:
@@ -700,7 +707,7 @@
       lenses: "三つの見方",
       aura: "XR検証",
       plan: "検証計画",
-      planPage: "計画"
+      planPage: "実行計画"
     },
     cueUi: {
       discoveryPoint: "発見ポイント",
@@ -1279,7 +1286,14 @@
         }
       },
       note:
-        "これらは将来の応用例であり、現在の開発範囲ではありません。"
+        "これらは将来の応用例であり、現在の開発範囲ではありません。",
+      planCta: {
+        kicker: "次のページ",
+        title: "実行体制とロードマップを見る",
+        body:
+          "次のページでは、6か月のAndroid XRプロトタイプとして何を作り、何を検証し、何を範囲外にするかを示します。",
+        link: "実行体制とロードマップを開く →"
+      }
     },
     footer: {
       exampleNote:
