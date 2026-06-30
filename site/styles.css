@@ -4298,10 +4298,10 @@ select:focus-visible {
 }
 
 .lookagain-snapshot-card {
-  grid-template-rows: minmax(0, 1fr) auto;
-  gap: 12px;
-  min-height: 264px;
-  padding: 13px;
+  grid-template-rows: minmax(0, 1fr);
+  gap: 0;
+  min-height: 276px;
+  padding: 12px;
   border: 1px solid rgba(155, 229, 140, 0.62);
   border-radius: 8px;
   background:
@@ -4313,22 +4313,35 @@ select:focus-visible {
 }
 
 .lookagain-visual {
-  aspect-ratio: 4 / 3;
-  min-height: 212px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-height: 244px;
   border: 1px solid rgba(155, 229, 140, 0.28);
   background:
-    radial-gradient(ellipse at 37% 22%, rgba(248, 223, 159, 0.2), transparent 36%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(0, 0, 0, 0.16)),
+    radial-gradient(ellipse at 48% 24%, rgba(248, 223, 159, 0.18), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(0, 0, 0, 0.1)),
     url("../assets/generated/mauritshuis-wall-v24.png") center / cover no-repeat,
     #243027;
+}
+
+.lookagain-visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 44% 48%, transparent 0 42%, rgba(5, 8, 8, 0.12) 68%, rgba(5, 8, 8, 0.32) 100%),
+    linear-gradient(180deg, rgba(155, 229, 140, 0.035), transparent 32%);
 }
 
 .lookagain-visual > img {
   position: absolute;
   z-index: 1;
-  left: 36%;
+  left: 42%;
   top: 50%;
-  width: min(50%, 162px);
+  width: min(46%, 154px);
   height: auto;
   max-height: 76%;
   border: 14px solid var(--frame-gold);
@@ -4379,15 +4392,17 @@ select:focus-visible {
 
 .snapshot-target-pulse {
   position: absolute;
-  z-index: 3;
-  left: 39%;
+  z-index: 5;
+  left: 43%;
   top: 54%;
-  width: 22px;
-  height: 22px;
+  width: 18px;
+  height: 18px;
   border: 2px solid var(--green);
   border-radius: 999px;
   transform: translate(-50%, -50%);
-  box-shadow: 0 0 0 7px rgba(155, 229, 140, 0.13);
+  box-shadow:
+    0 0 0 6px rgba(155, 229, 140, 0.1),
+    0 0 24px rgba(155, 229, 140, 0.32);
 }
 
 .snapshot-connector {
@@ -4400,8 +4415,8 @@ select:focus-visible {
 }
 
 .snapshot-connector line {
-  stroke: var(--green);
-  stroke-width: 1.7;
+  stroke: rgba(155, 229, 140, 0.72);
+  stroke-width: 1.25;
   stroke-linecap: round;
   vector-effect: non-scaling-stroke;
 }
@@ -4412,13 +4427,13 @@ select:focus-visible {
 
 .snapshot-question-panel {
   position: absolute;
-  z-index: 5;
+  z-index: 6;
   right: 12px;
   top: 14px;
   display: grid;
-  gap: 4px;
-  max-width: 46%;
-  padding: 8px 9px;
+  gap: 5px;
+  max-width: 44%;
+  padding: 7px 9px;
   border: 1px solid rgba(155, 229, 140, 0.36);
   border-radius: 7px;
   background:
@@ -4432,8 +4447,9 @@ select:focus-visible {
 
 .snapshot-question-panel span {
   color: var(--green);
-  font-size: 0.5rem;
+  font-size: 0.48rem;
   font-weight: 820;
+  line-height: 1;
 }
 
 .snapshot-question-panel em {
@@ -4450,8 +4466,8 @@ select:focus-visible {
 
 .snapshot-question-panel strong {
   color: var(--ink);
-  font-size: 0.62rem;
-  line-height: 1.16;
+  font-size: 0.58rem;
+  line-height: 1.18;
 }
 
 .snapshot-question-panel p {

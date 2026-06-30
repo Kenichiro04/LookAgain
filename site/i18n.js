@@ -311,10 +311,10 @@
       },
       xr: {
         title: "Look Again",
-        body: "An expert points once.",
-        kicker: "EXPERT POINTER",
+        body: "A quiet cue on the real work.",
+        kicker: "WEARING XR",
         target: "Gaze and light",
-        question: "Light and gaze pull attention to the pearl.",
+        question: "Look at this highlight first.",
         explanation:
           "The cue connects the real painting to a floating close-up.",
         detailLabel: "Magnified paint detail",
@@ -1018,10 +1018,10 @@
       },
       xr: {
         title: "Look Again",
-        body: "専門家が一度だけ指差す。",
-        kicker: "専門家の指差し",
+        body: "実物の上に、静かに出る。",
+        kicker: "XR装着中",
         target: "視線と光",
-        question: "光と視線が真珠へ注意を集める。",
+        question: "まずこの光を見る。",
         explanation:
           "実物作品の一点と、浮かぶ拡大表示をつなぐ。",
         detailLabel: "絵具の細部を拡大",
