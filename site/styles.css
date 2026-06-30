@@ -1373,15 +1373,25 @@ select:focus-visible {
 }
 
 .explorer-stage[data-artwork="girl"] .stage-scene.stage--pearl {
-  background-size: auto, auto, 124%;
-  background-position: center, center, center 42%;
+  background-size: auto, auto, 156%;
+  background-position:
+    center,
+    center,
+    calc(50% + var(--room-x)) calc(42% + var(--room-y));
 }
 
 .explorer-stage[data-artwork="girl"] .artwork-rig.small-framed {
   left: 50%;
-  top: 47%;
-  width: 27%;
+  top: 45.5%;
+  width: 30%;
   max-width: 560px;
+}
+
+.explorer-stage[data-artwork="girl"] .artwork-rig.small-framed .artwork-frame {
+  box-shadow:
+    0 28px 54px rgba(0, 0, 0, 0.42),
+    0 8px 18px rgba(0, 0, 0, 0.28),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.18);
 }
 
 .artwork-frame {
@@ -6549,6 +6559,32 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   .xr-stage[data-state="restorer"] .artwork-rig.small-framed {
     top: 36%;
     width: var(--art-mobile-width, 54%);
+  }
+
+  .explorer-stage[data-artwork="girl"] .stage-scene.stage--pearl {
+    background-size: auto, auto, 180%;
+    background-position:
+      center,
+      center,
+      calc(50% + var(--room-x)) calc(41% + var(--room-y));
+  }
+
+  .explorer-stage[data-artwork="girl"][data-state="restorer"] {
+    min-height: 680px;
+  }
+
+  .explorer-stage[data-artwork="girl"][data-state="restorer"] .artwork-rig.small-framed {
+    top: 38%;
+    width: 46%;
+  }
+
+  .explorer-stage[data-artwork="girl"][data-state="restorer"] .spec-edge-panel {
+    left: 12px;
+    right: 12px;
+    top: auto;
+    bottom: 24px;
+    width: auto;
+    transform: none;
   }
 
   .hero-stage[data-state="restorer"] .artwork-rig.small-framed {
