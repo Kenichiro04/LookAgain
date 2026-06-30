@@ -562,25 +562,30 @@
       cards: {
         architecture: {
           title: "Architecture",
-          body: "Notice structure, material, and circulation in a real building."
+          body: "Notice structure, material, and circulation in a real building.",
+          panel: "Load path"
         },
         field: {
           title: "Field learning",
           body:
-            "Point to one plant, rock, tool, or trace before a learner knows what to ask."
+            "Point to one plant, rock, tool, or trace before a learner knows what to ask.",
+          panel: "First clue"
         },
         repair: {
           title: "Repair / inspection",
-          body: "Show the part that matters before the manual becomes useful."
+          body: "Show the part that matters before the manual becomes useful.",
+          panel: "Check first"
         },
         performance: {
           title: "Live performance",
           body:
-            "Point attention to staging, gesture, or musical structure without pulling the viewer into a screen."
+            "Point attention to staging, gesture, or musical structure without pulling the viewer into a screen.",
+          panel: "Gesture cue"
         },
         training: {
           title: "Training environments",
-          body: "Guide attention to one critical detail, then disappear."
+          body: "Guide attention to one critical detail, then disappear.",
+          panel: "Critical step"
         }
       },
       note:
@@ -1264,25 +1269,30 @@
       cards: {
         architecture: {
           title: "建築",
-          body: "実際の建物の中で、構造・素材・動線に気づく。"
+          body: "実際の建物の中で、構造・素材・動線に気づく。",
+          panel: "荷重の流れ"
         },
         field: {
           title: "フィールド学習",
           body:
-            "植物、岩、道具、痕跡など、問いが生まれる前の一点を指し示す。"
+            "植物、岩、道具、痕跡など、問いが生まれる前の一点を指し示す。",
+          panel: "最初の手がかり"
         },
         repair: {
           title: "修理 / 点検",
-          body: "マニュアルを読む前に、まず見るべき部品を示す。"
+          body: "マニュアルを読む前に、まず見るべき部品を示す。",
+          panel: "まず確認"
         },
         performance: {
           title: "ライブパフォーマンス",
           body:
-            "画面に注意を移さず、演出・身振り・音楽構造への注意を促す。"
+            "画面に注意を移さず、演出・身振り・音楽構造への注意を促す。",
+          panel: "身振りのキュー"
         },
         training: {
           title: "トレーニング環境",
-          body: "重要な一点を示し、すぐ消える。"
+          body: "重要な一点を示し、すぐ消える。",
+          panel: "重要手順"
         }
       },
       note:
