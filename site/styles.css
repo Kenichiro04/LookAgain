@@ -1372,6 +1372,13 @@ select:focus-visible {
   left: 56.5%;
 }
 
+.explorer-stage[data-artwork="lastSupper"] .artwork-rig.wall-mural {
+  left: 50%;
+  top: 53.7%;
+  width: 71.8%;
+  max-width: none;
+}
+
 .explorer-stage[data-artwork="girl"] .stage-scene.stage--pearl {
   background-size: auto, auto, 156%;
   background-position:
@@ -1392,6 +1399,13 @@ select:focus-visible {
     0 28px 54px rgba(0, 0, 0, 0.42),
     0 8px 18px rgba(0, 0, 0, 0.28),
     inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+}
+
+.explorer-stage[data-artwork="arnolfini"] .artwork-rig.medium-framed {
+  left: 50%;
+  top: 48%;
+  width: 35%;
+  max-width: 520px;
 }
 
 .artwork-frame {
@@ -6598,7 +6612,7 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
       calc(50% + var(--room-x)) calc(41% + var(--room-y));
   }
 
-  .explorer-stage[data-artwork="girl"][data-state="restorer"] {
+  .explorer-stage[data-artwork="girl"] {
     min-height: 680px;
   }
 
@@ -6663,6 +6677,24 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   .xr-stage[data-state="museum"] .artwork-rig.medium-framed {
     top: 36%;
     width: var(--art-mobile-width, 50%);
+  }
+
+  .explorer-stage[data-artwork="lastSupper"] .artwork-rig.wall-mural {
+    left: 50%;
+    top: 38.3%;
+    width: 90%;
+  }
+
+  .explorer-stage[data-artwork="girl"] .artwork-rig.small-framed {
+    left: 50%;
+    top: 38%;
+    width: 46%;
+  }
+
+  .explorer-stage[data-artwork="arnolfini"] .artwork-rig.medium-framed {
+    left: 50%;
+    top: 36%;
+    width: 48%;
   }
 
   .edge-panel {
