@@ -4810,16 +4810,19 @@ select:focus-visible {
 
 .snapshot-comparison-rows {
   display: grid;
-  max-width: 880px;
-  margin-top: 22px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  max-width: none;
+  margin-top: 0;
+  padding-top: 18px;
+  border-top: 0;
 }
 
 .snapshot-row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 18px;
-  padding: 10px 0;
+  grid-template-columns: minmax(0, 650px) 32px minmax(300px, 360px);
+  gap: 16px;
+  align-items: center;
+  padding: 11px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   color: var(--muted);
   font-size: 0.92rem;
@@ -4829,6 +4832,39 @@ select:focus-visible {
   color: var(--ink);
   font-size: 0.8rem;
   font-weight: 820;
+}
+
+.snapshot-row-arrow {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  justify-self: center;
+  width: 32px;
+  height: 26px;
+  border: 1px solid rgba(155, 229, 140, 0.22);
+  border-radius: 999px;
+  color: var(--green);
+  background:
+    radial-gradient(circle, rgba(155, 229, 140, 0.14), rgba(8, 12, 11, 0.94) 70%);
+  font-size: 0.78rem;
+  font-weight: 860;
+}
+
+.snapshot-row-arrow::before {
+  content: "";
+  position: absolute;
+  top: -26px;
+  bottom: -18px;
+  left: 50%;
+  z-index: -1;
+  width: 1px;
+  background: linear-gradient(
+    rgba(155, 229, 140, 0),
+    rgba(155, 229, 140, 0.34) 24%,
+    rgba(155, 229, 140, 0.34) 74%,
+    rgba(155, 229, 140, 0)
+  );
 }
 
 .section-heading-row {
@@ -6251,6 +6287,25 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
     transform: rotate(90deg);
   }
 
+  .snapshot-comparison-rows {
+    margin-top: 18px;
+    padding-top: 0;
+  }
+
+  .snapshot-row {
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+
+  .snapshot-row-arrow {
+    justify-self: center;
+    transform: rotate(90deg);
+  }
+
+  .snapshot-row-arrow::before {
+    display: none;
+  }
+
   .existing-methods-group {
     grid-template-columns: repeat(3, minmax(92px, 1fr));
   }
@@ -7091,8 +7146,8 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   }
 
   .snapshot-row-head {
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    grid-template-columns: 1fr;
+    gap: 4px;
   }
 
   .mechanics-list,
