@@ -21,7 +21,7 @@
         "table-edge": "table edge",
         "architectural-edge": "painted architecture",
         "coffered-ceiling-orthogonal": "coffered ceiling",
-        "painted-wall-tapestry-orthogonal": "side-wall tapestry",
+        "painted-wall-tapestry-orthogonal": "side-wall openings",
         "table-orthogonal": "table recession",
         "gesture-direction": "gesture",
         "figure-grouping": "figure grouping",
@@ -358,7 +358,7 @@
           artist: {
             target: "Vanishing point and table lines",
             question: "The painted room is built from lines converging near Christ's head.",
-            body: "Coffered ceiling, side-wall tapestry bands, and table recession converge near Christ's head."
+            body: "Coffered ceiling, side-wall openings and bands, and table recession converge near Christ's head."
           },
           restorer: {
             target: "Wall surface and losses",
@@ -726,7 +726,7 @@
         "table-edge": "食卓の線",
         "architectural-edge": "描かれた建築の線",
         "coffered-ceiling-orthogonal": "格天井",
-        "painted-wall-tapestry-orthogonal": "側壁タペストリー",
+        "painted-wall-tapestry-orthogonal": "側壁の開口",
         "table-orthogonal": "食卓の奥行き",
         "gesture-direction": "身振り",
         "figure-grouping": "人物のまとまり",
@@ -1063,7 +1063,7 @@
           artist: {
             target: "消失点と食卓の線",
             question: "描かれた室内は、キリストの頭部付近へ収束する線で組まれている。",
-            body: "格天井、側壁のタペストリー、食卓の奥行きがキリストの頭部付近へ収束する。"
+            body: "格天井、側壁の開口と帯、食卓の奥行きがキリストの頭部付近へ収束する。"
           },
           restorer: {
             target: "壁面と損失部分",

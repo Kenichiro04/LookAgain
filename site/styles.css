@@ -1977,7 +1977,7 @@ select:focus-visible {
 }
 
 .explorer-stage .spec-lines-lastSupper-artist {
-  transform: scale(1.28);
+  transform: none;
   transform-origin: 50% 46.8%;
 }
 

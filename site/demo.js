@@ -85,7 +85,7 @@
       panel: {
         kicker: "ARTIST LENS",
         title: "How is this space constructed?",
-        body: "Coffered ceiling, side-wall tapestry bands, and table recession converge near Christ's head.",
+        body: "Coffered ceiling, side-wall openings and bands, and table recession converge near Christ's head.",
         target: { x: 50, y: 46.8 },
         position: { top: "31%", right: "2%", width: "13%" }
       },
@@ -254,18 +254,16 @@
         <span class="soft-region" style="--x:30%;--y:49%;--w:24%;--h:21%;"></span>
         <span class="soft-region" style="--x:70%;--y:49%;--w:24%;--h:21%;"></span>
         <svg class="cue-lines last-supper-cue-lines" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <line x1="30" y1="-8" x2="50" y2="46.8"></line>
-          <line x1="70" y1="-8" x2="50" y2="46.8"></line>
-          <line x1="18" y1="4" x2="50" y2="46.8"></line>
-          <line x1="82" y1="4" x2="50" y2="46.8"></line>
-          <line x1="-10" y1="18" x2="50" y2="46.8"></line>
-          <line x1="110" y1="18" x2="50" y2="46.8"></line>
-          <line x1="-10" y1="31" x2="50" y2="46.8"></line>
-          <line x1="110" y1="31" x2="50" y2="46.8"></line>
-          <line x1="-10" y1="58" x2="50" y2="46.8"></line>
-          <line x1="110" y1="58" x2="50" y2="46.8"></line>
-          <line x1="-10" y1="66" x2="50" y2="46.8"></line>
-          <line x1="110" y1="66" x2="50" y2="46.8"></line>
+          <line x1="34" y1="2" x2="45" y2="31"></line>
+          <line x1="41" y1="2" x2="47" y2="31"></line>
+          <line x1="59" y1="2" x2="53" y2="31"></line>
+          <line x1="66" y1="2" x2="55" y2="31"></line>
+          <line x1="8" y1="12" x2="35" y2="33"></line>
+          <line x1="18" y1="27" x2="41" y2="40"></line>
+          <line x1="92" y1="12" x2="65" y2="33"></line>
+          <line x1="82" y1="27" x2="59" y2="40"></line>
+          <line x1="14" y1="63" x2="38" y2="58"></line>
+          <line x1="86" y1="63" x2="62" y2="58"></line>
         </svg>
       `;
     }
