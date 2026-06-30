@@ -1634,6 +1634,35 @@ select:focus-visible {
   transform: translateX(-50%);
 }
 
+.pointer-from-lower-right-toward-face-turban-comparison + .anchor-target .anchor-label {
+  top: calc(100% + 58px);
+  bottom: auto;
+  left: calc(50% + 112px);
+  transform: translateX(-50%);
+}
+
+.pointer-from-right-toward-central-mirror + .anchor-target .anchor-label {
+  top: calc(100% + 18px);
+  bottom: auto;
+  left: calc(50% + 132px);
+  transform: translateX(-50%);
+}
+
+.pointer-from-right-toward-lower-textile-area + .anchor-target .anchor-label,
+.pointer-from-right-toward-left-center-wall-area + .anchor-target .anchor-label {
+  top: 50%;
+  bottom: auto;
+  left: calc(50% + 150px);
+  transform: translate(-50%, -50%);
+}
+
+.pointer-from-upper-right-toward-table-center + .anchor-target .anchor-label,
+.pointer-from-right-toward-object-cluster + .anchor-target .anchor-label {
+  bottom: calc(100% + 42px);
+  left: calc(50% + 40px);
+  transform: translateX(-50%);
+}
+
 .pointer-cue {
   position: absolute;
   left: var(--anchor-x);
@@ -2028,12 +2057,12 @@ select:focus-visible {
 }
 
 .spec-aux-legend-arnolfini-social {
-  left: 42%;
-  top: 24%;
+  left: 62%;
+  top: 28%;
   bottom: auto;
   width: max-content;
   min-width: 130px;
-  max-width: min(40%, 280px);
+  max-width: min(34%, 260px);
   border-color: rgba(155, 229, 140, 0.36);
   color: rgba(216, 255, 199, 0.96);
 }
