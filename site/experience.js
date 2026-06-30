@@ -18,6 +18,8 @@
   };
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const parallaxStages = new WeakMap();
+  const cueSequenceObservedStages = new WeakSet();
+  let cueSequenceObserver = null;
   const heroLookAgainExamples = [
     { key: "artist", stateId: "artist", lens: "artist", artwork: "lastSupper" },
     { key: "restorer", stateId: "restorer", lens: "restorer", artwork: "girl" },
@@ -703,12 +705,25 @@
     const config = stageConfigFor(stateId, overrides);
     const artwork = artworks[config.artwork];
     const scene = stage.querySelector("[data-stage-scene]");
+    const runCueSequence = Boolean(config.panel && config.cue);
     stage.dataset.state = stateId;
     stage.dataset.artwork = config.artwork;
     stage.dataset.scene = artwork.scene;
     stage.dataset.scale = artwork.scaleClass;
     stage.dataset.cueSpecId = config.cueSpecId || "";
+    stage.dataset.cueSequenceKey = runCueSequence
+      ? `${stateId}:${config.artwork}:${config.cueSpecId || config.cue}`
+      : "";
     stage.classList.remove("is-stage-changing", "is-xr-reveal");
+    stage.classList.toggle("is-cue-sequence", runCueSequence);
+    stage.classList.remove("is-cue-sequence-active");
+    stage.dataset.cueSequenceVisible = "false";
+    if (runCueSequence && reducedMotion) {
+      stage.classList.add("is-cue-sequence-active");
+    }
+    if (runCueSequence) {
+      ensureCueSequenceObserver(stage);
+    }
     void stage.offsetWidth;
     stage.classList.add("is-stage-changing");
     if (stateId === "wearing") {
@@ -734,13 +749,28 @@
     `;
 
     resetStageParallax(stage, { immediate: true });
-    requestAnimationFrame(() => positionConnector(stage));
+    const sequenceKey = stage.dataset.cueSequenceKey;
+    const startCueSequenceIfVisible = (force = false) => {
+      if (!runCueSequence || stage.dataset.cueSequenceKey !== sequenceKey) return;
+      positionConnector(stage);
+      if (cueStageIsVisible(stage) && (force || !stage.classList.contains("is-cue-sequence-active"))) {
+        restartCueSequence(stage);
+      }
+    };
+    requestAnimationFrame(() => {
+      startCueSequenceIfVisible(true);
+    });
+    if (runCueSequence && !reducedMotion) {
+      [280, 920].forEach((delay) => {
+        window.setTimeout(() => startCueSequenceIfVisible(false), delay);
+      });
+    }
   }
 
   function renderConnectorSvg() {
     return `
       <svg class="connector-svg stage-layer--overlay" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-        <line x1="0" y1="0" x2="0" y2="0"></line>
+        <line x1="0" y1="0" x2="0" y2="0" pathLength="1"></line>
         <circle class="connector-start" cx="0" cy="0" r="0.55"></circle>
         <circle class="connector-end" cx="0" cy="0" r="0.45"></circle>
       </svg>
@@ -758,7 +788,7 @@
       <div class="xr-stage matrix-mini-stage" data-state="${stateId}" data-artwork="${config.artwork}" data-scene="${artwork.scene}" data-scale="${artwork.scaleClass}">
         <div class="stage-scene scene-${artwork.scene} stage--${artwork.stageClass}">
           <svg class="connector-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-            <line x1="${anchorX}" y1="${anchorY}" x2="${connectorEndX}" y2="${connectorEndY}"></line>
+            <line x1="${anchorX}" y1="${anchorY}" x2="${connectorEndX}" y2="${connectorEndY}" pathLength="1"></line>
             <circle class="connector-start" cx="${anchorX}" cy="${anchorY}" r="0.55"></circle>
             <circle class="connector-end" cx="${connectorEndX}" cy="${connectorEndY}" r="0.45"></circle>
           </svg>
@@ -992,7 +1022,7 @@
               `spec-source-${cueSpecSlug(line.source)}`,
               line.arrow ? "spec-line-has-arrow" : "spec-line-no-arrow"
             ].join(" ");
-            return `<path class="${classes}" data-line-source="${escapeAttr(line.source)}" d="${line.path}"${arrow}></path>`;
+            return `<path class="${classes}" data-line-source="${escapeAttr(line.source)}" d="${line.path}" pathLength="1"${arrow}></path>`;
           })
           .join("")}
       </svg>
@@ -1587,6 +1617,48 @@
 
   function renderQuietMessage() {
     return `<div class="quiet-message">${t("states.quiet.message")}</div>`;
+  }
+
+  function cueStageIsVisible(stage) {
+    if (!stage || !stage.classList.contains("is-cue-sequence")) return false;
+    const rect = stage.getBoundingClientRect();
+    if (!rect.width || !rect.height) return false;
+    const visibleWidth = Math.max(0, Math.min(rect.right, window.innerWidth) - Math.max(rect.left, 0));
+    const visibleHeight = Math.max(0, Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0));
+    return visibleWidth * visibleHeight >= rect.width * rect.height * 0.18;
+  }
+
+  function restartCueSequence(stage) {
+    if (!stage || reducedMotion || !stage.classList.contains("is-cue-sequence")) return;
+    stage.classList.remove("is-cue-sequence-active");
+    void stage.offsetWidth;
+    requestAnimationFrame(() => {
+      if (stage.classList.contains("is-cue-sequence")) {
+        stage.classList.add("is-cue-sequence-active");
+      }
+    });
+  }
+
+  function ensureCueSequenceObserver(stage) {
+    if (!stage || reducedMotion || cueSequenceObservedStages.has(stage) || !("IntersectionObserver" in window)) return;
+    if (!cueSequenceObserver) {
+      cueSequenceObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          const cueStage = entry.target;
+          if (!cueStage.classList.contains("is-cue-sequence")) return;
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.22) {
+            if (cueStage.dataset.cueSequenceVisible !== "true") {
+              cueStage.dataset.cueSequenceVisible = "true";
+              restartCueSequence(cueStage);
+            }
+          } else {
+            cueStage.dataset.cueSequenceVisible = "false";
+          }
+        });
+      }, { threshold: [0, 0.22, 0.5] });
+    }
+    cueSequenceObservedStages.add(stage);
+    cueSequenceObserver.observe(stage);
   }
 
   function positionConnector(stage) {
