@@ -685,10 +685,9 @@
         repair: "repair / inspection",
         training: "training environments"
       },
-      builderTitle: "Builder",
-      builderName: "Kenichiro Eda",
-      builderBody:
-        "Independent product builder / prototype developer focused on XR interaction design, AI-assisted prototyping, and measurable user testing.",
+      builderTitle: "Team",
+      builderMemberKenichiro: "Kenichiro Eda — Product / prototype",
+      builderMemberYuka: "Yuka Nabeshima — Research / language",
       contactTitle: "Contact",
       contactName: "Kenichiro Eda",
       contactEmail: "ciaoken16@icloud.com",
@@ -1390,10 +1389,9 @@
         repair: "修理 / 点検",
         training: "トレーニング環境"
       },
-      builderTitle: "Builder",
-      builderName: "江田健一郎",
-      builderBody:
-        "XRインタラクション設計、AI支援プロトタイピング、測定可能なユーザーテストに取り組む個人プロダクトビルダー / プロトタイプ開発者。",
+      builderTitle: "Team",
+      builderMemberKenichiro: "江田健一郎 — Product / prototype",
+      builderMemberYuka: "鍋島優歌 — Research / language",
       contactTitle: "連絡先",
       contactName: "江田健一郎",
       contactEmail: "ciaoken16@icloud.com",
