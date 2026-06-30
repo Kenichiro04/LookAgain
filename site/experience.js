@@ -1338,6 +1338,7 @@
       `;
     }
     if (config.matrixPreview) {
+      const matrixEvidence = [materialEvidence, comparativeEvidence].filter(Boolean).join("");
       return `
         <aside
           class="edge-panel spec-edge-panel matrix-cue-panel stage-layer--panel ${positionClass}${panelKindClass}"
@@ -1350,6 +1351,7 @@
             <h3>${escapeHtml(title)}</h3>
             <p class="micro-evidence">${escapeHtml(microEvidence)}</p>
           </span>
+          ${matrixEvidence ? `<div class="matrix-cue-evidence">${matrixEvidence}</div>` : ""}
         </aside>
       `;
     }
@@ -1900,6 +1902,10 @@
                 aria-label="${escapeAttr(`${t(artwork.labelKey)} / ${t(`lenses.names.${lens}`)} / ${spec ? cueSpecText(spec, "target_label") : ""}`)}"
               >
                 ${renderMatrixCell(artworkId, lens)}
+                <span class="matrix-preview-cta">
+                  <span>${escapeHtml(t("lenses.previewCta"))}</span>
+                  <span aria-hidden="true">↓</span>
+                </span>
               </button>
             `;
           })
@@ -2090,6 +2096,9 @@
       const button = event.target.closest("[data-matrix-lens]");
       if (!button) return;
       setLensByArtwork(button.dataset.matrixLens, button.dataset.matrixArtwork);
+      window.setTimeout(() => {
+        document.querySelector("#preview")?.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
+      }, 40);
     });
     previewControls?.addEventListener("click", (event) => {
       const lensButton = event.target.closest("[data-preview-lens]");

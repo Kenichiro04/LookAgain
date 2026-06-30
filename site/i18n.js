@@ -336,6 +336,7 @@
         "Choose a card to preview how a short pointer appears on the artwork.",
       footerLine:
         "The goal is not to add more facts. The goal is to make the first place to look clear.",
+      previewCta: "Open full preview",
       names: {
         artist: "Artist",
         restorer: "Conservator",
@@ -965,6 +966,7 @@
         "カードを選ぶと、作品の上に短い指差しが出る様子を確認できる。",
       footerLine:
         "目的は情報を増やすことではない。最初に見る場所を分かるようにすること。",
+      previewCta: "下で詳しく見る",
       names: {
         artist: "画家",
         restorer: "保存修復家",
