@@ -789,8 +789,8 @@
   function renderColorContrastWash(spec) {
     if (cueSpecClass(spec) !== "girl-artist") return "";
     return `
-      <span class="spec-color-wash spec-color-blue" style="--x: 56%; --y: 26%; --w: 37%; --h: 22%;" aria-hidden="true"></span>
-      <span class="spec-color-wash spec-color-yellow" style="--x: 50%; --y: 63%; --w: 34%; --h: 23%;" aria-hidden="true"></span>
+      <span class="spec-color-wash spec-color-green" style="--x: 56%; --y: 26%; --w: 37%; --h: 22%;" aria-hidden="true"></span>
+      <span class="spec-color-wash spec-color-green" style="--x: 50%; --y: 63%; --w: 34%; --h: 23%;" aria-hidden="true"></span>
     `;
   }
 
@@ -900,7 +900,8 @@
       .filter((line) => allowedSources.has(line.source))
       .slice(0, maxLines);
     if (!paths.length) return "";
-    const label = config.matrixPreview ? matrixAuxiliaryLineLabel(spec) : auxiliaryLineLabel(spec, paths);
+    const showLegend = !config.matrixPreview && specClass === "arnolfini-social";
+    const label = showLegend ? auxiliaryLineLabel(spec, paths) : "";
     const arrowId = `spec-arrow-${specClass}${config.matrixPreview ? "-mini" : "-stage"}`;
     const arrowDef = paths.some((line) => line.arrow)
       ? `
@@ -932,7 +933,7 @@
           })
           .join("")}
       </svg>
-      <span class="spec-aux-legend spec-aux-legend-${specClass}">${escapeHtml(label)}</span>
+      ${showLegend ? `<span class="spec-aux-legend spec-aux-legend-${specClass}">${escapeHtml(label)}</span>` : ""}
     `;
   }
 

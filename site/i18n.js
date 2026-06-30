@@ -170,7 +170,7 @@
           "How the artist directs attention through composition, light, color, gaze, gesture, and pictorial staging.",
         diagram: {
           lastSupper: "Perspective, table lines, gestures, and figures pull attention toward the center.",
-          girl: "Light, blue-yellow contrast, and gaze pull attention back to the face.",
+          girl: "Light, color contrast, and gaze pull attention back to the face.",
           arnolfini: "Mirror, sightlines, and figure placement decide who is looking."
         }
       },
@@ -373,7 +373,7 @@
           artist: {
             target: "Gaze and light",
             question: "The gaze, light edge, and color contrast pull the viewer into the figure.",
-            body: "The gaze, soft light edge, and blue-yellow contrast make a small image feel immediate."
+            body: "The gaze, soft light edge, and color contrast make a small image feel immediate."
           },
           restorer: {
             target: "Pearl highlight",
@@ -801,7 +801,7 @@
           "構図・光・色・視線・身振り・画面設計によって、画家が注意をどう導いているかを見る。",
         diagram: {
           lastSupper: "遠近法、食卓の線、身振り、人物配置が注意を中心へ集める。",
-          girl: "光、青と黄の対比、視線が顔へ注意を戻す。",
+          girl: "光、色の対比、視線が顔へ注意を戻す。",
           arnolfini: "鏡、視線、人物配置が「見る/見られる」を作る。"
         }
       },
@@ -1004,7 +1004,7 @@
           artist: {
             target: "視線と光",
             question: "視線、光の境界、色の対比が、人物へ注意を引き寄せる。",
-            body: "視線、柔らかな光の境界、青と黄の対比が、小さな像を強く引き寄せる。"
+            body: "視線、柔らかな光の境界、色の対比が、小さな像を強く引き寄せる。"
           },
           restorer: {
             target: "真珠のハイライト",
