@@ -1,0 +1,457 @@
+{
+  "version": "v23",
+  "package": "v23-delta-experience-pack",
+  "product_definition": {
+    "name": "Look Again",
+    "category": "pre-search pointing layer for the physical world",
+    "product_category": "pre-search pointing layer for the physical world",
+    "museum_role": "first proof environment, not product category",
+    "not_a": [
+      "museum guide",
+      "AI art explainer",
+      "AR museum guide",
+      "smart audio guide",
+      "Google Lens clone"
+    ],
+    "primary_message": "Before you know what to ask, XR shows where to look.",
+    "final_message": "The artwork does not change. The question does.",
+    "core_interaction_metaphor": "An expert points once. You look again.",
+    "core_interaction_not": "not an explanation panel in glasses",
+    "current_state": [
+      "Browser prototype",
+      "Concept visualization",
+      "Native Android XR implementation is not yet complete",
+      "No museum partnership is claimed"
+    ],
+    "core_test": "Whether optical see-through Android XR can point to the right part of the physical world before the user knows what to ask."
+  },
+  "category_reframe": {
+    "guide": "explains after the work is identified",
+    "search": "answers after the question is formed",
+    "look_again": "points before the question exists"
+  },
+  "delta_narrative": {
+    "before": [
+      "No guide leaves discovery to chance",
+      "Audio gives context without a precise point of attention",
+      "Phone guidance shifts attention to a copied screen image"
+    ],
+    "after": [
+      "The visitor remains with the physical artwork",
+      "A source-grounded lens appears beside the real artwork",
+      "A connector ties a specific artwork point to a peripheral panel",
+      "The lens can change by viewpoint without becoming a linear guide sequence"
+    ]
+  },
+  "final_section_order": [
+    "Hero differential sequence",
+    "Category Reframe",
+    "Difference Snapshot",
+    "Lens Matrix",
+    "Preview selected cue",
+    "What is XR-only here?",
+    "Why start in museums?",
+    "Why Project Aura?",
+    "6-month closed test",
+    "Success metrics",
+    "Footer"
+  ],
+  "hero_transformation_model": {
+    "layout": "single dominant first-person museum stage with copy area and a two-act rail",
+    "same_stage_contract": "The Hero keeps the same artwork, wall, camera, and viewing distance while only the guidance layer changes.",
+    "act_1_existing_ways": {
+      "sequence": [
+        "looking",
+        "audio",
+        "phone"
+      ],
+      "autoplay_behavior": "starts first and plays no guide, audio guide, and phone guide once",
+      "visual_treatment": "subtle uncertain-focus layer; no target pulse, pointer, connector, or Look Again panel",
+      "purpose": "show that familiar guidance modes can help but still leave attention unsettled or pulled away"
+    },
+    "act_2_look_again": {
+      "sequence": [
+        "The Last Supper x Artist",
+        "Girl with a Pearl Earring x Conservator",
+        "The Arnolfini Portrait x Historian / Social Context"
+      ],
+      "autoplay_behavior": "appears after Existing ways completes, cycles three source-grounded examples once, then returns to a quiet thesis state",
+      "visual_treatment": "uncertain-focus layer is removed; one expert cue, target, connector, and short question appear on the real artwork",
+      "purpose": "show Look Again as the transformation, not a fourth equal mode"
+    },
+    "manual_controls": "top-level rail exposes Existing ways and Look Again; smaller sub-state rails expose No guide, Audio, Phone and Artist, Conservator, Historian inside their respective acts",
+    "icons": "inline SVG icons are generated for no guide, audio, phone, and Look Again controls",
+    "first_viewport_delta_proof": "The Hero states the pre-search pointing category before the visitor scrolls, and a fixed Existing vs Look Again proof block is visible before the autoplay completes.",
+    "qa_state_contract": "The main autoplay remains Existing ways -> Look Again, while query params can pin wearing, artist, restorer, social, museum, and quiet states for QA without turning expert viewpoints into a linear product flow."
+  },
+  "display_scale_model": [
+    {
+      "artwork": "Girl with a Pearl Earring",
+      "referenced_dimensions": "44.5 x 39 cm",
+      "display_treatment": "small framed painting at eye level",
+      "visual_width_target": "roughly 30-38% of desktop stage width",
+      "rendered_desktop_width_pct": 33.9,
+      "frame_border_model": "generated gilded/decorative frame texture; artwork-specific small-painting proportions",
+      "scene": "generated Mauritshuis-informed green wall background",
+      "source_context": "Mauritshuis current collection page; Room 15; official framed-image caption"
+    },
+    {
+      "artwork": "The Arnolfini Portrait",
+      "referenced_dimensions": "82.2 x 60 cm",
+      "display_treatment": "vertical framed panel at eye level",
+      "visual_width_target": "roughly 38-52% of desktop stage width",
+      "rendered_desktop_width_pct": 43.9,
+      "frame_border_model": "generated dark Netherlandish-style frame texture; Room 52 framed panel treatment",
+      "scene": "generated National Gallery-informed old-master wall background",
+      "source_context": "National Gallery current collection page; Room 52; fifteenth-century Netherlandish frame"
+    },
+    {
+      "artwork": "The Last Supper",
+      "referenced_dimensions": "460 x 880 cm",
+      "display_treatment": "wall-scale refectory mural without frame",
+      "visual_width_target": "roughly 60-78% of desktop stage width",
+      "rendered_desktop_width_pct": 71.8,
+      "frame_border_model": "none; mural has 0px frame border",
+      "scene": "generated historic refectory far-wall background",
+      "source_context": "Museo del Cenacolo Vinciano and public catalogue dimension references"
+    }
+  ],
+  "example_artwork_scope": "Paintings shown in V23 are examples. The intended system can support many rights-reviewed artworks, cultural artifacts, and museum objects.",
+  "generated_backgrounds": [
+    {
+      "asset": "assets/generated/gallery-wall-v24.png",
+      "purpose": "neutral fallback gallery wall context with low floor line",
+      "claim_limit": "generated concept plate, not a real museum photo"
+    },
+    {
+      "asset": "assets/generated/refectory-pov-v24.png",
+      "purpose": "historic refectory end-wall context for centered wall-scale Last Supper state",
+      "claim_limit": "generated concept plate, not the actual Santa Maria delle Grazie refectory"
+    },
+    {
+      "asset": "assets/generated/mauritshuis-wall-v24.png",
+      "purpose": "display-informed green wall context for Girl with a Pearl Earring",
+      "claim_limit": "generated concept plate, not Mauritshuis Room 15 reconstruction"
+    },
+    {
+      "asset": "assets/generated/national-gallery-wall-v24.png",
+      "purpose": "display-informed dark old-master wall context for The Arnolfini Portrait",
+      "claim_limit": "generated concept plate, not National Gallery Room 52 reconstruction"
+    }
+  ],
+  "hero_states": [
+    {
+      "id": "looking",
+      "label": "NO GUIDE",
+      "artwork": "Girl with a Pearl Earring",
+      "cue": "none",
+      "caption": "I can see it. But I don’t know what to look for.",
+      "hero_act": "existing_ways",
+      "uncertain_focus": true
+    },
+    {
+      "id": "audio",
+      "label": "AUDIO GUIDE",
+      "artwork": "Girl with a Pearl Earring",
+      "cue": "audio waveform, artwork-specific transcript bubble, and visitor confusion bubble only",
+      "caption": "Good context. But where exactly should I look?",
+      "hero_act": "existing_ways",
+      "uncertain_focus": true,
+      "spatial_contract": "no target pulse, no pointer, no connector, no panel"
+    },
+    {
+      "id": "phone",
+      "label": "PHONE GUIDE",
+      "artwork": "Girl with a Pearl Earring",
+      "cue": "foreground hand-held phone with copied artwork, app-like guide page, screen glow, and pixel texture",
+      "caption": "Rich information. But now I am looking at a glowing copy.",
+      "hero_act": "existing_ways",
+      "uncertain_focus": true,
+      "spatial_contract": "real artwork remains visible but de-emphasized behind the glowing copied screen"
+    },
+    {
+      "id": "wearing",
+      "label": "WEARING XR",
+      "artwork": "Girl with a Pearl Earring",
+      "cue": "calm optical XR HUD",
+      "caption": "Look Again starts from the real work."
+    },
+    {
+      "id": "artist",
+      "label": "ARTIST LENS",
+      "artwork": "The Last Supper",
+      "cue": "attention structure: perspective, table lines, gesture rhythm, figure placement, target pulse, and connector to a short peripheral question",
+      "panel_question": "How does the painting direct the room’s attention?",
+      "hero_use": "Hero example 1. The phone disappears and the cue attaches to the current mural."
+    },
+    {
+      "id": "restorer",
+      "label": "CONSERVATOR LENS",
+      "artwork": "Girl with a Pearl Earring",
+      "cue": "source-grounded cue spec: pearl highlight, paint edge, crop callout, material surface scan, target pulse, pointer, connector, and short peripheral question",
+      "panel_question": "How can a few marks become a pearl?",
+      "hero_use": "Hero example 2. The cue shows paint becoming illusion on the small framed painting."
+    },
+    {
+      "id": "social",
+      "label": "HISTORIAN / SOCIAL CONTEXT LENS",
+      "artwork": "The Arnolfini Portrait",
+      "cue": "source-grounded cue spec: visible social-context object cluster, object-following line, target pulse, pointer, connector, and short peripheral question",
+      "panel_question": "What does wealth need us to notice?",
+      "hero_use": "Hero example 3. The cue points to objects as social evidence on the framed panel."
+    },
+    {
+      "id": "museum",
+      "label": "MUSEUM HISTORY LENS",
+      "artwork": "The Arnolfini Portrait",
+      "cue": "timeline in readable edge panel outside the painting",
+      "panel_question": "Why is this work here?"
+    },
+    {
+      "id": "quiet",
+      "label": "QUIET VIEW",
+      "artwork": "Girl with a Pearl Earring",
+      "cue": "overlays disappear",
+      "caption": "The artwork does not change. The question does."
+    }
+  ],
+  "lens_types": [
+    {
+      "id": "artist",
+      "name": "Artist lens",
+      "definition": "How the artist directs attention through composition, light, color, gaze, gesture, and pictorial staging.",
+      "not_only_perspective": true,
+      "attention_shift": "how the artist directs attention becomes the question; perspective is only one mechanism where appropriate",
+      "primary_artwork": "The Last Supper",
+      "per_artwork_mechanisms": {
+        "The Last Supper": [
+          "perspective",
+          "table lines",
+          "gesture rhythm"
+        ],
+        "Girl with a Pearl Earring": [
+          "light edge",
+          "color contrast",
+          "gaze"
+        ],
+        "The Arnolfini Portrait": [
+          "mirror",
+          "sightlines",
+          "figure placement"
+        ]
+      }
+    },
+    {
+      "id": "restorer",
+      "name": "Conservator lens",
+      "definition": "How the work exists as a physical object: surface, damage, repair, technique, support, pigment, and what time has changed.",
+      "attention_shift": "surface, damage, repair, support, highlight, technique, and illusion become inspectable material evidence",
+      "primary_artwork": "Girl with a Pearl Earring"
+    },
+    {
+      "id": "social",
+      "name": "Historian / Social Context lens",
+      "definition": "How people, objects, institutions, status, belief, trade, power, and display shape what the work meant and why it mattered.",
+      "attention_shift": "people, objects, institutions, status, belief, trade, power, and display become visible historical context",
+      "primary_artwork": "The Arnolfini Portrait"
+    },
+    {
+      "id": "museum",
+      "name": "Museum History",
+      "attention_shift": "collection history becomes a readable peripheral question",
+      "primary_artwork": "The Arnolfini Portrait"
+    }
+  ],
+  "xr_only_mechanics": [
+    {
+      "id": "momentary_expert_pointing",
+      "description": "A curator-like pointing gesture appears in the visitor’s field of view, anchored to a real detail, then disappears."
+    },
+    {
+      "id": "spatial_anchor",
+      "description": "The cue is fixed to a visible artwork detail, not to a floating web annotation."
+    },
+    {
+      "id": "connector_to_peripheral_panel",
+      "description": "A real artwork detail is tied to a peripheral panel."
+    },
+    {
+      "id": "body_position_cue",
+      "description": "Oblique view is used only for surface and material questions."
+    },
+    {
+      "id": "disappear_by_default",
+      "description": "The cue gives a question, then returns the visitor to the artwork."
+    }
+  ],
+  "why_museums_first": {
+    "summary": "The problem is visible there: the visitor can stand in front of the real thing and still not know where to look.",
+    "museum_role": "Museum is the first proof environment, not the whole product category.",
+    "failure_test": "If XR distracts, darkens, or mispoints, the phone is better."
+  },
+  "project_aura_rationale": {
+    "summary": "The hard question is optical, not graphical.",
+    "contrast": [
+      "Phones can explain artwork",
+      "Google Lens can search what the visitor already noticed",
+      "Gemini can answer questions",
+      "Look Again tests whether optical see-through Android XR can trigger better noticing while the visitor stays with the physical work"
+    ]
+  },
+  "six_month_closed_test": {
+    "artwork_count": "3-5 public-domain artworks",
+    "implementation": [
+      "Android Studio",
+      "Kotlin",
+      "Compose",
+      "Jetpack XR SDK"
+    ],
+    "selection_path": [
+      "QR selection",
+      "artwork-number selection",
+      "local content bundle"
+    ],
+    "scope": "Closed native Android XR test focused on noticing and do-not-remove validation."
+  },
+  "validation_metrics": [
+    "unnoticed-detail discovery rate",
+    "where-to-look clarity",
+    "do-not-remove-glasses rate",
+    "artwork-looking time",
+    "cue helpfulness without distraction",
+    "re-looking intent",
+    "comparison against audio-only and phone guidance"
+  ],
+  "mvp_exclusions": [
+    "museum-wide navigation",
+    "heavy 3D reconstruction",
+    "museum partnership claim",
+    "generic AI interpretation",
+    "completed native Android XR application claim",
+    "rights-cleared public deployment claim"
+  ],
+  "qa_query_params": {
+    "hero": [
+      "?hero=looking&artwork=lastSupper",
+      "?hero=audio&artwork=lastSupper",
+      "?hero=phone&artwork=lastSupper",
+      "?hero=lookagain&artwork=lastSupper",
+      "?hero=audio&artwork=girl",
+      "?hero=phone&artwork=girl",
+      "?hero=lookagain&artwork=girl",
+      "?hero=audio&artwork=arnolfini",
+      "?hero=phone&artwork=arnolfini",
+      "?hero=lookagain&artwork=arnolfini",
+      "?hero=wearing&artwork=girl",
+      "?hero=artist&artwork=lastSupper",
+      "?hero=restorer&artwork=girl",
+      "?hero=social&artwork=arnolfini",
+      "?hero=museum&artwork=arnolfini",
+      "?hero=quiet&artwork=girl"
+    ],
+    "two_act_hero": [
+      "?hero=looking",
+      "?hero=audio",
+      "?hero=phone",
+      "?hero=lookagain"
+    ],
+    "lenses": [
+      "?section=lenses&lens=artist&item=0",
+      "?section=lenses&lens=restorer&item=1",
+      "?section=lenses&lens=social&item=0"
+    ],
+    "preview_selected_cue": [
+      "?section=lenses&lens=artist&item=0",
+      "?section=lenses&lens=restorer&item=1",
+      "?section=lenses&lens=social&item=2"
+    ]
+  },
+  "display_reference_audit": {
+    "path": "docs/DISPLAY_REFERENCE_AUDIT_V23.md",
+    "method": "official and reputable display references inform staging; runtime scenes remain display-informed approximations",
+    "claim_limit": "not exact museum reconstruction"
+  },
+  "artwork_specific_stage_modes": [
+    {
+      "class": "stage--last-supper",
+      "artwork": "The Last Supper",
+      "mode": "mural / refectory mode",
+      "behavior": "large wall-bound mural on far wall, no frame, no frame shadow, natural distant viewing"
+    },
+    {
+      "class": "stage--pearl",
+      "artwork": "Girl with a Pearl Earring",
+      "mode": "small framed portrait mode",
+      "behavior": "small framed wall-mounted painting at natural eye level with close viewing distance"
+    },
+    {
+      "class": "stage--arnolfini",
+      "artwork": "The Arnolfini Portrait",
+      "mode": "vertical framed panel mode",
+      "behavior": "vertical framed panel at natural eye level with enough size to inspect objects"
+    }
+  ],
+  "state_specific_display_behavior": {
+    "phone": "foreground hand-held phone; copied artwork aspect matches current artwork; top app bar, title, metadata, chips, dense cards, scroll cue, screen glow, and pixel texture pull attention to the screen copy",
+    "audio": "side waveform plus artwork-specific transcript and confusion bubble; no target pulse, no pointer, no connector, no panel, and no precise spatial anchor",
+    "look_again": "phone disappears; cue-specific target, connector, and short artwork-specific question attach to a physically plausible detail on the real artwork"
+  },
+  "lens_matrix": {
+    "source_of_truth": "data/lens_cue_specs_v23.json",
+    "primary_ui": true,
+    "rows": [
+      "The Last Supper",
+      "Girl with a Pearl Earring",
+      "The Arnolfini Portrait"
+    ],
+    "columns": [
+      "Artist",
+      "Conservator",
+      "Historian / Social Context"
+    ],
+    "cell_contract": [
+      "Target:",
+      "Question:"
+    ],
+    "cell_content_source": "Each matrix cell uses the exact target_label and question from the matching cue spec.",
+    "preview_rendering_source": "Preview selected cue loads the matching cue spec and renders target pulse, pointer, connector, edge panel, cue type overlays, and source-grounded tag from that data.",
+    "no_long_explanations_in_cells": true,
+    "understandable_without_clicking": true,
+    "matrix_artwork_column_removed": true,
+    "uses_artwork_sections": true,
+    "artwork_section_headers_include_thumbnails": true,
+    "each_matrix_cell_has_cue_preview": true,
+    "cells_have_enough_width_for_cue_previews": true,
+    "columns_are_comparable_horizontally": true,
+    "viewpoints_are_comparable_vertically": true,
+    "mobile_matrix_behavior": "artwork cards with title, display type, thumbnail, and three stacked lens cards; no tiny four-column table",
+    "strong_double_vertical_separators": true,
+    "preview_selected_cue_secondary": true,
+    "preview_selected_cue_updates_from_cell": true,
+    "not_guide_method_comparison": true,
+    "excluded_methods": [
+      "No Guide",
+      "Audio Guide",
+      "Phone Guide"
+    ],
+    "rows_are": "artworks",
+    "columns_are": "Look Again expert viewpoints",
+    "cell_purpose": "show where that expert viewpoint would point first and the short question it would ask",
+    "qa_must_fail_if": [
+      "matrix is not visible without clicking",
+      "matrix does not have 3 artwork rows",
+      "matrix does not have 3 viewpoint columns",
+      "double vertical separators are missing",
+      "cells contain long explanations",
+      "old Explorer remains the primary UI",
+      "mobile layout becomes unreadable",
+      "Japanese content is incomplete"
+    ]
+  },
+  "qa_artifacts": {
+    "display_contact_sheet": "qa/display_contact_sheet.png",
+    "display_qa_metrics": "qa/display_qa_metrics.json",
+    "qa_report_json": "qa/qa_report.json",
+    "qa_report_md": "qa/qa_report.md"
+  }
+}
