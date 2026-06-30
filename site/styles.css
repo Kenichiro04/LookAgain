@@ -4851,7 +4851,7 @@ select:focus-visible {
 .matrix-mini-stage .edge-panel h3 {
   display: -webkit-box;
   overflow: hidden;
-  font-size: 0.5rem;
+  font-size: 0.46rem;
   line-height: 1.08;
   overflow-wrap: anywhere;
   -webkit-box-orient: vertical;
@@ -4864,7 +4864,7 @@ select:focus-visible {
 
 .matrix-mini-stage.xr-stage[data-artwork="lastSupper"] .spec-edge-panel h3,
 .matrix-mini-stage .spec-edge-panel h3 {
-  font-size: 0.5rem;
+  font-size: 0.46rem;
   line-height: 1.08;
 }
 
@@ -4878,7 +4878,7 @@ select:focus-visible {
   border: 0;
   padding: 0;
   color: rgba(244, 242, 238, 0.92);
-  font-size: 0.52rem;
+  font-size: 0.42rem;
   line-height: 1.1;
   overflow-wrap: anywhere;
   white-space: normal;
@@ -4893,7 +4893,7 @@ select:focus-visible {
   border-color: rgba(155, 229, 140, 0.28);
   padding: 2px 5px;
   color: var(--green);
-  font-size: 0.48rem;
+  font-size: 0.42rem;
   line-height: 1.05;
 }
 
@@ -4901,7 +4901,7 @@ select:focus-visible {
   display: grid;
   grid-column: 1 / -1;
   gap: 3px;
-  max-height: 54px;
+  max-height: 72px;
   overflow: hidden;
 }
 
@@ -4941,7 +4941,9 @@ select:focus-visible {
 }
 
 .matrix-cue-evidence .material-card-grid {
-  display: none;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3px;
 }
 
 .matrix-cue-evidence .comparative-card-grid {
@@ -4955,11 +4957,30 @@ select:focus-visible {
 
 .matrix-cue-evidence .comparative-card-image,
 .matrix-cue-evidence .comparative-evidence.is-compact .comparative-card-image {
-  min-height: 28px;
+  min-height: 38px;
   border-radius: 3px;
 }
 
+.matrix-cue-evidence .material-card figcaption,
 .matrix-cue-evidence .comparative-card figcaption {
+  display: grid;
+  gap: 1px;
+}
+
+.matrix-cue-evidence .material-card figcaption strong,
+.matrix-cue-evidence .comparative-card figcaption strong {
+  display: -webkit-box;
+  overflow: hidden;
+  color: rgba(244, 242, 238, 0.86);
+  font-size: 0.36rem;
+  font-weight: 720;
+  line-height: 1.05;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.matrix-cue-evidence .material-card figcaption span,
+.matrix-cue-evidence .comparative-card figcaption span {
   display: none;
 }
 
@@ -4969,8 +4990,7 @@ select:focus-visible {
   margin-bottom: 5px;
 }
 
-.matrix-mini-stage .material-evidence-title,
-.matrix-mini-stage .material-card figcaption {
+.matrix-mini-stage .material-evidence-title {
   display: none;
 }
 
@@ -4978,10 +4998,10 @@ select:focus-visible {
   display: -webkit-box;
   overflow: hidden;
   color: rgba(255, 232, 153, 0.92);
-  font-size: 0.46rem;
+  font-size: 0.39rem;
   line-height: 1.08;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
 }
 
 .matrix-mini-stage .material-model {
@@ -5149,7 +5169,7 @@ select:focus-visible {
 }
 
 .matrix-mini-stage .material-card-image {
-  min-height: 40px;
+  min-height: 46px;
   border-radius: 4px;
 }
 
@@ -5161,7 +5181,7 @@ select:focus-visible {
 .matrix-mini-stage .comparative-evidence-title {
   display: -webkit-box;
   overflow: hidden;
-  font-size: 0.48rem;
+  font-size: 0.39rem;
   line-height: 1.08;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -5177,14 +5197,14 @@ select:focus-visible {
 
 .matrix-mini-stage .comparative-card-image,
 .matrix-mini-stage .comparative-evidence.is-compact .comparative-card-image {
-  min-height: 42px;
+  min-height: 40px;
   border-radius: 4px;
 }
 
 .matrix-mini-stage .comparative-card figcaption strong {
   display: -webkit-box;
   overflow: hidden;
-  font-size: 0.46rem;
+  font-size: 0.36rem;
   line-height: 1.05;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -5198,7 +5218,7 @@ select:focus-visible {
   display: -webkit-box;
   overflow: hidden;
   margin-top: 5px;
-  font-size: 0.4rem;
+  font-size: 0.34rem;
   line-height: 1.18;
   overflow-wrap: anywhere;
   -webkit-box-orient: vertical;
@@ -5212,17 +5232,17 @@ select:focus-visible {
 .matrix-grid-cell:nth-child(-n + 3) .matrix-mini-stage .edge-panel h3,
 .matrix-grid-cell:nth-child(-n + 3) .matrix-mini-stage.xr-stage[data-artwork="lastSupper"] .spec-edge-panel h3,
 .matrix-grid-cell:nth-child(-n + 3) .matrix-mini-stage .spec-edge-panel h3 {
-  font-size: 0.54rem;
+  font-size: 0.46rem;
   line-height: 1.08;
 }
 
 .matrix-grid-cell:nth-child(-n + 3) .matrix-mini-stage .panel-target {
-  font-size: 0.48rem;
+  font-size: 0.42rem;
 }
 
 .matrix-grid-cell:nth-child(-n + 3) .matrix-mini-stage .edge-panel p {
-  font-size: 0.43rem;
-  line-height: 1.16;
+  font-size: 0.34rem;
+  line-height: 1.18;
 }
 
 .matrix-mini-stage .source-tag,
@@ -5879,6 +5899,12 @@ html[lang="ja"] .metric-table span {
 
 html[lang="ja"] .edge-panel h3 {
   font-size: 0.98rem;
+}
+
+html[lang="ja"] .matrix-mini-stage .edge-panel h3,
+html[lang="ja"] .matrix-mini-stage .spec-edge-panel h3,
+html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
+  font-size: 0.46rem;
 }
 
 @keyframes wave {
@@ -6616,34 +6642,37 @@ html[lang="ja"] .edge-panel h3 {
 
   .matrix-mini-stage .edge-panel h3,
   .matrix-mini-stage.xr-stage[data-artwork="lastSupper"] .spec-edge-panel h3,
-  .matrix-mini-stage .spec-edge-panel h3 {
-    font-size: 0.45rem;
-  }
-
-  .matrix-mini-stage .panel-target {
+  .matrix-mini-stage .spec-edge-panel h3,
+  .matrix-mini-stage .matrix-cue-panel h3,
+  html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
     font-size: 0.44rem;
   }
 
+  .matrix-mini-stage .panel-target,
+  .matrix-mini-stage .matrix-cue-panel .panel-target {
+    font-size: 0.4rem;
+  }
+
   .matrix-mini-stage .edge-panel p {
-    font-size: 0.36rem;
+    font-size: 0.33rem;
   }
 
   .matrix-grid-cell:nth-child(-n + 3) .matrix-mini-stage .edge-panel h3,
   .matrix-grid-cell:nth-child(-n + 3) .matrix-mini-stage.xr-stage[data-artwork="lastSupper"] .spec-edge-panel h3,
   .matrix-grid-cell:nth-child(-n + 3) .matrix-mini-stage .spec-edge-panel h3 {
-    font-size: 0.48rem;
+    font-size: 0.44rem;
   }
 
   .matrix-grid-cell:nth-child(-n + 3) .matrix-mini-stage .panel-target {
-    font-size: 0.42rem;
+    font-size: 0.4rem;
   }
 
   .matrix-grid-cell:nth-child(-n + 3) .matrix-mini-stage .edge-panel p {
-    font-size: 0.38rem;
+    font-size: 0.33rem;
   }
 
   .matrix-cue-evidence {
-    max-height: 44px;
+    max-height: 64px;
   }
 
   .matrix-cue-evidence .material-evidence,
@@ -6651,34 +6680,21 @@ html[lang="ja"] .edge-panel h3 {
     padding: 2px;
   }
 
-  .matrix-cue-evidence .material-model {
-    min-height: 28px;
-  }
-
-  .matrix-cue-evidence .material-model-stage {
-    min-height: 24px;
-  }
-
+  .matrix-cue-evidence .material-card-image,
   .matrix-cue-evidence .comparative-card-image,
   .matrix-cue-evidence .comparative-evidence.is-compact .comparative-card-image {
-    min-height: 23px;
-  }
-
-  .matrix-mini-stage .material-card-image {
     min-height: 34px;
   }
 
-  .matrix-mini-stage .material-model {
-    min-height: 48px;
-    padding: 3px;
+  .matrix-mini-stage .material-card-image {
+    min-height: 38px;
   }
 
-  .matrix-mini-stage .material-model-stage {
-    min-height: 42px;
-  }
-
+  .matrix-cue-evidence .material-evidence-title,
+  .matrix-cue-evidence .comparative-evidence-title,
+  .matrix-mini-stage[data-state="restorer"] .material-evidence-title,
   .matrix-mini-stage .comparative-evidence-title {
-    font-size: 0.43rem;
+    font-size: 0.37rem;
   }
 
   .matrix-mini-stage .comparative-card-image,
@@ -6687,7 +6703,7 @@ html[lang="ja"] .edge-panel h3 {
   }
 
   .matrix-mini-stage .comparative-card figcaption strong {
-    font-size: 0.4rem;
+    font-size: 0.36rem;
   }
 
   .difference-snapshot {

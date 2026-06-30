@@ -1292,10 +1292,20 @@
     `;
   }
 
+  function matrixFeaturedMaterialCards(spec) {
+    if (!Array.isArray(spec.material_visual_cards)) return [];
+    if (cueSpecClass(spec) === "girl-restorer" && spec.material_visual_cards[0]) {
+      return [spec.material_visual_cards[0]];
+    }
+    return spec.material_visual_cards.slice(0, 1);
+  }
+
   function renderMaterialEvidence(spec, options = {}) {
     if (spec.lens_id !== "restorer" || !Array.isArray(spec.material_visual_cards)) return "";
-    const modelMarkup = renderMaterialModel(spec, options);
-    const cards = options.compact && modelMarkup ? [] : (options.compact ? spec.material_visual_cards.slice(0, 1) : spec.material_visual_cards);
+    const modelMarkup = options.matrixPreview ? "" : renderMaterialModel(spec, options);
+    const cards = options.matrixPreview
+      ? matrixFeaturedMaterialCards(spec)
+      : (options.compact && modelMarkup ? [] : (options.compact ? spec.material_visual_cards.slice(0, 1) : spec.material_visual_cards));
     const mode = spec.material_visual_mode || "surface";
     const title = cueSpecText(spec, "material_visual_title");
     const cardMarkup = cards
@@ -1378,7 +1388,10 @@
       ? (cueSpecText(spec, "micro_evidence") || cueSpecExplanation(spec))
       : cueSpecExplanation(spec);
     const positionClass = `panel-${cueSpecSlug(spec.edge_panel_position)}`;
-    const materialEvidence = renderMaterialEvidence(spec, { compact: !!config.matrixPreview || compactStageMaterialPanel });
+    const materialEvidence = renderMaterialEvidence(spec, {
+      compact: !!config.matrixPreview || compactStageMaterialPanel,
+      matrixPreview: !!config.matrixPreview
+    });
     const comparativeEvidence = compactStageMaterialPanel ? "" : renderComparativeEvidence(spec, { compact: compactEvidence });
     const panelKindClass = `${spec.lens_id === "restorer" ? " spec-material-panel" : ""}${comparativeEvidence ? " spec-comparative-panel" : ""} spec-panel-${specClass}`;
     const crop = spec.visual_cue_types.includes("crop-callout") && !materialEvidence
