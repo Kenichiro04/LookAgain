@@ -59,7 +59,7 @@
       principle: "The artwork does not change.<br>The question does.",
       examplesLabel: "Look Again examples",
       delta: {
-        existingLabel: "Existing guides",
+        existingLabel: "Today’s ways",
         existingTitle: "More information, but still unsure where to look",
         existingBody: "No guide leaves you guessing. Audio gives context without pointing. Phone guides move attention to a screen.",
         lookAgainLabel: "Look Again",
@@ -277,7 +277,7 @@
       title: "Why it is different from today’s guides",
       subtitle:
         "Museum guidance is the first comparison case — not the whole category.",
-      existingLabel: "Existing guides",
+      existingLabel: "Today’s ways",
       existingMicrocopy:
         "They give context or information, but you still have to decide where to look.",
       lookAgainLabel: "Look Again",
@@ -321,7 +321,7 @@
         modelLabel: "Paint illusion model"
       },
       rows: {
-        existingHead: "Existing guides",
+        existingHead: "Today’s ways",
         lookAgainHead: "Look Again",
         contextExisting: "More explanation",
         contextLookAgain: "One clear place to look",
@@ -408,7 +408,7 @@
       }
     },
     preview: {
-      title: "Cue preview",
+      title: "Try one pointing moment",
       body:
         "Choose an artwork and viewpoint to see how the XR cue appears on the work.",
       controls: {
