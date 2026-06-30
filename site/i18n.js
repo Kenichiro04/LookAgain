@@ -282,14 +282,15 @@
       lookAgainLabel: "Look Again",
       lookAgainMicrocopy:
         "It briefly points to one place on the real artwork, before you know what to ask.",
-      audioBubble: "Where?",
+      audioTranscript: "Light creates the illusion of the pearl.",
+      audioBubble: "But where should I look?",
       noGuide: {
         title: "No guide",
         body: "Where do I start?"
       },
       audio: {
         title: "Audio",
-        body: "Where exactly?"
+        body: "Still searching."
       },
       phone: {
         title: "Looking at pixels",
@@ -975,14 +976,15 @@
       lookAgainLabel: "Look Again",
       lookAgainMicrocopy:
         "何を問えばいいか分かる前に、実物作品の一点を短く指差す。",
-      audioBubble: "どこ？",
+      audioTranscript: "光が、真珠のような効果を作っています。",
+      audioBubble: "でも、どこを見ればいい？",
       noGuide: {
         title: "ガイドなし",
         body: "どこから見る？"
       },
       audio: {
         title: "音声",
-        body: "どこを見ればいい？"
+        body: "どこを見る？"
       },
       phone: {
         title: "ピクセルを見ている",

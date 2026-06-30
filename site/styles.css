@@ -3572,19 +3572,42 @@ select:focus-visible {
     linear-gradient(180deg, rgba(216, 152, 79, 0.08), rgba(0, 0, 0, 0.12));
 }
 
-.audio-wave-mini {
+.audio-guide-mini {
   position: absolute;
   z-index: 3;
   left: 12px;
   top: 12px;
-  display: flex;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
-  gap: 3px;
-  height: 28px;
-  padding: 0 8px;
+  gap: 8px;
+  width: min(76%, 178px);
+  min-height: 34px;
+  padding: 7px 9px;
   border: 1px solid rgba(242, 208, 144, 0.24);
+  border-radius: 8px;
+  background: rgba(16, 13, 10, 0.78);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.32);
+}
+
+.audio-guide-mini p {
+  margin: 0;
+  color: rgba(255, 241, 213, 0.88);
+  font-size: 0.58rem;
+  font-weight: 650;
+  line-height: 1.18;
+}
+
+.audio-wave-mini {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  width: 34px;
+  height: 24px;
   border-radius: 999px;
-  background: rgba(16, 13, 10, 0.68);
+  background: rgba(242, 208, 144, 0.13);
 }
 
 .audio-wave-mini span {
@@ -3606,30 +3629,25 @@ select:focus-visible {
   height: 23px;
 }
 
-.mini-transcript,
-.mini-where {
+.mini-thought-cloud {
   position: absolute;
   z-index: 3;
-  max-width: 72%;
-  border: 1px solid rgba(255, 236, 199, 0.2);
-  border-radius: 6px;
-  color: rgba(255, 241, 213, 0.86);
-  font-size: 0.62rem;
-  line-height: 1.22;
-}
-
-.mini-transcript {
   right: 10px;
-  bottom: 42px;
-  padding: 6px 8px;
-  background: rgba(26, 20, 13, 0.72);
-}
-
-.mini-where {
-  right: 14px;
   bottom: 12px;
-  padding: 5px 7px;
-  background: rgba(101, 66, 30, 0.74);
+  max-width: 58%;
+  border: 1px solid rgba(255, 236, 199, 0.24);
+  border-radius: 999px;
+  padding: 8px 11px;
+  background:
+    radial-gradient(circle at 18% 84%, rgba(255, 241, 213, 0.2) 0 5px, transparent 6px),
+    radial-gradient(circle at 0% 104%, rgba(255, 241, 213, 0.16) 0 3px, transparent 4px),
+    rgba(77, 54, 32, 0.78);
+  color: rgba(255, 241, 213, 0.9);
+  font-size: 0.6rem;
+  font-weight: 780;
+  line-height: 1.18;
+  text-align: center;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.3);
 }
 
 .phone-thumb .method-visual > img {
