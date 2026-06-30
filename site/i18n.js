@@ -315,7 +315,8 @@
         question: "Light and gaze pull attention to the pearl.",
         explanation:
           "The cue connects the real painting to a floating close-up.",
-        detailLabel: "Magnified paint detail"
+        detailLabel: "Magnified paint detail",
+        modelLabel: "Paint illusion model"
       },
       rows: {
         existingHead: "Existing guides",
@@ -945,7 +946,8 @@
         question: "光と視線が真珠へ注意を集める。",
         explanation:
           "実物作品の一点と、浮かぶ拡大表示をつなぐ。",
-        detailLabel: "絵具の細部を拡大"
+        detailLabel: "絵具の細部を拡大",
+        modelLabel: "絵具の錯覚モデル"
       },
       rows: {
         existingHead: "従来のガイド",

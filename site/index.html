@@ -9,7 +9,7 @@
       content="Look Again is an Android XR experiment that briefly points to one place on the real artwork before a visitor knows what to ask."
     >
     <link rel="icon" href="data:,">
-    <link rel="stylesheet" href="./styles.css?v=v23-last-supper-perspective-lines-1">
+    <link rel="stylesheet" href="./styles.css?v=v23-difference-snapshot-xr-1">
   </head>
   <body>
     <header class="site-header" aria-label="Global">
@@ -200,12 +200,21 @@
               <article class="lookagain-snapshot-card">
                 <div class="lookagain-visual">
                   <img src="../assets/art/girl.jpg" alt="" aria-hidden="true">
+                  <svg class="snapshot-xr-guides" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                    <path class="snapshot-guide-light" d="M17 18 C28 29 34 43 39 54"></path>
+                    <path class="snapshot-guide-gaze" d="M24 43 C30 47 34 51 39 54"></path>
+                    <path class="snapshot-guide-face" d="M30 20 C22 35 26 55 39 67"></path>
+                  </svg>
                   <span class="snapshot-target-pulse" aria-hidden="true"></span>
                   <svg class="snapshot-connector" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-                    <line x1="39" y1="54" x2="70" y2="66"></line>
+                    <line x1="39" y1="54" x2="71" y2="69"></line>
                     <line x1="34" y1="42" x2="39" y2="54"></line>
                     <circle cx="39" cy="54" r="1.2"></circle>
                   </svg>
+                  <div class="snapshot-material-chip" aria-hidden="true">
+                    <span class="snapshot-material-model"></span>
+                    <span data-i18n="difference.xr.modelLabel">Paint illusion model</span>
+                  </div>
                   <div class="snapshot-detail-card" aria-hidden="true">
                     <img src="../assets/details/girl_pearl_crop.jpg" alt="">
                     <span data-i18n="difference.xr.detailLabel">Magnified paint detail</span>
@@ -474,8 +483,8 @@
       </p>
     </footer>
 
-    <script src="./i18n.js?v=v23-last-supper-perspective-lines-1"></script>
-    <script src="./lens-cue-specs-v23.js?v=v23-last-supper-perspective-lines-1"></script>
-    <script src="./experience.js?v=v23-last-supper-perspective-lines-1"></script>
+    <script src="./i18n.js?v=v23-difference-snapshot-xr-1"></script>
+    <script src="./lens-cue-specs-v23.js?v=v23-difference-snapshot-xr-1"></script>
+    <script src="./experience.js?v=v23-difference-snapshot-xr-1"></script>
   </body>
 </html>
