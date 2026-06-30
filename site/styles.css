@@ -828,6 +828,38 @@ select:focus-visible {
   color: var(--muted);
 }
 
+.preview-display-stack {
+  display: grid;
+  gap: 10px;
+  margin-top: 2px;
+}
+
+.preview-display-item {
+  display: grid;
+  grid-template-columns: minmax(72px, 0.36fr) 1fr;
+  gap: 12px;
+  align-items: start;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.preview-display-item strong {
+  color: var(--green);
+  font-size: 0.72rem;
+  font-weight: 820;
+  letter-spacing: 0;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.preview-display-item span {
+  color: rgba(244, 242, 238, 0.78);
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
 .preview-details dl {
   display: grid;
   gap: 12px;
@@ -2032,6 +2064,18 @@ select:focus-visible {
   margin-top: 8px;
   font-size: 0.74rem;
   line-height: 1.32;
+}
+
+.source-footnote-mark {
+  margin-left: 0.28em;
+  font-size: 0.54em;
+  line-height: 0;
+  vertical-align: super;
+}
+
+.source-footnote-mark a {
+  color: var(--green);
+  text-decoration: none;
 }
 
 .source-tag {
@@ -5183,6 +5227,88 @@ select {
   font-weight: 650;
 }
 
+.source-footnotes {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 38px 32px 30px;
+  background: #070909;
+  color: var(--muted);
+}
+
+.source-footnotes-inner {
+  display: grid;
+  gap: 12px;
+}
+
+.source-footnotes-kicker {
+  margin: 0;
+  color: var(--green);
+  font-size: 0.68rem;
+  font-weight: 820;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.source-footnotes h2 {
+  margin: 0;
+  color: var(--ink);
+  font-size: clamp(1.05rem, 1.7vw, 1.45rem);
+}
+
+.source-footnotes p {
+  max-width: 760px;
+  margin: 0;
+  color: rgba(244, 242, 238, 0.62);
+  font-size: 0.84rem;
+  line-height: 1.6;
+}
+
+.source-footnotes ol {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 18px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.source-footnotes li {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 8px;
+}
+
+.source-footnotes a {
+  display: inline-flex;
+  gap: 6px;
+  min-width: 0;
+  color: rgba(244, 242, 238, 0.8);
+  font-size: 0.78rem;
+  font-weight: 720;
+  text-decoration: none;
+}
+
+.source-footnotes a span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.source-footnote-number {
+  flex: 0 0 auto;
+  color: var(--green);
+}
+
+.source-footnotes small {
+  overflow: hidden;
+  color: rgba(244, 242, 238, 0.44);
+  font-size: 0.66rem;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .plan-page {
   background:
     radial-gradient(circle at 14% 8%, rgba(155, 229, 140, 0.12), transparent 32%),
@@ -5773,6 +5899,28 @@ html[lang="ja"] .edge-panel h3 {
 
   .preview-details h3 {
     font-size: 1.15rem;
+  }
+
+  .preview-display-item {
+    grid-template-columns: 1fr;
+    gap: 5px;
+    padding: 9px 10px;
+  }
+
+  .preview-display-item span {
+    font-size: 0.8rem;
+  }
+
+  .source-footnotes {
+    padding: 30px 18px 26px;
+  }
+
+  .source-footnotes ol {
+    grid-template-columns: 1fr;
+  }
+
+  .source-footnotes small {
+    white-space: normal;
   }
 
   .hero-stage[data-state="looking"],

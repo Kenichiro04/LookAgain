@@ -406,13 +406,75 @@
       }
     },
     preview: {
-      title: "Try one pointer",
+      title: "Preview the XR display",
       body:
-        "Select a card above. This preview shows one pointer on the artwork, one short explanation, and the moment it gets out of the way.",
+        "Select an artwork and viewpoint. The stage shows the target, connector, edge cue, optional evidence, and how the display gets out of the way.",
       controls: {
         viewpoint: "Viewpoint",
         artwork: "Artwork"
+      },
+      mechanics: {
+        kicker: "DISPLAY LOGIC",
+        title: "What appears in the XR view",
+        body:
+          "This panel describes the interface, not the artwork. The artwork explanation stays as a short cue on the work.",
+        items: {
+          target: {
+            label: "Target",
+            body: "The marker locks to: {target}"
+          },
+          anchor: {
+            label: "Anchor",
+            body: "The connector starts at the real detail, not at a floating card."
+          },
+          panel: {
+            label: "Edge panel",
+            body: "A short expert cue appears at the edge of view, then gets out of the way."
+          },
+          evidence: {
+            label: "Evidence",
+            body: "This cue can show: {evidence}. It stays inside the XR view instead of becoming a reading panel."
+          },
+          timing: {
+            label: "Timing",
+            body: "The cue is a first look, not a reading mode."
+          },
+          source: {
+            label: "Footnote",
+            body: "The cue carries source footnote {number}; full links are at the bottom of the page."
+          }
+        }
       }
+    },
+    sourceFootnotes: {
+      kicker: "Source footnotes",
+      title: "Sources used for cue grounding",
+      body:
+        "These links support the cue examples. They are kept out of the preview panel so the page explains the interaction, not art history.",
+      itemPrefix: "Used by"
+    },
+    sourceLabels: {
+      "cenacolovinciano.org": "Cenacolo Vinciano",
+      "www.cenacolovinciano.org": "Cenacolo Vinciano",
+      "cenacolovinciano.vivaticket.it": "Cenacolo Vinciano",
+      "www.nga.gov": "National Gallery of Art",
+      "www.mauritshuis.nl": "Mauritshuis",
+      "www.metmuseum.org": "The Met",
+      "www.nationalgallery.org.uk": "The National Gallery"
+    },
+    sourceTitles: {
+      "https://www.cenacolovinciano.org/en/museum/the-last-supper/": "The Last Supper",
+      "https://cenacolovinciano.org/en/museum/the-works/the-last-supper-leonardo-da-vinci-1452-1519/": "The Last Supper",
+      "https://cenacolovinciano.org/en/story/a-powerful-theatrical-machine/": "A powerful theatrical machine",
+      "https://cenacolovinciano.org/en/museum/backstage/": "Cenacolo backstage",
+      "https://cenacolovinciano.vivaticket.it/index.php?nvpg[festivalDetail]&id=2384&lang=en": "Cenacolo Vinciano visitor information",
+      "https://www.nga.gov/collection/art-object-page.46590.html": "The Last Supper study",
+      "https://www.mauritshuis.nl/en/our-collection/artworks/670-girl-with-a-pearl-earring/": "Girl with a Pearl Earring",
+      "https://www.mauritshuis.nl/en/explore/the-collection/artworks/girl-with-a-pearl-earring-670/": "Girl with a Pearl Earring",
+      "https://www.metmuseum.org/art/collection/search/437880": "Study of a Young Woman",
+      "https://www.metmuseum.org/art/collection/search/437879": "Study of a Young Woman",
+      "https://www.nationalgallery.org.uk/technical-bulletin/billinge_campbell1995": "Technical Bulletin on The Arnolfini Portrait",
+      "https://www.nationalgallery.org.uk/paintings/jan-van-eyck-the-arnolfini-portrait": "The Arnolfini Portrait"
     },
     xrOnly: {
       title: "Why this needs XR",
@@ -1037,13 +1099,75 @@
       }
     },
     preview: {
-      title: "一つの指差しを試す",
+      title: "XR表示をプレビュー",
       body:
-        "上のカードを選ぶと、作品の上に出る一つの指差し、一つの短い解説、そしてすぐ消える流れを確認できる。",
+        "作品と視点を選ぶと、見る場所、接続線、端のキュー、必要な証拠表示、そして邪魔にならない戻り方を確認できる。",
       controls: {
         viewpoint: "視点",
         artwork: "作品"
+      },
+      mechanics: {
+        kicker: "表示の仕組み",
+        title: "XR画面に何が出るのか",
+        body:
+          "ここは美術解説ではなく、表示項目の説明です。作品の解説は実物上の短いキューに閉じ込める。",
+        items: {
+          target: {
+            label: "見る場所",
+            body: "マーカーは「{target}」に固定される。"
+          },
+          anchor: {
+            label: "アンカー",
+            body: "線は浮いたカードではなく、実物の細部から始まる。"
+          },
+          panel: {
+            label: "端のパネル",
+            body: "短い専門家キューが視界の端に出て、邪魔になる前に退く。"
+          },
+          evidence: {
+            label: "証拠表示",
+            body: "このキューでは「{evidence}」を出せる。読ませるパネルではなく、XR内の補助表示に留める。"
+          },
+          timing: {
+            label: "時間",
+            body: "これは読ませる画面ではなく、最初に見る場所を作る表示である。"
+          },
+          source: {
+            label: "脚注",
+            body: "キューには脚注{number}を付け、出典リンクはページ最下部にまとめる。"
+          }
+        }
       }
+    },
+    sourceFootnotes: {
+      kicker: "脚注",
+      title: "キュー設計で参照した出典",
+      body:
+        "これらはキュー例の根拠です。プレビュー横ではなく下部にまとめ、ページ本体はインタラクションの説明に集中させる。",
+      itemPrefix: "使用箇所"
+    },
+    sourceLabels: {
+      "cenacolovinciano.org": "Cenacolo Vinciano",
+      "www.cenacolovinciano.org": "Cenacolo Vinciano",
+      "cenacolovinciano.vivaticket.it": "Cenacolo Vinciano",
+      "www.nga.gov": "National Gallery of Art",
+      "www.mauritshuis.nl": "Mauritshuis",
+      "www.metmuseum.org": "The Met",
+      "www.nationalgallery.org.uk": "The National Gallery"
+    },
+    sourceTitles: {
+      "https://www.cenacolovinciano.org/en/museum/the-last-supper/": "《最後の晩餐》",
+      "https://cenacolovinciano.org/en/museum/the-works/the-last-supper-leonardo-da-vinci-1452-1519/": "《最後の晩餐》",
+      "https://cenacolovinciano.org/en/story/a-powerful-theatrical-machine/": "強い劇場的装置としての《最後の晩餐》",
+      "https://cenacolovinciano.org/en/museum/backstage/": "Cenacolo 修復・舞台裏",
+      "https://cenacolovinciano.vivaticket.it/index.php?nvpg[festivalDetail]&id=2384&lang=en": "Cenacolo Vinciano 来館情報",
+      "https://www.nga.gov/collection/art-object-page.46590.html": "《最後の晩餐》習作",
+      "https://www.mauritshuis.nl/en/our-collection/artworks/670-girl-with-a-pearl-earring/": "《真珠の耳飾りの少女》",
+      "https://www.mauritshuis.nl/en/explore/the-collection/artworks/girl-with-a-pearl-earring-670/": "《真珠の耳飾りの少女》",
+      "https://www.metmuseum.org/art/collection/search/437880": "《若い女性の習作》",
+      "https://www.metmuseum.org/art/collection/search/437879": "《若い女性の習作》",
+      "https://www.nationalgallery.org.uk/technical-bulletin/billinge_campbell1995": "《アルノルフィーニ夫妻像》技術研究",
+      "https://www.nationalgallery.org.uk/paintings/jan-van-eyck-the-arnolfini-portrait": "《アルノルフィーニ夫妻像》"
     },
     xrOnly: {
       title: "なぜXRなのか",

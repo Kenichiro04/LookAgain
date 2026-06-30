@@ -321,6 +321,7 @@
   const lensMatrix = document.querySelector("[data-lens-matrix]");
   const previewControls = document.querySelector("[data-preview-controls]");
   const previewDetails = document.querySelector("[data-preview-details]");
+  const sourceFootnotes = document.querySelector("[data-source-footnotes]");
 
   function getInitialLang() {
     const params = new URLSearchParams(window.location.search);
@@ -385,6 +386,64 @@
 
   function cueSpecStatement(spec) {
     return cueSpecText(spec, "micro_evidence") || cueSpecExplanation(spec);
+  }
+
+  function formatMessage(template, values = {}) {
+    return String(template || "").replace(/\{([a-zA-Z0-9_]+)\}/g, (_, key) => values[key] ?? "");
+  }
+
+  function cueSpecSourceUrls(spec) {
+    return Array.isArray(spec?.source_urls) ? spec.source_urls.filter(Boolean) : [];
+  }
+
+  function sourceHost(url) {
+    try {
+      return new URL(url).hostname;
+    } catch (error) {
+      return url;
+    }
+  }
+
+  function sourceLabel(url) {
+    const labels = dict().sourceLabels || {};
+    const titles = dict().sourceTitles || {};
+    const host = sourceHost(url);
+    const normalizedHost = host.replace(/^www\./, "");
+    return titles[url] || labels[host] || labels[normalizedHost] || normalizedHost;
+  }
+
+  function sourceFootnoteEntries() {
+    const entries = new Map();
+    cueSpecs.forEach((spec) => {
+      cueSpecSourceUrls(spec).forEach((url) => {
+        if (!entries.has(url)) {
+          entries.set(url, {
+            index: entries.size + 1,
+            url,
+            label: sourceLabel(url),
+            usedBy: []
+          });
+        }
+        const entry = entries.get(url);
+        const usedBy = `${cueSpecText(spec, "artwork_title")} / ${cueSpecText(spec, "lens_title")}`;
+        if (usedBy.trim() && !entry.usedBy.includes(usedBy)) {
+          entry.usedBy.push(usedBy);
+        }
+      });
+    });
+    return [...entries.values()];
+  }
+
+  function sourceFootnoteNumber(spec) {
+    const primaryUrl = cueSpecSourceUrls(spec)[0];
+    if (!primaryUrl) return null;
+    return sourceFootnoteEntries().find((entry) => entry.url === primaryUrl)?.index || null;
+  }
+
+  function sourceFootnoteMark(spec) {
+    const number = sourceFootnoteNumber(spec);
+    if (!number) return "";
+    return `<sup class="source-footnote-mark"><a href="#source-footnote-${number}" aria-label="${escapeAttr(t("sourceFootnotes.kicker"))} ${number}">[${number}]</a></sup>`;
   }
 
   function localizedCardText(card, field) {
@@ -1365,7 +1424,7 @@
         ${materialEvidence}
         ${comparativeEvidence}
         <span class="panel-target">${escapeHtml(target)}</span>
-        <h3>${escapeHtml(title)}</h3>
+        <h3>${escapeHtml(title)}${sourceFootnoteMark(spec)}</h3>
         <p class="micro-evidence">${escapeHtml(microEvidence)}</p>
       </aside>
     `;
@@ -1948,25 +2007,66 @@
   function renderPreviewDetails(item) {
     if (!previewDetails || !item?.cueSpec) return;
     const spec = item.cueSpec;
-    const explanation = cueSpecExplanation(spec);
-    const materialEvidence = renderMaterialEvidence(spec);
-    const comparativeEvidence = renderComparativeEvidence(spec);
+    const target = cueSpecText(spec, "target_label");
+    const evidenceTypes = [
+      spec.visual_cue_types?.includes("crop-callout") ? (lang === "ja" ? "拡大画像" : "crop") : "",
+      spec.visual_cue_types?.includes("material-surface-scan") ? (lang === "ja" ? "素材モデル" : "material model") : "",
+      Array.isArray(spec.comparative_visual_cards) && spec.comparative_visual_cards.length ? (lang === "ja" ? "比較画像" : "comparison image") : ""
+    ].filter(Boolean);
+    const evidenceBody = evidenceTypes.length
+      ? formatMessage(t("preview.mechanics.items.evidence.body"), { evidence: evidenceTypes.join(lang === "ja" ? "・" : ", ") })
+      : (lang === "ja"
+        ? "このキューでは余分な資料を出さず、線と端のパネルだけで見る場所を示す。"
+        : "This cue stays with the line and edge panel instead of adding another evidence card.");
+    const sourceNumber = sourceFootnoteNumber(spec);
+    const mechanismItems = [
+      {
+        key: "target",
+        label: t("preview.mechanics.items.target.label"),
+        body: formatMessage(t("preview.mechanics.items.target.body"), { target })
+      },
+      {
+        key: "anchor",
+        label: t("preview.mechanics.items.anchor.label"),
+        body: t("preview.mechanics.items.anchor.body")
+      },
+      {
+        key: "panel",
+        label: t("preview.mechanics.items.panel.label"),
+        body: t("preview.mechanics.items.panel.body")
+      },
+      {
+        key: "evidence",
+        label: t("preview.mechanics.items.evidence.label"),
+        body: evidenceBody
+      },
+      {
+        key: "timing",
+        label: t("preview.mechanics.items.timing.label"),
+        body: t("preview.mechanics.items.timing.body")
+      },
+      {
+        key: "source",
+        label: t("preview.mechanics.items.source.label"),
+        body: sourceNumber
+          ? formatMessage(t("preview.mechanics.items.source.body"), { number: `[${sourceNumber}]` })
+          : (lang === "ja" ? "出典がある場合は、脚注をページ最下部にまとめる。" : "When a source is present, the full link sits at the bottom of the page.")
+      }
+    ];
     previewDetails.innerHTML = `
-      <h3>${escapeHtml(cueSpecStatement(spec))}</h3>
-      <p>${escapeHtml(explanation)}</p>
-      ${materialEvidence}
-      ${comparativeEvidence}
-      <dl>
-        <div>
-          <dt>${escapeHtml(t("lenses.targetLabel"))}</dt>
-          <dd>${escapeHtml(cueSpecText(spec, "target_label"))}</dd>
-        </div>
-        <div>
-          <dt>${lang === "ja" ? "視点" : "Viewpoint"}</dt>
-          <dd>${escapeHtml(cueSpecText(spec, "lens_title"))}</dd>
-        </div>
-      </dl>
-      ${renderPreviewReference(spec)}
+      <p class="preview-kicker">${escapeHtml(t("preview.mechanics.kicker"))}</p>
+      <h3>${escapeHtml(t("preview.mechanics.title"))}</h3>
+      <p>${escapeHtml(t("preview.mechanics.body"))}</p>
+      <div class="preview-display-stack">
+        ${mechanismItems
+          .map((entry) => `
+            <div class="preview-display-item preview-display-item-${escapeAttr(entry.key)}">
+              <strong>${escapeHtml(entry.label)}</strong>
+              <span>${escapeHtml(entry.body)}</span>
+            </div>
+          `)
+          .join("")}
+      </div>
     `;
   }
 
@@ -1987,6 +2087,37 @@
         <span>${escapeHtml(label)}</span>
         ${note ? `<p>${escapeHtml(note)}</p>` : ""}
         ${links ? `<p class="preview-reference-links">${links}</p>` : ""}
+      </div>
+    `;
+  }
+
+  function renderSourceFootnotes() {
+    if (!sourceFootnotes) return;
+    const entries = sourceFootnoteEntries();
+    if (!entries.length) {
+      sourceFootnotes.hidden = true;
+      sourceFootnotes.innerHTML = "";
+      return;
+    }
+    sourceFootnotes.hidden = false;
+    sourceFootnotes.innerHTML = `
+      <div class="section-inner source-footnotes-inner">
+        <p class="source-footnotes-kicker">${escapeHtml(t("sourceFootnotes.kicker"))}</p>
+        <h2>${escapeHtml(t("sourceFootnotes.title"))}</h2>
+        <p>${escapeHtml(t("sourceFootnotes.body"))}</p>
+        <ol>
+          ${entries
+            .map((entry) => `
+              <li id="source-footnote-${entry.index}">
+                <a href="${escapeAttr(entry.url)}" target="_blank" rel="noopener noreferrer">
+                  <span class="source-footnote-number">[${entry.index}]</span>
+                  <span>${escapeHtml(entry.label)}</span>
+                </a>
+                <small>${escapeHtml(t("sourceFootnotes.itemPrefix"))}: ${escapeHtml(entry.usedBy.join(" / "))}</small>
+              </li>
+            `)
+            .join("")}
+        </ol>
       </div>
     `;
   }
@@ -2040,6 +2171,7 @@
     renderPreviewControls(item);
     renderStage(explorerStage, currentLens, overrides);
     renderPreviewDetails(item);
+    renderSourceFootnotes();
   }
 
   function setLens(lens, itemIndex = 0) {
