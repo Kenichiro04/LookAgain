@@ -125,9 +125,9 @@
       src: "../assets/details/girl_technical_crop.jpg",
       altKey: "art.technicalCropAlt"
     },
-    oranges: {
-      src: "../assets/details/arnolfini_oranges_crop.jpg",
-      altKey: "art.orangesCropAlt"
+    mirrorSignature: {
+      src: "../assets/details/arnolfini_mirror_signature_crop.jpg",
+      altKey: "art.arnolfiniMirrorCropAlt"
     }
   };
 
@@ -857,7 +857,7 @@
     const regions = {
       "lastSupper-social": { x1: 25, y1: 52, x2: 80, y2: 73 },
       "girl-social": { x1: 24, y1: 7, x2: 74, y2: 66 },
-      "arnolfini-social": { x1: 12, y1: 57, x2: 34, y2: 69 }
+      "arnolfini-social": { x1: 42, y1: 31, x2: 59, y2: 49 }
     };
     const region = regions[cueSpecClass(spec)] || spec.target_region;
     return `
@@ -915,9 +915,9 @@
         { source: "fine detail region", kind: "object", path: "M32 62 C40 66 48 67 55 64" }
       ],
       "arnolfini-social": [
-        { source: "orange contour", kind: "object", path: "M16 61 C20 58 24 59 27 62" },
-        { source: "orange contour", kind: "object", path: "M17 65 C22 67 27 66 31 64" },
-        { source: "textile edge", kind: "object", path: "M56 55 C66 62 72 73 76 86" }
+        { source: "painted signature", kind: "object", path: "M42 34 C47 32 54 32 59 34" },
+        { source: "convex mirror", kind: "object", path: "M43 43 C45 37 55 37 57 43 C55 50 45 50 43 43" },
+        { source: "reflected witnesses", kind: "sightline", arrow: true, path: "M50 43 L50 30" }
       ]
     };
     return definitions[cueSpecClass(spec)] || [];
@@ -1204,7 +1204,7 @@
       "artwork-crop": artwork.src,
       "pearl-visible": detailAssets.pearl.src,
       "pearl-technical": detailAssets.technical.src,
-      "arnolfini-oranges": detailAssets.oranges.src
+      "arnolfini-mirror-signature": detailAssets.mirrorSignature.src
     };
     return sources[asset] || artwork.src;
   }
@@ -1467,7 +1467,7 @@
           <h3>${panelTitle(config)}</h3>
           <p>${panelBody(config)}</p>
           <div class="panel-media">
-            ${detailFigure(detailAssets.oranges, t("states.social.oranges"))}
+            ${detailFigure(detailAssets.mirrorSignature, t("states.social.witness"))}
           </div>
         </aside>
       `;

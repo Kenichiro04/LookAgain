@@ -40,8 +40,9 @@
         "painted-fabric-edge": "fabric edge",
         "fine-detail-region": "fine detail",
         "paired-tronie-comparison": "paired tronie comparison",
-        "orange-contour": "orange contour",
-        "textile-edge": "textile edge",
+        "convex-mirror": "convex mirror",
+        "painted-signature": "painted signature",
+        "reflected-witnesses": "reflected witnesses",
         "mirror-relation": "mirror relation",
         "furniture-object-alignment": "object alignment"
       }
@@ -88,8 +89,8 @@
           label: "SOCIAL",
           short: "Social context",
           sequenceShort: "Social",
-          caption: "The expert points to objects as evidence.",
-          question: "What does wealth need us to notice?"
+          caption: "The expert points to witness and authorship.",
+          question: "Who is made present in the room?"
         }
       },
       audioByArtwork: {
@@ -187,11 +188,11 @@
       social: {
         label: "HISTORIAN / SOCIAL CONTEXT LENS",
         short: "Historian",
-        caption: "Small objects become evidence.",
+        caption: "A mirror and signature become social evidence.",
         title: "Historian / Social Context lens",
         body:
           "How people, objects, institutions, status, belief, trade, power, and display shape what the work meant and why it mattered.",
-        oranges: "Object evidence",
+        witness: "Witness evidence",
       },
       museum: {
         label: "MUSEUM HISTORY LENS",
@@ -221,7 +222,7 @@
       lastSupperAlt: "The Last Supper artwork source image",
       pearlCropAlt: "Detail crop of the pearl highlight",
       technicalCropAlt: "Simulated technical crop of the pearl highlight",
-      orangesCropAlt: "Detail crop of objects in The Arnolfini Portrait"
+      arnolfiniMirrorCropAlt: "Detail crop of the mirror and painted signature in The Arnolfini Portrait"
     },
     artDisplay: {
       lastSupper: "Mural / refectory wall",
@@ -252,7 +253,7 @@
         body:
           "A highly detailed interior filled with objects associated with wealth, status, and social display.",
         facts: [
-          "Notice the mirror, oranges, textiles, and gestures.",
+          "Notice the mirror, painted signature, reflected figures, and gestures.",
           "Oil glazes support the sharp detail and luminous surface.",
           "Objects in the room invite social and material readings."
         ]
@@ -399,9 +400,9 @@
             body: "Oil on panel, fine textile detail, and small touches make wealth visible as material precision."
           },
           social: {
-            target: "Oranges and costly textiles",
-            question: "Oranges and costly textiles make status visible inside the room.",
-            body: "Objects are not background decoration; they make status and display visible."
+            target: "Convex mirror and painted signature",
+            question: "The mirror and signature make witness and authorship visible.",
+            body: "The room is not only owned; it is seen, recorded, and staged."
           }
         }
       }
@@ -734,8 +735,9 @@
         "painted-fabric-edge": "布地の端",
         "fine-detail-region": "細部",
         "paired-tronie-comparison": "二つのトローニー比較",
-        "orange-contour": "オレンジの輪郭",
-        "textile-edge": "布地の線",
+        "convex-mirror": "凸面鏡",
+        "painted-signature": "壁の署名",
+        "reflected-witnesses": "映り込む証人",
         "mirror-relation": "鏡との関係",
         "furniture-object-alignment": "家具と小物の並び"
       }
@@ -782,8 +784,8 @@
           label: "SOCIAL",
           short: "社会文脈の視点",
           sequenceShort: "社会文脈",
-          caption: "専門家が、小物を証拠として指差す。",
-          question: "富は、私たちに何を見せようとしているのか？"
+          caption: "専門家が、証人と作者の存在を指差す。",
+          question: "この部屋には誰の存在が残されているのか？"
         }
       },
       audioByArtwork: {
@@ -881,11 +883,11 @@
       social: {
         label: "HISTORIAN / SOCIAL CONTEXT LENS",
         short: "歴史・社会",
-        caption: "小さな物が、証拠として見えてくる。",
+        caption: "鏡と署名が、社会的な証拠になる。",
         title: "歴史家 / 社会文脈の視点",
         body:
           "人物、小物、制度、地位、信仰、交易、権力、展示が、作品の意味と重要性をどう形づくるかを見る。",
-        oranges: "物の証拠",
+        witness: "証人の証拠",
       },
       museum: {
         label: "MUSEUM HISTORY LENS",
@@ -915,7 +917,7 @@
       lastSupperAlt: "最後の晩餐の作品画像",
       pearlCropAlt: "真珠のハイライト部分の詳細画像",
       technicalCropAlt: "真珠のハイライト部分の技術画像コンセプト",
-      orangesCropAlt: "アルノルフィーニ夫妻像の小物詳細画像"
+      arnolfiniMirrorCropAlt: "アルノルフィーニ夫妻像の凸面鏡と壁の署名の詳細画像"
     },
     artDisplay: {
       lastSupper: "壁画 / 食堂壁面",
@@ -946,7 +948,7 @@
         body:
           "富、地位、社会的演出を示す小物が細かく描かれた室内像。",
         facts: [
-          "鏡、オレンジ、布地、身振りに注目できる。",
+          "鏡、壁の署名、映り込む人物、身振りに注目できる。",
           "油彩の層が、細部と光沢を支えている。",
           "室内の物は、社会的・物質的な読みを誘う。"
         ]
@@ -1093,9 +1095,9 @@
             body: "板に描かれた油彩、細密な布地、小さな筆触が、富を素材の精度として見せている。"
           },
           social: {
-            target: "オレンジと高価な布地",
-            question: "オレンジと高価な布地が、室内の地位と富を可視化している。",
-            body: "小物は背景ではない。地位と見せるための富を可視化している。"
+            target: "凸面鏡と壁の署名",
+            question: "鏡と署名が、証人と作者の存在を見えるようにしている。",
+            body: "この部屋は所有されているだけでなく、見られ、記録され、演出されている。"
           }
         }
       }

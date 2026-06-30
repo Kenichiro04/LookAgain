@@ -1876,9 +1876,12 @@ select:focus-visible {
 }
 
 .spec-aux-legend-arnolfini-social {
-  left: 20%;
-  bottom: 20%;
-  max-width: min(34%, 260px);
+  left: 42%;
+  top: 24%;
+  bottom: auto;
+  width: max-content;
+  min-width: 130px;
+  max-width: min(40%, 280px);
   border-color: rgba(155, 229, 140, 0.36);
   color: rgba(216, 255, 199, 0.96);
 }

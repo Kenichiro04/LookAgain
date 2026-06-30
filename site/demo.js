@@ -114,15 +114,15 @@
       start: 62,
       end: 76,
       mode: "ECONOMIST / SOCIAL",
-      caption: "What does wealth look like in this room?",
+      caption: "Who is made present in this room?",
       artwork: "arnolfini",
       xr: true,
       connector: true,
       panel: {
         kicker: "ECONOMIST / SOCIAL",
-        title: "What does wealth look like in this room?",
-        body: "Oranges and costly textiles make social display visible as objects.",
-        target: { x: 23, y: 63 },
+        title: "Who is made present in this room?",
+        body: "The mirror and painted signature make witness and authorship visible.",
+        target: { x: 50, y: 43 },
         position: { top: "34%", right: "7%" }
       },
       cue: "economist"
