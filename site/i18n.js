@@ -418,8 +418,7 @@
       mechanics: {
         kicker: "DISPLAY LOGIC",
         title: "What appears in the XR view",
-        body:
-          "This panel describes the interface, not the artwork. The artwork explanation stays as a short cue on the work.",
+        body: "",
         items: {
           target: {
             label: "Target",
@@ -427,7 +426,7 @@
           },
           anchor: {
             label: "Anchor",
-            body: "The connector starts at the real detail, not at a floating card."
+            body: "The connector starts at the real detail."
           },
           panel: {
             label: "Edge panel",
@@ -435,11 +434,11 @@
           },
           evidence: {
             label: "Evidence",
-            body: "This cue can show: {evidence}. It stays inside the XR view instead of becoming a reading panel."
+            body: "Adds supporting visual material when needed: {evidence}."
           },
           timing: {
             label: "Timing",
-            body: "The cue is a first look, not a reading mode."
+            body: "Appears briefly at the start of looking."
           },
           source: {
             label: "Footnote",
@@ -451,8 +450,7 @@
     sourceFootnotes: {
       kicker: "Source footnotes",
       title: "Sources used for cue grounding",
-      body:
-        "These links support the cue examples. They are kept out of the preview panel so the page explains the interaction, not art history.",
+      body: "Reference links for the visible cue examples.",
       itemPrefix: "Used by"
     },
     sourceLabels: {
@@ -481,7 +479,7 @@
     xrOnly: {
       title: "Why this needs XR",
       intro:
-        "This is not more text in glasses. The point is to place help on the real thing, at the moment before the visitor knows what to ask.",
+        "Help appears on the real thing at the moment before the visitor knows what to ask.",
       items: {
         pointing: {
           title: "A brief pointer",
@@ -489,7 +487,7 @@
         },
         spatial: {
           title: "Fixed to the real artwork",
-          body: "The pointer belongs to a visible detail, not to a floating web label."
+          body: "The pointer anchors to a visible detail."
         },
         connector: {
           title: "One line from place to explanation",
@@ -1125,8 +1123,7 @@
       mechanics: {
         kicker: "表示の仕組み",
         title: "XR画面に何が出るのか",
-        body:
-          "ここは美術解説ではなく、表示項目の説明です。作品の解説は実物上の短いキューに閉じ込める。",
+        body: "",
         items: {
           target: {
             label: "見る場所",
@@ -1134,7 +1131,7 @@
           },
           anchor: {
             label: "アンカー",
-            body: "線は浮いたカードではなく、実物の細部から始まる。"
+            body: "線は実物の細部から始まる。"
           },
           panel: {
             label: "端のパネル",
@@ -1142,11 +1139,11 @@
           },
           evidence: {
             label: "証拠表示",
-            body: "このキューでは「{evidence}」を出せる。読ませるパネルではなく、XR内の補助表示に留める。"
+            body: "必要な場合に「{evidence}」を重ねる。"
           },
           timing: {
             label: "時間",
-            body: "これは読ませる画面ではなく、最初に見る場所を作る表示である。"
+            body: "見始めの短い瞬間だけ表示する。"
           },
           source: {
             label: "脚注",
@@ -1158,8 +1155,7 @@
     sourceFootnotes: {
       kicker: "脚注",
       title: "キュー設計で参照した出典",
-      body:
-        "これらはキュー例の根拠です。プレビュー横ではなく下部にまとめ、ページ本体はインタラクションの説明に集中させる。",
+      body: "表示キュー例の参照リンク。",
       itemPrefix: "使用箇所"
     },
     sourceLabels: {
@@ -1188,7 +1184,7 @@
     xrOnly: {
       title: "なぜXRなのか",
       intro:
-        "これはグラスに文字を増やす体験ではない。問いが生まれる前の瞬間に、実物の上へ助けを置くことが重要である。",
+        "問いが生まれる前の瞬間に、実物の上へ助けを置く。",
       items: {
         pointing: {
           title: "短い指差し",
@@ -1196,7 +1192,7 @@
         },
         spatial: {
           title: "実物作品に固定される",
-          body: "指差しは、空中のラベルではなく、見えている細部に結びつく。"
+          body: "指差しは、見えている細部に固定される。"
         },
         connector: {
           title: "場所と解説を一本の線で結ぶ",

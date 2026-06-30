@@ -2020,8 +2020,8 @@
     const evidenceBody = evidenceTypes.length
       ? formatMessage(t("preview.mechanics.items.evidence.body"), { evidence: evidenceTypes.join(lang === "ja" ? "・" : ", ") })
       : (lang === "ja"
-        ? "このキューでは余分な資料を出さず、線と端のパネルだけで見る場所を示す。"
-        : "This cue stays with the line and edge panel instead of adding another evidence card.");
+        ? "線と端のパネルで見る場所を示す。"
+        : "The line and edge panel mark the place to look.");
     const sourceNumber = sourceFootnoteNumber(spec);
     const mechanismItems = [
       {
@@ -2060,7 +2060,6 @@
     previewDetails.innerHTML = `
       <p class="preview-kicker">${escapeHtml(t("preview.mechanics.kicker"))}</p>
       <h3>${escapeHtml(t("preview.mechanics.title"))}</h3>
-      <p>${escapeHtml(t("preview.mechanics.body"))}</p>
       <div class="preview-display-stack">
         ${mechanismItems
           .map((entry) => `
@@ -2108,7 +2107,6 @@
       <div class="section-inner source-footnotes-inner">
         <p class="source-footnotes-kicker">${escapeHtml(t("sourceFootnotes.kicker"))}</p>
         <h2>${escapeHtml(t("sourceFootnotes.title"))}</h2>
-        <p>${escapeHtml(t("sourceFootnotes.body"))}</p>
         <ol>
           ${entries
             .map((entry) => `
