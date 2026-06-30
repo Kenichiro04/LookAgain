@@ -282,22 +282,25 @@
         <div class="section-inner">
           <div class="section-heading-row">
             <div>
-              <h2 id="preview-title" data-i18n="preview.title">Try one pointer</h2>
+              <h2 id="preview-title" data-i18n="preview.title">Cue preview</h2>
               <p data-i18n="preview.body">
-                Select a card above. This preview shows one pointer on the artwork, one short explanation, and the moment it gets out of the way.
+                Choose an artwork and viewpoint to see how the XR cue appears on the work.
               </p>
             </div>
-            <div class="preview-controls" data-preview-controls aria-label="Preview controls"></div>
           </div>
           <div class="preview-layout">
-            <div class="xr-stage explorer-stage museum-stage" data-xr-stage="explorer">
-              <div class="stage-bar">
-                <p class="state-label" data-stage-label>ARTIST LENS</p>
-                <p class="state-caption" data-stage-caption aria-live="polite">
-                  A short explanation appears where the artwork is.
-                </p>
+            <div class="preview-stage-column">
+              <div class="xr-stage explorer-stage museum-stage" data-xr-stage="explorer">
+                <div class="stage-bar">
+                  <p class="state-label" data-stage-label>ARTIST LENS</p>
+                  <p class="state-caption" data-stage-caption aria-live="polite">
+                    A short explanation appears where the artwork is.
+                  </p>
+                </div>
+                <div class="preview-artwork-controls" data-preview-artwork-controls aria-label="Artwork controls"></div>
+                <div class="stage-scene" data-stage-scene></div>
               </div>
-              <div class="stage-scene" data-stage-scene></div>
+              <div class="preview-lens-controls" data-preview-lens-controls aria-label="Viewpoint controls"></div>
             </div>
             <div class="preview-details" data-preview-details aria-live="polite">
               <p class="preview-kicker" data-i18n="preview.mechanics.kicker">DISPLAY LOGIC</p>

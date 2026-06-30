@@ -408,9 +408,9 @@
       }
     },
     preview: {
-      title: "Preview the XR display",
+      title: "Cue preview",
       body:
-        "Select an artwork and viewpoint. The stage shows the target, connector, edge cue, optional evidence, and how the display gets out of the way.",
+        "Choose an artwork and viewpoint to see how the XR cue appears on the work.",
       controls: {
         viewpoint: "Viewpoint",
         artwork: "Artwork"
@@ -1103,9 +1103,9 @@
       }
     },
     preview: {
-      title: "XR表示をプレビュー",
+      title: "キューのプレビュー",
       body:
-        "作品と視点を選ぶと、見る場所、接続線、端のキュー、必要な証拠表示、そして邪魔にならない戻り方を確認できる。",
+        "作品と視点を選ぶと、XRキューが作品上にどう現れるかを確認できる。",
       controls: {
         viewpoint: "視点",
         artwork: "作品"

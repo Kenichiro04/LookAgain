@@ -319,7 +319,8 @@
   const lookAgainSubstateRail = document.querySelector("[data-lookagain-substate-rail]");
   const heroSequenceCaption = document.querySelector("[data-hero-sequence-caption]");
   const lensMatrix = document.querySelector("[data-lens-matrix]");
-  const previewControls = document.querySelector("[data-preview-controls]");
+  const previewLensControls = document.querySelector("[data-preview-lens-controls]");
+  const previewArtworkControls = document.querySelector("[data-preview-artwork-controls]");
   const previewDetails = document.querySelector("[data-preview-details]");
   const sourceFootnotes = document.querySelector("[data-source-footnotes]");
 
@@ -2123,7 +2124,7 @@
   }
 
   function renderPreviewControls(item) {
-    if (!previewControls || !item) return;
+    if (!item) return;
     const lensButtons = lensOrder
       .map((lens) => `
         <button
@@ -2149,16 +2150,22 @@
       `)
       .join("");
 
-    previewControls.innerHTML = `
-      <div class="preview-control-group" role="group" aria-label="${escapeAttr(t("preview.controls.viewpoint"))}">
+    if (previewLensControls) {
+      previewLensControls.innerHTML = `
+      <div class="preview-control-group preview-control-group-lens" role="group" aria-label="${escapeAttr(t("preview.controls.viewpoint"))}">
         <span>${escapeHtml(t("preview.controls.viewpoint"))}</span>
         <div class="preview-control-row">${lensButtons}</div>
       </div>
-      <div class="preview-control-group" role="group" aria-label="${escapeAttr(t("preview.controls.artwork"))}">
+    `;
+    }
+    if (previewArtworkControls) {
+      previewArtworkControls.innerHTML = `
+      <div class="preview-control-group preview-control-group-artwork" role="group" aria-label="${escapeAttr(t("preview.controls.artwork"))}">
         <span>${escapeHtml(t("preview.controls.artwork"))}</span>
         <div class="preview-control-row">${artworkButtons}</div>
       </div>
     `;
+    }
   }
 
   function renderExplorer() {
@@ -2197,6 +2204,19 @@
     renderExplorer();
   }
 
+  function handlePreviewControlClick(event) {
+    const lensButton = event.target.closest("[data-preview-lens]");
+    if (lensButton) {
+      const item = selectedPreviewItem();
+      setLensByArtwork(lensButton.dataset.previewLens, item.artwork);
+      return;
+    }
+    const artworkButton = event.target.closest("[data-preview-artwork]");
+    if (artworkButton) {
+      setLensByArtwork(currentLens, artworkButton.dataset.previewArtwork);
+    }
+  }
+
   function bindEvents() {
     initStageParallax(heroStage);
     initStageParallax(explorerStage);
@@ -2231,18 +2251,8 @@
         document.querySelector("#preview")?.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
       }, 40);
     });
-    previewControls?.addEventListener("click", (event) => {
-      const lensButton = event.target.closest("[data-preview-lens]");
-      if (lensButton) {
-        const item = selectedPreviewItem();
-        setLensByArtwork(lensButton.dataset.previewLens, item.artwork);
-        return;
-      }
-      const artworkButton = event.target.closest("[data-preview-artwork]");
-      if (artworkButton) {
-        setLensByArtwork(currentLens, artworkButton.dataset.previewArtwork);
-      }
-    });
+    previewLensControls?.addEventListener("click", handlePreviewControlClick);
+    previewArtworkControls?.addEventListener("click", handlePreviewControlClick);
     document.querySelectorAll("[data-lang-button]").forEach((button) => {
       button.addEventListener("click", () => setLanguage(button.dataset.langButton));
     });
