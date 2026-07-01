@@ -1731,6 +1731,8 @@
       panelRect.top + 22,
       Math.min(anchorCenterY, panelRect.bottom - 22)
     );
+    const panelOriginX = panelConnectionX === panelRect.left ? "left" : "right";
+    const panelOriginY = ((panelConnectionY - panelRect.top) / panelRect.height) * 100;
     const x1 = ((anchorCenterX - sceneRect.left) / sceneRect.width) * 100;
     const y1 = ((anchorCenterY - sceneRect.top) / sceneRect.height) * 100;
     const x2 = ((panelConnectionX - sceneRect.left) / sceneRect.width) * 100;
@@ -1744,6 +1746,8 @@
     start.setAttribute("cy", y1.toFixed(2));
     end.setAttribute("cx", x2.toFixed(2));
     end.setAttribute("cy", y2.toFixed(2));
+    panel.style.setProperty("--connector-origin-x", panelOriginX);
+    panel.style.setProperty("--connector-origin-y", `${panelOriginY.toFixed(2)}%`);
   }
 
   function positionMatrixConnector(stage) {
@@ -1771,6 +1775,8 @@
     const anchorCenterY = anchorRect.top + anchorRect.height / 2;
     const panelConnectionX = anchorCenterX <= panelRect.left ? panelRect.left : panelRect.right;
     const panelConnectionY = panelRect.top + panelRect.height / 2;
+    const panelOriginX = panelConnectionX === panelRect.left ? "left" : "right";
+    const panelOriginY = ((panelConnectionY - panelRect.top) / panelRect.height) * 100;
     const x1 = ((anchorCenterX - sceneRect.left) / sceneRect.width) * 100;
     const y1 = ((anchorCenterY - sceneRect.top) / sceneRect.height) * 100;
     const x2 = ((panelConnectionX - sceneRect.left) / sceneRect.width) * 100;
@@ -1784,6 +1790,8 @@
     start.setAttribute("cy", y1.toFixed(2));
     end.setAttribute("cx", x2.toFixed(2));
     end.setAttribute("cy", y2.toFixed(2));
+    panel.style.setProperty("--connector-origin-x", panelOriginX);
+    panel.style.setProperty("--connector-origin-y", `${panelOriginY.toFixed(2)}%`);
   }
 
   function positionMatrixConnectors() {

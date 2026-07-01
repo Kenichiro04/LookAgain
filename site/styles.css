@@ -2439,15 +2439,15 @@ select:focus-visible {
 
 .xr-stage.is-cue-sequence .edge-panel {
   opacity: 0;
-  clip-path: inset(0 0 0 42% round 8px);
+  clip-path: inset(0 42% 0 0 round 8px);
   scale: 0.86 0.96;
-  transform-origin: left center;
+  transform-origin: var(--connector-origin-x, left) var(--connector-origin-y, 50%);
 }
 
 .xr-stage.is-cue-sequence .edge-panel[data-panel-position^="left"],
 .xr-stage.is-cue-sequence .edge-panel[data-panel-position*="left"] {
-  clip-path: inset(0 42% 0 0 round 8px);
-  transform-origin: right center;
+  clip-path: inset(0 0 0 42% round 8px);
+  transform-origin: var(--connector-origin-x, right) var(--connector-origin-y, 50%);
 }
 
 .xr-stage.is-cue-sequence.is-cue-sequence-active .spec-material-scan,
@@ -2468,19 +2468,19 @@ select:focus-visible {
 }
 
 .xr-stage.is-cue-sequence.is-cue-sequence-active .connector-svg line {
-  animation: xrConnectorDraw 420ms cubic-bezier(0.2, 0.78, 0.18, 1) 420ms both;
+  animation: xrConnectorDraw 360ms cubic-bezier(0.2, 0.78, 0.18, 1) 260ms both;
 }
 
 .xr-stage.is-cue-sequence.is-cue-sequence-active .connector-svg .connector-start {
-  animation: xrConnectorDotAppear 220ms ease-out 340ms both;
+  animation: xrConnectorDotAppear 180ms ease-out 220ms both;
 }
 
 .xr-stage.is-cue-sequence.is-cue-sequence-active .connector-svg .connector-end {
-  animation: xrConnectorDotAppear 220ms ease-out 760ms both;
+  animation: xrConnectorDotAppear 180ms ease-out 585ms both;
 }
 
 .xr-stage.is-cue-sequence.is-cue-sequence-active .edge-panel {
-  animation: xrPanelAppearFromConnector 360ms cubic-bezier(0.18, 0.82, 0.2, 1) 780ms both;
+  animation: xrPanelAppearFromConnector 300ms cubic-bezier(0.18, 0.82, 0.2, 1) 600ms both;
 }
 
 .xr-stage.is-cue-sequence.is-cue-sequence-active .edge-panel[data-panel-position^="left"],
@@ -2493,7 +2493,7 @@ select:focus-visible {
 }
 
 .hero-stage.is-cue-sequence.is-cue-sequence-active .edge-panel {
-  animation: heroPanelAppearFromConnector 320ms cubic-bezier(0.18, 0.82, 0.2, 1) 780ms both;
+  animation: heroPanelAppearFromConnector 280ms cubic-bezier(0.18, 0.82, 0.2, 1) 600ms both;
 }
 
 .hero-stage.is-cue-sequence.is-cue-sequence-active .edge-panel[data-panel-position^="left"],
@@ -2566,26 +2566,6 @@ select:focus-visible {
 @keyframes xrPanelAppearFromConnector {
   0% {
     opacity: 0;
-    clip-path: inset(0 0 0 42% round 8px);
-    filter: blur(4px);
-    scale: 0.86 0.96;
-  }
-  42% {
-    opacity: 1;
-    clip-path: inset(0 0 0 18% round 8px);
-    filter: blur(1.6px);
-  }
-  100% {
-    opacity: 1;
-    clip-path: inset(0 0 0 0 round 8px);
-    filter: blur(0);
-    scale: 1;
-  }
-}
-
-@keyframes xrPanelAppearFromConnectorLeft {
-  0% {
-    opacity: 0;
     clip-path: inset(0 42% 0 0 round 8px);
     filter: blur(4px);
     scale: 0.86 0.96;
@@ -2603,10 +2583,30 @@ select:focus-visible {
   }
 }
 
+@keyframes xrPanelAppearFromConnectorLeft {
+  0% {
+    opacity: 0;
+    clip-path: inset(0 0 0 42% round 8px);
+    filter: blur(4px);
+    scale: 0.86 0.96;
+  }
+  42% {
+    opacity: 1;
+    clip-path: inset(0 0 0 18% round 8px);
+    filter: blur(1.6px);
+  }
+  100% {
+    opacity: 1;
+    clip-path: inset(0 0 0 0 round 8px);
+    filter: blur(0);
+    scale: 1;
+  }
+}
+
 @keyframes heroPanelAppearFromConnector {
   0% {
     opacity: 0;
-    clip-path: inset(0 0 0 30% round 8px);
+    clip-path: inset(0 30% 0 0 round 8px);
     scale: 0.94 0.98;
   }
   100% {
@@ -2619,7 +2619,7 @@ select:focus-visible {
 @keyframes heroPanelAppearFromConnectorLeft {
   0% {
     opacity: 0;
-    clip-path: inset(0 30% 0 0 round 8px);
+    clip-path: inset(0 0 0 30% round 8px);
     scale: 0.94 0.98;
   }
   100% {
