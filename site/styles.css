@@ -7010,10 +7010,10 @@ select {
   padding: 20px 22px;
   border-left: 1px solid rgba(255, 255, 255, 0.07);
   background:
-    linear-gradient(180deg, rgba(155, 229, 140, var(--step-glow, 0.08)), rgba(255, 255, 255, 0.026) 58%, rgba(0, 0, 0, 0.08)),
-    rgba(17, 21, 21, 0.92);
-  color: rgba(244, 242, 238, 0.88);
-  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.48);
+    linear-gradient(180deg, rgba(255, 255, 255, var(--step-sheen, 0.018)), rgba(155, 229, 140, var(--step-glow, 0.08))),
+    rgba(17, 21, 21, 0.96);
+  color: rgba(244, 242, 238, 0.94);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.62);
   counter-increment: plan;
 }
 
@@ -7023,37 +7023,44 @@ select {
 
 .plan-list li:nth-child(1) {
   --step-glow: 0.05;
+  --step-sheen: 0.018;
   --step-color: rgba(155, 229, 140, 0.52);
 }
 
 .plan-list li:nth-child(2) {
   --step-glow: 0.08;
+  --step-sheen: 0.022;
   --step-color: rgba(155, 229, 140, 0.62);
 }
 
 .plan-list li:nth-child(3) {
   --step-glow: 0.12;
+  --step-sheen: 0.028;
   --step-color: rgba(155, 229, 140, 0.72);
 }
 
 .plan-list li:nth-child(4) {
   --step-glow: 0.17;
+  --step-sheen: 0.034;
   --step-color: rgba(155, 229, 140, 0.84);
 }
 
 .plan-list li:nth-child(5) {
   --step-glow: 0.24;
+  --step-sheen: 0.042;
   --step-color: rgba(155, 229, 140, 0.96);
 }
 
 .plan-list li::before {
   content: counter(plan, decimal-leading-zero);
-  display: inline-block;
-  margin-bottom: 28px;
+  display: block;
+  width: max-content;
+  margin-bottom: 26px;
   color: var(--step-color, var(--green));
   font-size: 0.78rem;
   font-weight: 720;
   letter-spacing: 0.02em;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.72);
 }
 
 .metric-table {
