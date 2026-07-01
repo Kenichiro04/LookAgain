@@ -4376,7 +4376,7 @@ select:focus-visible {
 
 .future-xr-architecture {
   --future-image: url("../assets/generated/future-contexts/architecture-xr-v1.png");
-  --future-position: center 52%;
+  --future-position: center 50%;
 }
 
 .future-arch-ridge,
@@ -4388,19 +4388,19 @@ select:focus-visible {
 }
 
 .future-arch-ridge {
-  left: 21%;
-  top: 34%;
-  width: 58%;
+  left: 2%;
+  top: 22%;
+  width: 81%;
   height: 2px;
   background: rgba(155, 229, 140, 0.96);
   box-shadow: 0 0 18px rgba(155, 229, 140, 0.42);
-  transform: rotate(-9deg);
+  transform: rotate(-3.5deg);
   transform-origin: 50% 50%;
 }
 
 .future-arch-pitch {
-  top: 34%;
-  width: 31%;
+  top: 38%;
+  width: 47%;
   height: 2px;
   background: repeating-linear-gradient(
     90deg,
@@ -4412,50 +4412,58 @@ select:focus-visible {
 }
 
 .future-arch-pitch-left {
-  left: 22%;
-  transform: rotate(17deg);
+  left: 25%;
+  transform: rotate(7deg);
 }
 
 .future-arch-pitch-right {
-  left: 50%;
-  transform: rotate(-21deg);
+  left: 45%;
+  top: 49%;
+  width: 36%;
+  transform: rotate(-1deg);
 }
 
 .future-arch-load {
-  top: 44%;
+  top: 23%;
   width: 2px;
-  height: 35%;
+  height: 52%;
   background: linear-gradient(180deg, rgba(155, 229, 140, 0.96), rgba(155, 229, 140, 0.18));
   box-shadow: 0 0 16px rgba(155, 229, 140, 0.34);
 }
 
 .future-arch-load-left {
-  left: 38%;
-  transform: rotate(4deg);
+  left: 15.5%;
+  transform: rotate(0deg);
 }
 
 .future-arch-load-right {
-  left: 61%;
-  transform: rotate(-5deg);
+  left: 46.5%;
+  top: 38%;
+  height: 38%;
+  transform: rotate(-1deg);
 }
 
 .future-arch-column {
-  top: 50%;
-  width: 12%;
-  height: 28%;
+  top: 24%;
+  width: 7.5%;
+  height: 51%;
   border-inline: 1.5px solid rgba(155, 229, 140, 0.64);
   border-block: 1px solid rgba(255, 232, 153, 0.42);
   background: linear-gradient(180deg, rgba(155, 229, 140, 0.08), transparent);
+  border-radius: 999px / 38px;
 }
 
 .future-arch-column-left {
-  left: 32%;
-  transform: perspective(120px) rotateY(8deg);
+  left: 12.1%;
+  transform: perspective(120px) rotateY(3deg);
 }
 
 .future-arch-column-right {
-  left: 56%;
-  transform: perspective(120px) rotateY(-7deg);
+  left: 43.3%;
+  top: 38%;
+  width: 5.4%;
+  height: 37%;
+  transform: perspective(120px) rotateY(-3deg);
 }
 
 .future-xr-architecture .future-xr-panel {
@@ -4465,7 +4473,7 @@ select:focus-visible {
 
 .future-xr-field {
   --future-image: url("../assets/generated/future-contexts/field-learning-xr-v1.png");
-  --future-position: center 56%;
+  --future-position: center 50%;
 }
 
 .future-botany-leaf,
@@ -4476,16 +4484,16 @@ select:focus-visible {
 }
 
 .future-botany-leaf {
-  left: 32%;
-  top: 22%;
-  width: 33%;
-  height: 48%;
+  left: 28%;
+  top: 20%;
+  width: 25%;
+  height: 46%;
   border: 2px solid rgba(155, 229, 140, 0.92);
-  border-radius: 54% 46% 58% 42% / 48% 57% 43% 52%;
+  border-radius: 64% 18% 58% 20% / 48% 24% 66% 30%;
   box-shadow:
     inset 0 0 0 1px rgba(255, 232, 153, 0.16),
     0 0 18px rgba(155, 229, 140, 0.28);
-  transform: rotate(-17deg);
+  transform: rotate(-27deg);
 }
 
 .future-botany-vein {
@@ -4496,38 +4504,38 @@ select:focus-visible {
 }
 
 .future-botany-vein-main {
-  left: 47.5%;
-  top: 26%;
-  width: 2px;
-  height: 44%;
-  background: linear-gradient(180deg, rgba(255, 232, 153, 0.95), rgba(255, 232, 153, 0.28));
-  transform: rotate(-17deg);
+  left: 31%;
+  top: 52%;
+  width: 31%;
+  height: 1.5px;
+  background: linear-gradient(90deg, rgba(255, 232, 153, 0.95), rgba(255, 232, 153, 0.28));
+  transform: rotate(-62deg);
 }
 
 .future-botany-vein-one {
-  left: 45%;
-  top: 38%;
-  width: 19%;
-  transform: rotate(-38deg);
+  left: 31%;
+  top: 53%;
+  width: 33%;
+  transform: rotate(-9deg);
 }
 
 .future-botany-vein-two {
-  left: 44%;
-  top: 48%;
-  width: 17%;
-  transform: rotate(20deg);
+  left: 31%;
+  top: 53%;
+  width: 25%;
+  transform: rotate(39deg);
 }
 
 .future-botany-vein-three {
-  left: 43.5%;
-  top: 58%;
-  width: 20%;
-  transform: rotate(34deg);
+  left: 31%;
+  top: 53%;
+  width: 24%;
+  transform: rotate(-144deg);
 }
 
 .future-botany-node {
-  left: 50%;
-  top: 66%;
+  left: 31%;
+  top: 53%;
   width: 9px;
   height: 9px;
   border: 2px solid rgba(155, 229, 140, 0.96);
@@ -4539,14 +4547,15 @@ select:focus-visible {
 }
 
 .future-xr-field .future-xr-panel {
-  left: 8px;
+  left: auto;
   right: auto;
+  right: 8px;
   bottom: 8px;
 }
 
 .future-xr-performance {
   --future-image: url("../assets/generated/future-contexts/performance-xr-v1.png");
-  --future-position: center 43%;
+  --future-position: center 47%;
 }
 
 .future-skeleton-dot,
@@ -4567,23 +4576,23 @@ select:focus-visible {
 }
 
 .future-skeleton-head {
-  left: 39%;
-  top: 30%;
+  left: 35.6%;
+  top: 25.8%;
   width: 13px;
   height: 13px;
 }
 
-.future-skeleton-neck { left: 40%; top: 41%; }
-.future-skeleton-shoulder-left { left: 34%; top: 44%; }
-.future-skeleton-shoulder-right { left: 45%; top: 43%; }
-.future-skeleton-elbow-left { left: 29%; top: 53%; }
-.future-skeleton-elbow-right { left: 49%; top: 31%; }
-.future-skeleton-hand-left { left: 25%; top: 64%; }
-.future-skeleton-hand-right { left: 55%; top: 20%; }
-.future-skeleton-hip-left { left: 38%; top: 63%; }
-.future-skeleton-hip-right { left: 46%; top: 64%; }
-.future-skeleton-knee-left { left: 37%; top: 79%; }
-.future-skeleton-knee-right { left: 50%; top: 78%; }
+.future-skeleton-neck { left: 36%; top: 34.5%; }
+.future-skeleton-shoulder-left { left: 31.5%; top: 36.4%; }
+.future-skeleton-shoulder-right { left: 39.2%; top: 35.2%; }
+.future-skeleton-elbow-left { left: 35.9%; top: 31%; }
+.future-skeleton-elbow-right { left: 39.7%; top: 25.2%; }
+.future-skeleton-hand-left { left: 39.4%; top: 29.5%; }
+.future-skeleton-hand-right { left: 40.1%; top: 18.5%; }
+.future-skeleton-hip-left { left: 32%; top: 50.5%; }
+.future-skeleton-hip-right { left: 38.2%; top: 50.8%; }
+.future-skeleton-knee-left { left: 30.7%; top: 70.5%; }
+.future-skeleton-knee-right { left: 40.4%; top: 69.2%; }
 
 .future-skeleton-bone {
   height: 2px;
@@ -4593,65 +4602,65 @@ select:focus-visible {
 }
 
 .future-skeleton-bone-shoulders {
-  left: 35%;
-  top: 46%;
-  width: 12%;
-  transform: rotate(-5deg);
+  left: 32.4%;
+  top: 38.2%;
+  width: 8%;
+  transform: rotate(-8deg);
 }
 
 .future-skeleton-bone-spine {
-  left: 41%;
-  top: 43%;
-  width: 23%;
-  transform: rotate(84deg);
+  left: 36.5%;
+  top: 35.8%;
+  width: 16%;
+  transform: rotate(78deg);
 }
 
 .future-skeleton-bone-arm-left-a {
-  left: 35%;
-  top: 46%;
-  width: 11%;
-  transform: rotate(134deg);
+  left: 32.2%;
+  top: 37.2%;
+  width: 7%;
+  transform: rotate(-37deg);
 }
 
 .future-skeleton-bone-arm-left-b {
-  left: 30%;
-  top: 55%;
-  width: 13%;
-  transform: rotate(112deg);
+  left: 36%;
+  top: 31.7%;
+  width: 5.8%;
+  transform: rotate(-18deg);
 }
 
 .future-skeleton-bone-arm-right-a {
-  left: 46%;
-  top: 44%;
-  width: 15%;
-  transform: rotate(-58deg);
+  left: 39.5%;
+  top: 36.2%;
+  width: 11%;
+  transform: rotate(-83deg);
 }
 
 .future-skeleton-bone-arm-right-b {
-  left: 50%;
-  top: 32%;
-  width: 15%;
-  transform: rotate(-50deg);
+  left: 40%;
+  top: 26%;
+  width: 8%;
+  transform: rotate(-88deg);
 }
 
 .future-skeleton-bone-hips {
-  left: 39%;
-  top: 66%;
-  width: 9%;
-  transform: rotate(7deg);
+  left: 32.5%;
+  top: 52.7%;
+  width: 6.5%;
+  transform: rotate(3deg);
 }
 
 .future-skeleton-bone-leg-left {
-  left: 39%;
-  top: 66%;
-  width: 15%;
+  left: 32.2%;
+  top: 52.5%;
+  width: 18%;
   transform: rotate(94deg);
 }
 
 .future-skeleton-bone-leg-right {
-  left: 47%;
-  top: 67%;
-  width: 14%;
+  left: 38.4%;
+  top: 53%;
+  width: 16.5%;
   transform: rotate(80deg);
 }
 

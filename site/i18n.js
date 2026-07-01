@@ -631,8 +631,8 @@
         architecture: {
           status: "Architect perspective",
           title: "Architecture review",
-          body: "Show roof pitch, column load path, and material choices on the building itself.",
-          panel: "Roof pitch / load path"
+          body: "Lock column centerlines and beam direction onto the building itself.",
+          panel: "Column line / beam direction"
         },
         field: {
           status: "Botanist perspective",
@@ -645,8 +645,8 @@
           status: "Skeletal review",
           title: "Dance review",
           body:
-            "Overlay joint positions and limb lines on the dancer so form and timing are visible without a second screen.",
-          panel: "Joint line / timing"
+            "Overlay shoulder, elbow, wrist, hip, and knee lines on the dancer so form and timing are visible without a second screen.",
+          panel: "Shoulder / elbow / wrist line"
         },
         training: {
           status: "Procedure perspective",
@@ -1404,8 +1404,8 @@
         architecture: {
           status: "建築家視点",
           title: "建築レビュー",
-          body: "屋根勾配、柱への荷重の流れ、素材の判断を現地の建物上で見る。",
-          panel: "屋根勾配 / 荷重経路"
+          body: "柱芯と梁の向きを、現地の建物そのものに重ねて見る。",
+          panel: "柱芯 / 梁の向き"
         },
         field: {
           status: "植物学者視点",
@@ -1418,8 +1418,8 @@
           status: "骨格レビュー",
           title: "ダンスレビュー",
           body:
-            "踊り手の関節位置と手足のラインを重ね、フォームとタイミングを別画面なしで見る。",
-          panel: "関節ライン / タイミング"
+            "踊り手の肩、肘、手首、腰、膝を重ね、フォームとタイミングを別画面なしで見る。",
+          panel: "肩 / 肘 / 手首ライン"
         },
         training: {
           status: "手順視点",
