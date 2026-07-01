@@ -1888,14 +1888,42 @@
       state.frame = window.requestAnimationFrame(animate);
     };
 
-    stage.addEventListener("pointermove", (event) => {
-      if (event.pointerType === "touch" && event.pressure === 0) return;
+    const updateTargetFromPoint = (clientX, clientY) => {
       const rect = stage.getBoundingClientRect();
       if (!rect.width || !rect.height) return;
-      state.targetX = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
-      state.targetY = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
+      state.targetX = ((clientX - rect.left) / rect.width - 0.5) * 2;
+      state.targetY = ((clientY - rect.top) / rect.height - 0.5) * 2;
       state.wake();
+    };
+
+    const updateTargetIfInside = (event) => {
+      const rect = stage.getBoundingClientRect();
+      if (
+        event.clientX < rect.left ||
+        event.clientX > rect.right ||
+        event.clientY < rect.top ||
+        event.clientY > rect.bottom
+      ) {
+        return;
+      }
+      updateTargetFromPoint(event.clientX, event.clientY);
+    };
+
+    stage.addEventListener("pointermove", (event) => {
+      if (event.pointerType === "touch" && event.pressure === 0) return;
+      updateTargetFromPoint(event.clientX, event.clientY);
     }, { passive: true });
+
+    stage.addEventListener("mousemove", (event) => {
+      updateTargetFromPoint(event.clientX, event.clientY);
+    }, { passive: true });
+
+    document.addEventListener("pointermove", (event) => {
+      if (event.pointerType === "touch" && event.pressure === 0) return;
+      updateTargetIfInside(event);
+    }, { passive: true });
+
+    document.addEventListener("mousemove", updateTargetIfInside, { passive: true });
 
     stage.addEventListener("pointerleave", () => resetStageParallax(stage), { passive: true });
     stage.addEventListener("pointercancel", () => resetStageParallax(stage), { passive: true });
@@ -2394,7 +2422,7 @@
   }
 
   function bindEvents() {
-    // The Hero is a directed recording-like sequence; keep the artwork and wall locked.
+    initStageParallax(heroStage);
     initStageParallax(explorerStage);
     document.querySelector('[data-action="replay"]').addEventListener("click", replayHero);
     document.querySelector('[data-action="explore-lenses"]').addEventListener("click", () => {
