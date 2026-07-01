@@ -5167,6 +5167,7 @@ select:focus-visible {
 .method-thumb {
   grid-template-rows: minmax(0, 1fr) auto;
   gap: 11px;
+  overflow: hidden;
 }
 
 .method-visual,
@@ -5362,9 +5363,9 @@ select:focus-visible {
 }
 
 .phone-thumb .snapshot-framed-art {
-  left: 42%;
-  top: 42%;
-  height: min(68%, 140px);
+  left: 37%;
+  top: 46%;
+  height: min(72%, 150px);
   opacity: 0.86;
   filter: saturate(0.96) brightness(0.98) blur(0.08px);
 }
@@ -5383,14 +5384,14 @@ select:focus-visible {
 
 .phone-thumb-device {
   position: absolute;
-  left: 73%;
-  bottom: -42px;
+  left: 72%;
+  bottom: 8px;
   z-index: 4;
-  width: 56%;
+  width: 48%;
   min-width: 64px;
-  max-width: 108px;
+  max-width: 94px;
   aspect-ratio: 9 / 16.7;
-  transform: translateX(-50%) perspective(560px) rotateX(18deg) rotateZ(-5deg);
+  transform: translateX(-50%) perspective(560px) rotateX(15deg) rotateZ(-5deg);
   transform-origin: center bottom;
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 20px;
@@ -5639,6 +5640,11 @@ select:focus-visible {
 .lookagain-copy {
   display: grid;
   gap: 4px;
+}
+
+.method-copy {
+  align-content: start;
+  min-height: 50px;
 }
 
 .method-copy strong,
@@ -8373,16 +8379,17 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   }
 
   .phone-thumb .snapshot-framed-art {
-    left: 20%;
-    height: min(52%, 82px);
+    left: 38%;
+    top: 46%;
+    height: min(62%, 110px);
   }
 
   .phone-thumb-device {
-    left: 70%;
-    bottom: -34px;
-    width: 52%;
+    left: 71%;
+    bottom: 6px;
+    width: 44%;
     min-width: 58px;
-    max-width: 76px;
+    max-width: 72px;
   }
 
   .phone-thumb .method-copy span {
