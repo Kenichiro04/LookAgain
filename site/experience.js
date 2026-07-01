@@ -24,9 +24,7 @@
   const heroLookAgainExamples = [
     { key: "selectArtist", stateId: "select", lens: "artist", selectedLens: "artist", artwork: "arnolfini", durationMs: 1900 },
     { key: "artist", stateId: "artist", lens: "artist", artwork: "arnolfini" },
-    { key: "selectRestorer", stateId: "select", lens: "restorer", selectedLens: "restorer", artwork: "arnolfini", durationMs: 1300 },
     { key: "restorer", stateId: "restorer", lens: "restorer", artwork: "arnolfini" },
-    { key: "selectSocial", stateId: "select", lens: "social", selectedLens: "social", artwork: "arnolfini", durationMs: 1300 },
     { key: "social", stateId: "social", lens: "social", artwork: "arnolfini" },
     { key: "quiet", stateId: "quiet", lens: "artist", artwork: "arnolfini" }
   ];

@@ -95,7 +95,7 @@
         restorer: {
           label: "MATERIAL",
           short: "Material",
-          sequenceShort: "4. Material",
+          sequenceShort: "3. Material",
           caption: "Textiles and surface detail show how paint carries value.",
           question: "Textiles and surface detail show how paint carries value."
         },
@@ -109,14 +109,14 @@
         social: {
           label: "SOCIAL CONTEXT",
           short: "Social context",
-          sequenceShort: "6. Social context",
+          sequenceShort: "4. Social context",
           caption: "The convex mirror and signature frame the room as a social scene.",
           question: "The convex mirror and signature frame the room as a social scene."
         },
         quiet: {
           label: "LOOK WITH YOUR OWN EYES",
           short: "Look",
-          sequenceShort: "7. Look with your own eyes",
+          sequenceShort: "5. Look with your own eyes",
           caption: "Once you have the perspective, look at the artwork with your own eyes.",
           question: "Once you have the perspective, look at the artwork with your own eyes."
         }
@@ -875,7 +875,7 @@
         restorer: {
           label: "素材視点",
           short: "素材視点",
-          sequenceShort: "4. 素材視点",
+          sequenceShort: "3. 素材視点",
           caption: "布地と表面の細部が、絵具で価値を担っている。",
           question: "布地と表面の細部が、絵具で価値を担っている。"
         },
@@ -889,14 +889,14 @@
         social: {
           label: "社会文脈",
           short: "社会文脈",
-          sequenceShort: "6. 社会文脈",
+          sequenceShort: "4. 社会文脈",
           caption: "凸面鏡と署名が、室内を社会的な場として見せる。",
           question: "凸面鏡と署名が、室内を社会的な場として見せる。"
         },
         quiet: {
           label: "自分の目で見る",
           short: "自分の目で見る",
-          sequenceShort: "7. 自分の目で見る",
+          sequenceShort: "5. 自分の目で見る",
           caption: "視点を受け取ったら、自分の目で作品をご覧ください。",
           question: "視点を受け取ったら、自分の目で作品をご覧ください。"
         }
