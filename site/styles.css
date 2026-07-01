@@ -7516,7 +7516,7 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
 
   .hero-stage {
     aspect-ratio: auto;
-    min-height: 640px;
+    min-height: 700px;
   }
 
   .hero-act-rail {
@@ -7542,7 +7542,7 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   .hero-stage[data-state="select"],
   .hero-stage[data-state="wearing"] {
     aspect-ratio: auto;
-    min-height: 640px;
+    min-height: 700px;
   }
 
   .hero-viewpoint-selector {
@@ -7572,12 +7572,12 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
 
   .explorer-stage {
     aspect-ratio: auto;
-    min-height: 560px;
+    min-height: 640px;
   }
 
   .hero-stage[data-state="artist"][data-artwork="lastSupper"],
   .hero-stage[data-state="museum"][data-artwork="lastSupper"] {
-    min-height: 640px;
+    min-height: 700px;
   }
 
   .stage-scene.stage--last-supper {
@@ -7634,7 +7634,7 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   .hero-stage[data-state="looking"],
   .hero-stage[data-state="audio"],
   .hero-stage[data-state="phone"] {
-    min-height: 640px;
+    min-height: 700px;
   }
 
   .stage-bar {
@@ -7841,6 +7841,7 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   .hero-stage .spec-edge-panel.hero-question-panel,
   .hero-stage[data-artwork="lastSupper"] .spec-edge-panel.hero-question-panel,
   .hero-stage[data-state="restorer"] .spec-edge-panel.hero-question-panel,
+  .explorer-stage[data-artwork="girl"][data-state="restorer"] .spec-edge-panel,
   .explorer-stage .edge-panel,
   .explorer-stage .panel-right-of-frame-upper-middle,
   .explorer-stage .panel-right-outside-mural-lower-middle,
@@ -7849,18 +7850,24 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   .explorer-stage .spec-panel-lastSupper-restorer,
   .explorer-stage .spec-panel-arnolfini-restorer {
     top: auto;
-    bottom: 22px;
+    bottom: 16px;
     transform: none;
   }
 
   .hero-stage .spec-edge-panel.hero-question-panel,
   .hero-stage[data-artwork="lastSupper"] .spec-edge-panel.hero-question-panel,
   .hero-stage[data-state="restorer"] .spec-edge-panel.hero-question-panel {
-    max-height: min(34%, 218px);
+    max-height: min(31%, 224px);
   }
 
   .explorer-stage .edge-panel {
-    max-height: min(34%, 230px);
+    max-height: min(31%, 224px);
+  }
+
+  .explorer-stage[data-artwork="girl"][data-state="restorer"] .spec-edge-panel {
+    top: 53%;
+    bottom: auto;
+    max-height: min(31%, 224px);
   }
 
   .panel-media {
