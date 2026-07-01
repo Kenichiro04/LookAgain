@@ -2,10 +2,10 @@
   const en = {
     nav: {
       difference: "What changes",
-      lenses: "Ways to look",
-      aura: "XR test",
-      plan: "Test plan",
-      planPage: "Roadmap"
+      lenses: "Perspective Matrix",
+      aura: "Why XR",
+      plan: "Implementation",
+      planPage: "Plan"
     },
     cueUi: {
       discoveryPoint: "Discovery point",
@@ -49,67 +49,106 @@
     },
     hero: {
       title:
-        '<span class="hero-title-kicker">Before you know what to ask,</span><span class="hero-title-focus">an expert points once.</span>',
+        '<span class="hero-title-focus">See the artwork through an expert perspective.</span>',
       subcopy:
-        "A museum-first Android XR prototype that shows where to look on the real artwork — then disappears.",
+        "Look Again is an Android XR experience that overlays a short expert perspective on the real artwork. The display appears briefly, then fades so you can return to the artwork itself.",
       searchNote:
-        "Search helps after the question exists. Look Again helps before that.",
-      replay: "Replay the examples",
-      explore: "View the Lens Matrix",
-      principle: "The artwork does not change.<br>The question does.",
-      examplesLabel: "Look Again examples",
+        "Search works once the intent is clear. Look Again handles the moment before that.",
+      replay: "Replay the flow",
+      explore: "See expert perspectives",
+      principle: "The artwork does not change.<br>The perspective does.",
+      examplesLabel: "Experience flow",
       delta: {
         existingLabel: "Today’s ways",
-        existingTitle: "More information, but still unsure where to look",
-        existingBody: "No guide leaves you guessing. Audio gives context without pointing. Phone guides move attention to a screen.",
+        existingTitle: "More explanation, but still outside the work",
+        existingBody: "No guide leaves you guessing. Audio gives context without giving an entry point. Phone guides move attention to a screen.",
         lookAgainLabel: "Look Again",
-        lookAgainTitle: "One brief pointer on the real artwork",
-        lookAgainBody: "It shows one place to look, asks one question, and then gets out of the way."
+        lookAgainTitle: "One expert perspective on the real artwork",
+        lookAgainBody: "It places one short expert perspective on the work, then fades from view."
       },
       audioTranscript: "Notice how light creates the illusion of the pearl.",
-      whereExactly: "Where exactly should I look?",
-      lookAgainQuestion: "How does the painting direct attention?",
-      lookAgainCaption: "An expert points once. I know where to look.",
+      whereExactly: "The focal point stays vague.",
+      lookAgainQuestion: "Composition directs attention through the painting.",
+      lookAgainCaption: "An expert perspective appears on the artwork.",
       lookAgainExamples: {
+        selectArtist: {
+          label: "WEARING XR",
+          short: "Choose Artist",
+          sequenceShort: "1. Choose Artist",
+          caption: "After wearing the glasses, the viewpoint menu appears on the artwork. Artist is selected.",
+          question: "Artist perspective selected."
+        },
         artist: {
           label: "ARTIST",
           short: "Artist",
-          sequenceShort: "Artist",
-          caption: "The expert points to how attention is built.",
-          question: "How does the painting direct the room’s attention?"
+          sequenceShort: "2. Artist",
+          caption: "Mirror, hands, and figure placement organize how the scene is seen.",
+          question: "Mirror, hands, and figure placement organize how the scene is seen."
+        },
+        selectRestorer: {
+          label: "SWITCH VIEWPOINT",
+          short: "Choose Material",
+          sequenceShort: "3. Choose Material",
+          caption: "The menu returns briefly. Material is selected before the next view appears.",
+          question: "Material perspective selected."
         },
         restorer: {
-          label: "CONSERVATOR",
-          short: "Conservator",
-          sequenceShort: "Conservator",
-          caption: "The conservator points to how the object was made and changed.",
-          question: "How can a few marks become a pearl?"
+          label: "MATERIAL",
+          short: "Material",
+          sequenceShort: "4. Material",
+          caption: "Textiles and surface detail show how paint carries value.",
+          question: "Textiles and surface detail show how paint carries value."
+        },
+        selectSocial: {
+          label: "SWITCH VIEWPOINT",
+          short: "Choose Social",
+          sequenceShort: "5. Choose Social",
+          caption: "The menu returns briefly. Social context is selected before the next view appears.",
+          question: "Social context perspective selected."
         },
         social: {
-          label: "SOCIAL",
+          label: "SOCIAL CONTEXT",
           short: "Social context",
-          sequenceShort: "Social",
-          caption: "The expert points to witness and authorship.",
-          question: "Who is made present in the room?"
+          sequenceShort: "6. Social context",
+          caption: "The convex mirror and signature frame the room as a social scene.",
+          question: "The convex mirror and signature frame the room as a social scene."
+        },
+        quiet: {
+          label: "LOOK WITH YOUR OWN EYES",
+          short: "Look",
+          sequenceShort: "7. Look with your own eyes",
+          caption: "Once you have the perspective, look at the artwork with your own eyes.",
+          question: "Once you have the perspective, look at the artwork with your own eyes."
+        }
+      },
+      viewpointSelector: {
+        aria: "Viewpoint selection",
+        eyebrow: "WEARING XR",
+        title: "Choose an expert perspective",
+        body: "The artwork stays in view. Only the way of looking changes.",
+        options: {
+          artist: "Artist",
+          restorer: "Material",
+          social: "Social context"
         }
       },
       audioByArtwork: {
         lastSupper: {
           transcript: "The composition draws your attention toward the center of the room.",
-          confusion: "Where exactly should I look?"
+          confusion: "The focal point stays vague."
         },
         girl: {
           transcript: "Notice how light creates the illusion of the pearl.",
-          confusion: "Where exactly should I look?"
+          confusion: "The focal point stays vague."
         },
         arnolfini: {
           transcript: "The objects in the room reveal wealth and status.",
-          confusion: "Where exactly should I look?"
+          confusion: "The focal point stays vague."
         }
       },
       existingCaptions: {
         looking: "Looking, but not knowing where to begin.",
-        audio: "The audio explains, but I still ask: where?",
+        audio: "The audio explains, but the focal point stays vague.",
         phone: "The phone has information, but now I am looking at a screen."
       },
       acts: {
@@ -119,25 +158,48 @@
         },
         lookagain: {
           label: "Look Again",
-          caption: "Artist → Conservator → Historian"
+          caption: "Choose perspective → Artist → Material → Social context → Look with your own eyes"
+        }
+      }
+    },
+    experienceFlow: {
+      title: "How the experience works",
+      intro:
+        "Look Again does not ask you to keep watching the overlay. It gives you a perspective, then returns you to the artwork.",
+      steps: {
+        choose: {
+          title: "Choose a perspective",
+          body: "Choose an expert perspective such as artist, material, or social context."
+        },
+        see: {
+          title: "See it on the artwork",
+          body: "A short question and focus area appear on the real artwork."
+        },
+        fade: {
+          title: "Let the display fade",
+          body: "The display stays brief and then fades from view."
+        },
+        look: {
+          title: "Look with your own eyes",
+          body: "Once you have the perspective, look at the artwork with your own eyes."
         }
       }
     },
     category: {
-      title: "Not another guide screen.<br>A pointing moment on the real work.",
+      title: "Not a longer guide.<br>A new way into the work.",
       body:
-        "Audio gives context. Phones give information. Look Again gives one place to look before the visitor knows what to ask.",
+        "Audio gives context. A phone gives information. Look Again adds a perspective for beginning to look.",
       guide: {
         label: "Guide",
-        body: "explains what you selected"
+        body: "explains the selected work"
       },
       search: {
         label: "Search",
-        body: "answers what you ask"
+        body: "answers a question"
       },
       lookAgain: {
         label: "Look Again",
-        body: "points before you know what to ask"
+        body: "offers a perspective"
       }
     },
     states: {
@@ -162,11 +224,16 @@
         caption: "“Look Again starts from the real work.”",
         hud: "WEARING XR"
       },
+      select: {
+        label: "CHOOSE PERSPECTIVE",
+        short: "Choose",
+        caption: "Choose an expert perspective while the artwork stays in view."
+      },
       artist: {
-        label: "ARTIST LENS",
+        label: "ARTIST PERSPECTIVE",
         short: "Artist",
         caption: "The artwork shows where attention is being led.",
-        title: "Artist lens",
+        title: "Artist perspective",
         body:
           "How the artist directs attention through composition, light, color, gaze, gesture, and pictorial staging.",
         diagram: {
@@ -176,7 +243,7 @@
         }
       },
       restorer: {
-        label: "CONSERVATOR LENS",
+        label: "CONSERVATOR PERSPECTIVE",
         short: "Conservator",
         caption: "A few marks of paint become something you can see.",
         title: "Conservator lens",
@@ -186,16 +253,16 @@
         technical: "Concept technical crop"
       },
       social: {
-        label: "HISTORIAN / SOCIAL CONTEXT LENS",
+        label: "HISTORIAN PERSPECTIVE",
         short: "Historian",
-        caption: "A mirror and signature become social evidence.",
+        caption: "Mirror and signature frame the room as a social scene.",
         title: "Historian / Social Context lens",
         body:
           "How people, objects, institutions, status, belief, trade, power, and display shape what the work meant and why it mattered.",
         witness: "Witness evidence",
       },
       museum: {
-        label: "MUSEUM HISTORY LENS",
+        label: "MUSEUM HISTORY PERSPECTIVE",
         short: "History",
         caption: "“Why is this work here?”",
         title: "Why is this work here?",
@@ -207,10 +274,10 @@
         ]
       },
       quiet: {
-        label: "QUIET VIEW",
-        short: "Quiet",
-        caption: "The artwork does not change. What you notice does.",
-        message: "The artwork does not change.<br>What you notice does."
+        label: "LOOK WITH YOUR OWN EYES",
+        short: "Look",
+        caption: "Once you have the perspective, look at the artwork with your own eyes.",
+        message: "Once you have the perspective, look at the artwork with your own eyes."
       }
     },
     art: {
@@ -274,15 +341,15 @@
       }
     },
     difference: {
-      title: "Why it is different from today’s guides",
+      title: "Current Guides Comparison",
       subtitle:
-        "Museum guidance is the first comparison case — not the whole category.",
-      existingLabel: "Today’s ways",
+        "Museum guides are the first comparison, not the final goal.",
+      existingLabel: "Current guides",
       existingMicrocopy:
-        "They give context or information, but you still have to decide where to look.",
+        "They are useful, but you still have to find a way into the work.",
       lookAgainLabel: "Look Again",
       lookAgainMicrocopy:
-        "It briefly points to one place on the real artwork, before you know what to ask.",
+        "Look Again adds one perspective on the real artwork, then fades away.",
       audioTranscript: "Light creates the illusion of the pearl.",
       audioBubble: "But where should I look?",
       noGuide: {
@@ -291,11 +358,11 @@
       },
       audio: {
         title: "Audio",
-        body: "Still searching."
+        body: "Where exactly?"
       },
       phone: {
-        title: "Looking at pixels",
-        body: ""
+        title: "Phone",
+        body: "Looking at the screen"
       },
       phoneUi: {
         app: "Gallery Guide",
@@ -311,20 +378,20 @@
       },
       xr: {
         title: "Look Again",
-        body: "A quiet cue on the real work.",
-        kicker: "WEARING XR",
+        body: "A quiet perspective on the real work.",
+        kicker: "EXPERT PERSPECTIVE",
         target: "Gaze and light",
-        question: "Look at this highlight first.",
+        question: "How do light and gaze make the pearl appear?",
         explanation:
-          "The cue connects the real painting to a floating close-up.",
+          "The perspective appears on the artwork, not on a separate screen.",
         detailLabel: "Magnified paint detail",
         modelLabel: "Paint illusion model"
       },
       rows: {
-        existingHead: "Today’s ways",
+        existingHead: "Current guides",
         lookAgainHead: "Look Again",
         contextExisting: "More explanation",
-        contextLookAgain: "One clear place to look",
+        contextLookAgain: "A perspective to begin with",
         infoExisting: "Attention can drift",
         infoLookAgain: "Attention returns to the artwork",
         attentionExisting: "Often another screen",
@@ -332,13 +399,13 @@
       }
     },
     lenses: {
-      title: "Three ways to look",
+      title: "Perspective Matrix",
       body:
-        "Three representative expert viewpoints for looking at paintings. The same artwork points to a different first detail depending on whose eye is looking.",
+        "Three artworks show how Artist, Conservator, and Historian perspectives open different entries into the work.",
       explanation:
-        "Choose a card to preview how a short pointer appears on the artwork.",
+        "The matrix shows the first display moment for each artwork and expert perspective.",
       footerLine:
-        "The goal is not to add more facts. The goal is to make the first place to look clear.",
+        "Instead of adding more explanation, Look Again makes the viewing entry visible.",
       previewCta: "Open full preview",
       names: {
         artist: "Artist",
@@ -408,21 +475,21 @@
       }
     },
     preview: {
-      title: "Try one pointing moment",
+      title: "Display Preview",
       body:
-        "Choose an artwork and viewpoint to see how the XR cue appears on the work.",
+        "Select a matrix card above. The preview shows how one expert perspective appears on the artwork, stays briefly, fades from view, and returns you to looking.",
       controls: {
         viewpoint: "Viewpoint",
         artwork: "Artwork"
       },
       mechanics: {
-        kicker: "DISPLAY LOGIC",
-        title: "What appears in the XR view",
+        kicker: "WHAT APPEARS",
+        title: "One display on the artwork",
         body: "",
         items: {
           target: {
             label: "Target",
-            body: "The marker locks to: {target}"
+            body: "The display is anchored to: {target}"
           },
           anchor: {
             label: "Anchor",
@@ -430,7 +497,7 @@
           },
           panel: {
             label: "Edge panel",
-            body: "A short expert cue appears at the edge of view, then gets out of the way."
+            body: "The explanation stays brief so you can return to the artwork."
           },
           evidence: {
             label: "Evidence",
@@ -442,15 +509,19 @@
           },
           source: {
             label: "Footnote",
-            body: "The cue carries source footnote {number}; full links are at the bottom of the page."
+            body: "The display carries source footnote {number}; full links are at the bottom of the page."
+          },
+          final: {
+            label: "Return",
+            body: "Once you have the perspective, look at the artwork with your own eyes."
           }
         }
       }
     },
     sourceFootnotes: {
       kicker: "Source footnotes",
-      title: "Sources used for cue grounding",
-      body: "Reference links for the visible cue examples.",
+      title: "Sources used for perspective grounding",
+      body: "Reference links for the visible perspective examples.",
       itemPrefix: "Used by"
     },
     sourceLabels: {
@@ -467,7 +538,7 @@
       "https://cenacolovinciano.org/en/museum/the-works/the-last-supper-leonardo-da-vinci-1452-1519/": "The Last Supper",
       "https://cenacolovinciano.org/en/story/a-powerful-theatrical-machine/": "A powerful theatrical machine",
       "https://cenacolovinciano.org/en/museum/backstage/": "Cenacolo backstage",
-      "https://cenacolovinciano.vivaticket.it/index.php?nvpg[festivalDetail]&id=2384&lang=en": "Cenacolo Vinciano visitor information",
+      "https://cenacolovinciano.vivaticket.it/index.php?nvpg[festivalDetail]&id=2384&lang=en": "Cenacolo Vinciano visit information",
       "https://www.nga.gov/collection/art-object-page.46590.html": "The Last Supper study",
       "https://www.mauritshuis.nl/en/our-collection/artworks/670-girl-with-a-pearl-earring/": "Girl with a Pearl Earring",
       "https://www.mauritshuis.nl/en/explore/the-collection/artworks/girl-with-a-pearl-earring-670/": "Girl with a Pearl Earring",
@@ -479,139 +550,138 @@
     xrOnly: {
       title: "Why this needs XR",
       intro:
-        "Help appears on the real thing at the moment before the visitor knows what to ask.",
+        "This is not about putting more text in glasses. The value is that a perspective can appear on the real artwork while you keep looking at it.",
       items: {
         pointing: {
-          title: "A brief pointer",
-          body: "A small pointer appears on one real detail, then disappears."
+          title: "A brief visual perspective",
+          body: "A short overlay appears on one visible detail, then fades."
         },
         spatial: {
-          title: "Fixed to the real artwork",
-          body: "The pointer anchors to a visible detail."
+          title: "Attached to the artwork",
+          body: "The guidance belongs to a visible detail, not to a floating label."
         },
         connector: {
-          title: "One line from place to explanation",
+          title: "Place and explanation stay connected",
           body: "The marked detail connects to a short explanation at the edge of view."
         },
         body: {
-          title: "Move only when it matters",
+          title: "Movement only when useful",
           body: "Side viewing is used only for material or surface questions."
         },
         disappear: {
-          title: "It gets out of the way",
-          body: "The pointer gives one concise explanation, then returns attention to the artwork."
+          title: "It fades from view",
+          body: "The display stays brief, then returns attention to the artwork."
         }
       }
     },
     whyMuseums: {
-      title: "Why start with museums?",
+      title: "Museum-first, not museum-only",
       body:
         "Because the problem is easy to see there. You can stand in front of the real thing and still not know where to begin. Artworks also make a strict test: if XR makes the work harder to see, darker, or more distracting, the phone is better.",
       closing:
-        "Museums are where the problem is easiest to see, not where the product must end. The broader category is pointing before search in real places."
+        "Museums are where the problem is easiest to see, not where the product must end. The broader category is opening a first question before search in real places."
     },
     aura: {
-      title: "Can XR help without getting in the way?",
+      title: "Android XR hardware validation",
       body:
-        "Look Again has to work while the visitor keeps seeing the real artwork. That makes Project Aura useful for testing: low light, color, comfort, anchoring, and distraction all matter.",
+        "The XR value above only matters if the real artwork remains clear. The hardware test checks the few conditions that decide that.",
       statement:
-        "If the glasses make the artwork harder to see, the phone is the better interface.",
-      validationIntro: "What to test",
+        "If those conditions fail, the phone is the better interface.",
+      validationIntro: "Validation focus",
       points: {
-        lowLight: "visibility in low light",
-        color: "whether colors still feel right",
-        distraction: "whether the overlay distracts",
-        anchoring: "whether the pointer stays in the right place",
-        comfort: "comfort during looking",
-        remove: "whether people keep the glasses on"
+        lowLight: "Artwork remains visible in dim rooms",
+        color: "Color and contrast stay close enough to the real work",
+        distraction: "The overlay stays peripheral and brief",
+        anchoring: "The mark stays attached to the same visible detail",
+        comfort: "Viewing remains comfortable"
       }
     },
     plan: {
-      title: "6-month closed test",
+      title: "Implementation and validation plan",
       body:
-        "A focused Android XR test. The question is simple: can a short pointer help people know where to look better than audio or phone guidance?",
+        "The first build is deliberately narrow: can a short perspective on the real artwork help you begin looking better than audio or phone guidance?",
       items: {
         artworks: "Start with 3–5 public-domain artworks.",
         native: "Build a native Android XR prototype.",
-        selection: "Use artwork numbers or QR codes to choose the work.",
+        selection: "Select works by artwork number or QR code.",
         scope:
-          "Keep the MVP narrow: no museum-wide navigation, no heavy 3D reconstruction, no museum partnership claim.",
-        validation: "Compare against audio and phone guidance before calling XR better."
+          "Keep the MVP focused: no museum-wide navigation, no heavy 3D reconstruction, no museum partnership claim.",
+        validation: "Compare with audio and phone guidance before claiming XR is better."
       }
     },
     metrics: {
-      title: "What success means",
+      title: "How success will be measured",
       body:
-        "Look Again only works if it helps people see the real work more clearly without pulling them into another screen.",
+        "Look Again only works if it helps you see the real artwork more clearly without pulling you into another screen.",
       items: {
-        discovery: "noticing details people missed before",
-        question: "asking better questions after looking",
+        discovery: "noticing previously missed details",
+        question: "forming better questions after looking",
         remove: "keeping the glasses on",
         time: "time spent looking at the real artwork",
-        helpfulness: "helpfulness without distraction",
+        helpfulness: "viewing support without distraction",
         intent: "wanting to look again",
         comparison: "comparison with audio and phone guidance"
       }
     },
     futureContexts: {
-      title: "Where this could go next",
+      title: "Museum-first, not museum-only",
       intro:
-        "Museums are the first test because the problem is easy to see there. The same pattern could later apply anywhere people look before they know what to ask.",
+        "Museums are the first proof environment because the problem is easy to see there. The same pattern can later apply anywhere people are looking, but do not yet know what to ask.",
       cards: {
         architecture: {
-          title: "Architecture",
-          body: "Notice structure, material, and circulation in a real building.",
-          panel: "Load path"
+          status: "Architect perspective",
+          title: "Architecture review",
+          body: "Show roof pitch, column load path, and material choices on the building itself.",
+          panel: "Roof pitch / load path"
         },
         field: {
-          title: "Field learning",
+          status: "Botanist perspective",
+          title: "Field botany",
           body:
-            "Point to one plant, rock, tool, or trace before a learner knows what to ask.",
-          panel: "First clue"
-        },
-        repair: {
-          title: "Repair / inspection",
-          body: "Show the part that matters before the manual becomes useful.",
-          panel: "Check first"
+            "Trace leaf shape, veins, and growth points on the plant before the learner knows the terms.",
+          panel: "Leaf veins / growth point"
         },
         performance: {
-          title: "Live performance",
+          status: "Skeletal review",
+          title: "Dance review",
           body:
-            "Point attention to staging, gesture, or musical structure without pulling the viewer into a screen.",
-          panel: "Gesture cue"
+            "Overlay joint positions and limb lines on the dancer so form and timing are visible without a second screen.",
+          panel: "Joint line / timing"
         },
         training: {
+          status: "Procedure perspective",
           title: "Training environments",
-          body: "Guide attention to one critical detail, then disappear.",
-          panel: "Critical step"
+          body: "Bring attention to one critical detail, then disappear.",
+          panel: "Step path / critical detail"
         }
       },
       note:
-        "Future contexts are examples of the interaction pattern, not current product scope.",
-      planCta: {
-        kicker: "Next page",
-        title: "See the execution plan and roadmap",
-        body:
-          "The next page explains how this becomes a 6-month Android XR prototype, what gets tested, and what stays out of scope.",
-        link: "Open builder readiness and roadmap →"
-      }
+        "Future contexts are examples of the interaction pattern, not current product scope."
     },
     footer: {
       exampleNote:
         "The artworks are examples for the prototype. Future use would require rights review for each artwork and display context.",
       disclaimer:
-        "Concept visualization. Native Android XR implementation is not yet complete. No museum partnership is claimed. Museum scenes are approximate visualizations, not exact reconstructions.",
+        "Prototype visualization. Native Android XR implementation is not complete. No museum partnership is claimed. Museum scenes are approximate visualizations, not exact reconstructions.",
       contactHtml:
-        "Builder: Kenichiro Eda<br>Contact: ciaoken16@icloud.com<br>Handle: @ciaoken16",
-      planLink: "Read builder readiness and roadmap →"
+        "Builders: Kenichiro Eda / Yuka Nabeshima<br>Contact: ciaoken16@gmail.com",
+      copyright: "© 2026 Kenichiro Eda",
+      planLink: "Plan"
+    },
+    executionPlanCta: {
+      kicker: "Reviewer page",
+      title: "See the execution plan and roadmap",
+      body:
+        "Build scope, six-month roadmap, validation plan, grant use, team, and current status are separated for review.",
+      action: "Open plan"
     },
     planPage: {
       home: "Home",
-      title: "Builder readiness & roadmap",
-      kicker: "Compact execution page",
+      title: "Implementation roadmap",
+      kicker: "Reviewer execution plan",
       intro:
-        "Look Again is designed as a focused Android XR prototype, not a broad museum-platform launch. The goal is to test whether short, source-grounded pointing cues can help people know where to look before they know what to ask.",
-      readinessTitle: "Why this can be built",
+        "Look Again is designed as a focused Android XR prototype, not a broad museum-platform launch. The goal is to test whether a short perspective on the real artwork can help people begin looking before they know what to ask.",
+      readinessTitle: "Build scope",
       readiness: {
         rapid: {
           title: "Rapid prototype",
@@ -619,23 +689,23 @@
         },
         measurable: {
           title: "Measurable interaction",
-          body: "Test where-to-look clarity, phone comparison, and do-not-remove-glasses rate."
+          body: "Test first-question clarity, phone comparison, and do-not-remove-glasses rate."
         },
         source: {
           title: "Source-grounded content",
-          body: "Use public-domain artworks and vetted source notes; AI routes cues, not invented interpretations."
+          body: "Use public-domain artworks and vetted source notes; AI routes perspectives, not invented interpretations."
         },
         small: {
           title: "Small enough to ship",
           body: "The MVP avoids museum-wide navigation, heavy 3D reconstruction, and partnership dependency."
         }
       },
-      roadmapTitle: "6-month roadmap",
+      roadmapTitle: "Six-month roadmap",
       roadmap: {
         month1: {
           label: "Month 1",
           title: "Native Android XR project setup.",
-          body: "Port browser cue model into Android / Jetpack XR prototype."
+          body: "Port the browser perspective model into an Android / Jetpack XR prototype."
         },
         month2: {
           label: "Month 2",
@@ -644,18 +714,18 @@
         },
         month3: {
           label: "Month 3",
-          title: "Spatial cue rendering.",
-          body: "Pointer, pulse, connector, peripheral panel, disappear-by-default behavior."
+          title: "Spatial perspective rendering.",
+          body: "Overlay, pulse, connector, peripheral panel, disappear-by-default behavior."
         },
         month4: {
           label: "Month 4",
-          title: "Project Aura validation.",
-          body: "Low-light visibility, color fidelity, comfort, distraction, anchoring."
+          title: "Android XR hardware validation.",
+          body: "Brightness, color fidelity, comfort, distraction, placement; include XREAL Project Aura if supplied through Catalyst."
         },
         month5: {
           label: "Month 5",
           title: "User study.",
-          body: "Compare no guide / audio-like context / phone guide / Look Again cue."
+          body: "Compare no guide / audio-like context / phone guide / Look Again perspective."
         },
         month6: {
           label: "Month 6",
@@ -663,26 +733,26 @@
           body: "Demo video, Google Play closed testing readiness, public documentation."
         }
       },
-      grantTitle: "Grant use summary",
+      grantTitle: "Grant use",
       grantIntro: "If funding is awarded, it would support focused prototype validation.",
       grant: {
         native: "Native Android XR prototype",
-        aura: "Project Aura validation",
+        aura: "Android XR hardware validation, including XREAL Project Aura if supplied through Catalyst",
         content: "Public-domain content and source audit",
         testing: "User testing",
         assets: "Demo video and submission assets"
       },
       beyondTitle: "Beyond museums",
       beyondBody1:
-        "Museums are the first proof environment because the problem is visible there: people can be looking at the real thing and still not know where to look.",
+        "Museums are the first proof environment because the problem is visible there: people can be looking at the real thing and still not know how to enter the work.",
       beyondBody2:
-        "The larger vision is a pre-search pointing layer for the physical world. Before a person knows what to ask, Android XR can point to one meaningful detail, ask one grounded question, and disappear.",
+        "The larger vision is a pre-search perspective layer for the physical world. Before a person knows what to ask, Android XR can reveal one meaningful detail, open one grounded question, and disappear.",
       futureTitle: "Future contexts",
       future: {
         cultural: "cultural sites",
-        architecture: "architecture",
-        field: "field learning",
-        repair: "repair / inspection",
+        architecture: "architect perspective",
+        field: "botanist perspective",
+        performance: "skeletal review for dance",
         training: "training environments"
       },
       builderTitle: "Team",
@@ -690,13 +760,12 @@
       builderMemberYuka: "Yuka Nabeshima — Research / language",
       contactTitle: "Contact",
       contactName: "Kenichiro Eda",
-      contactEmail: "ciaoken16@icloud.com",
-      contactHandle: "@ciaoken16",
-      statusTitle: "Current status / disclaimers",
+      contactEmail: "ciaoken16@gmail.com",
+      statusTitle: "Current status",
       status: {
-        concept: "Concept visualization.",
-        browser: "Browser prototype / concept visualization exists.",
-        native: "Native Android XR implementation is not yet complete.",
+        concept: "Prototype visualization.",
+        browser: "Browser prototype / prototype visualization exists.",
+        native: "Native Android XR implementation is not complete.",
         partnership: "No museum partnership is claimed.",
         scenes: "Display scenes are display-informed approximations, not exact museum reconstructions."
       }
@@ -706,9 +775,9 @@
   const ja = {
     nav: {
       difference: "何が変わるか",
-      lenses: "三つの見方",
-      aura: "XR検証",
-      plan: "検証計画",
+      lenses: "視点マトリクス",
+      aura: "なぜXRか",
+      plan: "実装計画",
       planPage: "実行計画"
     },
     cueUi: {
@@ -753,67 +822,106 @@
     },
     hero: {
       title:
-        '<span class="hero-title-kicker">何を問えばいいか分かる前に、</span><span class="hero-title-focus">専門家が一度だけ指差す。</span>',
+        '<span class="hero-title-focus">専門家の視点を通して、作品を見る。</span>',
       subcopy:
-        "実物作品のどこを見るかを示し、すぐ消える。美術館から始めるAndroid XRプロトタイプ。",
+        "Look Againは、実物作品の上に短い専門家視点を重ねるAndroid XR体験です。表示は短く現れ、その後は作品そのものを見る時間に戻ります。",
       searchNote:
-        "検索は、問いができてから役に立つ。Look Againは、その前を助ける。",
-      replay: "例をもう一度見る",
-      explore: "視点マトリクスを見る",
-      principle: "作品は変わらない。<br>問いが変わる。",
-      examplesLabel: "Look Againの例",
+        "検索は、調べたいことが明確になってから役に立つ。Look Againは、その前の鑑賞の入口を扱います。",
+      replay: "流れをもう一度見る",
+      explore: "専門家視点を見る",
+      principle: "作品は変わらない。<br>視点が変わる。",
+      examplesLabel: "体験の流れ",
       delta: {
         existingLabel: "従来のガイド",
-        existingTitle: "情報は増える。でも、どこを見るかはまだ迷う",
+        existingTitle: "説明は増える。でも、作品の外に留まりやすい",
         existingBody: "何もなければ手がかりがない。音声は文脈をくれるが、場所は示さない。スマホは注意を画面へ移す。",
         lookAgainLabel: "Look Again",
-        lookAgainTitle: "実物作品の上に、一度だけ指差しが出る",
-        lookAgainBody: "見る場所を一つ示し、問いを一つだけ出して、すぐ消える。"
+        lookAgainTitle: "実物作品の上に、一つの専門家視点が出る",
+        lookAgainBody: "作品の上に短い専門家視点を重ね、すぐ視界から消える。"
       },
       audioTranscript: "光が真珠のような効果を生み出しています。",
-      whereExactly: "どこ？",
-      lookAgainQuestion: "この絵は注意をどう導くのか？",
-      lookAgainCaption: "専門家が一度だけ指差す。どこを見ればいいか分かる。",
+      whereExactly: "焦点が曖昧なまま残る。",
+      lookAgainQuestion: "構図が、絵の中で注意を導いている。",
+      lookAgainCaption: "専門家視点が作品の上に現れる。",
       lookAgainExamples: {
+        selectArtist: {
+          label: "WEARING XR",
+          short: "画家を選択",
+          sequenceShort: "1. 画家を選ぶ",
+          caption: "装着後、視点メニューが作品上に現れ、画家視点を選択する。",
+          question: "画家視点を選択。"
+        },
         artist: {
-          label: "ARTIST",
-          short: "画家の視点",
-          sequenceShort: "画家",
-          caption: "専門家が、注意の作られ方を指差す。",
-          question: "この絵は、部屋全体の注意をどう導いているのか？"
+          label: "画家視点",
+          short: "画家視点",
+          sequenceShort: "2. 画家視点",
+          caption: "鏡、手、人物配置が、この場面の見え方を組み立てている。",
+          question: "鏡、手、人物配置が、この場面の見え方を組み立てている。"
+        },
+        selectRestorer: {
+          label: "視点切替",
+          short: "素材を選択",
+          sequenceShort: "3. 素材を選ぶ",
+          caption: "視点メニューが一瞬戻り、素材視点へ切り替える。",
+          question: "素材視点を選択。"
         },
         restorer: {
-          label: "CONSERVATOR",
-          short: "保存修復家の視点",
-          sequenceShort: "保存修復家",
-          caption: "保存修復家が、作品の作られ方と変化を指差す。",
-          question: "わずかな絵具の跡は、どう真珠に見えるのか？"
+          label: "素材視点",
+          short: "素材視点",
+          sequenceShort: "4. 素材視点",
+          caption: "布地と表面の細部が、絵具で価値を担っている。",
+          question: "布地と表面の細部が、絵具で価値を担っている。"
+        },
+        selectSocial: {
+          label: "視点切替",
+          short: "社会文脈を選択",
+          sequenceShort: "5. 社会文脈を選ぶ",
+          caption: "視点メニューが一瞬戻り、社会文脈へ切り替える。",
+          question: "社会文脈を選択。"
         },
         social: {
-          label: "SOCIAL",
-          short: "社会文脈の視点",
-          sequenceShort: "社会文脈",
-          caption: "専門家が、証人と作者の存在を指差す。",
-          question: "この部屋には誰の存在が残されているのか？"
+          label: "社会文脈",
+          short: "社会文脈",
+          sequenceShort: "6. 社会文脈",
+          caption: "凸面鏡と署名が、室内を社会的な場として見せる。",
+          question: "凸面鏡と署名が、室内を社会的な場として見せる。"
+        },
+        quiet: {
+          label: "自分の目で見る",
+          short: "自分の目で見る",
+          sequenceShort: "7. 自分の目で見る",
+          caption: "視点を受け取ったら、自分の目で作品をご覧ください。",
+          question: "視点を受け取ったら、自分の目で作品をご覧ください。"
+        }
+      },
+      viewpointSelector: {
+        aria: "視点選択",
+        eyebrow: "WEARING XR",
+        title: "専門家視点を選ぶ",
+        body: "作品は見たまま、見るための視点だけを切り替える。",
+        options: {
+          artist: "画家視点",
+          restorer: "素材視点",
+          social: "社会文脈"
         }
       },
       audioByArtwork: {
         lastSupper: {
           transcript: "構図は視線を部屋の中心へ導きます。",
-          confusion: "どこを見ればいい？"
+          confusion: "焦点が曖昧なまま残る。"
         },
         girl: {
           transcript: "光が真珠のような効果を生み出しています。",
-          confusion: "どこを見ればいい？"
+          confusion: "焦点が曖昧なまま残る。"
         },
         arnolfini: {
           transcript: "部屋の小物が富と地位を示しています。",
-          confusion: "どこを見ればいい？"
+          confusion: "焦点が曖昧なまま残る。"
         }
       },
       existingCaptions: {
         looking: "見ている。でも、どこから見ればいいか分からない。",
-        audio: "音声は説明してくれる。でも、どこを見ればいい？",
+        audio: "音声は説明してくれる。でも、焦点は曖昧なまま残る。",
         phone: "スマホには情報がある。でも今見ているのは画面だ。"
       },
       acts: {
@@ -823,25 +931,48 @@
         },
         lookagain: {
           label: "Look Again",
-          caption: "画家の視点 → 保存修復家の視点 → 歴史家の視点"
+          caption: "視点選択 → 画家視点 → 素材視点 → 社会文脈 → 自分の目で見る"
+        }
+      }
+    },
+    experienceFlow: {
+      title: "体験の流れ",
+      intro:
+        "Look Againは、表示を見続けるための体験ではありません。専門家視点を受け取ったら、作品そのものを見る時間に戻ります。",
+      steps: {
+        choose: {
+          title: "視点を選ぶ",
+          body: "画家、素材、社会文脈などの専門家視点を選びます。"
+        },
+        see: {
+          title: "作品上で見る",
+          body: "選んだ視点に基づいて、短い問いと注目箇所が実物作品の上に表示されます。"
+        },
+        fade: {
+          title: "表示が消える",
+          body: "表示は長く残らず、短く表示されたあとに視界から消えます。"
+        },
+        look: {
+          title: "自分の目で見る",
+          body: "視点を受け取ったら、自分の目で作品をご覧ください。"
         }
       }
     },
     category: {
-      title: "もう一つのガイド画面ではない。<br>実物作品の上に現れる、一瞬の指差し。",
+      title: "解説を長くするのではない。<br>作品に入るための視点をつくる。",
       body:
-        "音声は文脈をくれる。スマホは情報をくれる。Look Againは、来館者が何を問えばいいか分かる前に、まず見るべき一点を示す。",
+        "音声は文脈を伝える。スマホは情報を表示する。Look Againは、作品を見始めるための視点を加える。",
       guide: {
         label: "ガイド",
-        body: "選んだものを説明する"
+        body: "選んだ作品を説明する"
       },
       search: {
         label: "検索",
-        body: "投げた問いに答える"
+        body: "問いに答える"
       },
       lookAgain: {
         label: "Look Again",
-        body: "何を問えばいいか分かる前に指差す"
+        body: "視点を提示する"
       }
     },
     states: {
@@ -866,8 +997,13 @@
         caption: "「Look Againは、実物作品から始まる。」",
         hud: "WEARING XR"
       },
+      select: {
+        label: "視点を選ぶ",
+        short: "視点選択",
+        caption: "作品を見たまま、専門家視点を選ぶ。"
+      },
       artist: {
-        label: "ARTIST LENS",
+        label: "ARTIST PERSPECTIVE",
         short: "画家",
         caption: "作品の中で、視線がどこへ導かれているかが見える。",
         title: "画家の視点",
@@ -880,7 +1016,7 @@
         }
       },
       restorer: {
-        label: "CONSERVATOR LENS",
+        label: "CONSERVATOR PERSPECTIVE",
         short: "保存修復家",
         caption: "わずかな絵具の跡が、見えるものに変わる。",
         title: "保存修復家の視点",
@@ -890,16 +1026,16 @@
         technical: "技術画像コンセプト"
       },
       social: {
-        label: "HISTORIAN / SOCIAL CONTEXT LENS",
+        label: "HISTORIAN PERSPECTIVE",
         short: "歴史・社会",
-        caption: "鏡と署名が、社会的な証拠になる。",
+        caption: "鏡と署名が、室内を社会的な場として見せる。",
         title: "歴史家 / 社会文脈の視点",
         body:
           "人物、小物、制度、地位、信仰、交易、権力、展示が、作品の意味と重要性をどう形づくるかを見る。",
         witness: "証人の証拠",
       },
       museum: {
-        label: "MUSEUM HISTORY LENS",
+        label: "MUSEUM HISTORY PERSPECTIVE",
         short: "来歴",
         caption: "「なぜこの作品はここにあるのか？」",
         title: "なぜこの作品はここにあるのか？",
@@ -911,10 +1047,10 @@
         ]
       },
       quiet: {
-        label: "QUIET VIEW",
-        short: "静かな視界",
-        caption: "作品は変わらない。気づく場所が変わる。",
-        message: "作品は変わらない。<br>気づく場所が変わる。"
+        label: "自分の目で見る",
+        short: "自分の目で見る",
+        caption: "視点を受け取ったら、自分の目で作品をご覧ください。",
+        message: "視点を受け取ったら、自分の目で作品をご覧ください。"
       }
     },
     art: {
@@ -978,15 +1114,15 @@
       }
     },
     difference: {
-      title: "今のガイドと何が違うのか",
+      title: "現状ガイドとの比較",
       subtitle:
-        "美術館ガイドは最初の比較対象であり、カテゴリ全体ではありません。",
-      existingLabel: "従来のガイド",
+        "美術館ガイドは最初の比較対象であり、最終ゴールではありません。",
+      existingLabel: "現状のガイド",
       existingMicrocopy:
-        "文脈や情報は届く。でも、どこを見るかは自分で探さなければならない。",
+        "役には立つ。でも、作品に入っていく視点はまだ自分で見つける必要がある。",
       lookAgainLabel: "Look Again",
       lookAgainMicrocopy:
-        "何を問えばいいか分かる前に、実物作品の一点を短く指差す。",
+        "Look Againは、実物作品の上に一つの視点を重ね、すぐ消える。",
       audioTranscript: "光が、真珠のような効果を作っています。",
       audioBubble: "でも、どこを見ればいい？",
       noGuide: {
@@ -998,8 +1134,8 @@
         body: "どこを見る？"
       },
       phone: {
-        title: "ピクセルを見ている",
-        body: ""
+        title: "スマホ",
+        body: "画面を見ている"
       },
       phoneUi: {
         app: "Gallery Guide",
@@ -1016,19 +1152,19 @@
       xr: {
         title: "Look Again",
         body: "実物の上に、静かに出る。",
-        kicker: "XR装着中",
+        kicker: "専門家視点",
         target: "視線と光",
-        question: "まずこの光を見る。",
+        question: "光と視線は、真珠をどう立ち上げているのか？",
         explanation:
-          "実物作品の一点と、浮かぶ拡大表示をつなぐ。",
+          "別の画面ではなく、実物作品の上に視点が現れる。",
         detailLabel: "絵具の細部を拡大",
         modelLabel: "絵具の錯覚モデル"
       },
       rows: {
-        existingHead: "従来のガイド",
+        existingHead: "現状のガイド",
         lookAgainHead: "Look Again",
         contextExisting: "説明が増える",
-        contextLookAgain: "見る場所が一つ示される",
+        contextLookAgain: "見始めるための視点",
         infoExisting: "注意が流れる",
         infoLookAgain: "注意が作品へ戻る",
         attentionExisting: "別の画面を見がち",
@@ -1036,13 +1172,13 @@
       }
     },
     lenses: {
-      title: "三つの見方",
+      title: "視点マトリクス",
       body:
-        "絵画を見る代表的な三つの視点を並べる。同じ作品でも、誰の目で見るかによって最初に指差す場所が変わる。",
+        "3作品を通して、画家、保存修復家、歴史家の視点が作品への入口をどう変えるかを示す。",
       explanation:
-        "カードを選ぶと、作品の上に短い指差しが出る様子を確認できる。",
+        "マトリクスは、作品と専門家視点ごとに最初の表示場面を示す。",
       footerLine:
-        "目的は情報を増やすことではない。最初に見る場所を分かるようにすること。",
+        "説明を増やすのではなく、作品を見る入口を見えるようにする。",
       previewCta: "下で詳しく見る",
       names: {
         artist: "画家",
@@ -1054,7 +1190,7 @@
         restorer: "表面・修復・技法",
         social: "小物・地位・見せ方"
       },
-      targetLabel: "見る場所:",
+      targetLabel: "対象:",
       questionLabel: "解説:",
       explanationLabel: "解説:",
       matrix: {
@@ -1112,21 +1248,21 @@
       }
     },
     preview: {
-      title: "キューのプレビュー",
+      title: "表示プレビュー",
       body:
-        "作品と視点を選ぶと、XRキューが作品上にどう現れるかを確認できる。",
+        "上のマトリクスカードを選ぶと、一つの専門家視点が作品の上に現れ、短く表示され、視界から消えて、作品を見る状態に戻る流れを確認できます。",
       controls: {
         viewpoint: "視点",
         artwork: "作品"
       },
       mechanics: {
-        kicker: "表示の仕組み",
-        title: "XR画面に何が出るのか",
+        kicker: "表示される内容",
+        title: "作品の上に出る一つの表示",
         body: "",
         items: {
           target: {
-            label: "見る場所",
-            body: "マーカーは「{target}」に固定される。"
+            label: "対象",
+            body: "表示は「{target}」に結びつく。"
           },
           anchor: {
             label: "アンカー",
@@ -1134,7 +1270,7 @@
           },
           panel: {
             label: "端のパネル",
-            body: "短い専門家キューが視界の端に出て、邪魔になる前に退く。"
+            body: "説明は短く留め、すぐ作品を見る状態に戻れるようにします。"
           },
           evidence: {
             label: "証拠表示",
@@ -1146,15 +1282,19 @@
           },
           source: {
             label: "脚注",
-            body: "キューには脚注{number}を付け、出典リンクはページ最下部にまとめる。"
+            body: "表示には脚注{number}を付け、出典リンクはページ最下部にまとめる。"
+          },
+          final: {
+            label: "戻る",
+            body: "視点を受け取ったら、自分の目で作品をご覧ください。"
           }
         }
       }
     },
     sourceFootnotes: {
       kicker: "脚注",
-      title: "キュー設計で参照した出典",
-      body: "表示キュー例の参照リンク。",
+      title: "視点設計で参照した出典",
+      body: "表示例の参照リンク。",
       itemPrefix: "使用箇所"
     },
     sourceLabels: {
@@ -1183,139 +1323,138 @@
     xrOnly: {
       title: "なぜXRなのか",
       intro:
-        "問いが生まれる前の瞬間に、実物の上へ助けを置く。",
+        "これは、グラスに文字を増やすための体験ではない。実物作品を見続けたまま、その上に視点を重ねられることに意味がある。",
       items: {
         pointing: {
-          title: "短い指差し",
-          body: "実物の細部に短い指差しが現れ、すぐ消える。"
+          title: "短い視点表示",
+          body: "見えている細部に短い表示が現れ、すぐ消える。"
         },
         spatial: {
-          title: "実物作品に固定される",
-          body: "指差しは、見えている細部に固定される。"
+          title: "作品に結びつく",
+          body: "表示は浮いたラベルではなく、見えている細部に結びつく。"
         },
         connector: {
-          title: "場所と解説を一本の線で結ぶ",
+          title: "場所と説明がつながる",
           body: "示された細部が、視界の端にある短い解説へつながる。"
         },
         body: {
-          title: "必要な時だけ、見る位置を変える",
+          title: "必要な時だけ動く",
           body: "斜めから見る表現は、素材や表面を見る時だけ使う。"
         },
         disappear: {
-          title: "すぐ消えて、邪魔をしない",
-          body: "指差しは短い解説を一つだけ出し、注意を作品へ戻す。"
+          title: "視界から消える",
+          body: "表示は短く現れ、注意を作品へ戻す。"
         }
       }
     },
     whyMuseums: {
-      title: "なぜ美術館から始めるのか？",
+      title: "美術館から始める。美術館だけでは終わらない。",
       body:
         "この問題が見えやすいからです。実物を目の前にしていても、どこから見ればいいか分からないことがある。美術作品は厳しい検証対象でもある。XRによって作品が見づらくなり、暗くなり、邪魔になるなら、スマホの方がよい。",
       closing:
-        "美術館は問題が最も見えやすい場所であり、プロダクトがそこで終わるという意味ではありません。より大きなカテゴリは、検索前に現実の場所で指差す体験です。"
+        "美術館は問題が最も見えやすい場所であり、プロダクトがそこで終わるという意味ではありません。より大きなカテゴリは、検索前に現実の場所で最初の問いを開く体験です。"
     },
     aura: {
-      title: "XRは、邪魔をせずに助けられるのか？",
+      title: "Android XR実機で確かめること",
       body:
-        "Look Againは、来館者が実物作品を見続けたまま成立しなければならない。そのため、Project Auraでの検証が重要になる。低照度、色の見え方、快適さ、空間上の固定、邪魔にならなさがすべて関わる。",
+        "上で述べたXRの価値は、実物作品がはっきり見え続ける場合にだけ成立する。実機検証では、その成立条件だけを確かめる。",
       statement:
-        "グラスによって作品が見づらくなるなら、スマホの方がよいインターフェースである。",
-      validationIntro: "検証すること",
+        "この条件を満たせないなら、スマホの方がよい。",
+      validationIntro: "検証する成立条件",
       points: {
-        lowLight: "暗い展示室での見やすさ",
-        color: "色の見え方が保たれるか",
-        distraction: "表示が邪魔にならないか",
-        anchoring: "指差しが正しい場所に留まるか",
-        comfort: "鑑賞中の快適さ",
-        remove: "グラスを外したくならないか"
+        lowLight: "暗い展示室でも作品が見える",
+        color: "色とコントラストが実物から大きく外れない",
+        distraction: "表示が短く、視界の邪魔にならない",
+        anchoring: "印が同じ細部に結びついたまま残る",
+        comfort: "鑑賞中の負担が小さい"
       }
     },
     plan: {
-      title: "6か月のクローズドテスト",
+      title: "実装・実証計画",
       body:
-        "焦点を絞ったAndroid XRの検証。問うのは一つだけ。短い指差しは、音声やスマホガイドよりも「どこを見るか」を助けられるのか。",
+        "最初の実装範囲は意図的に絞る。実物作品の上に重ねる短い視点表示は、音声やスマホガイドよりも、作品を見始める助けになるのかを実証する。",
       items: {
         artworks: "3〜5点のパブリックドメイン作品から始める。",
-        native: "ネイティブAndroid XRプロトタイプを作る。",
-        selection: "作品番号またはQRコードで作品を選ぶ。",
+        native: "ネイティブAndroid XRプロトタイプを実装する。",
+        selection: "作品番号またはQRコードで作品を選択する。",
         scope:
           "MVPは絞る。館内ナビ、重い3D再構成、美術館提携の主張は入れない。",
-        validation: "XRの方が良いと言う前に、音声やスマホガイドと比較する。"
+        validation: "XRが優れていると言う前に、音声・スマホガイドと比較する。"
       }
     },
     metrics: {
-      title: "成功の基準",
+      title: "成功の測り方",
       body:
-        "Look Againが成立するのは、別の画面に引き込まず、実物作品をより明確に見る助けになる場合だけである。",
+        "Look Againが成立するのは、別の画面に引き込まず、実物作品をよりはっきり見られる場合だけです。",
       items: {
         discovery: "それまで見落としていた細部に気づく",
         question: "見た後に、よりよい問いが生まれる",
         remove: "グラスを外したくならない",
         time: "実物作品を見ている時間",
-        helpfulness: "邪魔にならない助けになっているか",
+        helpfulness: "邪魔にならない鑑賞補助",
         intent: "もう一度見たくなるか",
         comparison: "音声・スマホガイドとの比較"
       }
     },
     futureContexts: {
-      title: "この先に広がる場所",
+      title: "美術館から始める。美術館だけでは終わらない。",
       intro:
-        "美術館から始めるのは、問題が見えやすいからです。同じ型は、何を問えばいいか分かる前に人が現実を見ている場面へ広げられる可能性があります。",
+        "美術館から始めるのは、問題が見えやすいからです。同じ型は将来的に、見ているのに何を問えばいいか分からない他の場面にも広げられます。",
       cards: {
         architecture: {
-          title: "建築",
-          body: "実際の建物の中で、構造・素材・動線に気づく。",
-          panel: "荷重の流れ"
+          status: "建築家視点",
+          title: "建築レビュー",
+          body: "屋根勾配、柱への荷重の流れ、素材の判断を現地の建物上で見る。",
+          panel: "屋根勾配 / 荷重経路"
         },
         field: {
-          title: "フィールド学習",
+          status: "植物学者視点",
+          title: "フィールド植物学",
           body:
-            "植物、岩、道具、痕跡など、問いが生まれる前の一点を指し示す。",
-          panel: "最初の手がかり"
-        },
-        repair: {
-          title: "修理 / 点検",
-          body: "マニュアルを読む前に、まず見るべき部品を示す。",
-          panel: "まず確認"
+            "名前を知る前に、葉の形、葉脈、生長点を植物の上で見る。",
+          panel: "葉脈 / 生長点"
         },
         performance: {
-          title: "ライブパフォーマンス",
+          status: "骨格レビュー",
+          title: "ダンスレビュー",
           body:
-            "画面に注意を移さず、演出・身振り・音楽構造への注意を促す。",
-          panel: "身振りのキュー"
+            "踊り手の関節位置と手足のラインを重ね、フォームとタイミングを別画面なしで見る。",
+          panel: "関節ライン / タイミング"
         },
         training: {
+          status: "手順視点",
           title: "トレーニング環境",
-          body: "重要な一点を示し、すぐ消える。",
-          panel: "重要手順"
+          body: "重要な一点へ注意を向け、すぐ消える。",
+          panel: "手順の流れ / 重要箇所"
         }
       },
       note:
-        "これらは将来の応用例であり、現在の開発範囲ではありません。",
-      planCta: {
-        kicker: "次のページ",
-        title: "実行体制とロードマップを見る",
-        body:
-          "次のページでは、6か月のAndroid XRプロトタイプとして何を作り、何を検証し、何を範囲外にするかを示します。",
-        link: "実行体制とロードマップを開く →"
-      }
+        "これらは将来の応用例であり、現在の開発範囲ではありません。"
     },
     footer: {
       exampleNote:
         "ここで使う作品はプロトタイプ用の例です。今後の利用では、作品ごと・展示文脈ごとに権利確認が必要です。",
       disclaimer:
-        "コンセプト可視化。ネイティブAndroid XR実装は未完了。美術館との提携は主張しない。展示シーンは近似的な可視化であり、正確な再現ではない。",
+        "プロトタイプの可視化です。ネイティブAndroid XR実装は未完了です。美術館との提携は主張していません。美術館シーンは近似的な表現であり、正確な再現ではありません。",
       contactHtml:
-        "Builder: 江田健一郎<br>連絡先: ciaoken16@icloud.com<br>Handle: @ciaoken16",
-      planLink: "実行体制とロードマップを見る →"
+        "制作: 江田健一郎 / 鍋島優歌<br>連絡先: ciaoken16@gmail.com",
+      copyright: "© 2026 Kenichiro Eda",
+      planLink: "実行計画"
+    },
+    executionPlanCta: {
+      kicker: "審査員向けページ",
+      title: "実行計画とロードマップを見る",
+      body:
+        "実装範囲、6か月ロードマップ、検証計画、助成金の使途、チーム、現在の状態を審査用に分けて整理しています。",
+      action: "実行計画を開く"
     },
     planPage: {
       home: "ホーム",
-      title: "実行体制とロードマップ",
-      kicker: "コンパクトな実行ページ",
+      title: "実装ロードマップ",
+      kicker: "審査員向け実行計画",
       intro:
-        "Look Againは、大規模な美術館プラットフォームではなく、焦点を絞ったAndroid XRプロトタイプとして設計する。目的は、出典に基づく短い指差しキューが、人が何を問えばいいか分かる前に「どこを見るか」を助けられるかを検証すること。",
-      readinessTitle: "なぜ作れるのか",
+        "Look Againは、大規模な美術館プラットフォームではなく、焦点を絞ったAndroid XRプロトタイプとして設計する。目的は、実物作品の上に重ねる短い視点表示が、何を問えばいいか分かる前に作品を見始める助けになるかを検証すること。",
+      readinessTitle: "実装範囲",
       readiness: {
         rapid: {
           title: "高速プロトタイプ",
@@ -1323,11 +1462,11 @@
         },
         measurable: {
           title: "測定できる体験",
-          body: "「どこを見るか」の明確さ、スマホ比較、グラスを外したくならない率を測る。"
+          body: "最初の問いの明確さ、スマホ比較、グラスを外したくならない率を測る。"
         },
         source: {
           title: "出典に基づくコンテンツ",
-          body: "パブリックドメイン作品と確認済み出典を使う。AIは解釈を作るのではなく、キューを選ぶ。"
+          body: "パブリックドメイン作品と確認済み出典を使う。AIは解釈を作るのではなく、視点を選ぶ。"
         },
         small: {
           title: "出せる範囲に絞る",
@@ -1339,7 +1478,7 @@
         month1: {
           label: "1か月目",
           title: "ネイティブAndroid XRプロジェクトを立ち上げる。",
-          body: "ブラウザ版のキューモデルをAndroid / Jetpack XRプロトタイプへ移植する。"
+          body: "ブラウザ版の視点モデルをAndroid / Jetpack XRプロトタイプへ移植する。"
         },
         month2: {
           label: "2か月目",
@@ -1348,18 +1487,18 @@
         },
         month3: {
           label: "3か月目",
-          title: "空間キュー表示を実装する。",
-          body: "指差し、パルス、コネクタ、周辺パネル、初期状態では消える挙動を作る。"
+          title: "空間視点表示を実装する。",
+          body: "表示、パルス、コネクタ、周辺パネル、初期状態では消える挙動を作る。"
         },
         month4: {
           label: "4か月目",
-          title: "Project Auraで検証する。",
-          body: "低照度での見やすさ、色の見え方、快適さ、邪魔にならなさ、空間上の固定を確認する。"
+          title: "Android XR実機で検証する。",
+          body: "明るさ、色の見え方、快適さ、邪魔にならなさ、表示位置を確認する。Catalystで提供される場合はXREAL Project Auraを含む。"
         },
         month5: {
           label: "5か月目",
           title: "ユーザースタディを行う。",
-          body: "ガイドなし / 音声的文脈 / スマホガイド / Look Againの指差しを比較する。"
+          body: "ガイドなし / 音声的文脈 / スマホガイド / Look Againの視点表示を比較する。"
         },
         month6: {
           label: "6か月目",
@@ -1367,11 +1506,11 @@
           body: "デモ動画、Google Playクローズドテスト準備、公開ドキュメントを整える。"
         }
       },
-      grantTitle: "助成金の使途概要",
+      grantTitle: "助成金の使途",
       grantIntro: "採択された場合、助成金は焦点を絞ったプロトタイプ検証に使う。",
       grant: {
         native: "ネイティブAndroid XRプロトタイプ",
-        aura: "Project Auraでの検証",
+        aura: "Android XR実機での実証。Catalystで提供される場合はXREAL Project Auraを含む",
         content: "パブリックドメイン作品と出典監査",
         testing: "ユーザーテスト",
         assets: "デモ動画と提出用素材"
@@ -1380,13 +1519,13 @@
       beyondBody1:
         "美術館は、この問題が見えやすい最初の検証環境である。人は実物を見ていても、どこを見ればいいか分からないことがある。",
       beyondBody2:
-        "より大きな構想は、現実世界のための検索前の指差しレイヤーである。人が何を問えばいいか分かる前に、Android XRが意味のある一点を示し、出典に基づく問いを一つだけ出して、すぐ消える。",
+        "より大きな構想は、現実世界のための検索前の視点レイヤーである。人が何を問えばいいか分かる前に、Android XRが意味のある一点を見えるようにし、出典に基づく問いを一つだけ開いて、すぐ消える。",
       futureTitle: "今後の文脈",
       future: {
         cultural: "文化遺産・史跡",
-        architecture: "建築",
-        field: "フィールド学習",
-        repair: "修理 / 点検",
+        architecture: "建築家視点",
+        field: "植物学者視点",
+        performance: "ダンスの骨格レビュー",
         training: "トレーニング環境"
       },
       builderTitle: "Team",
@@ -1394,12 +1533,11 @@
       builderMemberYuka: "鍋島優歌 — Research / language",
       contactTitle: "連絡先",
       contactName: "江田健一郎",
-      contactEmail: "ciaoken16@icloud.com",
-      contactHandle: "@ciaoken16",
-      statusTitle: "現在の状態 / 注意書き",
+      contactEmail: "ciaoken16@gmail.com",
+      statusTitle: "現在の状態",
       status: {
-        concept: "コンセプト可視化。",
-        browser: "ブラウザプロトタイプ / コンセプト可視化は存在する。",
+        concept: "プロトタイプの可視化です。",
+        browser: "ブラウザプロトタイプ / プロトタイプ可視化は存在する。",
         native: "ネイティブAndroid XR実装は未完了。",
         partnership: "美術館との提携は主張しない。",
         scenes: "展示シーンは実展示を参照した近似であり、正確な再現ではない。"

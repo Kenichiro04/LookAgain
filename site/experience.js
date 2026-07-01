@@ -1,9 +1,9 @@
 (function () {
   const I18N = window.LookAgainI18n;
   const existingSequence = ["looking", "audio", "phone"];
-  const lookAgainSequence = ["artist", "restorer", "social", "museum"];
-  const heroQueryStates = ["artist", "restorer", "social", "lookagain"];
-  const defaultHeroArtwork = "girl";
+  const lookAgainSequence = ["select", "artist", "restorer", "social", "quiet"];
+  const heroQueryStates = ["select", "artist", "restorer", "social", "quiet", "lookagain"];
+  const defaultHeroArtwork = "arnolfini";
   const lensOrder = ["artist", "restorer", "social"];
   const artworkOrder = ["lastSupper", "girl", "arnolfini"];
   const heroTimingMs = {
@@ -11,9 +11,10 @@
     audio: 3600,
     phone: 4200,
     transition: 1400,
-    artist: 4500,
-    restorer: 4500,
-    social: 4500,
+    select: 1500,
+    artist: 4400,
+    restorer: 4400,
+    social: 4400,
     quiet: 3000
   };
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -21,9 +22,13 @@
   const cueSequenceObservedStages = new WeakSet();
   let cueSequenceObserver = null;
   const heroLookAgainExamples = [
-    { key: "artist", stateId: "artist", lens: "artist", artwork: "lastSupper" },
-    { key: "restorer", stateId: "restorer", lens: "restorer", artwork: "girl" },
-    { key: "social", stateId: "social", lens: "social", artwork: "arnolfini" }
+    { key: "selectArtist", stateId: "select", lens: "artist", selectedLens: "artist", artwork: "arnolfini", durationMs: 1900 },
+    { key: "artist", stateId: "artist", lens: "artist", artwork: "arnolfini" },
+    { key: "selectRestorer", stateId: "select", lens: "restorer", selectedLens: "restorer", artwork: "arnolfini", durationMs: 1300 },
+    { key: "restorer", stateId: "restorer", lens: "restorer", artwork: "arnolfini" },
+    { key: "selectSocial", stateId: "select", lens: "social", selectedLens: "social", artwork: "arnolfini", durationMs: 1300 },
+    { key: "social", stateId: "social", lens: "social", artwork: "arnolfini" },
+    { key: "quiet", stateId: "quiet", lens: "artist", artwork: "arnolfini" }
   ];
 
   const artworks = {
@@ -158,6 +163,11 @@
       artwork: "girl",
       ...artworkStage("girl"),
       wearing: true
+    },
+    select: {
+      artwork: "arnolfini",
+      ...artworkStage("arnolfini"),
+      viewpointSelect: true
     },
     artist: {
       artwork: "lastSupper",
@@ -564,6 +574,7 @@
       audio: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h3.2L12 18V6L7.2 10H4Z"></path><path d="M15.2 8.3a5.4 5.4 0 0 1 0 7.4"></path><path d="M17.8 5.8a9 9 0 0 1 0 12.4"></path></svg>',
       phone: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2.8" width="10" height="18.4" rx="2.1"></rect><path d="M10.3 5.6h3.4"></path><circle cx="12" cy="18" r=".7"></circle></svg>',
       wearing: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 10.5h6.2l1.2 2.4h2.2l1.2-2.4h6.2"></path><path d="M5 10.5l1 6h3.4l1.5-3.6"></path><path d="M19 10.5l-1 6h-3.4l-1.5-3.6"></path></svg>',
+      select: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 10.5h6.2l1.2 2.4h2.2l1.2-2.4h6.2"></path><path d="M5 10.5l1 6h3.4l1.5-3.6"></path><path d="M19 10.5l-1 6h-3.4l-1.5-3.6"></path></svg>',
       artist: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v14H3V5Z"></path><path d="M3 5l9 7 9-7"></path><path d="M3 19l9-7 9 7"></path><circle cx="12" cy="12" r="1.4"></circle></svg>',
       restorer: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="5.2"></circle><path d="m14.4 14.4 5.1 5.1"></path><path d="M8.5 10.7h4"></path><path d="M10.5 8.7v4"></path></svg>',
       social: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="7" cy="13" r="2.4"></circle><circle cx="16.5" cy="8" r="2"></circle><circle cx="17" cy="17" r="2.2"></circle><path d="M9.2 12 14.7 9"></path><path d="M9.2 14.1l5.8 2"></path></svg>',
@@ -571,6 +582,11 @@
       quiet: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7"></circle></svg>'
     };
     return `<span class="state-icon">${icons[id] || icons.looking}</span>`;
+  }
+
+  function heroExampleDuration(example) {
+    if (!example) return 4000;
+    return example.durationMs || heroTimingMs[example.stateId] || 4000;
   }
 
   function setHeroAct(act) {
@@ -598,7 +614,7 @@
           index: pinnedIndex,
           key: example.key,
           caption: t(`hero.lookAgainExamples.${example.key}.caption`),
-          duration: heroTimingMs[example.stateId] || 4000
+          duration: heroExampleDuration(example)
         };
       }
     }
@@ -611,7 +627,7 @@
         index: currentLookAgainIndex,
         key: example.key,
         caption: t(`hero.lookAgainExamples.${example.key}.caption`),
-        duration: heroTimingMs[example.stateId] || 4000
+        duration: heroExampleDuration(example)
       };
     }
 
@@ -726,7 +742,7 @@
     }
     void stage.offsetWidth;
     stage.classList.add("is-stage-changing");
-    if (stateId === "wearing") {
+    if (stateId === "wearing" || stateId === "select") {
       stage.classList.add("is-xr-reveal");
     }
     const label = config.stageLabelKey ? t(config.stageLabelKey) : t(`states.${stateId}.label`);
@@ -744,6 +760,7 @@
       ${config.audio ? renderAudioCue(config) : ""}
       ${config.phone ? renderPhoneMock(artwork) : ""}
       ${config.wearing ? renderWearingHud() : ""}
+      ${config.viewpointSelect ? renderViewpointSelector(config.viewpointSelectedLens) : ""}
       ${config.panel ? renderPanel(config) : ""}
       ${config.quiet ? renderQuietMessage() : ""}
     `;
@@ -837,8 +854,8 @@
   }
 
   function renderStagePerspective() {
-    // The current refectory view is off-axis, so do not claim the room and painted
-    // vanishing points align. Last Supper perspective cues stay inside the artwork.
+    // The refectory view is off-axis, so room-scale vanishing lines are not shown.
+    // Last Supper perspective cues are drawn from painted objects and may extend beyond the mural edge.
     return "";
   }
 
@@ -907,16 +924,18 @@
   function specLineDefinitions(spec) {
     const definitions = {
       "lastSupper-artist": [
-        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M34 2 L45 31" },
-        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M41 2 L47 31" },
-        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M59 2 L53 31" },
-        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M66 2 L55 31" },
-        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M8 12 L35 33" },
-        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M18 27 L41 40" },
-        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M92 12 L65 33" },
-        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M82 27 L59 40" },
-        { source: "table orthogonal", kind: "object", arrow: false, path: "M14 63 L38 58" },
-        { source: "table orthogonal", kind: "object", arrow: false, path: "M86 63 L62 58" }
+        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M2.3 -24 L50 46.8" },
+        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M18.6 -24 L50 46.8" },
+        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M81.4 -24 L50 46.8" },
+        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M97.7 -24 L50 46.8" },
+        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M-24 28.8 L50 46.8" },
+        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M-24 53.4 L50 46.8" },
+        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M-24 89.1 L50 46.8" },
+        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M124 28.8 L50 46.8" },
+        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M124 53.4 L50 46.8" },
+        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M124 89.1 L50 46.8" },
+        { source: "table orthogonal", kind: "object", arrow: false, path: "M-22 95.8 L50 46.8" },
+        { source: "table orthogonal", kind: "object", arrow: false, path: "M122 95.8 L50 46.8" }
       ],
       "lastSupper-social": [
         { source: "table edge", kind: "object", path: "M24 64 L82 64" },
@@ -1216,6 +1235,31 @@
     `;
   }
 
+  function renderViewpointSelector(selectedLens = "artist") {
+    const options = lensOrder
+      .map((lens) => {
+        const selected = lens === selectedLens;
+        return `
+        <span class="hero-viewpoint-option hero-viewpoint-option-${escapeAttr(lens)}${selected ? " is-selected" : ""}" aria-current="${selected}">
+          ${stateIcon(lens)}
+          <span>${escapeHtml(t(`hero.viewpointSelector.options.${lens}`))}</span>
+          ${selected ? '<span class="hero-viewpoint-option-check" aria-hidden="true"></span>' : ""}
+        </span>
+      `;
+      })
+      .join("");
+    return `
+      <aside class="hero-viewpoint-selector stage-layer--panel" aria-label="${escapeAttr(t("hero.viewpointSelector.aria"))}">
+        <span class="hero-viewpoint-eyebrow">${escapeHtml(t("hero.viewpointSelector.eyebrow"))}</span>
+        <strong>${escapeHtml(t("hero.viewpointSelector.title"))}</strong>
+        <p>${escapeHtml(t("hero.viewpointSelector.body"))}</p>
+        <div class="hero-viewpoint-options">
+          ${options}
+        </div>
+      </aside>
+    `;
+  }
+
   function panelTitle(config) {
     return config.panelTitleKey ? t(config.panelTitleKey) : t(`states.${config.stateId}.title`);
   }
@@ -1252,8 +1296,8 @@
   function materialModelSpec(spec) {
     const definitions = {
       "lastSupper-restorer": {
-        title_en: "XR 3D surface model",
-        title_ja: "XR 3D表面モデル",
+        title_en: "3D surface model",
+        title_ja: "3D表面モデル",
         note_en: "Support, paint, loss, and repair separate in space.",
         note_ja: "支持体・絵具・損失・補修を空間的に分けて見る。",
         layers: [
@@ -1264,10 +1308,10 @@
         ]
       },
       "girl-restorer": {
-        title_en: "3D paint-to-illusion model",
-        title_ja: "3D絵具錯覚モデル",
-        note_en: "Tiny raised marks and darkness complete the pearl.",
-        note_ja: "小さな絵具の盛り上がりと暗さが真珠を成立させる。",
+        title_en: "Paint illusion model",
+        title_ja: "絵具の錯視モデル",
+        note_en: "This separates visible paint marks, reflected light, and surrounding darkness. It is not a measured 3D scan.",
+        note_ja: "明るい筆触、反射光、周囲の暗さを分解して見る模式表示。実測3Dスキャンではない。",
         layers: [
           { key: "ground", label_en: "dark ground", label_ja: "暗い地", z: 0 },
           { key: "shadow", label_en: "shadow basin", label_ja: "影", z: 12 },
@@ -1680,10 +1724,17 @@
     const sceneRect = scene.getBoundingClientRect();
     const anchorRect = anchorEl.getBoundingClientRect();
     const panelRect = panel.getBoundingClientRect();
-    const x1 = ((anchorRect.left + anchorRect.width / 2 - sceneRect.left) / sceneRect.width) * 100;
-    const y1 = ((anchorRect.top + anchorRect.height / 2 - sceneRect.top) / sceneRect.height) * 100;
-    const x2 = ((panelRect.left - sceneRect.left) / sceneRect.width) * 100;
-    const y2 = ((panelRect.top + panelRect.height / 2 - sceneRect.top) / sceneRect.height) * 100;
+    const anchorCenterX = anchorRect.left + anchorRect.width / 2;
+    const anchorCenterY = anchorRect.top + anchorRect.height / 2;
+    const panelConnectionX = anchorCenterX <= panelRect.left ? panelRect.left : panelRect.right;
+    const panelConnectionY = Math.max(
+      panelRect.top + 22,
+      Math.min(anchorCenterY, panelRect.bottom - 22)
+    );
+    const x1 = ((anchorCenterX - sceneRect.left) / sceneRect.width) * 100;
+    const y1 = ((anchorCenterY - sceneRect.top) / sceneRect.height) * 100;
+    const x2 = ((panelConnectionX - sceneRect.left) / sceneRect.width) * 100;
+    const y2 = ((panelConnectionY - sceneRect.top) / sceneRect.height) * 100;
 
     line.setAttribute("x1", x1.toFixed(2));
     line.setAttribute("y1", y1.toFixed(2));
@@ -1864,6 +1915,27 @@
 
   function lookAgainHeroOverrides() {
     const example = heroLookAgainExamples[currentLookAgainIndex] || heroLookAgainExamples[0];
+    if (example.stateId === "select") {
+      return {
+        artwork: example.artwork,
+        viewpointSelect: true,
+        viewpointSelectedLens: example.selectedLens || example.lens,
+        panel: false,
+        stageIcon: "select",
+        stageLabelKey: `hero.lookAgainExamples.${example.key}.label`,
+        captionKey: `hero.lookAgainExamples.${example.key}.caption`
+      };
+    }
+    if (example.stateId === "quiet") {
+      return {
+        artwork: example.artwork,
+        quiet: true,
+        panel: false,
+        stageIcon: "quiet",
+        stageLabelKey: `hero.lookAgainExamples.${example.key}.label`,
+        captionKey: `hero.lookAgainExamples.${example.key}.caption`
+      };
+    }
     const item =
       (lensItems[example.lens] || []).find((candidate) => candidate.artwork === example.artwork) ||
       (lensItems[example.lens] || [])[0] ||
@@ -1899,7 +1971,8 @@
       return;
     }
     if (stateId === "lookagain") {
-      renderStage(heroStage, "artist", lookAgainHeroOverrides());
+      currentLookAgainIndex = 0;
+      renderStage(heroStage, "select", lookAgainHeroOverrides());
       return;
     }
     if (stateId === "wearing" || stateId === "quiet") {
@@ -1972,7 +2045,7 @@
     setHeroAct("lookagain");
     renderCurrentHeroStage();
     if (reducedMotion) return;
-    scheduleHeroAutoplay(heroTimingMs.artist);
+    scheduleHeroAutoplay(heroExampleDuration(heroLookAgainExamples[currentLookAgainIndex]));
   }
 
   function scheduleHeroAutoplay(delay) {
@@ -1986,11 +2059,17 @@
   function advanceHeroAutoplay() {
     heroTimer = null;
     if (autoplayPhase === "lookagain") {
-      currentLookAgainIndex = (currentLookAgainIndex + 1) % heroLookAgainExamples.length;
+      if (currentLookAgainIndex >= heroLookAgainExamples.length - 1) {
+        stopHeroAutoplay();
+        return;
+      }
+      currentLookAgainIndex += 1;
       renderCurrentHeroStage();
       renderHeroRails();
       const example = heroLookAgainExamples[currentLookAgainIndex];
-      scheduleHeroAutoplay(heroTimingMs[example.stateId] || 4000);
+      if (currentLookAgainIndex < heroLookAgainExamples.length - 1) {
+        scheduleHeroAutoplay(heroExampleDuration(example));
+      }
       return;
     }
     stopHeroAutoplay();
@@ -2105,8 +2184,8 @@
     const evidenceBody = evidenceTypes.length
       ? formatMessage(t("preview.mechanics.items.evidence.body"), { evidence: evidenceTypes.join(lang === "ja" ? "・" : ", ") })
       : (lang === "ja"
-        ? "線と端のパネルで見る場所を示す。"
-        : "The line and edge panel mark the place to look.");
+        ? "線と端のパネルが問いの入口を示す。"
+        : "The line and edge panel make the first question visible.");
     const sourceNumber = sourceFootnoteNumber(spec);
     const mechanismItems = [
       {
@@ -2140,6 +2219,11 @@
         body: sourceNumber
           ? formatMessage(t("preview.mechanics.items.source.body"), { number: `[${sourceNumber}]` })
           : (lang === "ja" ? "出典がある場合は、脚注をページ最下部にまとめる。" : "When a source is present, the full link sits at the bottom of the page.")
+      },
+      {
+        key: "final",
+        label: t("preview.mechanics.items.final.label"),
+        body: t("preview.mechanics.items.final.body")
       }
     ];
     previewDetails.innerHTML = `
@@ -2304,7 +2388,7 @@
   }
 
   function bindEvents() {
-    initStageParallax(heroStage);
+    // The Hero is a directed recording-like sequence; keep the artwork and wall locked.
     initStageParallax(explorerStage);
     document.querySelector('[data-action="replay"]').addEventListener("click", replayHero);
     document.querySelector('[data-action="explore-lenses"]').addEventListener("click", () => {

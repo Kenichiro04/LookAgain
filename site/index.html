@@ -6,10 +6,10 @@
     <title>Look Again V23 Delta Experience</title>
     <meta
       name="description"
-      content="Look Again is an Android XR experiment that briefly points to one place on the real artwork before a visitor knows what to ask."
+      content="Look Again is an Android XR prototype that overlays a short expert perspective on the real artwork, opens one question, and fades from view."
     >
     <link rel="icon" href="data:,">
-    <link rel="stylesheet" href="./styles.css?v=v23-hero-hidden-matrix-cta-1">
+    <link rel="stylesheet" href="./styles.css?v=v23-hero-viewpoint-selection-1">
   </head>
   <body>
     <header class="site-header" aria-label="Global">
@@ -19,9 +19,9 @@
       </a>
       <nav class="site-nav" aria-label="Page sections">
         <a href="#difference" data-i18n="nav.difference">What changes</a>
-        <a href="#lenses" data-i18n="nav.lenses">Ways to look</a>
-        <a href="#aura" data-i18n="nav.aura">XR test</a>
-        <a href="#test-plan" data-i18n="nav.plan">Test plan</a>
+        <a href="#lenses" data-i18n="nav.lenses">Perspective Matrix</a>
+        <a href="#xr-only" data-i18n="nav.aura">Why XR</a>
+        <a href="#test-plan" data-i18n="nav.plan">Implementation</a>
         <a class="nav-plan-link" href="./plan.html?lang=en" data-plan-link data-i18n="nav.planPage">Plan</a>
       </nav>
       <a class="header-plan-link" href="./plan.html?lang=en" data-plan-link data-i18n="nav.planPage">Plan</a>
@@ -36,49 +36,81 @@
         <div class="hero-copy">
           <div>
             <h1 id="hero-title" data-i18n-html="hero.title">
-              <span class="hero-title-kicker">Before you know what to ask,</span>
-              <span class="hero-title-focus">an expert points once.</span>
+              <span class="hero-title-focus">See the artwork through an expert perspective.</span>
             </h1>
             <p class="hero-principle" data-i18n-html="hero.principle">
-              The artwork does not change.<br>The question does.
+              The artwork does not change.<br>The perspective does.
             </p>
           </div>
           <p class="hero-sequence-caption" data-hero-sequence-caption aria-live="polite">
-            The expert points to how attention is built.
+            How do light and gaze shape what you notice first?
           </p>
           <p class="hero-subcopy" data-i18n="hero.subcopy">
-            A museum-first Android XR prototype that shows where to look on the real artwork — then disappears.
+            Look Again is an Android XR experience that overlays a short expert perspective on the real artwork. The display appears briefly, then fades so you can return to the artwork itself.
           </p>
           <p class="hero-search-note" data-i18n="hero.searchNote">
-            Search helps after the question exists. Look Again helps before that.
+            Search works after you know what to ask. Look Again works before that.
           </p>
           <div class="hero-actions" aria-label="Primary actions">
             <button type="button" class="button primary" data-action="replay">
-              <span data-i18n="hero.replay">Replay the examples</span>
+              <span data-i18n="hero.replay">Replay the flow</span>
               <span aria-hidden="true" class="button-icon">↺</span>
             </button>
             <button type="button" class="button secondary" data-action="explore-lenses">
-              <span data-i18n="hero.explore">View the Lens Matrix</span>
+              <span data-i18n="hero.explore">See expert perspectives</span>
               <span aria-hidden="true" class="button-icon">↓</span>
             </button>
           </div>
         </div>
 
-        <div class="hero-experience" data-hero-experience data-act="lookagain" aria-label="Look Again examples">
+        <div class="hero-experience" data-hero-experience data-act="lookagain" aria-label="Look Again experience flow">
           <div class="xr-stage hero-stage museum-stage" data-xr-stage="hero">
             <div class="stage-bar">
               <p class="state-label" data-stage-label>ARTIST</p>
               <p class="state-caption" data-stage-caption aria-live="polite">
-                The expert points to how attention is built.
+                How do light and gaze shape what you notice first?
               </p>
             </div>
             <div class="stage-scene" data-stage-scene></div>
           </div>
           <div class="hero-substate-lines">
             <div class="hero-substate-line">
-              <span data-i18n="hero.examplesLabel">Look Again examples</span>
+              <span data-i18n="hero.examplesLabel">Experience flow</span>
               <div class="hero-substate-rail" data-lookagain-substate-rail aria-label="Look Again sub-state controls"></div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section experience-flow-section" id="experience-flow" aria-labelledby="experience-flow-title">
+        <div class="section-inner experience-flow">
+          <div class="experience-flow-copy">
+            <h2 id="experience-flow-title" data-i18n="experienceFlow.title">How the experience works</h2>
+            <p data-i18n="experienceFlow.intro">
+              Look Again does not ask you to keep watching the overlay. It gives you a perspective, then returns you to the artwork.
+            </p>
+          </div>
+          <div class="experience-flow-steps" aria-label="Look Again experience flow">
+            <article>
+              <span class="experience-flow-index">01</span>
+              <h3 data-i18n="experienceFlow.steps.choose.title">Choose a perspective</h3>
+              <p data-i18n="experienceFlow.steps.choose.body">Choose an expert perspective such as artist, material, or social context.</p>
+            </article>
+            <article>
+              <span class="experience-flow-index">02</span>
+              <h3 data-i18n="experienceFlow.steps.see.title">See it on the artwork</h3>
+              <p data-i18n="experienceFlow.steps.see.body">A short question and focus area appear on the real artwork.</p>
+            </article>
+            <article>
+              <span class="experience-flow-index">03</span>
+              <h3 data-i18n="experienceFlow.steps.fade.title">Let the display fade</h3>
+              <p data-i18n="experienceFlow.steps.fade.body">The display stays brief and then fades from view.</p>
+            </article>
+            <article>
+              <span class="experience-flow-index">04</span>
+              <h3 data-i18n="experienceFlow.steps.look.title">Look with your own eyes</h3>
+              <p data-i18n="experienceFlow.steps.look.body">Once you have the perspective, look at the artwork with your own eyes.</p>
+            </article>
           </div>
         </div>
       </section>
@@ -86,23 +118,23 @@
       <section class="section category-reframe-section" id="category-reframe" aria-labelledby="category-reframe-title">
         <div class="section-inner category-reframe">
           <div class="category-copy">
-            <h2 id="category-reframe-title" data-i18n-html="category.title">Not another guide screen.<br>A pointing moment on the real work.</h2>
+            <h2 id="category-reframe-title" data-i18n-html="category.title">Not a longer guide.<br>A new way into the work.</h2>
             <p data-i18n="category.body">
-              Audio gives context. Phones give information. Look Again gives one place to look before the visitor knows what to ask.
+              Audio gives context. A phone gives information. Look Again adds a perspective for beginning to look.
             </p>
           </div>
           <div class="category-contrast" aria-label="Category contrast">
             <article>
               <span data-i18n="category.guide.label">Guide</span>
-              <p data-i18n="category.guide.body">explains what you selected</p>
+              <p data-i18n="category.guide.body">explains the selected work</p>
             </article>
             <article>
               <span data-i18n="category.search.label">Search</span>
-              <p data-i18n="category.search.body">answers what you ask</p>
+              <p data-i18n="category.search.body">answers a question</p>
             </article>
             <article class="lookagain">
               <span data-i18n="category.lookAgain.label">Look Again</span>
-              <p data-i18n="category.lookAgain.body">points before you know what to ask</p>
+              <p data-i18n="category.lookAgain.body">offers a perspective</p>
             </article>
           </div>
         </div>
@@ -112,22 +144,24 @@
         <div class="section-inner">
           <div class="section-heading-row difference-heading">
             <div>
-              <h2 id="difference-title" data-i18n="difference.title">Why it is different from today’s guides</h2>
+              <h2 id="difference-title" data-i18n="difference.title">Current Guides Comparison</h2>
               <p data-i18n="difference.subtitle">
-                Museum guidance is the first comparison case — not the whole category.
+                Museum guides are the first comparison, not the final goal.
               </p>
             </div>
           </div>
           <div class="difference-snapshot" aria-label="Experience comparison">
             <div class="snapshot-side snapshot-existing">
-              <div class="snapshot-side-label" data-i18n="difference.existingLabel">Today’s ways</div>
+              <div class="snapshot-side-label" data-i18n="difference.existingLabel">Current guides</div>
               <p class="snapshot-microcopy" data-i18n="difference.existingMicrocopy">
-                They give context or information, but you still have to decide where to look.
+                They are useful, but you still have to find a way into the work.
               </p>
               <div class="existing-methods-group" data-snapshot-existing-group>
                 <article class="method-thumb no-guide-thumb">
                   <div class="method-visual">
-                    <img src="../assets/art/girl.jpg" alt="" aria-hidden="true">
+                    <div class="snapshot-framed-art" aria-hidden="true">
+                      <img src="../assets/art/girl.jpg" alt="">
+                    </div>
                     <div class="method-haze"></div>
                   </div>
                   <div class="method-copy">
@@ -137,7 +171,9 @@
                 </article>
                 <article class="method-thumb audio-thumb">
                   <div class="method-visual">
-                    <img src="../assets/art/girl.jpg" alt="" aria-hidden="true">
+                    <div class="snapshot-framed-art" aria-hidden="true">
+                      <img src="../assets/art/girl.jpg" alt="">
+                    </div>
                     <div class="audio-guide-mini" aria-hidden="true">
                       <div class="audio-wave-mini">
                         <span></span><span></span><span></span><span></span><span></span>
@@ -153,7 +189,9 @@
                 </article>
                 <article class="method-thumb phone-thumb">
                   <div class="method-visual">
-                    <img src="../assets/art/girl.jpg" alt="" aria-hidden="true">
+                    <div class="snapshot-framed-art" aria-hidden="true">
+                      <img src="../assets/art/girl.jpg" alt="">
+                    </div>
                     <div class="phone-thumb-device" aria-hidden="true">
                       <div class="phone-thumb-screen">
                         <div class="phone-thumb-status">
@@ -188,8 +226,8 @@
                     </div>
                   </div>
                   <div class="method-copy">
-                    <strong data-i18n="difference.phone.title">Looking at pixels</strong>
-                    <span data-i18n="difference.phone.body"></span>
+                    <strong data-i18n="difference.phone.title">Phone</strong>
+                    <span data-i18n="difference.phone.body">Looking at the screen</span>
                   </div>
                 </article>
               </div>
@@ -198,19 +236,21 @@
             <div class="snapshot-side snapshot-lookagain">
               <div class="snapshot-side-label" data-i18n="difference.lookAgainLabel">Look Again</div>
               <p class="snapshot-microcopy" data-i18n="difference.lookAgainMicrocopy">
-                It briefly points to one place on the real artwork, before you know what to ask.
+                Look Again adds one perspective on the real artwork, then fades away.
               </p>
               <article class="lookagain-snapshot-card">
                 <div class="lookagain-visual">
-                  <img src="../assets/art/girl.jpg" alt="" aria-hidden="true">
+                  <div class="snapshot-framed-art" aria-hidden="true">
+                    <img src="../assets/art/girl.jpg" alt="">
+                  </div>
                   <span class="snapshot-target-pulse" aria-hidden="true"></span>
                   <svg class="snapshot-connector" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
                     <line x1="43" y1="54" x2="76" y2="31"></line>
                     <circle cx="43" cy="54" r="1.1"></circle>
                   </svg>
                   <div class="snapshot-question-panel">
-                    <span data-i18n="difference.xr.kicker">WEARING XR</span>
-                    <strong data-i18n="difference.xr.question">Look at this highlight first.</strong>
+                    <span data-i18n="difference.xr.kicker">EXPERT PERSPECTIVE</span>
+                    <strong data-i18n="difference.xr.question">How do light and gaze make the pearl appear?</strong>
                   </div>
                 </div>
               </article>
@@ -218,14 +258,14 @@
           </div>
           <div class="snapshot-comparison-rows" aria-label="Difference summary">
             <div class="snapshot-row snapshot-row-head">
-              <span data-i18n="difference.rows.existingHead">Today’s ways</span>
+              <span data-i18n="difference.rows.existingHead">Current guides</span>
               <span class="snapshot-row-arrow" aria-hidden="true">→</span>
               <span data-i18n="difference.rows.lookAgainHead">Look Again</span>
             </div>
             <div class="snapshot-row">
               <span data-i18n="difference.rows.contextExisting">More explanation</span>
               <span class="snapshot-row-arrow" aria-hidden="true">→</span>
-              <span data-i18n="difference.rows.contextLookAgain">One clear place to look</span>
+              <span data-i18n="difference.rows.contextLookAgain">A perspective to begin with</span>
             </div>
             <div class="snapshot-row">
               <span data-i18n="difference.rows.infoExisting">Attention can drift</span>
@@ -245,18 +285,18 @@
         <div class="section-inner">
           <div class="section-heading-row">
             <div>
-              <h2 id="lenses-title" data-i18n="lenses.title">Three ways to look</h2>
+              <h2 id="lenses-title" data-i18n="lenses.title">Expert Perspectives</h2>
               <p data-i18n="lenses.body">
-                The same artwork can be approached in different ways. Each card shows where that way of looking would point first.
+                The same artwork opens differently depending on which perspective you use.
               </p>
               <p class="matrix-explanation" data-i18n-html="lenses.explanation">
-                Choose a card to preview how a short pointer appears on the artwork.
+                Each card shows where that perspective begins.
               </p>
             </div>
           </div>
-          <div class="lens-matrix" data-lens-matrix role="grid" aria-label="Three ways to look"></div>
+          <div class="lens-matrix" data-lens-matrix role="grid" aria-label="Expert Perspectives"></div>
           <p class="matrix-footer-line" data-i18n="lenses.footerLine">
-            The goal is not to add more facts. The goal is to make the first place to look clear.
+            Instead of adding more explanation, Look Again makes the first question visible.
           </p>
         </div>
       </section>
@@ -265,9 +305,9 @@
         <div class="section-inner">
           <div class="section-heading-row">
             <div>
-              <h2 id="preview-title" data-i18n="preview.title">Try one pointing moment</h2>
+              <h2 id="preview-title" data-i18n="preview.title">Display Preview</h2>
               <p data-i18n="preview.body">
-                Choose an artwork and viewpoint to see how the XR cue appears on the work.
+                Select a matrix card above. The preview shows how one expert perspective appears on the artwork, stays briefly, fades from view, and returns you to looking.
               </p>
             </div>
           </div>
@@ -275,9 +315,9 @@
             <div class="preview-stage-column">
               <div class="xr-stage explorer-stage museum-stage" data-xr-stage="explorer">
                 <div class="stage-bar">
-                  <p class="state-label" data-stage-label>ARTIST LENS</p>
+                  <p class="state-label" data-stage-label>ARTIST PERSPECTIVE</p>
                   <p class="state-caption" data-stage-caption aria-live="polite">
-                    A short explanation appears where the artwork is.
+		                    A question appears on the artwork.
                   </p>
                 </div>
                 <div class="preview-artwork-controls" data-preview-artwork-controls aria-label="Artwork controls"></div>
@@ -286,8 +326,8 @@
               <div class="preview-lens-controls" data-preview-lens-controls aria-label="Viewpoint controls"></div>
             </div>
             <div class="preview-details" data-preview-details aria-live="polite">
-              <p class="preview-kicker" data-i18n="preview.mechanics.kicker">DISPLAY LOGIC</p>
-              <h3 data-i18n="preview.mechanics.title">What appears in the XR view</h3>
+              <p class="preview-kicker" data-i18n="preview.mechanics.kicker">WHAT APPEARS</p>
+              <h3 data-i18n="preview.mechanics.title">One display on the artwork</h3>
             </div>
           </div>
         </div>
@@ -297,58 +337,44 @@
         <div class="section-inner">
           <h2 id="xr-only-title" data-i18n="xrOnly.title">Why this needs XR</h2>
           <p class="xr-only-intro" data-i18n="xrOnly.intro">
-            Help appears on the real thing at the moment before the visitor knows what to ask.
+            This is not about putting more text in glasses. The value is that a perspective can appear on the real artwork while you keep looking at it.
           </p>
           <div class="mechanics-list">
             <article>
               <span>01</span>
-              <h3 data-i18n="xrOnly.items.pointing.title">A brief pointer</h3>
+              <h3 data-i18n="xrOnly.items.pointing.title">A brief visual perspective</h3>
               <p data-i18n="xrOnly.items.pointing.body">
-                A small pointer appears on one real detail, then disappears.
+                A short overlay appears on one visible detail, then fades.
               </p>
             </article>
             <article>
               <span>02</span>
-              <h3 data-i18n="xrOnly.items.spatial.title">Fixed to the real artwork</h3>
+              <h3 data-i18n="xrOnly.items.spatial.title">Attached to the artwork</h3>
               <p data-i18n="xrOnly.items.spatial.body">
-                The pointer anchors to a visible detail.
+                The guidance belongs to a visible detail, not to a floating label.
               </p>
             </article>
             <article>
               <span>03</span>
-              <h3 data-i18n="xrOnly.items.connector.title">One line from place to explanation</h3>
+              <h3 data-i18n="xrOnly.items.connector.title">Place and explanation stay connected</h3>
               <p data-i18n="xrOnly.items.connector.body">
                 The marked detail connects to a short explanation at the edge of view.
               </p>
             </article>
             <article>
               <span>04</span>
-              <h3 data-i18n="xrOnly.items.body.title">Move only when it matters</h3>
+              <h3 data-i18n="xrOnly.items.body.title">Movement only when useful</h3>
               <p data-i18n="xrOnly.items.body.body">
                 Side viewing is used only for material or surface questions.
               </p>
             </article>
             <article>
               <span>05</span>
-              <h3 data-i18n="xrOnly.items.disappear.title">It gets out of the way</h3>
+              <h3 data-i18n="xrOnly.items.disappear.title">It fades from view</h3>
               <p data-i18n="xrOnly.items.disappear.body">
-                The pointer gives one concise explanation, then returns attention to the artwork.
+                The display stays brief, then returns attention to the artwork.
               </p>
             </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section why-museums-section" id="why-museums" aria-labelledby="why-museums-title">
-        <div class="section-inner why-museums-grid">
-          <h2 id="why-museums-title" data-i18n="whyMuseums.title">Why start with museums?</h2>
-          <div>
-            <p class="large-copy" data-i18n="whyMuseums.body">
-              Because the problem is easy to see there. You can stand in front of the real thing and still not know where to begin. Artworks also make a strict test: if XR makes the work harder to see, darker, or more distracting, the phone is better.
-            </p>
-            <p class="why-museums-closing" data-i18n="whyMuseums.closing">
-              Museums are where the problem is easiest to see, not where the product must end. The broader category is pointing before search in real places.
-            </p>
           </div>
         </div>
       </section>
@@ -356,23 +382,22 @@
       <section class="section aura-section" id="aura" aria-labelledby="aura-title">
         <div class="section-inner aura-grid">
           <div>
-              <h2 id="aura-title" data-i18n="aura.title">Can XR help without getting in the way?</h2>
+              <h2 id="aura-title" data-i18n="aura.title">Android XR hardware validation</h2>
             <p class="large-copy" data-i18n="aura.body">
-              Look Again has to work while the visitor keeps seeing the real artwork. That makes Project Aura useful for testing: low light, color, comfort, anchoring, and distraction all matter.
+              The XR value above only matters if the real artwork remains clear. The hardware test checks the few conditions that decide that.
             </p>
             <p class="aura-statement" data-i18n="aura.statement">
-              If the glasses make the artwork harder to see, the phone is the better interface.
+              If those conditions fail, the phone is the better interface.
             </p>
           </div>
-          <div class="validation-list" aria-label="What to test">
-            <p data-i18n="aura.validationIntro">What to test</p>
+          <div class="validation-list" aria-label="Hardware validation focus">
+            <p data-i18n="aura.validationIntro">Validation focus</p>
             <ul>
-              <li data-i18n="aura.points.lowLight">visibility in low light</li>
-              <li data-i18n="aura.points.color">whether colors still feel right</li>
-              <li data-i18n="aura.points.distraction">whether the overlay distracts</li>
-              <li data-i18n="aura.points.anchoring">whether the pointer stays in the right place</li>
-              <li data-i18n="aura.points.comfort">comfort during looking</li>
-              <li data-i18n="aura.points.remove">whether people keep the glasses on</li>
+              <li data-i18n="aura.points.lowLight">Artwork remains visible in dim rooms</li>
+              <li data-i18n="aura.points.color">Color and contrast stay close enough to the real work</li>
+              <li data-i18n="aura.points.distraction">The overlay stays peripheral and brief</li>
+              <li data-i18n="aura.points.anchoring">The mark stays attached to the same visible detail</li>
+              <li data-i18n="aura.points.comfort">Viewing remains comfortable</li>
             </ul>
           </div>
         </div>
@@ -382,108 +407,94 @@
         <div class="section-inner">
           <div class="section-heading-row">
             <div>
-              <h2 id="plan-title" data-i18n="plan.title">6-month closed test</h2>
+              <h2 id="plan-title" data-i18n="plan.title">Implementation and validation plan</h2>
               <p data-i18n="plan.body">
-                A focused Android XR test. The question is simple: can a short pointer help people know where to look better than audio or phone guidance?
+                The first build is deliberately narrow: can a short perspective on the real artwork help you begin looking better than audio or phone guidance?
               </p>
             </div>
           </div>
           <ol class="plan-list">
             <li data-i18n="plan.items.artworks">Start with 3–5 public-domain artworks.</li>
             <li data-i18n="plan.items.native">Build a native Android XR prototype.</li>
-            <li data-i18n="plan.items.selection">Use artwork numbers or QR codes to choose the work.</li>
-            <li data-i18n="plan.items.scope">Keep the MVP narrow: no museum-wide navigation, no heavy 3D reconstruction, no museum partnership claim.</li>
-            <li data-i18n="plan.items.validation">Compare against audio and phone guidance before calling XR better.</li>
+            <li data-i18n="plan.items.selection">Select works by artwork number or QR code.</li>
+            <li data-i18n="plan.items.scope">Keep the MVP focused: no museum-wide navigation, no heavy 3D reconstruction, no museum partnership claim.</li>
+            <li data-i18n="plan.items.validation">Compare with audio and phone guidance before claiming XR is better.</li>
           </ol>
-        </div>
-      </section>
-
-      <section class="section metrics-section" id="metrics" aria-labelledby="metrics-title">
-        <div class="section-inner metrics-grid">
-          <div>
-            <h2 id="metrics-title" data-i18n="metrics.title">What success means</h2>
-            <p data-i18n="metrics.body">
-              Look Again only works if it helps people see the real work more clearly without pulling them into another screen.
-            </p>
-          </div>
-          <div class="metric-table" aria-label="Success metrics">
-            <span data-i18n="metrics.items.discovery">noticing details people missed before</span>
-            <span data-i18n="metrics.items.question">asking better questions after looking</span>
-            <span data-i18n="metrics.items.remove">keeping the glasses on</span>
-            <span data-i18n="metrics.items.time">time spent looking at the real artwork</span>
-            <span data-i18n="metrics.items.helpfulness">helpfulness without distraction</span>
-            <span data-i18n="metrics.items.intent">wanting to look again</span>
-            <span data-i18n="metrics.items.comparison">comparison with audio and phone guidance</span>
-          </div>
         </div>
       </section>
 
       <section class="section future-contexts-section" id="future-contexts" aria-labelledby="future-contexts-title">
         <div class="section-inner future-contexts-inner">
           <div class="future-contexts-copy">
-            <h2 id="future-contexts-title" data-i18n="futureContexts.title">Where this could go next</h2>
+            <h2 id="future-contexts-title" data-i18n="futureContexts.title">Museum-first, not museum-only</h2>
             <p data-i18n="futureContexts.intro">
-              Museums are the first test because the problem is easy to see there. The same pattern could later apply anywhere people look before they know what to ask.
+              Museums are the first test because the problem is easy to see there. Later, the same pattern could apply in other settings where people are looking, but do not yet know what to ask.
             </p>
           </div>
-          <div class="future-plan-cta" aria-labelledby="future-plan-cta-title">
-            <p class="future-plan-cta-kicker" data-i18n="futureContexts.planCta.kicker">Next page</p>
-            <h3 id="future-plan-cta-title" data-i18n="futureContexts.planCta.title">See the execution plan and roadmap</h3>
-            <p data-i18n="futureContexts.planCta.body">
-              The next page explains how this becomes a 6-month Android XR prototype, what gets tested, and what stays out of scope.
-            </p>
-            <a class="button primary future-plan-cta-link" href="./plan.html?lang=en" data-plan-link data-i18n="futureContexts.planCta.link">Open builder readiness and roadmap →</a>
-          </div>
-          <div class="future-context-card-grid" aria-label="Future context examples">
-            <article class="future-context-card future-context-card-architecture">
+          <div class="future-context-summary-grid" aria-label="Future context examples">
+            <article class="future-context-card">
               <div class="future-xr-preview future-xr-architecture" aria-hidden="true">
-                <span class="future-xr-status">XR</span>
-                <span class="future-xr-target"></span>
-                <span class="future-xr-line"></span>
-                <span class="future-xr-panel" data-i18n="futureContexts.cards.architecture.panel">Load path</span>
+                <span class="future-xr-status" data-i18n="futureContexts.cards.architecture.status">Architect perspective</span>
+                <span class="future-arch-ridge"></span>
+                <span class="future-arch-pitch future-arch-pitch-left"></span>
+                <span class="future-arch-pitch future-arch-pitch-right"></span>
+                <span class="future-arch-load future-arch-load-left"></span>
+                <span class="future-arch-load future-arch-load-right"></span>
+                <span class="future-arch-column future-arch-column-left"></span>
+                <span class="future-arch-column future-arch-column-right"></span>
+                <span class="future-xr-panel" data-i18n="futureContexts.cards.architecture.panel">Roof pitch / load path</span>
               </div>
-              <h3 data-i18n="futureContexts.cards.architecture.title">Architecture</h3>
-              <p data-i18n="futureContexts.cards.architecture.body">Notice structure, material, and circulation in a real building.</p>
+              <div class="future-context-card-copy">
+                <h3 data-i18n="futureContexts.cards.architecture.title">Architecture review</h3>
+                <p data-i18n="futureContexts.cards.architecture.body">Show roof pitch, column load path, and material choices on the building itself.</p>
+              </div>
             </article>
-            <article class="future-context-card future-context-card-field">
+            <article class="future-context-card">
               <div class="future-xr-preview future-xr-field" aria-hidden="true">
-                <span class="future-xr-status">XR</span>
-                <span class="future-xr-target"></span>
-                <span class="future-xr-line"></span>
-                <span class="future-xr-panel" data-i18n="futureContexts.cards.field.panel">First clue</span>
+                <span class="future-xr-status" data-i18n="futureContexts.cards.field.status">Botanist perspective</span>
+                <span class="future-botany-leaf"></span>
+                <span class="future-botany-vein future-botany-vein-main"></span>
+                <span class="future-botany-vein future-botany-vein-one"></span>
+                <span class="future-botany-vein future-botany-vein-two"></span>
+                <span class="future-botany-vein future-botany-vein-three"></span>
+                <span class="future-botany-node"></span>
+                <span class="future-xr-panel" data-i18n="futureContexts.cards.field.panel">Leaf veins / growth point</span>
               </div>
-              <h3 data-i18n="futureContexts.cards.field.title">Field learning</h3>
-              <p data-i18n="futureContexts.cards.field.body">Point to one plant, rock, tool, or trace before a learner knows what to ask.</p>
-            </article>
-            <article class="future-context-card future-context-card-repair">
-              <div class="future-xr-preview future-xr-repair" aria-hidden="true">
-                <span class="future-xr-status">XR</span>
-                <span class="future-xr-target"></span>
-                <span class="future-xr-line"></span>
-                <span class="future-xr-panel" data-i18n="futureContexts.cards.repair.panel">Check first</span>
+              <div class="future-context-card-copy">
+                <h3 data-i18n="futureContexts.cards.field.title">Field botany</h3>
+                <p data-i18n="futureContexts.cards.field.body">Trace leaf shape, veins, and growth points on the plant before the learner knows the terms.</p>
               </div>
-              <h3 data-i18n="futureContexts.cards.repair.title">Repair / inspection</h3>
-              <p data-i18n="futureContexts.cards.repair.body">Show the part that matters before the manual becomes useful.</p>
             </article>
-            <article class="future-context-card future-context-card-performance">
+            <article class="future-context-card">
               <div class="future-xr-preview future-xr-performance" aria-hidden="true">
-                <span class="future-xr-status">XR</span>
-                <span class="future-xr-target"></span>
-                <span class="future-xr-line"></span>
-                <span class="future-xr-panel" data-i18n="futureContexts.cards.performance.panel">Gesture cue</span>
+                <span class="future-xr-status" data-i18n="futureContexts.cards.performance.status">Skeletal review</span>
+                <span class="future-skeleton-dot future-skeleton-head"></span>
+                <span class="future-skeleton-dot future-skeleton-neck"></span>
+                <span class="future-skeleton-dot future-skeleton-shoulder-left"></span>
+                <span class="future-skeleton-dot future-skeleton-shoulder-right"></span>
+                <span class="future-skeleton-dot future-skeleton-elbow-left"></span>
+                <span class="future-skeleton-dot future-skeleton-elbow-right"></span>
+                <span class="future-skeleton-dot future-skeleton-hand-left"></span>
+                <span class="future-skeleton-dot future-skeleton-hand-right"></span>
+                <span class="future-skeleton-dot future-skeleton-hip-left"></span>
+                <span class="future-skeleton-dot future-skeleton-hip-right"></span>
+                <span class="future-skeleton-dot future-skeleton-knee-left"></span>
+                <span class="future-skeleton-dot future-skeleton-knee-right"></span>
+                <span class="future-skeleton-bone future-skeleton-bone-shoulders"></span>
+                <span class="future-skeleton-bone future-skeleton-bone-spine"></span>
+                <span class="future-skeleton-bone future-skeleton-bone-arm-left-a"></span>
+                <span class="future-skeleton-bone future-skeleton-bone-arm-left-b"></span>
+                <span class="future-skeleton-bone future-skeleton-bone-arm-right-a"></span>
+                <span class="future-skeleton-bone future-skeleton-bone-arm-right-b"></span>
+                <span class="future-skeleton-bone future-skeleton-bone-hips"></span>
+                <span class="future-skeleton-bone future-skeleton-bone-leg-left"></span>
+                <span class="future-skeleton-bone future-skeleton-bone-leg-right"></span>
+                <span class="future-xr-panel" data-i18n="futureContexts.cards.performance.panel">Joint line / timing</span>
               </div>
-              <h3 data-i18n="futureContexts.cards.performance.title">Live performance</h3>
-              <p data-i18n="futureContexts.cards.performance.body">Point attention to staging, gesture, or musical structure without pulling the viewer into a screen.</p>
-            </article>
-            <article class="future-context-card future-context-card-training">
-              <div class="future-xr-preview future-xr-training" aria-hidden="true">
-                <span class="future-xr-status">XR</span>
-                <span class="future-xr-target"></span>
-                <span class="future-xr-line"></span>
-                <span class="future-xr-panel" data-i18n="futureContexts.cards.training.panel">Critical step</span>
+              <div class="future-context-card-copy">
+                <h3 data-i18n="futureContexts.cards.performance.title">Dance review</h3>
+                <p data-i18n="futureContexts.cards.performance.body">Overlay joint positions and limb lines on the dancer so form and timing are visible without a second screen.</p>
               </div>
-              <h3 data-i18n="futureContexts.cards.training.title">Training environments</h3>
-              <p data-i18n="futureContexts.cards.training.body">Guide attention to one critical detail, then disappear.</p>
             </article>
           </div>
           <p class="future-contexts-note" data-i18n="futureContexts.note">
@@ -491,27 +502,39 @@
           </p>
         </div>
       </section>
-    </main>
 
-    <section class="source-footnotes" data-source-footnotes aria-label="Source footnotes"></section>
+      <section class="section execution-plan-section" id="execution-plan" aria-labelledby="execution-plan-title">
+        <div class="section-inner">
+          <a class="execution-plan-cta" href="./plan.html?lang=en" data-plan-link>
+            <span class="execution-plan-cta-copy">
+              <span class="execution-plan-cta-kicker" data-i18n="executionPlanCta.kicker">Reviewer page</span>
+              <span id="execution-plan-title" class="execution-plan-cta-title" data-i18n="executionPlanCta.title">See the execution plan and roadmap</span>
+              <span class="execution-plan-cta-body" data-i18n="executionPlanCta.body">Build scope, six-month roadmap, validation plan, grant use, team, and current status are separated for review.</span>
+            </span>
+            <span class="execution-plan-cta-action" data-i18n="executionPlanCta.action">Open plan</span>
+          </a>
+        </div>
+      </section>
+    </main>
 
     <footer class="site-footer">
       <p class="example-note" data-i18n="footer.exampleNote">
         The artworks are examples for the prototype. Future use would require rights review for each artwork and display context.
       </p>
       <p data-i18n="footer.disclaimer">
-        Concept visualization. Native Android XR implementation is not yet complete. No museum partnership is claimed. Museum scenes are approximate visualizations, not exact reconstructions.
+        Prototype visualization. Native Android XR implementation is not complete. No museum partnership is claimed. Museum scenes are approximate visualizations, not exact reconstructions.
       </p>
       <p class="footer-contact" data-i18n-html="footer.contactHtml">
-        Builder: Kenichiro Eda<br>Contact: ciaoken16@icloud.com<br>Handle: @ciaoken16
+        Builders: Kenichiro Eda / Yuka Nabeshima<br>Contact: ciaoken16@gmail.com
       </p>
-      <p class="footer-plan-link">
-        <a href="./plan.html?lang=en" data-plan-link data-i18n="footer.planLink">Read builder readiness and roadmap →</a>
+      <p class="footer-copyright" data-i18n="footer.copyright">
+        © 2026 Kenichiro Eda
       </p>
+      <section class="source-footnotes" data-source-footnotes aria-label="Source footnotes"></section>
     </footer>
 
-    <script src="./i18n.js?v=v23-hero-hidden-matrix-cta-1"></script>
-    <script src="./lens-cue-specs-v23.js?v=v23-hero-hidden-matrix-cta-1"></script>
-    <script src="./experience.js?v=v23-hero-hidden-matrix-cta-1"></script>
+    <script src="./i18n.js?v=v23-hero-viewpoint-selection-1"></script>
+    <script src="./lens-cue-specs-v23.js?v=v23-hero-viewpoint-selection-1"></script>
+    <script src="./experience.js?v=v23-hero-viewpoint-selection-1"></script>
   </body>
 </html>

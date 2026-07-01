@@ -169,29 +169,29 @@
     "edge_panel_position": "right-of-frame, center",
     "question_en": "What is paint, and what is illusion?",
     "question_ja": "これは物体なのか、絵具の効果なのか？",
-    "micro_evidence_en": "The pearl is produced by a few bright marks and surrounding darkness.",
-    "micro_evidence_ja": "真珠は、少数の明るい跡と周囲の暗さで生まれている。",
-    "explanation_en": "The pearl is not described with hard contour and full detail. A few light marks, nearby shadow, and reflected brightness make the viewer read paint as a jewel, which is exactly where the material illusion happens.",
-    "explanation_ja": "真珠は、輪郭や細部で克明に描かれているわけではない。数か所の明るい絵具、近くの影、反射の光によって、見る側が絵具を宝石として読んでしまう。そこに素材と錯覚の境目がある。",
+    "micro_evidence_en": "A few bright paint marks and nearby darkness make the earring read as pearl.",
+    "micro_evidence_ja": "少数の明るい絵具と周囲の暗さが、真珠のように見える効果を作っている。",
+    "explanation_en": "The earring is not built from a hard contour, a visible hook, or fully described detail. Vermeer uses a small number of bright paint marks, reflected light, and surrounding darkness so the viewer reads paint as pearl. This is a paint-and-perception effect, not a measured 3D structure.",
+    "explanation_ja": "耳飾りは、輪郭線や金具、細部を克明に描いて真珠にしているわけではない。少数の明るい絵具、反射の光、周囲の暗さによって、見る側が絵具を真珠として読んでしまう。これは実測された3D構造ではなく、絵具と知覚による効果である。",
     "material_visual_mode": "paint-vs-illusion",
-    "material_visual_title_en": "Two marks become a pearl",
-    "material_visual_title_ja": "二つの筆触が真珠になる",
+    "material_visual_title_en": "Paint becomes pearl",
+    "material_visual_title_ja": "絵具が真珠に見える",
     "material_visual_cards": [
       {
         "asset": "pearl-visible",
         "visual_mode": "paint-strokes",
         "label_en": "Visible paint",
         "label_ja": "可視光の絵具",
-        "body_en": "The upper dab and lower reflection do most of the work.",
-        "body_ja": "上の厚い点と下の反射が、ほぼすべてを作っている。"
+        "body_en": "A bright upper mark and a lower reflection carry most of the illusion.",
+        "body_ja": "上の明るい筆触と下側の反射が、錯視の大部分を担っている。"
       },
       {
         "asset": "pearl-technical",
         "visual_mode": "technical-contrast",
         "label_en": "Contrast read",
         "label_ja": "明暗で読む",
-        "body_en": "No hard contour or hook is needed for the eye to complete the jewel.",
-        "body_ja": "輪郭線や金具がなくても、目が宝石として補完してしまう。"
+        "body_en": "Even without a hard contour or visible hook, the eye reads paint as pearl.",
+        "body_ja": "輪郭線や金具が見えなくても、絵具が真珠として読める。"
       }
     ],
     "source_note_en": "Use Mauritshuis material notes on the oversized pearl and few strokes/marks.",
