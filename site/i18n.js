@@ -763,8 +763,8 @@
         training: "training environments"
       },
       builderTitle: "Team",
-      builderMemberKenichiro: "Kenichiro Eda — Product / prototype",
-      builderMemberYuka: "Yuka Nabeshima — Research / language",
+      builderMemberKenichiro: "Kenichiro Eda — Builder",
+      builderMemberYuka: "Yuka Nabeshima — Builder",
       contactTitle: "Contact",
       contactName: "Kenichiro Eda",
       contactEmail: "ciaoken16@gmail.com",
@@ -1543,8 +1543,8 @@
         training: "トレーニング環境"
       },
       builderTitle: "Team",
-      builderMemberKenichiro: "江田健一郎 — Product / prototype",
-      builderMemberYuka: "鍋島優歌 — Research / language",
+      builderMemberKenichiro: "江田健一郎 — Builder",
+      builderMemberYuka: "鍋島優歌 — Builder",
       contactTitle: "連絡先",
       contactName: "江田健一郎",
       contactEmail: "ciaoken16@gmail.com",
