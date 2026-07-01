@@ -577,7 +577,7 @@
     whyMuseums: {
       title: "Museum-first, not museum-only",
       body:
-        "Because the problem is easy to see there. You can stand in front of the real thing and still not know where to begin. Artworks also make a strict test: if XR makes the work harder to see, darker, or more distracting, the phone is better.",
+        "Because the problem is easy to see there. You can stand in front of the real thing and still not know where to begin. Artworks also make a strict test: XR must keep the work visible, preserve color and contrast, and stay out of the visitor’s way.",
       closing:
         "Museums are where the problem is easiest to see, not where the product must end. The broader category is opening a first question before search in real places."
     },
@@ -586,7 +586,7 @@
       body:
         "The XR value above only matters if the real artwork remains clear. The hardware test checks the few conditions that decide that.",
       statement:
-        "If those conditions fail, the phone is the better interface.",
+        "The test defines the display conditions for keeping attention on the real work.",
       validationIntro: "Validation focus",
       points: {
         lowLight: "Artwork remains visible in dim rooms",
@@ -1357,7 +1357,7 @@
     whyMuseums: {
       title: "美術館から始める。美術館だけでは終わらない。",
       body:
-        "この問題が見えやすいからです。実物を目の前にしていても、どこから見ればいいか分からないことがある。美術作品は厳しい検証対象でもある。XRによって作品が見づらくなり、暗くなり、邪魔になるなら、スマホの方がよい。",
+        "この問題が見えやすいからです。実物を目の前にしていても、どこから見ればいいか分からないことがある。美術作品は厳しい検証対象でもある。実物の見え方、色、集中を保ったまま視点を重ねられるかが問われる。",
       closing:
         "美術館は問題が最も見えやすい場所であり、プロダクトがそこで終わるという意味ではありません。より大きなカテゴリは、検索前に現実の場所で最初の問いを開く体験です。"
     },
@@ -1366,7 +1366,7 @@
       body:
         "上で述べたXRの価値は、実物作品がはっきり見え続ける場合にだけ成立する。実機検証では、その成立条件だけを確かめる。",
       statement:
-        "この条件を満たせないなら、スマホの方がよい。",
+        "実機検証では、実物を見続けながら視点を重ねるための表示条件を明確にする。",
       validationIntro: "検証する成立条件",
       points: {
         lowLight: "暗い展示室でも作品が見える",

@@ -1102,8 +1102,7 @@ select:focus-visible {
   display: grid;
   gap: 5px;
   margin-top: 6px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  padding-top: 10px;
+  padding-top: 4px;
   color: rgba(244, 242, 238, 0.48);
   font-size: 0.68rem;
   line-height: 1.35;
@@ -4051,6 +4050,12 @@ select:focus-visible {
   background: #0c0f0f;
 }
 
+.plan-section {
+  background:
+    linear-gradient(120deg, rgba(155, 229, 140, 0.1), rgba(20, 28, 24, 0.2) 46%, rgba(255, 255, 255, 0.015)),
+    #0c0f0f;
+}
+
 .experience-flow-section {
   padding-top: 46px;
   padding-bottom: 46px;
@@ -6970,32 +6975,89 @@ select {
 }
 
 .plan-list {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 1px;
+  gap: 0;
   margin: 34px 0 0;
   padding: 0;
   border: 1px solid var(--line);
   border-radius: 8px;
   overflow: hidden;
-  background: var(--line);
+  background:
+    linear-gradient(90deg, rgba(155, 229, 140, 0.28), rgba(155, 229, 140, 0.1) 54%, rgba(255, 255, 255, 0.04)),
+    #0c1010;
+  isolation: isolate;
   list-style: none;
   counter-reset: plan;
 }
 
+.plan-list::before {
+  content: "";
+  position: absolute;
+  top: 56px;
+  right: 24px;
+  left: 24px;
+  z-index: 0;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(155, 229, 140, 0.92), rgba(155, 229, 140, 0.46), rgba(244, 242, 238, 0.18));
+}
+
 .plan-list li {
+  position: relative;
+  z-index: 1;
   min-height: 210px;
   padding: 22px;
-  background: #111515;
+  border-left: 1px solid rgba(255, 255, 255, 0.07);
+  background:
+    linear-gradient(180deg, rgba(155, 229, 140, var(--step-glow, 0.08)), rgba(255, 255, 255, 0.018) 58%, rgba(0, 0, 0, 0.16)),
+    rgba(17, 21, 21, 0.92);
   color: var(--muted);
   counter-increment: plan;
 }
 
+.plan-list li:first-child {
+  border-left: 0;
+}
+
+.plan-list li:nth-child(1) {
+  --step-glow: 0.18;
+  --step-color: rgba(155, 229, 140, 0.96);
+}
+
+.plan-list li:nth-child(2) {
+  --step-glow: 0.15;
+  --step-color: rgba(155, 229, 140, 0.84);
+}
+
+.plan-list li:nth-child(3) {
+  --step-glow: 0.12;
+  --step-color: rgba(155, 229, 140, 0.72);
+}
+
+.plan-list li:nth-child(4) {
+  --step-glow: 0.09;
+  --step-color: rgba(155, 229, 140, 0.58);
+}
+
+.plan-list li:nth-child(5) {
+  --step-glow: 0.06;
+  --step-color: rgba(244, 242, 238, 0.44);
+}
+
 .plan-list li::before {
   content: counter(plan, decimal-leading-zero);
-  display: block;
+  display: grid;
+  width: 46px;
+  height: 46px;
   margin-bottom: 44px;
-  color: var(--green);
+  border: 1px solid var(--step-color, rgba(155, 229, 140, 0.7));
+  border-radius: 999px;
+  place-items: center;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(155, 229, 140, 0.26), rgba(155, 229, 140, 0.04) 62%, rgba(0, 0, 0, 0.32)),
+    #0b0f0f;
+  color: var(--step-color, var(--green));
   font-weight: 720;
 }
 
@@ -7054,7 +7116,6 @@ select {
 }
 
 .source-footnotes {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
   padding: 18px 32px 20px;
   background: #070909;
   color: #f4f2ee;
@@ -7107,8 +7168,6 @@ select {
   display: grid;
   gap: 2px;
   min-width: 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.14);
-  padding-top: 6px;
 }
 
 .source-footnotes a {
@@ -7413,6 +7472,40 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   .matrix-grid-cells {
     min-width: 948px;
   }
+
+  .plan-list {
+    grid-template-columns: 1fr;
+  }
+
+  .plan-list::before {
+    top: 24px;
+    bottom: 24px;
+    left: 46px;
+    right: auto;
+    width: 2px;
+    height: auto;
+    background: linear-gradient(180deg, rgba(155, 229, 140, 0.92), rgba(155, 229, 140, 0.42), rgba(244, 242, 238, 0.16));
+  }
+
+  .plan-list li {
+    min-height: auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    border-left: 0;
+    padding: 22px 22px 22px 84px;
+  }
+
+  .plan-list li:first-child {
+    border-top: 0;
+  }
+
+  .plan-list li::before {
+    position: absolute;
+    top: 20px;
+    left: 22px;
+    width: 46px;
+    height: 46px;
+    margin-bottom: 0;
+  }
 }
 
 @media (max-width: 1080px) {
@@ -7554,6 +7647,10 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   .mechanics-list,
   .plan-list {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .plan-list {
+    grid-template-columns: 1fr;
   }
 
   .plan-card-grid,
@@ -8574,12 +8671,30 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
     min-height: auto;
   }
 
+  .plan-list::before {
+    top: 20px;
+    right: auto;
+    bottom: 20px;
+    left: 35px;
+    width: 2px;
+    height: auto;
+    background: linear-gradient(180deg, rgba(155, 229, 140, 0.92), rgba(155, 229, 140, 0.42), rgba(244, 242, 238, 0.16));
+  }
+
+  .plan-list li {
+    padding: 16px 16px 18px 68px;
+  }
+
   .mechanics-list h3 {
     margin-top: 24px;
   }
 
   .plan-list li::before {
-    margin-bottom: 22px;
+    top: 16px;
+    left: 14px;
+    width: 40px;
+    height: 40px;
+    margin-bottom: 0;
   }
 
   .select-label {
