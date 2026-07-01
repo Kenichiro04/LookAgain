@@ -8102,11 +8102,6 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   }
 
   .explorer-stage[data-artwork="girl"] {
-    min-height: 680px;
-  }
-
-  .explorer-stage[data-artwork="girl"][data-state="restorer"],
-  .explorer-stage[data-artwork="girl"][data-state="social"] {
     min-height: 840px;
   }
 
@@ -8126,6 +8121,12 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
 
   .hero-stage[data-state="restorer"] .artwork-rig.small-framed {
     left: 50%;
+  }
+
+  .hero-stage[data-artwork="arnolfini"] .artwork-rig.medium-framed {
+    left: 50%;
+    top: 36%;
+    width: var(--art-mobile-width, 48%);
   }
 
   .hero-stage[data-state="restorer"] .spec-edge-panel.hero-question-panel {
