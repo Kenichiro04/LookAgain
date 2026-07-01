@@ -5227,8 +5227,9 @@ select:focus-visible {
 }
 
 .method-visual {
-  aspect-ratio: 4 / 3;
+  width: 100%;
   height: 100%;
+  aspect-ratio: auto;
   min-height: 0;
   border: 1px solid rgba(255, 220, 167, 0.14);
   box-shadow:
@@ -8040,7 +8041,22 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   }
 
   .hero-stage[data-state="restorer"] .spec-edge-panel.hero-question-panel .material-evidence {
-    margin-bottom: 6px;
+    gap: 5px;
+    margin-bottom: 5px;
+  }
+
+  .hero-stage[data-state="restorer"] .spec-edge-panel.hero-question-panel .material-model {
+    gap: 5px;
+    padding: 7px;
+  }
+
+  .hero-stage[data-state="restorer"] .spec-edge-panel.hero-question-panel .material-model-stage,
+  .hero-stage[data-state="restorer"] .spec-edge-panel.hero-question-panel .material-model-arnolfini-restorer .material-model-stage {
+    min-height: 72px;
+  }
+
+  .hero-stage[data-state="restorer"] .spec-edge-panel.hero-question-panel .material-model-copy strong {
+    -webkit-line-clamp: 1;
   }
 
   .hero-stage[data-state="restorer"] .spec-edge-panel.hero-question-panel .material-card-image {
@@ -8143,7 +8159,13 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   .hero-stage .spec-edge-panel.hero-question-panel,
   .hero-stage[data-artwork="lastSupper"] .spec-edge-panel.hero-question-panel,
   .hero-stage[data-state="restorer"] .spec-edge-panel.hero-question-panel {
-    max-height: min(31%, 224px);
+    bottom: clamp(64px, 8vh, 78px);
+  }
+
+  .hero-stage .spec-edge-panel.hero-question-panel,
+  .hero-stage[data-artwork="lastSupper"] .spec-edge-panel.hero-question-panel,
+  .hero-stage[data-state="restorer"] .spec-edge-panel.hero-question-panel {
+    max-height: min(38%, 286px);
   }
 
   .explorer-stage .edge-panel {
@@ -8391,13 +8413,31 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   }
 
   .existing-methods-group {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: 1fr;
     gap: 8px;
     padding: 12px;
+    height: auto;
+    min-height: 0;
+  }
+
+  .method-thumb {
+    grid-template-columns: minmax(0, 1fr) minmax(82px, 0.42fr);
+    grid-template-rows: none;
+    align-items: stretch;
+    gap: 10px;
+    min-height: 132px;
   }
 
   .method-visual {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
     min-height: 132px;
+  }
+
+  .method-copy {
+    align-content: center;
+    min-height: 0;
   }
 
   .method-visual .snapshot-framed-art {
