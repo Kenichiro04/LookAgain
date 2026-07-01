@@ -55,7 +55,7 @@
       searchNote:
         "Search works once the intent is clear. Look Again handles the moment before that.",
       replay: "Replay the flow",
-      explore: "See expert perspectives",
+      explore: "See the matrix",
       principle: "The artwork does not change.<br>The perspective does.",
       examplesLabel: "Experience flow",
       delta: {
@@ -379,7 +379,7 @@
       xr: {
         title: "Look Again",
         body: "A quiet perspective on the real work.",
-        kicker: "EXPERT PERSPECTIVE",
+        kicker: "DISPLAY PREVIEW",
         target: "Gaze and light",
         question: "How do light and gaze make the pearl appear?",
         explanation:
@@ -626,27 +626,34 @@
     futureContexts: {
       title: "Museum-first, not museum-only",
       intro:
-        "Museums are the first proof environment because the problem is easy to see there. The same pattern can later apply anywhere people are looking, but do not yet know what to ask.",
+        "Museums are the first proof environment because the problem is easy to see there. The same interaction pattern can later apply to nearby cultural and visual contexts: stage sets, landscape photography, and heritage sites.",
       cards: {
-        architecture: {
-          status: "Architect perspective",
-          title: "Architecture review",
-          body: "Lock column centerlines and beam direction onto the building itself.",
-          panel: "Column line / beam direction"
-        },
-        field: {
-          status: "Botanist perspective",
-          title: "Field botany",
+        opera: {
+          status: "Scenographer view",
+          title: "Opera stage set",
           body:
-            "Trace leaf shape, veins, and growth points on the plant before the learner knows the terms.",
-          panel: "Leaf veins / growth point"
+            "Sightlines and scenery layers explain how the stage creates space before the viewer knows the craft terms.",
+          panel: "Sightline / scenery layers",
+          insightTitle: "Scenographer reading",
+          insightBody: "The set creates depth by stacking flat scenery in the viewer’s sightline."
         },
-        performance: {
-          status: "Skeletal review",
-          title: "Dance review",
+        landscape: {
+          status: "Photographer view",
+          title: "Landscape photography",
           body:
-            "Overlay shoulder, elbow, wrist, hip, and knee lines on the dancer so form and timing are visible without a second screen.",
-          panel: "Shoulder / elbow / wrist line"
+            "Composition guides and depth layers show how a photograph leads attention through a real scene.",
+          panel: "Foreground / ridge / haze",
+          insightTitle: "Photographer reading",
+          insightBody: "Foreground rocks anchor scale; repeating ridges move the eye into depth."
+        },
+        heritage: {
+          status: "Heritage conservator view",
+          title: "Cultural heritage site",
+          body:
+            "Material seams and missing fragments make the history of the site readable on the site itself.",
+          panel: "Original stone / repair seam",
+          insightTitle: "Conservator reading",
+          insightBody: "Different stone courses separate original fabric from later repair."
         },
         training: {
           status: "Procedure perspective",
@@ -828,7 +835,7 @@
       searchNote:
         "検索は、調べたいことが明確になってから役に立つ。Look Againは、その前の鑑賞の入口を扱います。",
       replay: "流れをもう一度見る",
-      explore: "専門家視点を見る",
+      explore: "マトリクスを見る",
       principle: "作品は変わらない。<br>視点が変わる。",
       examplesLabel: "体験の流れ",
       delta: {
@@ -897,7 +904,7 @@
       viewpointSelector: {
         aria: "視点選択",
         eyebrow: "WEARING XR",
-        title: "専門家視点を選ぶ",
+        title: "視点を選ぶ",
         body: "作品は見たまま、見るための視点だけを切り替える。",
         options: {
           artist: "画家視点",
@@ -938,11 +945,11 @@
     experienceFlow: {
       title: "体験の流れ",
       intro:
-        "Look Againは、表示を見続けるための体験ではありません。専門家視点を受け取ったら、作品そのものを見る時間に戻ります。",
+        "Look Againは、表示を見続けるための体験ではありません。視点を受け取ったら、作品そのものを見る時間に戻ります。",
       steps: {
         choose: {
           title: "視点を選ぶ",
-          body: "画家、素材、社会文脈などの専門家視点を選びます。"
+          body: "画家、素材、社会文脈など、作品を見る入口を選びます。"
         },
         see: {
           title: "作品上で見る",
@@ -1000,7 +1007,7 @@
       select: {
         label: "視点を選ぶ",
         short: "視点選択",
-        caption: "作品を見たまま、専門家視点を選ぶ。"
+        caption: "作品を見たまま、視点を選ぶ。"
       },
       artist: {
         label: "ARTIST PERSPECTIVE",
@@ -1152,7 +1159,7 @@
       xr: {
         title: "Look Again",
         body: "実物の上に、静かに出る。",
-        kicker: "専門家視点",
+        kicker: "表示プレビュー",
         target: "視線と光",
         question: "光と視線は、真珠をどう立ち上げているのか？",
         explanation:
@@ -1176,7 +1183,7 @@
       body:
         "3作品を通して、画家、保存修復家、歴史家の視点が作品への入口をどう変えるかを示す。",
       explanation:
-        "マトリクスは、作品と専門家視点ごとに最初の表示場面を示す。",
+        "マトリクスは、作品と視点ごとに最初の表示場面を示す。",
       footerLine:
         "説明を増やすのではなく、作品を見る入口を見えるようにする。",
       previewCta: "下で詳しく見る",
@@ -1399,27 +1406,34 @@
     futureContexts: {
       title: "美術館から始める。美術館だけでは終わらない。",
       intro:
-        "美術館から始めるのは、問題が見えやすいからです。同じ型は将来的に、見ているのに何を問えばいいか分からない他の場面にも広げられます。",
+        "美術館から始めるのは、問題が見えやすいからです。同じ体験の型は、舞台セット、風景写真、文化財・遺跡など、近い文化・視覚領域にも広げられます。",
       cards: {
-        architecture: {
-          status: "建築家視点",
-          title: "建築レビュー",
-          body: "柱芯と梁の向きを、現地の建物そのものに重ねて見る。",
-          panel: "柱芯 / 梁の向き"
-        },
-        field: {
-          status: "植物学者視点",
-          title: "フィールド植物学",
+        opera: {
+          status: "舞台美術家の見方",
+          title: "オペラ舞台セット",
           body:
-            "名前を知る前に、葉の形、葉脈、生長点を植物の上で見る。",
-          panel: "葉脈 / 生長点"
+            "視線の通り道と書割の層を重ね、舞台がどう空間を作るかを実物上で見る。",
+          panel: "視線 / 書割の層",
+          insightTitle: "舞台美術家の読み方",
+          insightBody: "平面の書割を視線上に重ねることで、舞台上に奥行きが生まれる。"
         },
-        performance: {
-          status: "骨格レビュー",
-          title: "ダンスレビュー",
+        landscape: {
+          status: "写真家の見方",
+          title: "風景写真の構図",
           body:
-            "踊り手の肩、肘、手首、腰、膝を重ね、フォームとタイミングを別画面なしで見る。",
-          panel: "肩 / 肘 / 手首ライン"
+            "前景、稜線、霞の層を重ね、写真が視線をどう奥へ運ぶかを見る。",
+          panel: "前景 / 稜線 / 霞",
+          insightTitle: "写真家の読み方",
+          insightBody: "手前の岩がスケールを固定し、重なる稜線が視線を奥へ運ぶ。"
+        },
+        heritage: {
+          status: "文化財修復家の見方",
+          title: "文化財・遺跡",
+          body:
+            "石材の層、修復の継ぎ目、欠損部分を重ね、遺跡の時間をその場で読む。",
+          panel: "元の石材 / 修復の継ぎ目",
+          insightTitle: "修復家の読み方",
+          insightBody: "石材の層と色の違いが、元の部分と後の修復を分けて見せる。"
         },
         training: {
           status: "手順視点",
