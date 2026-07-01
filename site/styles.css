@@ -6985,7 +6985,7 @@ select {
   border-radius: 8px;
   overflow: hidden;
   background:
-    linear-gradient(90deg, rgba(155, 229, 140, 0.28), rgba(155, 229, 140, 0.1) 54%, rgba(255, 255, 255, 0.04)),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025), rgba(155, 229, 140, 0.11) 48%, rgba(155, 229, 140, 0.28)),
     #0c1010;
   isolation: isolate;
   list-style: none;
@@ -7000,19 +7000,20 @@ select {
   left: 24px;
   z-index: 0;
   height: 2px;
-  background: linear-gradient(90deg, rgba(155, 229, 140, 0.92), rgba(155, 229, 140, 0.46), rgba(244, 242, 238, 0.18));
+  background: linear-gradient(90deg, rgba(244, 242, 238, 0.18), rgba(155, 229, 140, 0.46), rgba(155, 229, 140, 0.92));
 }
 
 .plan-list li {
   position: relative;
   z-index: 1;
-  min-height: 210px;
-  padding: 22px;
+  min-height: 178px;
+  padding: 20px 22px;
   border-left: 1px solid rgba(255, 255, 255, 0.07);
   background:
-    linear-gradient(180deg, rgba(155, 229, 140, var(--step-glow, 0.08)), rgba(255, 255, 255, 0.018) 58%, rgba(0, 0, 0, 0.16)),
+    linear-gradient(180deg, rgba(155, 229, 140, var(--step-glow, 0.08)), rgba(255, 255, 255, 0.026) 58%, rgba(0, 0, 0, 0.08)),
     rgba(17, 21, 21, 0.92);
-  color: var(--muted);
+  color: rgba(244, 242, 238, 0.88);
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.48);
   counter-increment: plan;
 }
 
@@ -7021,13 +7022,13 @@ select {
 }
 
 .plan-list li:nth-child(1) {
-  --step-glow: 0.18;
-  --step-color: rgba(155, 229, 140, 0.96);
+  --step-glow: 0.05;
+  --step-color: rgba(155, 229, 140, 0.52);
 }
 
 .plan-list li:nth-child(2) {
-  --step-glow: 0.15;
-  --step-color: rgba(155, 229, 140, 0.84);
+  --step-glow: 0.08;
+  --step-color: rgba(155, 229, 140, 0.62);
 }
 
 .plan-list li:nth-child(3) {
@@ -7036,29 +7037,23 @@ select {
 }
 
 .plan-list li:nth-child(4) {
-  --step-glow: 0.09;
-  --step-color: rgba(155, 229, 140, 0.58);
+  --step-glow: 0.17;
+  --step-color: rgba(155, 229, 140, 0.84);
 }
 
 .plan-list li:nth-child(5) {
-  --step-glow: 0.06;
-  --step-color: rgba(244, 242, 238, 0.44);
+  --step-glow: 0.24;
+  --step-color: rgba(155, 229, 140, 0.96);
 }
 
 .plan-list li::before {
   content: counter(plan, decimal-leading-zero);
-  display: grid;
-  width: 46px;
-  height: 46px;
-  margin-bottom: 44px;
-  border: 1px solid var(--step-color, rgba(155, 229, 140, 0.7));
-  border-radius: 999px;
-  place-items: center;
-  background:
-    radial-gradient(circle at 50% 50%, rgba(155, 229, 140, 0.26), rgba(155, 229, 140, 0.04) 62%, rgba(0, 0, 0, 0.32)),
-    #0b0f0f;
+  display: inline-block;
+  margin-bottom: 28px;
   color: var(--step-color, var(--green));
+  font-size: 0.78rem;
   font-weight: 720;
+  letter-spacing: 0.02em;
 }
 
 .metric-table {
@@ -7116,6 +7111,7 @@ select {
 }
 
 .source-footnotes {
+  border-top: 1px solid rgba(244, 242, 238, 0.16);
   padding: 18px 32px 20px;
   background: #070909;
   color: #f4f2ee;
@@ -7218,6 +7214,16 @@ select {
     #090d0d;
 }
 
+.plan-roadmap-section,
+.plan-grant-section,
+.plan-team-section,
+.plan-status-section,
+.plan-contact-section {
+  background:
+    linear-gradient(120deg, rgba(155, 229, 140, 0.08), rgba(20, 28, 24, 0.2) 46%, rgba(255, 255, 255, 0.015)),
+    #0c0f0f;
+}
+
 .plan-page-hero-inner {
   max-width: var(--max);
 }
@@ -7262,7 +7268,9 @@ select {
 .plan-card-grid article,
 .plan-builder-grid article {
   padding: 22px;
-  background: #101413;
+  background:
+    linear-gradient(180deg, rgba(155, 229, 140, 0.06), rgba(255, 255, 255, 0.018) 58%, rgba(0, 0, 0, 0.1)),
+    rgba(16, 20, 19, 0.94);
 }
 
 .plan-card-grid h3,
@@ -7291,14 +7299,18 @@ select {
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: var(--line);
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025), rgba(155, 229, 140, 0.1), rgba(155, 229, 140, 0.18)),
+    var(--line);
   list-style: none;
 }
 
 .roadmap-list li {
   min-height: 210px;
   padding: 22px;
-  background: #111515;
+  background:
+    linear-gradient(180deg, rgba(155, 229, 140, 0.08), rgba(255, 255, 255, 0.02) 58%, rgba(0, 0, 0, 0.1)),
+    rgba(17, 21, 21, 0.93);
 }
 
 .roadmap-list span {
@@ -7373,7 +7385,9 @@ select {
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 24px;
-  background: rgba(255, 255, 255, 0.04);
+  background:
+    linear-gradient(180deg, rgba(155, 229, 140, 0.06), rgba(255, 255, 255, 0.018) 58%, rgba(0, 0, 0, 0.1)),
+    rgba(16, 20, 19, 0.94);
 }
 
 .plan-builder-grid {
@@ -7480,18 +7494,18 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   .plan-list::before {
     top: 24px;
     bottom: 24px;
-    left: 46px;
+    left: 38px;
     right: auto;
     width: 2px;
     height: auto;
-    background: linear-gradient(180deg, rgba(155, 229, 140, 0.92), rgba(155, 229, 140, 0.42), rgba(244, 242, 238, 0.16));
+    background: linear-gradient(180deg, rgba(244, 242, 238, 0.16), rgba(155, 229, 140, 0.46), rgba(155, 229, 140, 0.92));
   }
 
   .plan-list li {
     min-height: auto;
     border-top: 1px solid rgba(255, 255, 255, 0.07);
     border-left: 0;
-    padding: 22px 22px 22px 84px;
+    padding: 20px 22px 20px 62px;
   }
 
   .plan-list li:first-child {
@@ -7500,10 +7514,8 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
 
   .plan-list li::before {
     position: absolute;
-    top: 20px;
+    top: 21px;
     left: 22px;
-    width: 46px;
-    height: 46px;
     margin-bottom: 0;
   }
 }
@@ -8675,14 +8687,14 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
     top: 20px;
     right: auto;
     bottom: 20px;
-    left: 35px;
+    left: 28px;
     width: 2px;
     height: auto;
-    background: linear-gradient(180deg, rgba(155, 229, 140, 0.92), rgba(155, 229, 140, 0.42), rgba(244, 242, 238, 0.16));
+    background: linear-gradient(180deg, rgba(244, 242, 238, 0.16), rgba(155, 229, 140, 0.46), rgba(155, 229, 140, 0.92));
   }
 
   .plan-list li {
-    padding: 16px 16px 18px 68px;
+    padding: 15px 16px 16px 52px;
   }
 
   .mechanics-list h3 {
@@ -8692,8 +8704,6 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   .plan-list li::before {
     top: 16px;
     left: 14px;
-    width: 40px;
-    height: 40px;
     margin-bottom: 0;
   }
 
