@@ -761,10 +761,8 @@
         "Future directions may include cultural sites, architecture, and field learning. These are not part of the MVP.",
       future: {
         cultural: "cultural sites",
-        architecture: "architect perspective",
-        field: "botanist perspective",
-        performance: "skeletal review for dance",
-        training: "training environments"
+        architecture: "architecture",
+        field: "field learning"
       },
       builderTitle: "Team",
       builderMemberKenichiro: "Kenichiro Eda — Builder",
@@ -1544,11 +1542,9 @@
       futureBody:
         "将来的には、文化財、建築、フィールド学習などへの応用を検討します。ただし、これらは現在のMVP範囲には含めません。",
       future: {
-        cultural: "文化遺産・史跡",
-        architecture: "建築家視点",
-        field: "植物学者視点",
-        performance: "ダンスの骨格レビュー",
-        training: "トレーニング環境"
+        cultural: "文化財",
+        architecture: "建築",
+        field: "フィールド学習"
       },
       builderTitle: "Team",
       builderMemberKenichiro: "江田健一郎 — Builder",

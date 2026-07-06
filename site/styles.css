@@ -1820,6 +1820,7 @@ select:focus-visible {
   position: absolute;
   left: 50%;
   bottom: calc(100% + 8px);
+  z-index: 3;
   display: grid;
   gap: 1px;
   min-width: 112px;
@@ -1853,64 +1854,64 @@ select:focus-visible {
 
 .pointer-from-lower-right-toward-face-eye-area + .anchor-target .anchor-label,
 .pointer-from-lower-right-toward-head-turban-area + .anchor-target .anchor-label {
-  top: calc(100% + 30px);
+  top: calc(100% + 10px);
   bottom: auto;
-  left: calc(50% + 100px);
+  left: calc(50% + 24px);
   transform: translateX(-50%);
 }
 
 .pointer-from-lower-right-toward-face-turban-comparison + .anchor-target .anchor-label {
-  top: calc(100% + 48px);
+  top: calc(100% + 10px);
   bottom: auto;
-  left: calc(50% - 124px);
+  left: calc(50% - 24px);
   transform: translateX(-50%);
 }
 
 .pointer-from-lower-right-toward-center + .anchor-target .anchor-label {
-  top: calc(100% + 34px);
+  top: calc(100% + 10px);
   bottom: auto;
-  left: calc(50% + 124px);
+  left: calc(50% + 24px);
   transform: translateX(-50%);
 }
 
 .pointer-from-right-toward-pearl + .anchor-target .anchor-label {
-  top: calc(100% + 18px);
+  top: calc(100% + 10px);
   bottom: auto;
-  left: calc(50% + 20px);
+  left: calc(50% + 18px);
   transform: translateX(-50%);
 }
 
 .pointer-from-right-toward-central-mirror + .anchor-target .anchor-label {
-  top: calc(100% + 18px);
+  top: calc(100% + 10px);
   bottom: auto;
-  left: calc(50% + 132px);
+  left: calc(50% + 24px);
   transform: translateX(-50%);
 }
 
 .pointer-from-right-toward-lower-textile-area + .anchor-target .anchor-label {
-  top: 50%;
+  top: calc(100% + 10px);
   bottom: auto;
-  left: calc(50% - 124px);
-  transform: translate(-50%, -50%);
+  left: calc(50% - 24px);
+  transform: translateX(-50%);
 }
 
 .pointer-from-right-toward-left-center-wall-area + .anchor-target .anchor-label {
-  top: calc(100% + 20px);
+  top: calc(100% + 10px);
   bottom: auto;
-  left: calc(50% + 116px);
+  left: calc(50% + 24px);
   transform: translateX(-50%);
 }
 
 .pointer-from-upper-right-toward-table-center + .anchor-target .anchor-label {
-  top: calc(100% + 18px);
+  top: calc(100% + 10px);
   bottom: auto;
-  left: calc(50% - 96px);
+  left: calc(50% - 24px);
   transform: translateX(-50%);
 }
 
 .pointer-from-right-toward-object-cluster + .anchor-target .anchor-label {
-  bottom: calc(100% + 42px);
-  left: calc(50% + 40px);
+  bottom: calc(100% + 10px);
+  left: calc(50% + 24px);
   transform: translateX(-50%);
 }
 
