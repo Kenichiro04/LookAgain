@@ -465,8 +465,13 @@ select:focus-visible {
 }
 
 .museum-stage.is-parallax-enabled.is-cue-sequence .stage-layer--overlay.floating-anchor-layer:not(.connector-svg):not(.room-perspective-svg),
-.museum-stage.is-parallax-enabled.is-cue-sequence .artwork-cue-layer > :not(.anchor-target):not(.pointer-cue) {
+.museum-stage.is-parallax-enabled.is-cue-sequence .artwork-cue-layer > :not(.anchor-target):not(.pointer-cue):not(.spec-aux-lines):not(.spec-aux-legend) {
   translate: 0 0;
+}
+
+.museum-stage.is-parallax-enabled.is-cue-sequence .artwork-cue-layer > svg.spec-aux-lines,
+.museum-stage.is-parallax-enabled.is-cue-sequence .artwork-cue-layer > span.spec-aux-legend {
+  translate: calc(0px - var(--art-x)) calc(0px - var(--art-y));
 }
 
 .museum-stage.is-parallax-enabled .connector-svg {
