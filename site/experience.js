@@ -1755,23 +1755,28 @@
     const line = svg.querySelector("line");
     const start = svg.querySelector(".connector-start");
     const end = svg.querySelector(".connector-end");
-    const anchorEl = scene.querySelector(".anchor-target");
+    const sourceAnchorEl = scene.querySelector(".artwork-cue-layer .anchor-target") || scene.querySelector(".anchor-target");
+    const floatingAnchorEl = scene.querySelector(".floating-anchor-target.anchor-target");
     const panel = scene.querySelector(".edge-panel");
 
-    if (!anchorEl || !panel) {
+    if (!sourceAnchorEl || !panel) {
       svg.style.display = "none";
       return;
     }
 
     svg.style.display = "block";
     const sceneRect = scene.getBoundingClientRect();
-    const anchorRect = anchorEl.getBoundingClientRect();
+    const sourceAnchorRect = sourceAnchorEl.getBoundingClientRect();
+    const sourceAnchorCenterX = sourceAnchorRect.left + sourceAnchorRect.width / 2;
+    const sourceAnchorCenterY = sourceAnchorRect.top + sourceAnchorRect.height / 2;
+    scene.style.setProperty("--floating-anchor-x", `${(sourceAnchorCenterX - sceneRect.left).toFixed(2)}px`);
+    scene.style.setProperty("--floating-anchor-y", `${(sourceAnchorCenterY - sceneRect.top).toFixed(2)}px`);
+
+    const displayedAnchorEl = floatingAnchorEl || sourceAnchorEl;
+    avoidPanelAnchorOverlap(scene, panel, displayedAnchorEl);
+    const anchorRect = displayedAnchorEl.getBoundingClientRect();
     const anchorCenterX = anchorRect.left + anchorRect.width / 2;
     const anchorCenterY = anchorRect.top + anchorRect.height / 2;
-    scene.style.setProperty("--floating-anchor-x", `${(anchorCenterX - sceneRect.left).toFixed(2)}px`);
-    scene.style.setProperty("--floating-anchor-y", `${(anchorCenterY - sceneRect.top).toFixed(2)}px`);
-
-    avoidPanelAnchorOverlap(scene, panel, anchorEl);
     const panelRect = panel.getBoundingClientRect();
     const panelConnectionX = anchorCenterX <= panelRect.left ? panelRect.left : panelRect.right;
     const panelConnectionY = Math.max(

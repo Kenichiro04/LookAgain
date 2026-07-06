@@ -451,6 +451,14 @@ select:focus-visible {
   will-change: translate;
 }
 
+.museum-stage.is-parallax-enabled .stage-layer--overlay.floating-anchor-layer:not(.connector-svg):not(.room-perspective-svg) {
+  translate: calc(var(--panel-x) - var(--art-x)) calc(var(--panel-y) - var(--art-y));
+}
+
+.museum-stage.is-parallax-enabled .connector-svg {
+  translate: 0 0;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .museum-stage {
     --look-x: 0;
