@@ -2371,12 +2371,14 @@ select:focus-visible {
 }
 
 .viewing-position-copy {
-  position: relative;
+  position: absolute;
+  left: 50%;
+  top: 24px;
   z-index: 2;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  margin-top: -18px;
+  margin-top: 0;
   border: 1px solid rgba(108, 222, 255, 0.46);
   border-radius: 999px;
   padding: 5px 10px 6px;
@@ -2387,6 +2389,7 @@ select:focus-visible {
   letter-spacing: 0;
   line-height: 1;
   white-space: nowrap;
+  transform: translateX(-50%);
   box-shadow:
     0 10px 22px rgba(0, 0, 0, 0.24),
     0 0 18px rgba(67, 207, 255, 0.18);
