@@ -2409,27 +2409,13 @@ select:focus-visible {
     0 0 18px rgba(67, 207, 255, 0.18);
 }
 
-.floor-guide-glow {
-  fill: rgba(63, 203, 255, 0.2);
-  filter: blur(1.5px);
-}
-
 .floor-guide-ribbon {
   fill: url("#floorBackArrowFill");
   stroke: url("#floorBackArrowEdge");
-  stroke-width: 3.25;
+  stroke-width: 3.6;
   stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
-  opacity: 0.92;
-}
-
-.floor-guide-centerline {
-  fill: none;
-  stroke: rgba(255, 255, 255, 0.82);
-  stroke-linecap: round;
-  stroke-width: 2.5;
-  stroke-dasharray: 7 8;
-  vector-effect: non-scaling-stroke;
+  opacity: 0.96;
 }
 
 .spec-lines-girl-artist .spec-source-face-light-boundary,

@@ -895,9 +895,7 @@
               <stop offset="100%" stop-color="#6cdeff" stop-opacity="0.95"></stop>
             </linearGradient>
           </defs>
-          <ellipse class="floor-guide-glow" cx="130" cy="102" rx="104" ry="16"></ellipse>
           <path class="floor-guide-ribbon" d="M97 14 C112 25 148 25 163 14 C151 43 148 62 151 78 L190 78 L130 116 L70 78 L109 78 C112 62 109 43 97 14 Z"></path>
-          <path class="floor-guide-centerline" d="M130 31 C130 50 130 73 130 100"></path>
         </svg>
         <span class="viewing-position-copy">${escapeHtml(t("cueUi.stepBackHint"))}</span>
       </div>
