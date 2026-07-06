@@ -788,7 +788,8 @@
   function renderConnectorSvg() {
     return `
       <svg class="connector-svg stage-layer--overlay" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-        <line x1="0" y1="0" x2="0" y2="0" pathLength="1"></line>
+        <line class="connector-line-base" x1="0" y1="0" x2="0" y2="0" pathLength="1"></line>
+        <line class="connector-line-draw" x1="0" y1="0" x2="0" y2="0" pathLength="1"></line>
         <circle class="connector-start" cx="0" cy="0" r="0.55"></circle>
         <circle class="connector-end" cx="0" cy="0" r="0.45"></circle>
       </svg>
@@ -1750,7 +1751,8 @@
     const scene = stage.querySelector("[data-stage-scene]");
     const svg = scene.querySelector(".connector-svg");
     if (!svg) return;
-    const line = svg.querySelector("line");
+    const lines = svg.querySelectorAll("line");
+    const line = svg.querySelector(".connector-line-draw") || lines[0];
     const start = svg.querySelector(".connector-start");
     const end = svg.querySelector(".connector-end");
     const sourceAnchorEl = scene.querySelector(".artwork-cue-layer .anchor-target") || scene.querySelector(".anchor-target");
@@ -1788,10 +1790,12 @@
     const x2 = ((panelConnectionX - sceneRect.left) / sceneRect.width) * 100;
     const y2 = ((panelConnectionY - sceneRect.top) / sceneRect.height) * 100;
 
-    line.setAttribute("x1", x1.toFixed(2));
-    line.setAttribute("y1", y1.toFixed(2));
-    line.setAttribute("x2", x2.toFixed(2));
-    line.setAttribute("y2", y2.toFixed(2));
+    lines.forEach((connectorLine) => {
+      connectorLine.setAttribute("x1", x1.toFixed(2));
+      connectorLine.setAttribute("y1", y1.toFixed(2));
+      connectorLine.setAttribute("x2", x2.toFixed(2));
+      connectorLine.setAttribute("y2", y2.toFixed(2));
+    });
     start.setAttribute("cx", x1.toFixed(2));
     start.setAttribute("cy", y1.toFixed(2));
     end.setAttribute("cx", x2.toFixed(2));

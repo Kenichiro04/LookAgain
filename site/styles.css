@@ -2549,8 +2549,18 @@ select:focus-visible {
   stroke: var(--green);
   stroke-width: 1.5;
   stroke-linecap: round;
-  stroke-dasharray: 0.018 0.028;
   vector-effect: non-scaling-stroke;
+}
+
+.connector-line-base {
+  opacity: 0.78;
+  stroke-dasharray: 0.018 0.028;
+}
+
+.connector-line-draw {
+  opacity: 0.94;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
 }
 
 .connector-svg circle {
@@ -2608,7 +2618,15 @@ select:focus-visible {
 
 .xr-stage.is-cue-sequence .connector-svg line {
   opacity: 0;
+}
+
+.xr-stage.is-cue-sequence .connector-svg .connector-line-base {
   stroke-dasharray: 0.018 0.028;
+  stroke-dashoffset: 0;
+}
+
+.xr-stage.is-cue-sequence .connector-svg .connector-line-draw {
+  stroke-dasharray: 1;
   stroke-dashoffset: 1;
 }
 
@@ -2648,20 +2666,24 @@ select:focus-visible {
   animation: xrCueLabelAppear 320ms ease-out 360ms both;
 }
 
-.xr-stage.is-cue-sequence.is-cue-sequence-active .connector-svg line {
-  animation: xrConnectorDraw 250ms cubic-bezier(0.18, 0.82, 0.18, 1) 120ms both;
+.xr-stage.is-cue-sequence.is-cue-sequence-active .connector-svg .connector-line-base {
+  animation: xrConnectorBaseReveal 150ms ease-out 460ms both;
+}
+
+.xr-stage.is-cue-sequence.is-cue-sequence-active .connector-svg .connector-line-draw {
+  animation: xrConnectorDraw 360ms cubic-bezier(0.2, 0.78, 0.18, 1) 110ms both;
 }
 
 .xr-stage.is-cue-sequence.is-cue-sequence-active .connector-svg .connector-start {
-  animation: xrConnectorDotAppear 150ms ease-out 90ms both;
+  animation: xrConnectorDotAppear 150ms ease-out 80ms both;
 }
 
 .xr-stage.is-cue-sequence.is-cue-sequence-active .connector-svg .connector-end {
-  animation: xrConnectorDotAppear 130ms ease-out 290ms both;
+  animation: xrConnectorDotAppear 130ms ease-out 450ms both;
 }
 
 .xr-stage.is-cue-sequence.is-cue-sequence-active .edge-panel {
-  animation: xrPanelAppearFromConnector 280ms cubic-bezier(0.16, 0.84, 0.2, 1) 340ms both;
+  animation: xrPanelAppearFromConnector 420ms cubic-bezier(0.16, 0.84, 0.2, 1) 460ms both;
 }
 
 .xr-stage.is-cue-sequence.is-cue-sequence-active .edge-panel[data-panel-position^="left"],
@@ -2674,7 +2696,7 @@ select:focus-visible {
 }
 
 .hero-stage.is-cue-sequence.is-cue-sequence-active .edge-panel {
-  animation: heroPanelAppearFromConnector 260ms cubic-bezier(0.16, 0.84, 0.2, 1) 340ms both;
+  animation: heroPanelAppearFromConnector 400ms cubic-bezier(0.16, 0.84, 0.2, 1) 460ms both;
 }
 
 .hero-stage.is-cue-sequence.is-cue-sequence-active .edge-panel[data-panel-position^="left"],
@@ -2727,9 +2749,22 @@ select:focus-visible {
     opacity: 1;
     stroke-dashoffset: 1;
   }
-  100% {
+  86% {
     opacity: 1;
     stroke-dashoffset: 0;
+  }
+  100% {
+    opacity: 0.22;
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes xrConnectorBaseReveal {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.78;
   }
 }
 
