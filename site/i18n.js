@@ -341,7 +341,7 @@
       }
     },
     difference: {
-      title: "Current Guides Comparison",
+      title: "What changes in the viewing experience",
       subtitle:
         "Museum guides are the first comparison, not the final goal.",
       existingLabel: "Current guides",
@@ -475,7 +475,7 @@
       }
     },
     preview: {
-      title: "Display Preview",
+      title: "See one perspective on the artwork",
       body:
         "Select a matrix card above. The preview shows how one expert perspective appears on the artwork, stays briefly, fades from view, and returns you to looking.",
       controls: {
@@ -708,6 +708,8 @@
         }
       },
       roadmapTitle: "Six-month roadmap",
+      roadmapReleaseTarget:
+        "The six-month milestone is a closed-test MVP. The nine-month target is an Android XR release candidate.",
       roadmap: {
         month1: {
           label: "Month 1",
@@ -755,6 +757,8 @@
       beyondBody2:
         "The larger vision is a pre-search perspective layer for the physical world. Before a person knows what to ask, Android XR can reveal one meaningful detail, open one grounded question, and disappear.",
       futureTitle: "Future contexts",
+      futureBody:
+        "Future directions may include cultural sites, architecture, and field learning. These are not part of the MVP.",
       future: {
         cultural: "cultural sites",
         architecture: "architect perspective",
@@ -1121,7 +1125,7 @@
       }
     },
     difference: {
-      title: "現状ガイドとの比較",
+      title: "鑑賞体験の何が変わるのか",
       subtitle:
         "美術館ガイドは最初の比較対象であり、最終ゴールではありません。",
       existingLabel: "現状のガイド",
@@ -1255,7 +1259,7 @@
       }
     },
     preview: {
-      title: "表示プレビュー",
+      title: "一つの視点を作品上で見る",
       body:
         "上のマトリクスカードを選ぶと、一つの専門家視点が作品の上に現れ、短く表示され、視界から消えて、作品を見る状態に戻る流れを確認できます。",
       controls: {
@@ -1488,6 +1492,8 @@
         }
       },
       roadmapTitle: "6か月ロードマップ",
+      roadmapReleaseTarget:
+        "6か月時点ではクローズドテスト用MVPをまとめ、9か月時点ではAndroid XR向け公開候補版を目指します。",
       roadmap: {
         month1: {
           label: "1か月目",
@@ -1535,6 +1541,8 @@
       beyondBody2:
         "より大きな構想は、現実世界のための検索前の視点レイヤーである。人が何を問えばいいか分かる前に、Android XRが意味のある一点を見えるようにし、出典に基づく問いを一つだけ開いて、すぐ消える。",
       futureTitle: "今後の文脈",
+      futureBody:
+        "将来的には、文化財、建築、フィールド学習などへの応用を検討します。ただし、これらは現在のMVP範囲には含めません。",
       future: {
         cultural: "文化遺産・史跡",
         architecture: "建築家視点",
