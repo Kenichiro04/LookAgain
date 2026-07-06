@@ -969,16 +969,16 @@
   function specLineDefinitions(spec) {
     const definitions = {
       "lastSupper-artist": [
-        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M-22 -82 L50.2 43.4" },
-        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M8.8 -82 L50.2 43.4" },
-        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M91.4 -82 L50.2 43.4" },
-        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M122.3 -82 L50.2 43.4" },
-        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M-32 3.0 L50.2 43.4" },
-        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M-32 17.1 L50.2 43.4" },
-        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M132 3.0 L50.2 43.4" },
-        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M132 17.1 L50.2 43.4" },
-        { source: "table orthogonal", kind: "object", arrow: false, path: "M-32 87.4 L50.2 43.4" },
-        { source: "table orthogonal", kind: "object", arrow: false, path: "M132 87.5 L50.2 43.4" }
+        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M-51.3 -132 L50.2 43.4" },
+        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M-6.6 -132 L50.2 43.4" },
+        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M106.3 -132 L50.2 43.4" },
+        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M151 -132 L50.2 43.4" },
+        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M-55 -8.3 L50.2 43.4" },
+        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M-55 9.8 L50.2 43.4" },
+        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M155 -8.5 L50.2 43.4" },
+        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M155 9.7 L50.2 43.4" },
+        { source: "table orthogonal", kind: "object", arrow: false, path: "M-55 99.7 L50.2 43.4" },
+        { source: "table orthogonal", kind: "object", arrow: false, path: "M155 99.9 L50.2 43.4" }
       ],
       "lastSupper-social": [
         { source: "table edge", kind: "object", path: "M24 64 L82 64" },

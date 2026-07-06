@@ -2373,7 +2373,8 @@ select:focus-visible {
 .viewing-position-copy {
   position: absolute;
   left: 50%;
-  top: 24px;
+  top: auto;
+  bottom: -10px;
   z-index: 2;
   display: inline-flex;
   align-items: center;
