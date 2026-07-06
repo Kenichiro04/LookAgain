@@ -343,7 +343,7 @@
     difference: {
       title: "What changes in the viewing experience",
       subtitle:
-        "Museum guides are the first comparison, not the final goal.",
+        "Museum viewing is the concrete example here.",
       existingLabel: "Current guides",
       existingMicrocopy:
         "They are useful, but you still have to find a way into the work.",
@@ -1125,7 +1125,7 @@
     difference: {
       title: "鑑賞体験の何が変わるのか",
       subtitle:
-        "美術館ガイドは最初の比較対象であり、最終ゴールではありません。",
+        "ここでは、美術館での鑑賞を例に違いを説明します。",
       existingLabel: "現状のガイド",
       existingMicrocopy:
         "役には立つ。でも、作品に入っていく視点はまだ自分で見つける必要がある。",

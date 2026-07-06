@@ -1845,16 +1845,11 @@
     const anchorRect = inflateRect(labelAnchor.getBoundingClientRect(), 8);
     const label = labelAnchor.querySelector(".anchor-label");
     const labelRect = label ? label.getBoundingClientRect() : null;
-    const maskRects = Array.from(scene.querySelectorAll(".spec-material-scan, .spec-light-edge, .spec-color-wash, .spec-object-ring"))
-      .map((element) => inflateRect(element.getBoundingClientRect(), 6));
     const safeGap = 18;
-    const maskGap = 4;
     const padding = 12;
     const initialTargetRect = labelRect ? unionRects(anchorRect, labelRect) : anchorRect;
-    const maskOverlapFor = (rect) => maskRects.reduce((sum, maskRect) => sum + overlapArea(maskRect, rect, maskGap), 0);
     const initialPanelOverlap = overlapArea(panelRect, initialTargetRect, safeGap);
-    const initialMaskOverlap = labelRect ? maskOverlapFor(labelRect) : 0;
-    if (!initialPanelOverlap && !initialMaskOverlap) return;
+    if (!initialPanelOverlap) return;
 
     if (labelRect) {
       const labelCandidates = [
@@ -1873,13 +1868,10 @@
           const shiftedLabel = shiftRect(labelRect, x, y);
           const targetRect = unionRects(anchorRect, shiftedLabel);
           const panelOverlap = overlapArea(panelRect, targetRect, safeGap);
-          const maskOverlap = maskOverlapFor(shiftedLabel);
           return {
             x,
             y,
             panelOverlap,
-            maskOverlap,
-            overlap: panelOverlap * 1.3 + maskOverlap,
             boundsPenalty: rectWithinScenePenalty(targetRect, sceneRect, padding),
             distance: Math.abs(x) + Math.abs(y) * 1.08
           };
@@ -1887,14 +1879,13 @@
         .sort((a, b) =>
           a.boundsPenalty - b.boundsPenalty ||
           a.panelOverlap - b.panelOverlap ||
-          a.maskOverlap - b.maskOverlap ||
           a.distance - b.distance
         )[0];
 
       if (
         bestLabel &&
         bestLabel.boundsPenalty === 0 &&
-        (bestLabel.panelOverlap < initialPanelOverlap || bestLabel.maskOverlap < initialMaskOverlap || bestLabel.distance === 0)
+        (bestLabel.panelOverlap < initialPanelOverlap || bestLabel.distance === 0)
       ) {
         labelAnchor.style.setProperty("--anchor-label-safe-x", `${bestLabel.x.toFixed(2)}px`);
         labelAnchor.style.setProperty("--anchor-label-safe-y", `${bestLabel.y.toFixed(2)}px`);
