@@ -1937,9 +1937,9 @@ select:focus-visible {
 
 .hero-stage[data-cue-spec-id="girl:artist"] .floating-anchor-target.anchor-target .anchor-label,
 .explorer-stage[data-cue-spec-id="girl:artist"] .floating-anchor-target.anchor-target .anchor-label {
-  top: calc(100% + 22px);
+  top: calc(100% + 30px);
   bottom: auto;
-  left: calc(50% - 58px);
+  left: calc(50% - 96px);
 }
 
 .hero-stage[data-cue-spec-id="girl:restorer"] .floating-anchor-target.anchor-target .anchor-label,
