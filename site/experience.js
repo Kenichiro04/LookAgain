@@ -788,8 +788,7 @@
   function renderConnectorSvg() {
     return `
       <svg class="connector-svg stage-layer--overlay" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-        <line class="connector-line-base" x1="0" y1="0" x2="0" y2="0" pathLength="1"></line>
-        <line class="connector-line-draw" x1="0" y1="0" x2="0" y2="0" pathLength="1"></line>
+        <line class="connector-line-draw" x1="0" y1="0" x2="0" y2="0"></line>
         <circle class="connector-start" cx="0" cy="0" r="0.55"></circle>
         <circle class="connector-end" cx="0" cy="0" r="0.45"></circle>
       </svg>
@@ -1789,6 +1788,7 @@
     const y1 = ((anchorCenterY - sceneRect.top) / sceneRect.height) * 100;
     const x2 = ((panelConnectionX - sceneRect.left) / sceneRect.width) * 100;
     const y2 = ((panelConnectionY - sceneRect.top) / sceneRect.height) * 100;
+    const connectorPathLength = Math.hypot(panelConnectionX - anchorCenterX, panelConnectionY - anchorCenterY);
 
     lines.forEach((connectorLine) => {
       connectorLine.setAttribute("x1", x1.toFixed(2));
@@ -1796,6 +1796,7 @@
       connectorLine.setAttribute("x2", x2.toFixed(2));
       connectorLine.setAttribute("y2", y2.toFixed(2));
     });
+    svg.style.setProperty("--connector-path-length", `${connectorPathLength.toFixed(2)}px`);
     start.setAttribute("cx", x1.toFixed(2));
     start.setAttribute("cy", y1.toFixed(2));
     end.setAttribute("cx", x2.toFixed(2));
