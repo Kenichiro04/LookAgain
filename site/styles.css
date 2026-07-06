@@ -2658,19 +2658,19 @@ select:focus-visible {
 }
 
 .xr-stage.is-cue-sequence.is-cue-sequence-active .connector-svg line {
-  animation: xrConnectorDraw 360ms cubic-bezier(0.2, 0.78, 0.18, 1) 260ms both;
+  animation: xrConnectorDraw 360ms cubic-bezier(0.2, 0.78, 0.18, 1) 220ms both;
 }
 
 .xr-stage.is-cue-sequence.is-cue-sequence-active .connector-svg .connector-start {
-  animation: xrConnectorDotAppear 180ms ease-out 220ms both;
+  animation: xrConnectorDotAppear 180ms ease-out 180ms both;
 }
 
 .xr-stage.is-cue-sequence.is-cue-sequence-active .connector-svg .connector-end {
-  animation: xrConnectorDotAppear 180ms ease-out 585ms both;
+  animation: xrConnectorDotAppear 180ms ease-out 420ms both;
 }
 
 .xr-stage.is-cue-sequence.is-cue-sequence-active .edge-panel {
-  animation: xrPanelAppearFromConnector 300ms cubic-bezier(0.18, 0.82, 0.2, 1) 600ms both;
+  animation: xrPanelAppearFromConnector 300ms cubic-bezier(0.18, 0.82, 0.2, 1) 400ms both;
 }
 
 .xr-stage.is-cue-sequence.is-cue-sequence-active .edge-panel[data-panel-position^="left"],
@@ -2683,7 +2683,7 @@ select:focus-visible {
 }
 
 .hero-stage.is-cue-sequence.is-cue-sequence-active .edge-panel {
-  animation: heroPanelAppearFromConnector 280ms cubic-bezier(0.18, 0.82, 0.2, 1) 600ms both;
+  animation: heroPanelAppearFromConnector 280ms cubic-bezier(0.18, 0.82, 0.2, 1) 400ms both;
 }
 
 .hero-stage.is-cue-sequence.is-cue-sequence-active .edge-panel[data-panel-position^="left"],
