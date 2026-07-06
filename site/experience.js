@@ -732,6 +732,7 @@
     stage.classList.toggle("is-cue-sequence", runCueSequence);
     stage.classList.toggle("has-floating-anchor", runCueSequence);
     stage.classList.remove("is-cue-sequence-active");
+    delete stage.dataset.connectorLockedFor;
     stage.dataset.cueSequenceVisible = "false";
     if (runCueSequence && reducedMotion) {
       stage.classList.add("is-cue-sequence-active");
@@ -1716,7 +1717,10 @@
   function restartCueSequence(stage) {
     if (!stage || reducedMotion || !stage.classList.contains("is-cue-sequence")) return;
     stage.classList.remove("is-cue-sequence-active");
+    delete stage.dataset.connectorLockedFor;
     void stage.offsetWidth;
+    positionConnector(stage, { force: true });
+    stage.dataset.connectorLockedFor = stage.dataset.cueSequenceKey || "active";
     requestAnimationFrame(() => {
       if (stage.classList.contains("is-cue-sequence")) {
         stage.classList.add("is-cue-sequence-active");
@@ -1746,7 +1750,14 @@
     cueSequenceObserver.observe(stage);
   }
 
-  function positionConnector(stage) {
+  function positionConnector(stage, options = {}) {
+    if (
+      !options.force &&
+      stage?.dataset.connectorLockedFor &&
+      stage.dataset.connectorLockedFor === (stage.dataset.cueSequenceKey || "active")
+    ) {
+      return;
+    }
     const scene = stage.querySelector("[data-stage-scene]");
     const svg = scene.querySelector(".connector-svg");
     if (!svg) return;
@@ -2725,8 +2736,8 @@
       button.addEventListener("click", () => setLanguage(button.dataset.langButton));
     });
     window.addEventListener("resize", () => {
-      positionConnector(heroStage);
-      positionConnector(explorerStage);
+      positionConnector(heroStage, { force: true });
+      positionConnector(explorerStage, { force: true });
       scheduleMatrixConnectorPositioning();
     });
   }
