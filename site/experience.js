@@ -1763,12 +1763,15 @@
     }
 
     svg.style.display = "block";
-    avoidPanelAnchorOverlap(scene, panel, anchorEl);
     const sceneRect = scene.getBoundingClientRect();
     const anchorRect = anchorEl.getBoundingClientRect();
-    const panelRect = panel.getBoundingClientRect();
     const anchorCenterX = anchorRect.left + anchorRect.width / 2;
     const anchorCenterY = anchorRect.top + anchorRect.height / 2;
+    scene.style.setProperty("--floating-anchor-x", `${(anchorCenterX - sceneRect.left).toFixed(2)}px`);
+    scene.style.setProperty("--floating-anchor-y", `${(anchorCenterY - sceneRect.top).toFixed(2)}px`);
+
+    avoidPanelAnchorOverlap(scene, panel, anchorEl);
+    const panelRect = panel.getBoundingClientRect();
     const panelConnectionX = anchorCenterX <= panelRect.left ? panelRect.left : panelRect.right;
     const panelConnectionY = Math.max(
       panelRect.top + 22,
@@ -1789,8 +1792,6 @@
     start.setAttribute("cy", y1.toFixed(2));
     end.setAttribute("cx", x2.toFixed(2));
     end.setAttribute("cy", y2.toFixed(2));
-    scene.style.setProperty("--floating-anchor-x", `${(anchorCenterX - sceneRect.left).toFixed(2)}px`);
-    scene.style.setProperty("--floating-anchor-y", `${(anchorCenterY - sceneRect.top).toFixed(2)}px`);
     panel.style.setProperty("--connector-origin-x", panelOriginX);
     panel.style.setProperty("--connector-origin-y", `${panelOriginY.toFixed(2)}%`);
     syncPreviewPanelScrollHint(stage);
@@ -1833,18 +1834,27 @@
     const sceneRect = scene.getBoundingClientRect();
     panel.style.setProperty("--panel-safe-x", "0px");
     panel.style.setProperty("--panel-safe-y", "0px");
-    anchorEl.style.setProperty("--anchor-label-safe-x", "0px");
-    anchorEl.style.setProperty("--anchor-label-safe-y", "0px");
-    anchorEl.classList.remove("is-anchor-label-minimized");
+    const labelAnchor = scene.querySelector(".floating-anchor-target.anchor-target") || anchorEl;
+    new Set([anchorEl, labelAnchor]).forEach((target) => {
+      target.style.setProperty("--anchor-label-safe-x", "0px");
+      target.style.setProperty("--anchor-label-safe-y", "0px");
+      target.classList.remove("is-anchor-label-minimized");
+    });
 
     const panelRect = panel.getBoundingClientRect();
-    const anchorRect = inflateRect(anchorEl.getBoundingClientRect(), 8);
-    const label = anchorEl.querySelector(".anchor-label");
+    const anchorRect = inflateRect(labelAnchor.getBoundingClientRect(), 8);
+    const label = labelAnchor.querySelector(".anchor-label");
     const labelRect = label ? label.getBoundingClientRect() : null;
+    const maskRects = Array.from(scene.querySelectorAll(".spec-material-scan, .spec-light-edge, .spec-color-wash, .spec-object-ring"))
+      .map((element) => inflateRect(element.getBoundingClientRect(), 6));
     const safeGap = 18;
+    const maskGap = 4;
     const padding = 12;
     const initialTargetRect = labelRect ? unionRects(anchorRect, labelRect) : anchorRect;
-    if (!rectsOverlap(panelRect, initialTargetRect, safeGap)) return;
+    const maskOverlapFor = (rect) => maskRects.reduce((sum, maskRect) => sum + overlapArea(maskRect, rect, maskGap), 0);
+    const initialPanelOverlap = overlapArea(panelRect, initialTargetRect, safeGap);
+    const initialMaskOverlap = labelRect ? maskOverlapFor(labelRect) : 0;
+    if (!initialPanelOverlap && !initialMaskOverlap) return;
 
     if (labelRect) {
       const labelCandidates = [
@@ -1856,16 +1866,40 @@
         [-58, -42],
         [58, -42],
         [-58, 42],
-        [58, 42]
+        [58, 42],
+        [0, -86],
+        [0, 86],
+        [-86, 0],
+        [86, 0],
+        [-86, -64],
+        [86, -64],
+        [-86, 64],
+        [86, 64],
+        [-86, -86],
+        [86, -86],
+        [-86, 86],
+        [86, 86],
+        [0, -112],
+        [0, 112],
+        [-110, 0],
+        [110, 0],
+        [-110, -86],
+        [110, -86],
+        [-110, 86],
+        [110, 86]
       ];
       const bestLabel = labelCandidates
         .map(([x, y]) => {
           const shiftedLabel = shiftRect(labelRect, x, y);
           const targetRect = unionRects(anchorRect, shiftedLabel);
+          const panelOverlap = overlapArea(panelRect, targetRect, safeGap);
+          const maskOverlap = maskOverlapFor(shiftedLabel);
           return {
             x,
             y,
-            overlap: overlapArea(panelRect, targetRect, safeGap),
+            panelOverlap,
+            maskOverlap,
+            overlap: panelOverlap * 1.3 + maskOverlap,
             boundsPenalty: rectWithinScenePenalty(targetRect, sceneRect, padding),
             distance: Math.abs(x) + Math.abs(y) * 1.08
           };
@@ -1876,13 +1910,15 @@
           a.distance - b.distance
         )[0];
 
-      if (bestLabel && bestLabel.overlap === 0 && bestLabel.boundsPenalty === 0) {
-        anchorEl.style.setProperty("--anchor-label-safe-x", `${bestLabel.x.toFixed(2)}px`);
-        anchorEl.style.setProperty("--anchor-label-safe-y", `${bestLabel.y.toFixed(2)}px`);
-        return;
+      const initialOverlap = initialPanelOverlap * 1.3 + initialMaskOverlap;
+      if (bestLabel && bestLabel.boundsPenalty === 0 && bestLabel.overlap <= initialOverlap) {
+        labelAnchor.style.setProperty("--anchor-label-safe-x", `${bestLabel.x.toFixed(2)}px`);
+        labelAnchor.style.setProperty("--anchor-label-safe-y", `${bestLabel.y.toFixed(2)}px`);
+        if (bestLabel.panelOverlap === 0) return;
       }
 
-      anchorEl.classList.add("is-anchor-label-minimized");
+      if (!initialPanelOverlap) return;
+      labelAnchor.classList.add("is-anchor-label-minimized");
       if (!rectsOverlap(panelRect, anchorRect, safeGap)) return;
     }
 
