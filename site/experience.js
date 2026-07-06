@@ -2061,17 +2061,18 @@
     });
   }
 
-  const PARALLAX_LERP = 0.16;
+  const PARALLAX_LERP = 0.24;
+  const PARALLAX_REST_THRESHOLD = 0.006;
   const PARALLAX_RANGE = {
-    roomX: 3.2,
-    roomY: 2.2,
-    overlayX: 7.2,
-    overlayY: 4.2,
-    panelX: 4.8,
-    panelY: 3,
-    phoneX: 14,
-    phoneY: 8.4,
-    phoneRotate: 1.2
+    roomX: 2.4,
+    roomY: 1.6,
+    overlayX: 4.8,
+    overlayY: 2.8,
+    panelX: 3.1,
+    panelY: 2,
+    phoneX: 10,
+    phoneY: 6,
+    phoneRotate: 0.8
   };
 
   function setStageParallax(stage, x, y) {
@@ -2131,11 +2132,14 @@
       const dy = state.targetY - state.currentY;
       state.currentX += dx * PARALLAX_LERP;
       state.currentY += dy * PARALLAX_LERP;
-      if (Math.abs(dx) < 0.002) state.currentX = state.targetX;
-      if (Math.abs(dy) < 0.002) state.currentY = state.targetY;
+      if (Math.abs(dx) < PARALLAX_REST_THRESHOLD) state.currentX = state.targetX;
+      if (Math.abs(dy) < PARALLAX_REST_THRESHOLD) state.currentY = state.targetY;
       setStageParallax(stage, state.currentX, state.currentY);
       positionConnector(stage);
-      if (Math.abs(state.targetX - state.currentX) > 0.002 || Math.abs(state.targetY - state.currentY) > 0.002) {
+      if (
+        Math.abs(state.targetX - state.currentX) > PARALLAX_REST_THRESHOLD ||
+        Math.abs(state.targetY - state.currentY) > PARALLAX_REST_THRESHOLD
+      ) {
         state.frame = window.requestAnimationFrame(animate);
       }
     };
