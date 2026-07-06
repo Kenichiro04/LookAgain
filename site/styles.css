@@ -437,8 +437,12 @@ select:focus-visible {
   will-change: translate, rotate;
 }
 
+.stage-layer--panel {
+  translate: var(--panel-safe-x, 0px) var(--panel-safe-y, 0px);
+}
+
 .museum-stage.is-parallax-enabled .stage-layer--panel {
-  translate: var(--panel-x) var(--panel-y);
+  translate: calc(var(--panel-x) + var(--panel-safe-x, 0px)) calc(var(--panel-y) + var(--panel-safe-y, 0px));
   will-change: translate;
 }
 
@@ -1791,6 +1795,27 @@ select:focus-visible {
   background: var(--green);
 }
 
+.floating-anchor-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+  pointer-events: none;
+}
+
+.floating-anchor-proxy {
+  display: none !important;
+}
+
+.floating-anchor-target.anchor-target {
+  left: var(--floating-anchor-x, -999px);
+  top: var(--floating-anchor-y, -999px);
+  z-index: 1;
+}
+
+.xr-stage.has-floating-anchor .artwork-cue-layer .anchor-target {
+  visibility: hidden;
+}
+
 .anchor-label {
   position: absolute;
   left: 50%;
@@ -1809,9 +1834,14 @@ select:focus-visible {
   line-height: 1.08;
   text-align: center;
   text-wrap: balance;
+  translate: var(--anchor-label-safe-x, 0px) var(--anchor-label-safe-y, 0px);
   transform: translateX(-50%);
   backdrop-filter: blur(8px);
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.3);
+}
+
+.anchor-target.is-anchor-label-minimized .anchor-label {
+  display: none;
 }
 
 .anchor-kicker {
@@ -1865,10 +1895,10 @@ select:focus-visible {
 }
 
 .pointer-from-right-toward-left-center-wall-area + .anchor-target .anchor-label {
-  top: 50%;
+  top: calc(100% + 20px);
   bottom: auto;
-  left: calc(50% + 150px);
-  transform: translate(-50%, -50%);
+  left: calc(50% + 116px);
+  transform: translateX(-50%);
 }
 
 .pointer-from-upper-right-toward-table-center + .anchor-target .anchor-label {
@@ -2251,6 +2281,7 @@ select:focus-visible {
   inset: 0;
   width: 100%;
   height: 100%;
+  overflow: visible;
 }
 
 .explorer-stage .spec-lines-lastSupper-artist {
@@ -2262,6 +2293,55 @@ select:focus-visible {
 .spec-lines-girl-artist .spec-source-attention-path {
   stroke: rgba(155, 229, 140, 0.88);
   stroke-dasharray: 0.95 1.35;
+}
+
+.viewing-position-hint {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(28px, 5.4%, 52px);
+  z-index: 4;
+  display: inline-grid;
+  justify-items: center;
+  width: min(45%, 430px);
+  min-width: 270px;
+  pointer-events: none;
+  transform: translateX(-50%);
+  transform-origin: 50% 100%;
+}
+
+.viewing-position-arrow {
+  display: block;
+  width: min(330px, 36vw);
+  height: 124px;
+  overflow: visible;
+  transform: perspective(520px) rotateX(64deg);
+  transform-origin: 50% 100%;
+  filter:
+    drop-shadow(0 16px 18px rgba(0, 0, 0, 0.36))
+    drop-shadow(0 0 18px rgba(67, 207, 255, 0.22));
+}
+
+.floor-guide-glow {
+  fill: rgba(63, 203, 255, 0.2);
+  filter: blur(1.5px);
+}
+
+.floor-guide-ribbon {
+  fill: url("#floorBackArrowFill");
+  stroke: url("#floorBackArrowEdge");
+  stroke-width: 3.25;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.92;
+}
+
+.floor-guide-centerline {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.82);
+  stroke-linecap: round;
+  stroke-width: 2.5;
+  stroke-dasharray: 7 8;
+  vector-effect: non-scaling-stroke;
 }
 
 .spec-lines-girl-artist .spec-source-face-light-boundary,
@@ -7591,6 +7671,11 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
     min-height: 620px;
   }
 
+  .explorer-stage[data-artwork="girl"][data-state="restorer"] .spec-edge-panel {
+    max-height: min(54%, 340px);
+    overflow: auto;
+  }
+
   .aura-grid,
   .category-reframe,
   .experience-flow,
@@ -8073,6 +8158,10 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
 
   .hero-stage .anchor-label,
   .explorer-stage .anchor-label {
+    display: none;
+  }
+
+  .viewing-position-hint {
     display: none;
   }
 

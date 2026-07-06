@@ -10,8 +10,8 @@ window.LookAgainCueSpecsV23Data = [
     "target_label_en": "Vanishing point and table lines",
     "target_label_ja": "消失点と食卓の線",
     "target_coordinates": {
-      "x": 50,
-      "y": 43.6
+      "x": 50.2,
+      "y": 43.4
     },
     "target_region": {
       "x1": 35,

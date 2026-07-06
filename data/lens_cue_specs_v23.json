@@ -8,7 +8,7 @@
     "lens_title_ja": "画家の視点",
     "target_label_en": "Vanishing point and table lines",
     "target_label_ja": "消失点と食卓の線",
-    "target_coordinates": { "x": 50, "y": 43.6 },
+    "target_coordinates": { "x": 50.2, "y": 43.4 },
     "target_region": { "x1": 35, "y1": 26, "x2": 65, "y2": 62 },
     "pointer_direction": "from lower-right toward center",
     "visual_cue_types": ["target-pulse", "pointer-finger", "connector-line", "object-following-line"],

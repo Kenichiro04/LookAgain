@@ -730,6 +730,7 @@
       : "";
     stage.classList.remove("is-stage-changing", "is-xr-reveal");
     stage.classList.toggle("is-cue-sequence", runCueSequence);
+    stage.classList.toggle("has-floating-anchor", runCueSequence);
     stage.classList.remove("is-cue-sequence-active");
     stage.dataset.cueSequenceVisible = "false";
     if (runCueSequence && reducedMotion) {
@@ -753,12 +754,14 @@
       ${config.panel && config.cue ? renderConnectorSvg() : ""}
       ${renderStagePerspective(config)}
       ${renderArtwork(artwork, config)}
+      ${renderViewingPositionHint(config)}
       ${config.uncertainFocus ? '<div class="uncertain-focus-layer stage-layer--overlay" aria-hidden="true"></div>' : ""}
       ${config.phone ? '<div class="phone-focus-veil stage-layer--overlay" aria-hidden="true"></div>' : ""}
       ${config.audio ? renderAudioCue(config) : ""}
       ${config.phone ? renderPhoneMock(artwork) : ""}
       ${config.wearing ? renderWearingHud() : ""}
       ${config.viewpointSelect ? renderViewpointSelector(config.viewpointSelectedLens) : ""}
+      ${runCueSequence ? renderFloatingAnchor(config) : ""}
       ${config.panel ? renderPanel(config) : ""}
       ${config.quiet ? renderQuietMessage() : ""}
     `;
@@ -792,6 +795,24 @@
     `;
   }
 
+  function renderFloatingAnchor(config) {
+    const pointerClass = pointerDirectionClass(config.pointerDirection);
+    const targetLabel = config.cueSpec
+      ? cueSpecText(config.cueSpec, "target_label")
+      : (config.targetLabel || t("cueUi.discoveryPoint"));
+    return `
+      <div class="floating-anchor-layer stage-layer--overlay" aria-hidden="true">
+        <span class="floating-anchor-proxy pointer-cue ${pointerClass}"></span>
+        <span class="floating-anchor-target anchor-target" data-pointer-direction="${escapeAttr(config.pointerDirection || "")}">
+          <span class="anchor-label">
+            <span class="anchor-kicker">${escapeHtml(t("cueUi.discoveryPoint"))}</span>
+            <span>${escapeHtml(targetLabel)}</span>
+          </span>
+        </span>
+      </div>
+    `;
+  }
+
   function renderStaticStageMarkup(stateId, overrides = {}) {
     const config = stageConfigFor(stateId, overrides);
     const artwork = artworks[config.artwork];
@@ -809,6 +830,7 @@
           </svg>
           ${renderStagePerspective(config)}
           ${renderArtwork(artwork, config)}
+          ${renderViewingPositionHint(config)}
           ${config.panel ? renderPanel(config) : ""}
         </div>
       </div>
@@ -855,6 +877,30 @@
     // The refectory view is off-axis, so room-scale vanishing lines are not shown.
     // Last Supper perspective cues are drawn from painted objects and may extend beyond the mural edge.
     return "";
+  }
+
+  function renderViewingPositionHint(config) {
+    if (config.matrixPreview || !config.cueSpec || cueSpecClass(config.cueSpec) !== "lastSupper-artist") return "";
+    return `
+      <div class="viewing-position-hint stage-layer--overlay" aria-hidden="true">
+        <svg class="viewing-position-arrow" viewBox="0 0 260 124" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="floorBackArrowFill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#37caff" stop-opacity="0.02"></stop>
+              <stop offset="44%" stop-color="#37caff" stop-opacity="0.34"></stop>
+              <stop offset="100%" stop-color="#ffffff" stop-opacity="0.92"></stop>
+            </linearGradient>
+            <linearGradient id="floorBackArrowEdge" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#4ad1ff" stop-opacity="0.08"></stop>
+              <stop offset="100%" stop-color="#6cdeff" stop-opacity="0.95"></stop>
+            </linearGradient>
+          </defs>
+          <ellipse class="floor-guide-glow" cx="130" cy="102" rx="104" ry="16"></ellipse>
+          <path class="floor-guide-ribbon" d="M97 14 C112 25 148 25 163 14 C151 43 148 62 151 78 L190 78 L130 116 L70 78 L109 78 C112 62 109 43 97 14 Z"></path>
+          <path class="floor-guide-centerline" d="M130 31 C130 50 130 73 130 100"></path>
+        </svg>
+      </div>
+    `;
   }
 
   function renderSpecCue(config) {
@@ -922,18 +968,16 @@
   function specLineDefinitions(spec) {
     const definitions = {
       "lastSupper-artist": [
-        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M28 -6 L50 43.6" },
-        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M36 -6 L50 43.6" },
-        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M64 -6 L50 43.6" },
-        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M72 -6 L50 43.6" },
-        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M-8 -2.8 L50 43.6" },
-        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M-8 2.4 L50 43.6" },
-        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M-8 11.6 L50 43.6" },
-        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M108 -2.8 L50 43.6" },
-        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M108 2.4 L50 43.6" },
-        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M108 11.6 L50 43.6" },
-        { source: "table orthogonal", kind: "object", arrow: false, path: "M-6 79 L50 43.6" },
-        { source: "table orthogonal", kind: "object", arrow: false, path: "M106 79 L50 43.6" }
+        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M24 -28 L50.2 43.4" },
+        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M34 -24 L50.2 43.4" },
+        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M66 -24 L50.2 43.4" },
+        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M76 -28 L50.2 43.4" },
+        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M-28 -16 L50.2 43.4" },
+        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M-28 14 L50.2 43.4" },
+        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M128 -16 L50.2 43.4" },
+        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M128 14 L50.2 43.4" },
+        { source: "table orthogonal", kind: "object", arrow: false, path: "M-24 110 L50.2 43.4" },
+        { source: "table orthogonal", kind: "object", arrow: false, path: "M124 110 L50.2 43.4" }
       ],
       "lastSupper-social": [
         { source: "table edge", kind: "object", path: "M24 64 L82 64" },
@@ -1719,6 +1763,7 @@
     }
 
     svg.style.display = "block";
+    avoidPanelAnchorOverlap(scene, panel, anchorEl);
     const sceneRect = scene.getBoundingClientRect();
     const anchorRect = anchorEl.getBoundingClientRect();
     const panelRect = panel.getBoundingClientRect();
@@ -1744,8 +1789,171 @@
     start.setAttribute("cy", y1.toFixed(2));
     end.setAttribute("cx", x2.toFixed(2));
     end.setAttribute("cy", y2.toFixed(2));
+    scene.style.setProperty("--floating-anchor-x", `${(anchorCenterX - sceneRect.left).toFixed(2)}px`);
+    scene.style.setProperty("--floating-anchor-y", `${(anchorCenterY - sceneRect.top).toFixed(2)}px`);
     panel.style.setProperty("--connector-origin-x", panelOriginX);
     panel.style.setProperty("--connector-origin-y", `${panelOriginY.toFixed(2)}%`);
+  }
+
+  function avoidPanelAnchorOverlap(scene, panel, anchorEl) {
+    const sceneRect = scene.getBoundingClientRect();
+    panel.style.setProperty("--panel-safe-x", "0px");
+    panel.style.setProperty("--panel-safe-y", "0px");
+    anchorEl.style.setProperty("--anchor-label-safe-x", "0px");
+    anchorEl.style.setProperty("--anchor-label-safe-y", "0px");
+    anchorEl.classList.remove("is-anchor-label-minimized");
+
+    const panelRect = panel.getBoundingClientRect();
+    const anchorRect = inflateRect(anchorEl.getBoundingClientRect(), 8);
+    const label = anchorEl.querySelector(".anchor-label");
+    const labelRect = label ? label.getBoundingClientRect() : null;
+    const safeGap = 18;
+    const padding = 12;
+    const initialTargetRect = labelRect ? unionRects(anchorRect, labelRect) : anchorRect;
+    if (!rectsOverlap(panelRect, initialTargetRect, safeGap)) return;
+
+    if (labelRect) {
+      const labelCandidates = [
+        [0, 0],
+        [0, -68],
+        [0, 68],
+        [-112, 0],
+        [112, 0],
+        [-112, -56],
+        [112, -56],
+        [-112, 56],
+        [112, 56],
+        [0, -104],
+        [0, 104]
+      ];
+      const bestLabel = labelCandidates
+        .map(([x, y]) => {
+          const shiftedLabel = shiftRect(labelRect, x, y);
+          const targetRect = unionRects(anchorRect, shiftedLabel);
+          return {
+            x,
+            y,
+            overlap: overlapArea(panelRect, targetRect, safeGap),
+            boundsPenalty: rectWithinScenePenalty(targetRect, sceneRect, padding),
+            distance: Math.abs(x) + Math.abs(y) * 1.08
+          };
+        })
+        .sort((a, b) =>
+          a.boundsPenalty - b.boundsPenalty ||
+          a.overlap - b.overlap ||
+          a.distance - b.distance
+        )[0];
+
+      if (bestLabel && bestLabel.overlap === 0 && bestLabel.boundsPenalty === 0) {
+        anchorEl.style.setProperty("--anchor-label-safe-x", `${bestLabel.x.toFixed(2)}px`);
+        anchorEl.style.setProperty("--anchor-label-safe-y", `${bestLabel.y.toFixed(2)}px`);
+        return;
+      }
+
+      anchorEl.classList.add("is-anchor-label-minimized");
+      if (!rectsOverlap(panelRect, anchorRect, safeGap)) return;
+    }
+
+    const minX = sceneRect.left + padding - panelRect.left;
+    const maxX = sceneRect.right - padding - panelRect.right;
+    const minY = sceneRect.top + padding - panelRect.top;
+    const maxY = sceneRect.bottom - padding - panelRect.bottom;
+    const maxNudgeX = 92;
+    const maxNudgeY = 92;
+    const rawCandidates = [
+      [0, 0],
+      [0, -maxNudgeY],
+      [0, maxNudgeY],
+      [-maxNudgeX, 0],
+      [maxNudgeX, 0],
+      [-maxNudgeX, -maxNudgeY],
+      [maxNudgeX, -maxNudgeY],
+      [-maxNudgeX, maxNudgeY],
+      [maxNudgeX, maxNudgeY]
+    ];
+    const candidates = rawCandidates
+      .map(([x, y]) => ({
+        x: clamp(x, minX, maxX),
+        y: clamp(y, minY, maxY)
+      }))
+      .filter((candidate, index, list) =>
+        list.findIndex((item) => Math.abs(item.x - candidate.x) < 0.5 && Math.abs(item.y - candidate.y) < 0.5) === index
+      );
+
+    const scored = candidates
+      .map((candidate) => {
+        const shifted = shiftRect(panelRect, candidate.x, candidate.y);
+        const overlap = overlapArea(shifted, anchorRect, safeGap);
+        const distance = Math.abs(candidate.x) * 1.18 + Math.abs(candidate.y);
+        const boundsPenalty = rectWithinScenePenalty(shifted, sceneRect, padding);
+        return { ...candidate, overlap, distance, boundsPenalty };
+      })
+      .sort((a, b) =>
+        a.boundsPenalty - b.boundsPenalty ||
+        a.overlap - b.overlap ||
+        a.distance - b.distance
+      );
+
+    const best = scored[0];
+    if (!best) return;
+    panel.style.setProperty("--panel-safe-x", `${best.x.toFixed(2)}px`);
+    panel.style.setProperty("--panel-safe-y", `${best.y.toFixed(2)}px`);
+  }
+
+  function unionRects(a, b) {
+    return {
+      left: Math.min(a.left, b.left),
+      top: Math.min(a.top, b.top),
+      right: Math.max(a.right, b.right),
+      bottom: Math.max(a.bottom, b.bottom),
+      width: Math.max(a.right, b.right) - Math.min(a.left, b.left),
+      height: Math.max(a.bottom, b.bottom) - Math.min(a.top, b.top)
+    };
+  }
+
+  function inflateRect(rect, amount) {
+    return {
+      left: rect.left - amount,
+      top: rect.top - amount,
+      right: rect.right + amount,
+      bottom: rect.bottom + amount,
+      width: rect.width + amount * 2,
+      height: rect.height + amount * 2
+    };
+  }
+
+  function shiftRect(rect, x, y) {
+    return {
+      left: rect.left + x,
+      top: rect.top + y,
+      right: rect.right + x,
+      bottom: rect.bottom + y,
+      width: rect.width,
+      height: rect.height
+    };
+  }
+
+  function rectsOverlap(a, b, gap = 0) {
+    return a.left < b.right + gap &&
+      a.right > b.left - gap &&
+      a.top < b.bottom + gap &&
+      a.bottom > b.top - gap;
+  }
+
+  function overlapArea(a, b, gap = 0) {
+    const overlapWidth = Math.max(0, Math.min(a.right, b.right + gap) - Math.max(a.left, b.left - gap));
+    const overlapHeight = Math.max(0, Math.min(a.bottom, b.bottom + gap) - Math.max(a.top, b.top - gap));
+    return overlapWidth * overlapHeight;
+  }
+
+  function rectWithinScenePenalty(rect, sceneRect, padding) {
+    const x = Math.max(0, sceneRect.left + padding - rect.left) + Math.max(0, rect.right - sceneRect.right + padding);
+    const y = Math.max(0, sceneRect.top + padding - rect.top) + Math.max(0, rect.bottom - sceneRect.bottom + padding);
+    return x * 10000 + y * 10000;
+  }
+
+  function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
   }
 
   function positionMatrixConnector(stage) {
