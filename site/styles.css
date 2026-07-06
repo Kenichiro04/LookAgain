@@ -2370,6 +2370,28 @@ select:focus-visible {
     drop-shadow(0 0 18px rgba(67, 207, 255, 0.22));
 }
 
+.viewing-position-copy {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -18px;
+  border: 1px solid rgba(108, 222, 255, 0.46);
+  border-radius: 999px;
+  padding: 5px 10px 6px;
+  background: rgba(3, 12, 16, 0.72);
+  color: rgba(239, 251, 255, 0.94);
+  font-size: 0.66rem;
+  font-weight: 780;
+  letter-spacing: 0;
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow:
+    0 10px 22px rgba(0, 0, 0, 0.24),
+    0 0 18px rgba(67, 207, 255, 0.18);
+}
+
 .floor-guide-glow {
   fill: rgba(63, 203, 255, 0.2);
   filter: blur(1.5px);

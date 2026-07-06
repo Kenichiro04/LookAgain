@@ -899,6 +899,7 @@
           <path class="floor-guide-ribbon" d="M97 14 C112 25 148 25 163 14 C151 43 148 62 151 78 L190 78 L130 116 L70 78 L109 78 C112 62 109 43 97 14 Z"></path>
           <path class="floor-guide-centerline" d="M130 31 C130 50 130 73 130 100"></path>
         </svg>
+        <span class="viewing-position-copy">${escapeHtml(t("cueUi.stepBackHint"))}</span>
       </div>
     `;
   }
@@ -968,16 +969,16 @@
   function specLineDefinitions(spec) {
     const definitions = {
       "lastSupper-artist": [
-        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M17.9 -20 L50.2 43.4" },
-        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M31.1 -20 L50.2 43.4" },
-        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M69.0 -20 L50.2 43.4" },
-        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M82.0 -20 L50.2 43.4" },
-        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M-12 -3.0 L50.2 43.4" },
-        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M-12 6.6 L50.2 43.4" },
-        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M112 -3.0 L50.2 43.4" },
-        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M112 6.6 L50.2 43.4" },
-        { source: "table orthogonal", kind: "object", arrow: false, path: "M-12 83.8 L50.2 43.4" },
-        { source: "table orthogonal", kind: "object", arrow: false, path: "M112 83.6 L50.2 43.4" }
+        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M21.6 -6 L50.2 43.4" },
+        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M34.2 -6 L50.2 43.4" },
+        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M66.0 -6 L50.2 43.4" },
+        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M78.6 -6 L50.2 43.4" },
+        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M-8 14.8 L50.2 43.4" },
+        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M-8 24.8 L50.2 43.4" },
+        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M108 14.8 L50.2 43.4" },
+        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M108 24.8 L50.2 43.4" },
+        { source: "table orthogonal", kind: "object", arrow: false, path: "M-6 73.5 L50.2 43.4" },
+        { source: "table orthogonal", kind: "object", arrow: false, path: "M106 73.5 L50.2 43.4" }
       ],
       "lastSupper-social": [
         { source: "table edge", kind: "object", path: "M24 64 L82 64" },

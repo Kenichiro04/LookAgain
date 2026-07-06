@@ -12,6 +12,7 @@
       auxiliaryLinePrefix: "Guide line:",
       vanishingPoint: "Vanishing point",
       sharedVanishingPoint: "painting + room vanishing point",
+      stepBackHint: "Step back until the lines align.",
       matrixGuideLabels: {
         lastSupperArtist: "Lines show perspective converging on Christ",
         girlArtist: "Arrow shows the gaze and light path",
@@ -794,6 +795,7 @@
       auxiliaryLinePrefix: "補助線:",
       vanishingPoint: "消失点",
       sharedVanishingPoint: "絵と部屋の消失点",
+      stepBackHint: "少し下がると、線がそろう。",
       matrixGuideLabels: {
         lastSupperArtist: "線はキリストへ収束する遠近法",
         girlArtist: "矢印は視線と光の流れ",
