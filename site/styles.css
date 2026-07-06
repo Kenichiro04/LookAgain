@@ -455,6 +455,11 @@ select:focus-visible {
   translate: calc(var(--panel-x) - var(--art-x)) calc(var(--panel-y) - var(--art-y));
 }
 
+.museum-stage.is-parallax-enabled .artwork-cue-layer > :not(.anchor-target):not(.pointer-cue) {
+  translate: calc(var(--panel-x) - var(--art-x)) calc(var(--panel-y) - var(--art-y));
+  will-change: translate;
+}
+
 .museum-stage.is-parallax-enabled .connector-svg {
   translate: 0 0;
 }
