@@ -8449,6 +8449,16 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
     transform: translateY(-50%);
   }
 
+  .preview-section .explorer-stage .edge-panel {
+    scrollbar-gutter: auto;
+    scrollbar-width: none;
+  }
+
+  .preview-section .explorer-stage .edge-panel::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
   .explorer-stage .panel-right-of-frame-upper-middle {
     top: 46%;
   }
