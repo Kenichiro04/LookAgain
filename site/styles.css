@@ -2382,7 +2382,7 @@ select:focus-visible {
   position: absolute;
   left: 50%;
   top: auto;
-  bottom: 12px;
+  bottom: -30px;
   z-index: 2;
   display: inline-flex;
   align-items: center;
