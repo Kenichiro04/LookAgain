@@ -2771,6 +2771,59 @@ select:focus-visible {
   background: rgba(8, 12, 11, 0.92);
 }
 
+.preview-section .explorer-stage .edge-panel {
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(155, 229, 140, 0.45) rgba(255, 255, 255, 0.06);
+}
+
+.preview-section .explorer-stage .edge-panel::-webkit-scrollbar {
+  width: 7px;
+}
+
+.preview-section .explorer-stage .edge-panel::-webkit-scrollbar-track {
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.preview-section .explorer-stage .edge-panel::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: rgba(155, 229, 140, 0.5);
+  background-clip: content-box;
+}
+
+.preview-section .explorer-stage .edge-panel::-webkit-scrollbar-thumb:hover {
+  background: rgba(155, 229, 140, 0.68);
+  background-clip: content-box;
+}
+
+.preview-section .explorer-stage .edge-panel[data-scrollable="true"]::before,
+.preview-section .explorer-stage .edge-panel[data-scrollable="true"]::after {
+  content: "";
+  position: absolute;
+  right: 6px;
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.preview-section .explorer-stage .edge-panel[data-scrollable="true"]::before {
+  top: var(--preview-scroll-track-top, 10px);
+  z-index: 1;
+  width: 3px;
+  height: var(--preview-scroll-track-height, calc(100% - 20px));
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.preview-section .explorer-stage .edge-panel[data-scrollable="true"]::after {
+  top: var(--preview-scroll-thumb-top, 10px);
+  z-index: 2;
+  width: 3px;
+  height: var(--preview-scroll-thumb-height, 34px);
+  background: rgba(155, 229, 140, 0.62);
+  box-shadow: 0 0 0 1px rgba(155, 229, 140, 0.12);
+}
+
 .spec-material-panel {
   width: clamp(235px, 24vw, 350px);
 }

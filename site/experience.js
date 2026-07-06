@@ -1793,6 +1793,40 @@
     scene.style.setProperty("--floating-anchor-y", `${(anchorCenterY - sceneRect.top).toFixed(2)}px`);
     panel.style.setProperty("--connector-origin-x", panelOriginX);
     panel.style.setProperty("--connector-origin-y", `${panelOriginY.toFixed(2)}%`);
+    syncPreviewPanelScrollHint(stage);
+  }
+
+  function syncPreviewPanelScrollHint(stage) {
+    if (!stage || !stage.classList.contains("explorer-stage")) return;
+    const panel = stage.querySelector(".edge-panel");
+    if (!panel) return;
+
+    const update = () => {
+      const hasOverflow = panel.scrollHeight > panel.clientHeight + 2;
+      panel.dataset.scrollable = hasOverflow ? "true" : "false";
+      if (!hasOverflow) return;
+
+      const trackInset = 10;
+      const trackHeight = Math.max(36, panel.clientHeight - trackInset * 2);
+      const thumbHeight = Math.max(28, Math.min(trackHeight, trackHeight * (panel.clientHeight / panel.scrollHeight)));
+      const maxScroll = Math.max(1, panel.scrollHeight - panel.clientHeight);
+      const maxThumbOffset = Math.max(0, trackHeight - thumbHeight);
+      const thumbOffset = (panel.scrollTop / maxScroll) * maxThumbOffset;
+
+      panel.style.setProperty("--preview-scroll-track-top", `${(panel.scrollTop + trackInset).toFixed(2)}px`);
+      panel.style.setProperty("--preview-scroll-track-height", `${trackHeight.toFixed(2)}px`);
+      panel.style.setProperty("--preview-scroll-thumb-top", `${(panel.scrollTop + trackInset + thumbOffset).toFixed(2)}px`);
+      panel.style.setProperty("--preview-scroll-thumb-height", `${thumbHeight.toFixed(2)}px`);
+    };
+
+    if (panel.dataset.scrollHintBound !== "true") {
+      panel.dataset.scrollHintBound = "true";
+      panel.addEventListener("scroll", () => {
+        window.requestAnimationFrame(update);
+      }, { passive: true });
+    }
+
+    update();
   }
 
   function avoidPanelAnchorOverlap(scene, panel, anchorEl) {
