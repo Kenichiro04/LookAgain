@@ -459,7 +459,7 @@ select:focus-visible {
   translate: calc(var(--panel-x) - var(--art-x)) calc(var(--panel-y) - var(--art-y));
 }
 
-.museum-stage.is-parallax-enabled .artwork-cue-layer > :not(.anchor-target):not(.pointer-cue) {
+.museum-stage.is-parallax-enabled:not(.is-cue-sequence) .artwork-cue-layer > :not(.anchor-target):not(.pointer-cue) {
   translate: calc(var(--panel-x) - var(--art-x)) calc(var(--panel-y) - var(--art-y));
   will-change: translate;
 }
@@ -468,8 +468,12 @@ select:focus-visible {
   translate: 0 0;
 }
 
-.museum-stage.is-parallax-enabled.is-cue-sequence .artwork-cue-layer > :not(.anchor-target):not(.pointer-cue) {
+.museum-stage.is-parallax-enabled.is-cue-sequence .artwork-cue-layer > * {
   translate: calc(0px - var(--art-x)) calc(0px - var(--art-y));
+}
+
+.museum-stage.is-parallax-enabled.is-cue-sequence .viewing-position-hint.stage-layer--overlay {
+  translate: 0 0;
 }
 
 .museum-stage.is-parallax-enabled .connector-svg {
