@@ -1825,10 +1825,10 @@ select:focus-visible {
   gap: 1px;
   min-width: 112px;
   max-width: 178px;
-  border: 1px solid rgba(155, 229, 140, 0.34);
+  border: 1px solid rgba(155, 229, 140, 0.44);
   border-radius: 999px;
   padding: 5px 8px 6px;
-  background: rgba(8, 12, 11, 0.78);
+  background: rgba(8, 12, 11, 0.9);
   color: rgba(244, 242, 238, 0.92);
   font-size: 0.64rem;
   font-weight: 760;

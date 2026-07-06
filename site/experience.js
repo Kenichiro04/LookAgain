@@ -1866,27 +1866,7 @@
         [-58, -42],
         [58, -42],
         [-58, 42],
-        [58, 42],
-        [0, -86],
-        [0, 86],
-        [-86, 0],
-        [86, 0],
-        [-86, -64],
-        [86, -64],
-        [-86, 64],
-        [86, 64],
-        [-86, -86],
-        [86, -86],
-        [-86, 86],
-        [86, 86],
-        [0, -112],
-        [0, 112],
-        [-110, 0],
-        [110, 0],
-        [-110, -86],
-        [110, -86],
-        [-110, 86],
-        [110, 86]
+        [58, 42]
       ];
       const bestLabel = labelCandidates
         .map(([x, y]) => {
@@ -1906,12 +1886,16 @@
         })
         .sort((a, b) =>
           a.boundsPenalty - b.boundsPenalty ||
-          a.overlap - b.overlap ||
+          a.panelOverlap - b.panelOverlap ||
+          a.maskOverlap - b.maskOverlap ||
           a.distance - b.distance
         )[0];
 
-      const initialOverlap = initialPanelOverlap * 1.3 + initialMaskOverlap;
-      if (bestLabel && bestLabel.boundsPenalty === 0 && bestLabel.overlap <= initialOverlap) {
+      if (
+        bestLabel &&
+        bestLabel.boundsPenalty === 0 &&
+        (bestLabel.panelOverlap < initialPanelOverlap || bestLabel.maskOverlap < initialMaskOverlap || bestLabel.distance === 0)
+      ) {
         labelAnchor.style.setProperty("--anchor-label-safe-x", `${bestLabel.x.toFixed(2)}px`);
         labelAnchor.style.setProperty("--anchor-label-safe-y", `${bestLabel.y.toFixed(2)}px`);
         if (bestLabel.panelOverlap === 0) return;
