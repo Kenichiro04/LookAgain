@@ -539,6 +539,13 @@ select:focus-visible {
   animation: heroSceneCut 760ms ease both;
 }
 
+.hero-stage.is-stage-changing[data-state="artist"] .stage-scene,
+.hero-stage.is-stage-changing[data-state="restorer"] .stage-scene,
+.hero-stage.is-stage-changing[data-state="social"] .stage-scene,
+.hero-stage.is-stage-changing[data-state="quiet"] .stage-scene {
+  animation: none;
+}
+
 .hero-stage[data-state="select"].is-stage-changing .stage-scene {
   animation: xrWorldOpen 1400ms ease-out both;
 }
@@ -8419,6 +8426,12 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   .xr-stage[data-state="museum"] .artwork-rig.medium-framed {
     top: 36%;
     width: var(--art-mobile-width, 50%);
+  }
+
+  .hero-stage[data-artwork="arnolfini"] .artwork-rig.medium-framed {
+    left: 50%;
+    top: 36%;
+    width: var(--art-mobile-width, 48%);
   }
 
   .explorer-stage[data-artwork="lastSupper"] .artwork-rig.wall-mural {
