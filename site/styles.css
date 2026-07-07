@@ -447,7 +447,7 @@ select:focus-visible {
 }
 
 .museum-stage.is-parallax-enabled.is-cue-sequence .stage-layer--panel {
-  translate: var(--panel-safe-x, 0px) var(--panel-safe-y, 0px);
+  translate: calc(var(--panel-x) + var(--panel-safe-x, 0px)) calc(var(--panel-y) + var(--panel-safe-y, 0px));
 }
 
 .museum-stage.is-parallax-enabled .stage-layer--overlay:not(.connector-svg):not(.room-perspective-svg) {
@@ -465,19 +465,23 @@ select:focus-visible {
 }
 
 .museum-stage.is-parallax-enabled.is-cue-sequence .stage-layer--overlay.floating-anchor-layer:not(.connector-svg):not(.room-perspective-svg) {
-  translate: 0 0;
+  translate: var(--panel-x) var(--panel-y);
 }
 
 .museum-stage.is-parallax-enabled.is-cue-sequence .artwork-cue-layer > * {
-  translate: calc(0px - var(--art-x)) calc(0px - var(--art-y));
+  translate: calc(var(--panel-x) - var(--art-x)) calc(var(--panel-y) - var(--art-y));
 }
 
 .museum-stage.is-parallax-enabled.is-cue-sequence .viewing-position-hint.stage-layer--overlay {
-  translate: 0 0;
+  translate: var(--panel-x) var(--panel-y);
 }
 
 .museum-stage.is-parallax-enabled .connector-svg {
   translate: 0 0;
+}
+
+.museum-stage.is-parallax-enabled.is-cue-sequence .connector-svg {
+  translate: var(--panel-x) var(--panel-y);
 }
 
 @media (prefers-reduced-motion: reduce) {
