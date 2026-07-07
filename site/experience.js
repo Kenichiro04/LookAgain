@@ -2082,8 +2082,8 @@
     roomY: 1.6,
     overlayX: 4.8,
     overlayY: 2.8,
-    panelX: 3.1,
-    panelY: 2,
+    panelX: 3.8,
+    panelY: 2.35,
     phoneX: 10,
     phoneY: 6,
     phoneRotate: 0.8
