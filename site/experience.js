@@ -2075,8 +2075,8 @@
     });
   }
 
-  const PARALLAX_LERP = 0.24;
-  const PARALLAX_REST_THRESHOLD = 0.006;
+  const PARALLAX_LERP = 0.42;
+  const PARALLAX_REST_THRESHOLD = 0.01;
   const PARALLAX_RANGE = {
     roomX: 2.4,
     roomY: 1.6,
@@ -2093,8 +2093,9 @@
     if (!stage) return;
     const clampedX = Math.max(-1, Math.min(1, x));
     const clampedY = Math.max(-1, Math.min(1, y));
-    const easedX = Math.sin(clampedX * Math.PI / 2);
-    const easedY = Math.sin(clampedY * Math.PI / 2);
+    const xrResponseCurve = (value) => value * (0.92 + Math.abs(value) * 0.08);
+    const easedX = xrResponseCurve(clampedX);
+    const easedY = xrResponseCurve(clampedY);
     stage.style.setProperty("--look-x", easedX.toFixed(3));
     stage.style.setProperty("--look-y", easedY.toFixed(3));
     stage.style.setProperty("--room-x", `${(-easedX * PARALLAX_RANGE.roomX).toFixed(2)}px`);
