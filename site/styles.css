@@ -1607,7 +1607,10 @@ select:focus-visible {
 .explorer-stage[data-artwork="lastSupper"] .stage-scene.stage--last-supper {
   background-repeat: no-repeat;
   background-size: auto, auto, 138%;
-  background-position: center, center, center 48%;
+  background-position:
+    center,
+    center,
+    calc(50% + var(--room-x)) calc(48% + var(--room-y));
 }
 
 .explorer-stage[data-artwork="girl"] .stage-scene.stage--pearl {
