@@ -1487,16 +1487,10 @@
 
   function renderSpecPanel(config) {
     const spec = config.cueSpec;
-    const previewCuePanel = !config.matrixPreview && !config.heroQuestionOnly;
-    const previewMatrixKey = `lenses.matrix.${spec.artwork_id}.${spec.lens_id}`;
-    const previewMatrixQuestion = previewCuePanel ? t(`${previewMatrixKey}.question`) : "";
-    const previewMatrixBody = previewCuePanel ? t(`${previewMatrixKey}.body`) : "";
     const title = config.heroQuestionKey
       ? t(config.heroQuestionKey)
       : config.panelTitleKey
         ? t(config.panelTitleKey)
-        : previewCuePanel && !previewMatrixQuestion.startsWith("Missing:")
-          ? previewMatrixQuestion
         : cueSpecStatement(spec);
     const target = cueSpecText(spec, "target_label");
     const specClass = cueSpecClass(spec);
@@ -1505,18 +1499,16 @@
       !config.heroQuestionOnly &&
       spec.lens_id === "restorer" &&
       (specClass === "lastSupper-restorer" || specClass === "arnolfini-restorer");
-    const compactEvidence = !!config.matrixPreview || !!config.heroQuestionOnly || previewCuePanel || compactStageMaterialPanel;
-    const microEvidence = previewCuePanel && !previewMatrixBody.startsWith("Missing:")
-      ? previewMatrixBody
-      : compactEvidence
+    const compactEvidence = !!config.matrixPreview || !!config.heroQuestionOnly || compactStageMaterialPanel;
+    const microEvidence = compactEvidence
       ? (cueSpecText(spec, "micro_evidence") || cueSpecExplanation(spec))
       : cueSpecExplanation(spec);
     const positionClass = `panel-${cueSpecSlug(spec.edge_panel_position)}`;
     const materialEvidence = renderMaterialEvidence(spec, {
-      compact: !!config.matrixPreview || previewCuePanel || compactStageMaterialPanel,
+      compact: !!config.matrixPreview || compactStageMaterialPanel,
       matrixPreview: !!config.matrixPreview
     });
-    const comparativeEvidence = renderComparativeEvidence(spec, { compact: compactEvidence });
+    const comparativeEvidence = compactStageMaterialPanel ? "" : renderComparativeEvidence(spec, { compact: compactEvidence });
     const panelKindClass = `${spec.lens_id === "restorer" ? " spec-material-panel" : ""}${comparativeEvidence ? " spec-comparative-panel" : ""} spec-panel-${specClass}`;
     const crop = spec.visual_cue_types.includes("crop-callout") && !materialEvidence
       ? `<div class="spec-crop-callout" style="${cropCalloutStyle(spec)}" aria-hidden="true"></div>`
@@ -1556,20 +1548,17 @@
     }
     return `
       <aside
-        class="edge-panel spec-edge-panel preview-cue-panel stage-layer--panel ${positionClass}${panelKindClass}"
+        class="edge-panel spec-edge-panel stage-layer--panel ${positionClass}${panelKindClass}"
         data-panel-position="${escapeAttr(spec.edge_panel_position)}"
         data-source-note="${escapeAttr(cueSpecText(spec, "source_note"))}"
         aria-label="${escapeAttr(`${cueSpecText(spec, "lens_title")} / ${cueSpecText(spec, "target_label")}`)}"
       >
-        <span class="matrix-cue-icon" aria-hidden="true">${stateIcon(spec.lens_id)}</span>
-        <span class="matrix-cue-copy">
-          <span class="panel-target">${escapeHtml(target)}</span>
-          <h3>${escapeHtml(title)}${sourceFootnoteMark(spec)}</h3>
-          <p class="micro-evidence">${escapeHtml(microEvidence)}</p>
-        </span>
         ${crop}
         ${materialEvidence}
         ${comparativeEvidence}
+        <span class="panel-target">${escapeHtml(target)}</span>
+        <h3>${escapeHtml(title)}${sourceFootnoteMark(spec)}</h3>
+        <p class="micro-evidence">${escapeHtml(microEvidence)}</p>
       </aside>
     `;
   }
@@ -2086,15 +2075,15 @@
     });
   }
 
-  const PARALLAX_LERP = 0.66;
+  const PARALLAX_LERP = 0.42;
   const PARALLAX_REST_THRESHOLD = 0.01;
   const PARALLAX_RANGE = {
     roomX: 2.4,
     roomY: 1.6,
-    overlayX: 4.1,
-    overlayY: 2.35,
-    panelX: 3.35,
-    panelY: 2.05,
+    overlayX: 4.8,
+    overlayY: 2.8,
+    panelX: 3.8,
+    panelY: 2.35,
     phoneX: 10,
     phoneY: 6,
     phoneRotate: 0.8

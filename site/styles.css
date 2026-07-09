@@ -1599,23 +1599,13 @@ select:focus-visible {
 
 .explorer-stage[data-artwork="lastSupper"] .artwork-rig.wall-mural {
   left: 50%;
-  top: 54%;
-  width: 80%;
+  top: 53.7%;
+  width: 71.8%;
   max-width: none;
 }
 
-.explorer-stage[data-artwork="lastSupper"] .stage-scene.stage--last-supper {
-  background-repeat: no-repeat;
-  background-size: auto, auto, 138%;
-  background-position:
-    center,
-    center,
-    calc(50% + var(--room-x)) calc(48% + var(--room-y));
-}
-
 .explorer-stage[data-artwork="girl"] .stage-scene.stage--pearl {
-  background-repeat: no-repeat;
-  background-size: auto, auto, 164%;
+  background-size: auto, auto, 156%;
   background-position:
     center,
     center,
@@ -1624,8 +1614,8 @@ select:focus-visible {
 
 .explorer-stage[data-artwork="girl"] .artwork-rig.small-framed {
   left: 50%;
-  top: 47%;
-  width: 34%;
+  top: 45.5%;
+  width: 30%;
   max-width: 560px;
 }
 
@@ -1638,15 +1628,9 @@ select:focus-visible {
 
 .explorer-stage[data-artwork="arnolfini"] .artwork-rig.medium-framed {
   left: 50%;
-  top: 46%;
-  width: 40%;
+  top: 48%;
+  width: 35%;
   max-width: 520px;
-}
-
-.explorer-stage[data-artwork="arnolfini"] .stage-scene.stage--arnolfini {
-  background-repeat: no-repeat;
-  background-size: auto, auto, 148%;
-  background-position: center, center, center 43%;
 }
 
 .artwork-frame {
@@ -2939,75 +2923,6 @@ select:focus-visible {
   width: clamp(235px, 24vw, 350px);
 }
 
-.preview-section .explorer-stage .preview-cue-panel {
-  display: grid;
-  grid-template-columns: 24px minmax(0, 1fr);
-  align-items: start;
-  gap: 10px;
-  width: clamp(250px, 32%, 360px);
-  min-height: 0;
-  max-height: min(54%, 360px);
-  border-color: rgba(155, 229, 140, 0.46);
-  border-radius: 8px;
-  padding: 13px;
-  background:
-    linear-gradient(180deg, rgba(155, 229, 140, 0.13), rgba(8, 12, 11, 0.55)),
-    rgba(8, 12, 11, 0.78);
-  box-shadow:
-    0 18px 46px rgba(0, 0, 0, 0.3),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.055);
-  backdrop-filter: blur(10px);
-}
-
-.preview-cue-panel .matrix-cue-icon,
-.preview-cue-panel .matrix-cue-icon .state-icon {
-  width: 23px;
-  height: 23px;
-}
-
-.preview-cue-panel .matrix-cue-copy {
-  display: grid;
-  min-width: 0;
-  gap: 5px;
-}
-
-.preview-cue-panel .material-evidence,
-.preview-cue-panel .comparative-evidence,
-.preview-cue-panel .spec-crop-callout {
-  grid-column: 1 / -1;
-}
-
-.preview-cue-panel .material-evidence,
-.preview-cue-panel .comparative-evidence {
-  margin: 2px 0 0;
-  gap: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 7px;
-  padding: 7px;
-  background: rgba(0, 0, 0, 0.2);
-}
-
-.preview-cue-panel .material-evidence-title,
-.preview-cue-panel .comparative-evidence-title {
-  font-size: 0.58rem;
-  line-height: 1.12;
-}
-
-.preview-cue-panel .material-model {
-  min-height: 0;
-  padding: 7px;
-}
-
-.preview-cue-panel .material-model-stage {
-  min-height: 82px;
-}
-
-.preview-cue-panel .material-card-image,
-.preview-cue-panel .comparative-card-image,
-.preview-cue-panel .comparative-evidence.is-compact .comparative-card-image {
-  min-height: 58px;
-}
-
 .panel-target {
   display: inline-flex;
   width: fit-content;
@@ -3029,27 +2944,6 @@ select:focus-visible {
   margin-top: 8px;
   font-size: 0.74rem;
   line-height: 1.32;
-}
-
-.preview-cue-panel .panel-target {
-  margin: 0;
-  padding: 3px 7px;
-  font-size: 0.64rem;
-}
-
-.preview-cue-panel h3 {
-  font-size: 0.86rem;
-  line-height: 1.16;
-}
-
-.preview-cue-panel .micro-evidence {
-  display: -webkit-box;
-  overflow: hidden;
-  margin-top: 0;
-  font-size: 0.72rem;
-  line-height: 1.34;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
 }
 
 .source-footnote-mark {
@@ -3658,12 +3552,6 @@ select:focus-visible {
   bottom: 104px;
 }
 
-.panel-right-outside-mural-upper-right {
-  top: 34%;
-  bottom: auto;
-  transform: translateY(-50%);
-}
-
 .panel-right-of-frame-upper-middle {
   top: 86px;
 }
@@ -3678,12 +3566,6 @@ select:focus-visible {
 .explorer-stage .panel-right-outside-mural-lower-right,
 .explorer-stage .panel-right-of-frame-lower-middle {
   top: 56%;
-  bottom: auto;
-  transform: translateY(-50%);
-}
-
-.explorer-stage .panel-right-outside-mural-upper-right {
-  top: 38%;
   bottom: auto;
   transform: translateY(-50%);
 }
@@ -8659,18 +8541,6 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
 
   .explorer-stage .edge-panel {
     max-height: min(31%, 224px);
-  }
-
-  .preview-section .explorer-stage .preview-cue-panel {
-    grid-template-columns: 21px minmax(0, 1fr);
-    width: auto;
-    padding: 12px;
-  }
-
-  .preview-cue-panel .matrix-cue-icon,
-  .preview-cue-panel .matrix-cue-icon .state-icon {
-    width: 20px;
-    height: 20px;
   }
 
   .explorer-stage[data-artwork="girl"][data-state="restorer"] .spec-edge-panel {

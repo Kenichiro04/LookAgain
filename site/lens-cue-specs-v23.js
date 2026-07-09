@@ -154,7 +154,7 @@ window.LookAgainCueSpecsV23Data = [
       "gesture direction",
       "separation between groups"
     ],
-    "edge_panel_position": "right-outside-mural, upper-right",
+    "edge_panel_position": "right-outside-mural, lower-right",
     "question_en": "Who is included, and who is separated?",
     "question_ja": "誰が含まれ、誰が切り離されているのか？",
     "micro_evidence_en": "The shared table is not neutral; placement, gesture, and separation shape the scene’s order.",
