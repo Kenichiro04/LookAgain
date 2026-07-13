@@ -2867,30 +2867,14 @@ select:focus-visible {
 }
 
 .preview-section .explorer-stage .edge-panel {
-  scrollbar-gutter: stable;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(155, 229, 140, 0.45) rgba(255, 255, 255, 0.06);
+  -ms-overflow-style: none;
+  scrollbar-gutter: auto;
+  scrollbar-width: none;
 }
 
 .preview-section .explorer-stage .edge-panel::-webkit-scrollbar {
-  width: 7px;
-}
-
-.preview-section .explorer-stage .edge-panel::-webkit-scrollbar-track {
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.055);
-}
-
-.preview-section .explorer-stage .edge-panel::-webkit-scrollbar-thumb {
-  border: 2px solid transparent;
-  border-radius: 999px;
-  background: rgba(155, 229, 140, 0.5);
-  background-clip: content-box;
-}
-
-.preview-section .explorer-stage .edge-panel::-webkit-scrollbar-thumb:hover {
-  background: rgba(155, 229, 140, 0.68);
-  background-clip: content-box;
+  width: 0;
+  height: 0;
 }
 
 .preview-section .explorer-stage .edge-panel[data-scrollable="true"]::before,
