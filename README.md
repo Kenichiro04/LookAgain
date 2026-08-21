@@ -1,9 +1,5 @@
-# Look Again V23 public site
+# Look Again
 
-Static GitHub Pages build generated from:
+Public deployment files for the Look Again website.
 
-`40_build/prototypes/look-again/v23-delta-experience-pack/`
-
-Entry point:
-
-`site/index.html`
+Entry point: `site/index.html`
