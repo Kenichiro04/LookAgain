@@ -74,9 +74,9 @@
       lookAgainExamples: {
         selectArtist: {
           label: "WEARING XR",
-          short: "Choose Artist",
-          sequenceShort: "1. Choose Artist",
-          caption: "After wearing the glasses, the viewpoint menu appears on the artwork. Artist is selected.",
+          short: "Choose a perspective",
+          sequenceShort: "1. Choose a perspective",
+          caption: "After wearing the glasses, the perspective menu appears on the artwork. The Artist perspective is selected.",
           question: "Artist perspective selected."
         },
         artist: {
@@ -88,29 +88,29 @@
         },
         selectRestorer: {
           label: "SWITCH VIEWPOINT",
-          short: "Choose Material",
-          sequenceShort: "3. Choose Material",
-          caption: "The menu returns briefly. Material is selected before the next view appears.",
-          question: "Material perspective selected."
+          short: "Choose Conservator",
+          sequenceShort: "3. Choose Conservator",
+          caption: "The menu returns briefly. The Conservator perspective is selected before the next view appears.",
+          question: "Conservator perspective selected."
         },
         restorer: {
-          label: "MATERIAL",
-          short: "Material",
-          sequenceShort: "3. Material",
+          label: "CONSERVATOR",
+          short: "Conservator",
+          sequenceShort: "3. Conservator",
           caption: "Textiles and surface detail show how paint carries value.",
           question: "Textiles and surface detail show how paint carries value."
         },
         selectSocial: {
           label: "SWITCH VIEWPOINT",
-          short: "Choose Social",
-          sequenceShort: "5. Choose Social",
-          caption: "The menu returns briefly. Social context is selected before the next view appears.",
-          question: "Social context perspective selected."
+          short: "Choose Historian",
+          sequenceShort: "5. Choose Historian",
+          caption: "The menu returns briefly. The Historian perspective is selected before the next view appears.",
+          question: "Historian perspective selected."
         },
         social: {
-          label: "SOCIAL CONTEXT",
-          short: "Social context",
-          sequenceShort: "4. Social context",
+          label: "HISTORIAN",
+          short: "Historian",
+          sequenceShort: "4. Historian",
           caption: "The convex mirror and signature frame the room as a social scene.",
           question: "The convex mirror and signature frame the room as a social scene."
         },
@@ -128,9 +128,9 @@
         title: "Choose an expert perspective",
         body: "The artwork stays in view. Only the way of looking changes.",
         options: {
-          artist: "Artist",
-          restorer: "Material",
-          social: "Social context"
+          artist: "Artist perspective",
+          restorer: "Conservator perspective",
+          social: "Historian perspective"
         }
       },
       audioByArtwork: {
@@ -159,7 +159,7 @@
         },
         lookagain: {
           label: "Look Again",
-          caption: "Choose perspective → Artist → Material → Social context → Look with your own eyes"
+          caption: "Choose a perspective → Artist → Conservator → Historian → Look with your own eyes"
         }
       }
     },
@@ -170,7 +170,7 @@
       steps: {
         choose: {
           title: "Choose a perspective",
-          body: "Choose an expert perspective such as artist, material, or social context."
+          body: "Choose an expert perspective: Artist, Conservator, or Historian."
         },
         see: {
           title: "See it on the artwork",
@@ -857,43 +857,43 @@
       lookAgainExamples: {
         selectArtist: {
           label: "WEARING XR",
-          short: "画家を選択",
-          sequenceShort: "1. 画家を選ぶ",
-          caption: "装着後、視点メニューが作品上に現れ、画家視点を選択する。",
-          question: "画家視点を選択。"
+          short: "視点を選ぶ",
+          sequenceShort: "1. 視点を選ぶ",
+          caption: "装着後、視点メニューが作品上に現れ、「画家の視点」を選ぶ。",
+          question: "画家の視点を選択。"
         },
         artist: {
-          label: "画家視点",
-          short: "画家視点",
-          sequenceShort: "2. 画家視点",
+          label: "画家の視点",
+          short: "画家の視点",
+          sequenceShort: "2. 画家の視点",
           caption: "鏡、手、人物配置が、この場面の見え方を組み立てている。",
           question: "鏡、手、人物配置が、この場面の見え方を組み立てている。"
         },
         selectRestorer: {
           label: "視点切替",
-          short: "素材を選択",
-          sequenceShort: "3. 素材を選ぶ",
-          caption: "視点メニューが一瞬戻り、素材視点へ切り替える。",
-          question: "素材視点を選択。"
+          short: "保存修復家の視点へ",
+          sequenceShort: "3. 保存修復家の視点へ",
+          caption: "視点メニューが一瞬戻り、「保存修復家の視点」へ切り替える。",
+          question: "保存修復家の視点を選択。"
         },
         restorer: {
-          label: "素材視点",
-          short: "素材視点",
-          sequenceShort: "3. 素材視点",
+          label: "保存修復家の視点",
+          short: "保存修復家の視点",
+          sequenceShort: "3. 保存修復家の視点",
           caption: "布地と表面の細部が、絵具で価値を担っている。",
           question: "布地と表面の細部が、絵具で価値を担っている。"
         },
         selectSocial: {
           label: "視点切替",
-          short: "社会文脈を選択",
-          sequenceShort: "5. 社会文脈を選ぶ",
-          caption: "視点メニューが一瞬戻り、社会文脈へ切り替える。",
-          question: "社会文脈を選択。"
+          short: "歴史家の視点へ",
+          sequenceShort: "5. 歴史家の視点へ",
+          caption: "視点メニューが一瞬戻り、「歴史家の視点」へ切り替える。",
+          question: "歴史家の視点を選択。"
         },
         social: {
-          label: "社会文脈",
-          short: "社会文脈",
-          sequenceShort: "4. 社会文脈",
+          label: "歴史家の視点",
+          short: "歴史家の視点",
+          sequenceShort: "4. 歴史家の視点",
           caption: "凸面鏡と署名が、室内を社会的な場として見せる。",
           question: "凸面鏡と署名が、室内を社会的な場として見せる。"
         },
@@ -911,9 +911,9 @@
         title: "視点を選ぶ",
         body: "作品は見たまま、見るための視点だけを切り替える。",
         options: {
-          artist: "画家視点",
-          restorer: "素材視点",
-          social: "社会文脈"
+          artist: "画家の視点",
+          restorer: "保存修復家の視点",
+          social: "歴史家の視点"
         }
       },
       audioByArtwork: {
@@ -942,7 +942,7 @@
         },
         lookagain: {
           label: "Look Again",
-          caption: "視点選択 → 画家視点 → 素材視点 → 社会文脈 → 自分の目で見る"
+          caption: "視点選択 → 画家の視点 → 保存修復家の視点 → 歴史家の視点 → 自分の目で見る"
         }
       }
     },
@@ -953,7 +953,7 @@
       steps: {
         choose: {
           title: "視点を選ぶ",
-          body: "画家、素材、社会文脈など、作品を見る入口を選びます。"
+          body: "画家、保存修復家、歴史家の専門家視点から、作品を見る入口を選びます。"
         },
         see: {
           title: "作品上で見る",
