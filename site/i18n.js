@@ -50,7 +50,7 @@
     },
     hero: {
       title:
-        '<span class="hero-title-focus">See the artwork through an expert perspective.</span>',
+        '<span class="hero-title-focus">See the artwork<br>through an expert perspective.</span>',
       subcopy:
         "Look Again turns an expert’s way of seeing into a short Android XR display on the real artwork. It appears for a few seconds, then gets out of the way.",
       searchNote:
@@ -164,7 +164,7 @@
       }
     },
     experienceFlow: {
-      title: "How the experience works",
+      title: "How Look Again works",
       intro:
         "Choose a perspective. A marked detail and a short explanation appear on the artwork. When they fade, look again.",
       steps: {
@@ -177,11 +177,11 @@
           body: "A marked detail and a short explanation appear on the real artwork."
         },
         fade: {
-          title: "Let the display fade",
+          title: "Let it fade",
           body: "The display disappears after a few seconds."
         },
         look: {
-          title: "Look with your own eyes",
+          title: "Look again",
           body: "Return to the detail it marked."
         }
       }
@@ -342,7 +342,7 @@
       }
     },
     difference: {
-      title: "What changes in the viewing experience",
+      title: "How viewing changes",
       subtitle:
         "Audio explains the work. A phone moves the explanation to a screen. Look Again places an expert perspective on the real artwork.",
       existingLabel: "Current guides",
@@ -476,7 +476,7 @@
       }
     },
     preview: {
-      title: "See one perspective on the artwork",
+      title: "Perspective on the artwork",
       body:
         "Select a matrix card to see its XR display at full size.",
       controls: {
@@ -562,11 +562,11 @@
           body: "The guidance belongs to a visible detail, not to a floating label."
         },
         connector: {
-          title: "Connects detail and explanation",
+          title: "Explanation stays connected",
           body: "The marked detail connects to a short explanation at the edge of view."
         },
         body: {
-          title: "Changes with the viewing angle",
+          title: "Adapts to viewing angle",
           body: "Side viewing is used only for material or surface questions."
         },
         disappear: {
@@ -583,7 +583,7 @@
         "Museums are where the problem is easiest to see, not where the product must end. The broader category is opening a first question before search in real places."
     },
     aura: {
-      title: "Android XR hardware validation",
+      title: "Android XR hardware test",
       body:
         "The XR value above only matters if the real artwork remains clear. The hardware test checks the few conditions that decide that.",
       statement:
@@ -598,7 +598,7 @@
       }
     },
     plan: {
-      title: "Implementation and validation plan",
+      title: "Build and validation plan",
       body:
         "The first build is deliberately narrow: can a short perspective on the real artwork help you begin looking better than audio or phone guidance?",
       items: {
@@ -678,14 +678,14 @@
     },
     executionPlanCta: {
       kicker: "Reviewer page",
-      title: "See the execution plan and roadmap",
+      title: "Execution plan and roadmap",
       body:
         "Build scope, six-month roadmap, validation plan, grant use, team, and current status are separated for review.",
       action: "Open plan"
     },
     planPage: {
       home: "Home",
-      title: "Implementation roadmap",
+      title: "Build roadmap",
       kicker: "Reviewer execution plan",
       intro:
         "Look Again is designed as a focused Android XR prototype, not a broad museum-platform launch. The goal is to test whether a short perspective on the real artwork can help people begin looking before they know what to ask.",
@@ -833,7 +833,7 @@
     },
     hero: {
       title:
-        '<span class="hero-title-focus">専門家の視点を通して、作品を見る。</span>',
+        '<span class="hero-title-focus">専門家の視点を通して、<br>作品を見る。</span>',
       subcopy:
         "Look Againは、専門家の見方を短い表示にして、Android XRで実物作品に重ねます。表示は数秒で消え、作品だけが残ります。",
       searchNote:
@@ -1125,7 +1125,7 @@
       }
     },
     difference: {
-      title: "鑑賞体験の何が変わるのか",
+      title: "鑑賞体験の変化",
       subtitle:
         "音声は耳から説明を届け、スマホは画面に説明を出す。Look Againは、専門家の視点を実物作品の上に重ねます。",
       existingLabel: "現状のガイド",
@@ -1259,7 +1259,7 @@
       }
     },
     preview: {
-      title: "一つの視点を作品上で見る",
+      title: "作品上の視点",
       body:
         "マトリクスのカードを選ぶと、そのXR表示を大きく確認できます。",
       controls: {
@@ -1366,7 +1366,7 @@
         "美術館は問題が最も見えやすい場所であり、プロダクトがそこで終わるという意味ではありません。より大きなカテゴリは、検索前に現実の場所で最初の問いを開く体験です。"
     },
     aura: {
-      title: "Android XR実機で確かめること",
+      title: "Android XR実機検証",
       body:
         "上で述べたXRの価値は、実物作品がはっきり見え続ける場合にだけ成立する。実機検証では、その成立条件だけを確かめる。",
       statement:
@@ -1461,7 +1461,7 @@
     },
     executionPlanCta: {
       kicker: "審査員向けページ",
-      title: "実行計画とロードマップを見る",
+      title: "実行計画とロードマップ",
       body:
         "実装範囲、6か月ロードマップ、検証計画、助成金の使途、チーム、現在の状態を審査用に分けて整理しています。",
       action: "実行計画を開く"
@@ -1497,7 +1497,7 @@
       roadmap: {
         month1: {
           label: "1か月目",
-          title: "ネイティブAndroid XRプロジェクトを立ち上げる。",
+          title: "Android XRプロジェクトを開始。",
           body: "ブラウザ版の視点モデルをAndroid / Jetpack XRプロトタイプへ移植する。"
         },
         month2: {
@@ -1522,7 +1522,7 @@
         },
         month6: {
           label: "6か月目",
-          title: "クローズドテスト用パッケージにまとめる。",
+          title: "クローズドテスト版をまとめる。",
           body: "デモ動画、Google Playクローズドテスト準備、公開ドキュメントを整える。"
         }
       },

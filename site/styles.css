@@ -200,7 +200,7 @@ img {
   z-index: 32;
   gap: 12px;
   align-items: start;
-  width: min(40vw, 540px);
+  width: min(58vw, 800px);
   pointer-events: none;
 }
 
@@ -208,10 +208,11 @@ img {
   display: grid;
   gap: 8px;
   margin: 0;
-  max-width: min(100%, 31rem);
+  max-width: 100%;
   font-size: inherit;
   line-height: 1;
   font-weight: 720;
+  white-space: nowrap;
   text-shadow: 0 18px 70px rgba(0, 0, 0, 0.72);
 }
 
@@ -230,12 +231,12 @@ img {
 
 .hero-title-focus {
   display: block;
-  max-width: 6.8em;
+  max-width: none;
   color: var(--ink);
-  font-size: clamp(3.15rem, 4.65vw, 4.55rem);
+  font-size: 3rem;
   font-weight: 780;
   line-height: 0.94;
-  text-wrap: balance;
+  white-space: nowrap;
 }
 
 .hero-subcopy {
@@ -4324,7 +4325,7 @@ select:focus-visible {
 .experience-flow-steps h3 {
   margin: 0;
   color: var(--ink);
-  font-size: 1rem;
+  font-size: 0.9rem;
   line-height: 1.22;
 }
 
@@ -5223,6 +5224,33 @@ select:focus-visible {
   white-space: nowrap;
 }
 
+#experience-flow-title,
+#difference-title,
+#lenses-title,
+#preview-title,
+#xr-only-title,
+#plan-page-title,
+#plan-readiness-title,
+#hardware-validation-title,
+#implementation-validation-title,
+#plan-roadmap-title,
+#plan-grant-title,
+#plan-builder-title,
+#plan-beyond-title,
+#plan-status-title,
+#plan-contact-title,
+.experience-flow-steps h3,
+.mechanics-list h3,
+.future-context-card-copy h3,
+.plan-card-grid h3,
+.roadmap-list h3,
+.future-contexts h3,
+.execution-plan-cta-title {
+  overflow-wrap: normal;
+  white-space: nowrap;
+  word-break: keep-all;
+}
+
 .execution-plan-section {
   padding-top: 44px;
   padding-bottom: 70px;
@@ -5277,7 +5305,7 @@ select:focus-visible {
 .execution-plan-cta-title {
   max-width: 800px;
   color: #07100b;
-  font-size: clamp(2.1rem, 5vw, 4.45rem);
+  font-size: 3.2rem;
   font-weight: 820;
   letter-spacing: 0;
   line-height: 0.96;
@@ -7133,7 +7161,7 @@ select {
 
 .mechanics-list h3 {
   margin: 42px 0 10px;
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 
 .mechanics-list p {
@@ -7657,7 +7685,7 @@ select {
 }
 
 html[lang="ja"] .hero h1 {
-  max-width: min(100%, 31rem);
+  max-width: 100%;
   font-size: inherit;
 }
 
@@ -7666,8 +7694,8 @@ html[lang="ja"] .hero-title-kicker {
 }
 
 html[lang="ja"] .hero-title-focus {
-  max-width: 6.8em;
-  font-size: clamp(2.9rem, 4.65vw, 4.35rem);
+  max-width: none;
+  font-size: 3rem;
   line-height: 1;
 }
 
@@ -7781,16 +7809,16 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
     left: clamp(28px, 5vw, 56px);
     top: clamp(70px, 9vh, 96px);
     justify-self: auto;
-    width: min(44vw, 520px);
+    width: min(58vw, 640px);
   }
 
   .hero h1 {
-    max-width: min(100%, 28rem);
+    max-width: 100%;
   }
 
   .hero-title-focus {
-    max-width: 6.8em;
-    font-size: clamp(2.9rem, 5.15vw, 4.15rem);
+    max-width: none;
+    font-size: 2.3rem;
   }
 
   .hero-actions {
@@ -7970,7 +7998,7 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   }
 
   .execution-plan-cta-title {
-    font-size: clamp(2rem, 12vw, 3.1rem);
+    font-size: 1.6rem;
   }
 
   .execution-plan-cta-action {
@@ -8008,7 +8036,7 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
 
   .hero h1,
   html[lang="ja"] .hero h1 {
-    max-width: min(100%, 13rem);
+    max-width: 100%;
     font-size: inherit;
   }
 
@@ -8021,9 +8049,13 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
 
   .hero-title-focus,
   html[lang="ja"] .hero-title-focus {
-    max-width: 8.4em;
-    font-size: clamp(1.95rem, 8.6vw, 2.35rem);
+    max-width: none;
+    font-size: 1.35rem;
     line-height: 0.98;
+  }
+
+  html[lang="ja"] .hero-title-focus {
+    font-size: 1.7rem;
   }
 
   .hero-subcopy {
@@ -8644,7 +8676,7 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   }
 
   .section h2 {
-    font-size: 1.95rem;
+    font-size: 1.7rem;
   }
 
   .lens-matrix {
@@ -8913,12 +8945,12 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   }
 
   .plan-page h1 {
-    font-size: clamp(2.2rem, 11vw, 3rem);
+    font-size: 2.65rem;
     line-height: 1.04;
   }
 
   html[lang="ja"] .plan-page h1 {
-    font-size: clamp(2rem, 9.6vw, 2.65rem);
+    font-size: 2.4rem;
     line-height: 1.08;
   }
 
