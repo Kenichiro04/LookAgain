@@ -1059,13 +1059,9 @@ select:focus-visible {
 .preview-details {
   display: grid;
   align-content: start;
-  gap: 14px;
-  border: 1px solid rgba(155, 229, 140, 0.26);
-  border-radius: 8px;
-  padding: 22px;
-  background:
-    linear-gradient(180deg, rgba(155, 229, 140, 0.09), rgba(255, 255, 255, 0.025)),
-    var(--panel-solid);
+  gap: 18px;
+  border-left: 1px solid rgba(155, 229, 140, 0.28);
+  padding: 4px 0 4px 24px;
 }
 
 .preview-kicker {
@@ -1079,43 +1075,50 @@ select:focus-visible {
 
 .preview-details h3 {
   margin: 0;
-  font-size: 1.55rem;
-  line-height: 1.14;
+  font-size: 1.18rem;
+  line-height: 1.2;
 }
 
 .preview-details p {
   color: var(--muted);
 }
 
-.preview-display-stack {
+.preview-sequence-list {
   display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.preview-sequence-item {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
   gap: 10px;
-  margin-top: 2px;
+  padding: 15px 0;
+  border-top: 1px solid rgba(244, 242, 238, 0.12);
 }
 
-.preview-display-item {
-  display: grid;
-  grid-template-columns: minmax(72px, 0.36fr) 1fr;
-  gap: 12px;
-  align-items: start;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
-  padding: 10px 12px;
-  background: rgba(255, 255, 255, 0.035);
-}
-
-.preview-display-item strong {
+.preview-sequence-index {
   color: var(--green);
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 820;
-  letter-spacing: 0;
-  line-height: 1.3;
-  text-transform: uppercase;
+  line-height: 1.45;
 }
 
-.preview-display-item span {
+.preview-sequence-copy {
+  display: grid;
+  gap: 5px;
+}
+
+.preview-sequence-copy strong {
+  color: var(--ink);
+  font-size: 0.86rem;
+  line-height: 1.35;
+}
+
+.preview-sequence-copy > span {
   color: rgba(244, 242, 238, 0.78);
-  font-size: 0.84rem;
+  font-size: 0.82rem;
   line-height: 1.45;
 }
 
@@ -8224,21 +8227,17 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   }
 
   .preview-details {
-    padding: 16px;
+    border-top: 1px solid rgba(155, 229, 140, 0.28);
+    border-left: 0;
+    padding: 18px 0 0;
   }
 
   .preview-details h3 {
     font-size: 1.15rem;
   }
 
-  .preview-display-item {
-    grid-template-columns: 1fr;
-    gap: 5px;
-    padding: 9px 10px;
-  }
-
-  .preview-display-item span {
-    font-size: 0.8rem;
+  .preview-sequence-item {
+    padding: 13px 0;
   }
 
   .source-footnotes {

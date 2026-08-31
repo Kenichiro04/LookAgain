@@ -485,28 +485,28 @@
       },
       mechanics: {
         kicker: "WHAT APPEARS",
-        title: "What the viewer sees",
+        title: "Display sequence",
         body: "",
         items: {
           target: {
-            label: "Target",
-            body: "The display is anchored to: {target}"
+            label: "Mark a detail",
+            body: "The mark stays attached to {target}."
           },
           anchor: {
             label: "Anchor",
             body: "The connector starts at the real detail."
           },
           panel: {
-            label: "Edge panel",
-            body: "A short explanation sits beside the artwork, clear of the marked detail."
+            label: "Explain briefly",
+            body: "A line connects the marked detail to a short explanation."
           },
           evidence: {
-            label: "Evidence",
-            body: "Adds supporting visual material when needed: {evidence}."
+            label: "Supporting view",
+            body: "Add {evidence} only when it helps."
           },
           timing: {
-            label: "Timing",
-            body: "The display stays for a few seconds."
+            label: "Clear the view",
+            body: "After a few seconds, the overlay disappears."
           },
           source: {
             label: "Footnote",
@@ -1268,28 +1268,28 @@
       },
       mechanics: {
         kicker: "表示される内容",
-        title: "装着者に見えるもの",
+        title: "表示の流れ",
         body: "",
         items: {
           target: {
-            label: "対象",
-            body: "表示は「{target}」に結びつく。"
+            label: "細部を示す",
+            body: "「{target}」に印を固定する。"
           },
           anchor: {
             label: "アンカー",
             body: "線は実物の細部から始まる。"
           },
           panel: {
-            label: "端のパネル",
-            body: "短い解説を、注目箇所に重ならない位置へ表示する。"
+            label: "短く解説する",
+            body: "示した細部と短い解説を線でつなぐ。"
           },
           evidence: {
-            label: "証拠表示",
-            body: "必要な場合に「{evidence}」を重ねる。"
+            label: "補助表示",
+            body: "必要な場合だけ「{evidence}」を添える。"
           },
           timing: {
-            label: "時間",
-            body: "表示は数秒だけ出る。"
+            label: "表示を消す",
+            body: "数秒後に表示が消え、作品だけが残る。"
           },
           source: {
             label: "脚注",

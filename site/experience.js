@@ -2493,10 +2493,7 @@
     ].filter(Boolean);
     const evidenceBody = evidenceTypes.length
       ? formatMessage(t("preview.mechanics.items.evidence.body"), { evidence: evidenceTypes.join(lang === "ja" ? "・" : ", ") })
-      : (lang === "ja"
-        ? "線と端のパネルが問いの入口を示す。"
-        : "The line and edge panel make the first question visible.");
-    const sourceNumber = sourceFootnoteNumber(spec);
+      : "";
     const mechanismItems = [
       {
         key: "target",
@@ -2504,51 +2501,31 @@
         body: formatMessage(t("preview.mechanics.items.target.body"), { target })
       },
       {
-        key: "anchor",
-        label: t("preview.mechanics.items.anchor.label"),
-        body: t("preview.mechanics.items.anchor.body")
-      },
-      {
         key: "panel",
         label: t("preview.mechanics.items.panel.label"),
-        body: t("preview.mechanics.items.panel.body")
-      },
-      {
-        key: "evidence",
-        label: t("preview.mechanics.items.evidence.label"),
-        body: evidenceBody
+        body: [t("preview.mechanics.items.panel.body"), evidenceBody].filter(Boolean).join(" ")
       },
       {
         key: "timing",
         label: t("preview.mechanics.items.timing.label"),
         body: t("preview.mechanics.items.timing.body")
-      },
-      {
-        key: "source",
-        label: t("preview.mechanics.items.source.label"),
-        body: sourceNumber
-          ? formatMessage(t("preview.mechanics.items.source.body"), { number: `[${sourceNumber}]` })
-          : (lang === "ja" ? "出典がある場合は、脚注をページ最下部にまとめる。" : "When a source is present, the full link sits at the bottom of the page.")
-      },
-      {
-        key: "final",
-        label: t("preview.mechanics.items.final.label"),
-        body: t("preview.mechanics.items.final.body")
       }
     ];
     previewDetails.innerHTML = `
-      <p class="preview-kicker">${escapeHtml(t("preview.mechanics.kicker"))}</p>
       <h3>${escapeHtml(t("preview.mechanics.title"))}</h3>
-      <div class="preview-display-stack">
+      <ol class="preview-sequence-list">
         ${mechanismItems
-          .map((entry) => `
-            <div class="preview-display-item preview-display-item-${escapeAttr(entry.key)}">
-              <strong>${escapeHtml(entry.label)}</strong>
-              <span>${escapeHtml(entry.body)}</span>
-            </div>
+          .map((entry, index) => `
+            <li class="preview-sequence-item preview-sequence-item-${escapeAttr(entry.key)}">
+              <span class="preview-sequence-index">${String(index + 1).padStart(2, "0")}</span>
+              <span class="preview-sequence-copy">
+                <strong>${escapeHtml(entry.label)}</strong>
+                <span>${escapeHtml(entry.body)}</span>
+              </span>
+            </li>
           `)
           .join("")}
-      </div>
+      </ol>
     `;
   }
 
