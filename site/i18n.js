@@ -52,9 +52,9 @@
       title:
         '<span class="hero-title-focus">See the artwork through an expert perspective.</span>',
       subcopy:
-        "Look Again is an Android XR experience that overlays a short expert perspective on the real artwork. The display appears briefly, then fades so you can return to the artwork itself.",
+        "Look Again turns an expert’s way of seeing into a short Android XR display on the real artwork. It appears for a few seconds, then gets out of the way.",
       searchNote:
-        "Search works once the intent is clear. Look Again handles the moment before that.",
+        "Search answers a question. Look Again shows what an expert notices first.",
       replay: "Replay the flow",
       explore: "See the matrix",
       principle: "The artwork does not change.<br>The perspective does.",
@@ -118,15 +118,15 @@
           label: "LOOK WITH YOUR OWN EYES",
           short: "Look",
           sequenceShort: "5. Look with your own eyes",
-          caption: "Once you have the perspective, look at the artwork with your own eyes.",
-          question: "Once you have the perspective, look at the artwork with your own eyes."
+          caption: "The overlay fades. Keep looking at the detail it revealed.",
+          question: "The overlay fades. Keep looking at the detail it revealed."
         }
       },
       viewpointSelector: {
         aria: "Viewpoint selection",
         eyebrow: "WEARING XR",
         title: "Choose an expert perspective",
-        body: "The artwork stays in view. Only the way of looking changes.",
+        body: "Keep looking at the artwork while you switch perspectives.",
         options: {
           artist: "Artist perspective",
           restorer: "Conservator perspective",
@@ -166,30 +166,30 @@
     experienceFlow: {
       title: "How the experience works",
       intro:
-        "Look Again does not ask you to keep watching the overlay. It gives you a perspective, then returns you to the artwork.",
+        "Choose a perspective. A marked detail and a short explanation appear on the artwork. When they fade, look again.",
       steps: {
         choose: {
           title: "Choose a perspective",
-          body: "Choose an expert perspective: Artist, Conservator, or Historian."
+          body: "Choose Artist, Conservator, or Historian."
         },
         see: {
           title: "See it on the artwork",
-          body: "A short question and focus area appear on the real artwork."
+          body: "A marked detail and a short explanation appear on the real artwork."
         },
         fade: {
           title: "Let the display fade",
-          body: "The display stays brief and then fades from view."
+          body: "The display disappears after a few seconds."
         },
         look: {
           title: "Look with your own eyes",
-          body: "Once you have the perspective, look at the artwork with your own eyes."
+          body: "Return to the detail it marked."
         }
       }
     },
     category: {
       title: "Not a longer guide.<br>A new way into the work.",
       body:
-        "Audio gives context. A phone gives information. Look Again adds a perspective for beginning to look.",
+        "Audio explains the work. A phone puts that explanation on a screen. Look Again keeps it attached to the artwork.",
       guide: {
         label: "Guide",
         body: "explains the selected work"
@@ -200,7 +200,7 @@
       },
       lookAgain: {
         label: "Look Again",
-        body: "offers a perspective"
+        body: "ties a short explanation to the artwork"
       }
     },
     states: {
@@ -344,13 +344,13 @@
     difference: {
       title: "What changes in the viewing experience",
       subtitle:
-        "Museum viewing is the concrete example here.",
+        "We use a museum visit to compare four viewing experiences.",
       existingLabel: "Current guides",
       existingMicrocopy:
-        "They are useful, but you still have to find a way into the work.",
+        "No guide, audio, and phone each leave attention in a different place.",
       lookAgainLabel: "Look Again",
       lookAgainMicrocopy:
-        "Look Again adds one perspective on the real artwork, then fades away.",
+        "Look Again marks one detail on the real artwork and explains why it matters.",
       audioTranscript: "Light creates the illusion of the pearl.",
       audioBubble: "But where should I look?",
       noGuide: {
@@ -402,11 +402,11 @@
     lenses: {
       title: "Perspective Matrix",
       body:
-        "Three artworks show how Artist, Conservator, and Historian perspectives open different entries into the work.",
+        "The same artwork looks different depending on who is looking: Artist, Conservator, or Historian.",
       explanation:
-        "The matrix shows the first display moment for each artwork and expert perspective.",
+        "Read across to compare experts. Read down to compare artworks.",
       footerLine:
-        "Instead of adding more explanation, Look Again makes the viewing entry visible.",
+        "Each card shows one marked detail and one short explanation.",
       previewCta: "Open full preview",
       names: {
         artist: "Artist",
@@ -478,14 +478,14 @@
     preview: {
       title: "See one perspective on the artwork",
       body:
-        "Select a matrix card above. The preview shows how one expert perspective appears on the artwork, stays briefly, fades from view, and returns you to looking.",
+        "Select a matrix card to see its XR display at full size.",
       controls: {
         viewpoint: "Viewpoint",
         artwork: "Artwork"
       },
       mechanics: {
         kicker: "WHAT APPEARS",
-        title: "One display on the artwork",
+        title: "What the viewer sees",
         body: "",
         items: {
           target: {
@@ -498,7 +498,7 @@
           },
           panel: {
             label: "Edge panel",
-            body: "The explanation stays brief so you can return to the artwork."
+            body: "A short explanation sits beside the artwork, clear of the marked detail."
           },
           evidence: {
             label: "Evidence",
@@ -506,7 +506,7 @@
           },
           timing: {
             label: "Timing",
-            body: "Appears briefly at the start of looking."
+            body: "The display stays for a few seconds."
           },
           source: {
             label: "Footnote",
@@ -514,14 +514,14 @@
           },
           final: {
             label: "Return",
-            body: "Once you have the perspective, look at the artwork with your own eyes."
+            body: "When it fades, keep looking at the marked detail."
           }
         }
       }
     },
     sourceFootnotes: {
       kicker: "Source footnotes",
-      title: "Sources used for perspective grounding",
+      title: "Sources",
       body: "Reference links for the visible perspective examples.",
       itemPrefix: "Used by"
     },
@@ -551,26 +551,26 @@
     xrOnly: {
       title: "Why this needs XR",
       intro:
-        "This is not about putting more text in glasses. The value is that a perspective can appear on the real artwork while you keep looking at it.",
+        "A phone makes you look away from the artwork. XR can keep the marked detail and its explanation in the same view.",
       items: {
         pointing: {
-          title: "A brief visual perspective",
+          title: "Marks a real detail",
           body: "A short overlay appears on one visible detail, then fades."
         },
         spatial: {
-          title: "Attached to the artwork",
+          title: "Stays on the artwork",
           body: "The guidance belongs to a visible detail, not to a floating label."
         },
         connector: {
-          title: "Place and explanation stay connected",
+          title: "Connects detail and explanation",
           body: "The marked detail connects to a short explanation at the edge of view."
         },
         body: {
-          title: "Movement only when useful",
+          title: "Changes with the viewing angle",
           body: "Side viewing is used only for material or surface questions."
         },
         disappear: {
-          title: "It fades from view",
+          title: "Leaves the view clear",
           body: "The display stays brief, then returns attention to the artwork."
         }
       }
@@ -835,9 +835,9 @@
       title:
         '<span class="hero-title-focus">専門家の視点を通して、作品を見る。</span>',
       subcopy:
-        "Look Againは、実物作品の上に短い専門家視点を重ねるAndroid XR体験です。表示は短く現れ、その後は作品そのものを見る時間に戻ります。",
+        "Look Againは、専門家の見方を短い表示にして、Android XRで実物作品に重ねます。表示は数秒で消え、作品だけが残ります。",
       searchNote:
-        "検索は、調べたいことが明確になってから役に立つ。Look Againは、その前の鑑賞の入口を扱います。",
+        "検索は問いに答える。Look Againは、専門家が最初に見る場所と、その理由を示します。",
       replay: "流れをもう一度見る",
       explore: "マトリクスを見る",
       principle: "作品は変わらない。<br>視点が変わる。",
@@ -901,15 +901,15 @@
           label: "自分の目で見る",
           short: "自分の目で見る",
           sequenceShort: "5. 自分の目で見る",
-          caption: "視点を受け取ったら、自分の目で作品をご覧ください。",
-          question: "視点を受け取ったら、自分の目で作品をご覧ください。"
+          caption: "表示が消えたら、示された細部をもう一度見る。",
+          question: "表示が消えたら、示された細部をもう一度見る。"
         }
       },
       viewpointSelector: {
         aria: "視点選択",
         eyebrow: "WEARING XR",
         title: "視点を選ぶ",
-        body: "作品は見たまま、見るための視点だけを切り替える。",
+        body: "作品を見たまま、専門家の視点を切り替える。",
         options: {
           artist: "画家の視点",
           restorer: "保存修復家の視点",
@@ -949,30 +949,30 @@
     experienceFlow: {
       title: "体験の流れ",
       intro:
-        "Look Againは、表示を見続けるための体験ではありません。視点を受け取ったら、作品そのものを見る時間に戻ります。",
+        "視点を選ぶと、作品上に短い解説が出る。表示が消えたら、その細部を自分で見直す。",
       steps: {
         choose: {
           title: "視点を選ぶ",
-          body: "画家、保存修復家、歴史家の専門家視点から、作品を見る入口を選びます。"
+          body: "画家、保存修復家、歴史家から選ぶ。"
         },
         see: {
           title: "作品上で見る",
-          body: "選んだ視点に基づいて、短い問いと注目箇所が実物作品の上に表示されます。"
+          body: "実物作品の細部に印と短い解説が出る。"
         },
         fade: {
           title: "表示が消える",
-          body: "表示は長く残らず、短く表示されたあとに視界から消えます。"
+          body: "数秒後に表示が消える。"
         },
         look: {
           title: "自分の目で見る",
-          body: "視点を受け取ったら、自分の目で作品をご覧ください。"
+          body: "示された細部をもう一度見る。"
         }
       }
     },
     category: {
       title: "解説を長くするのではない。<br>作品に入るための視点をつくる。",
       body:
-        "音声は文脈を伝える。スマホは情報を表示する。Look Againは、作品を見始めるための視点を加える。",
+        "音声は耳から説明を届ける。スマホは画面に説明を出す。Look Againは、解説を実物作品の細部に結びつける。",
       guide: {
         label: "ガイド",
         body: "選んだ作品を説明する"
@@ -983,7 +983,7 @@
       },
       lookAgain: {
         label: "Look Again",
-        body: "視点を提示する"
+        body: "短い解説を実物作品に結びつける"
       }
     },
     states: {
@@ -1060,8 +1060,8 @@
       quiet: {
         label: "自分の目で見る",
         short: "自分の目で見る",
-        caption: "視点を受け取ったら、自分の目で作品をご覧ください。",
-        message: "視点を受け取ったら、自分の目で作品をご覧ください。"
+        caption: "表示が消えたら、示された細部をもう一度見る。",
+        message: "表示が消えたら、示された細部をもう一度見る。"
       }
     },
     art: {
@@ -1127,13 +1127,13 @@
     difference: {
       title: "鑑賞体験の何が変わるのか",
       subtitle:
-        "ここでは、美術館での鑑賞を例に違いを説明します。",
+        "美術館での鑑賞を例に、4つの体験を比べます。",
       existingLabel: "現状のガイド",
       existingMicrocopy:
-        "役には立つ。でも、作品に入っていく視点はまだ自分で見つける必要がある。",
+        "ガイドなし、音声、スマホでは、注意がそれぞれ違う場所に向かう。",
       lookAgainLabel: "Look Again",
       lookAgainMicrocopy:
-        "Look Againは、実物作品の上に一つの視点を重ね、すぐ消える。",
+        "Look Againは、実物作品の細部を示し、なぜ見るのかを短く解説する。",
       audioTranscript: "光が、真珠のような効果を作っています。",
       audioBubble: "でも、どこを見ればいい？",
       noGuide: {
@@ -1185,11 +1185,11 @@
     lenses: {
       title: "視点マトリクス",
       body:
-        "3作品を通して、画家、保存修復家、歴史家の視点が作品への入口をどう変えるかを示す。",
+        "同じ作品でも、画家、保存修復家、歴史家が最初に見る場所は違う。9つの画面で比べます。",
       explanation:
-        "マトリクスは、作品と視点ごとに最初の表示場面を示す。",
+        "横に見ると専門家の違い、縦に見ると作品ごとの違いが分かります。",
       footerLine:
-        "説明を増やすのではなく、作品を見る入口を見えるようにする。",
+        "各カードには、注目する細部と短い解説が一つずつ出ます。",
       previewCta: "下で詳しく見る",
       names: {
         artist: "画家",
@@ -1261,14 +1261,14 @@
     preview: {
       title: "一つの視点を作品上で見る",
       body:
-        "上のマトリクスカードを選ぶと、一つの専門家視点が作品の上に現れ、短く表示され、視界から消えて、作品を見る状態に戻る流れを確認できます。",
+        "マトリクスのカードを選ぶと、そのXR表示を大きく確認できます。",
       controls: {
         viewpoint: "視点",
         artwork: "作品"
       },
       mechanics: {
         kicker: "表示される内容",
-        title: "作品の上に出る一つの表示",
+        title: "装着者に見えるもの",
         body: "",
         items: {
           target: {
@@ -1281,7 +1281,7 @@
           },
           panel: {
             label: "端のパネル",
-            body: "説明は短く留め、すぐ作品を見る状態に戻れるようにします。"
+            body: "短い解説を、注目箇所に重ならない位置へ表示する。"
           },
           evidence: {
             label: "証拠表示",
@@ -1289,7 +1289,7 @@
           },
           timing: {
             label: "時間",
-            body: "見始めの短い瞬間だけ表示する。"
+            body: "表示は数秒だけ出る。"
           },
           source: {
             label: "脚注",
@@ -1297,14 +1297,14 @@
           },
           final: {
             label: "戻る",
-            body: "視点を受け取ったら、自分の目で作品をご覧ください。"
+            body: "表示が消えたら、示された細部を見続ける。"
           }
         }
       }
     },
     sourceFootnotes: {
       kicker: "脚注",
-      title: "視点設計で参照した出典",
+      title: "出典",
       body: "表示例の参照リンク。",
       itemPrefix: "使用箇所"
     },
@@ -1334,26 +1334,26 @@
     xrOnly: {
       title: "なぜXRなのか",
       intro:
-        "これは、グラスに文字を増やすための体験ではない。実物作品を見続けたまま、その上に視点を重ねられることに意味がある。",
+        "スマホでは、作品と画面を交互に見る。XRなら、作品の細部と解説を同じ視界に置けます。",
       items: {
         pointing: {
-          title: "短い視点表示",
+          title: "実物の細部を示す",
           body: "見えている細部に短い表示が現れ、すぐ消える。"
         },
         spatial: {
-          title: "作品に結びつく",
+          title: "作品上の位置を保つ",
           body: "表示は浮いたラベルではなく、見えている細部に結びつく。"
         },
         connector: {
-          title: "場所と説明がつながる",
+          title: "細部と解説をつなぐ",
           body: "示された細部が、視界の端にある短い解説へつながる。"
         },
         body: {
-          title: "必要な時だけ動く",
+          title: "見る角度に合わせる",
           body: "斜めから見る表現は、素材や表面を見る時だけ使う。"
         },
         disappear: {
-          title: "視界から消える",
+          title: "作品だけの視界に戻す",
           body: "表示は短く現れ、注意を作品へ戻す。"
         }
       }
