@@ -5229,7 +5229,8 @@ select:focus-visible {
   min-height: clamp(190px, 21vw, 268px);
   padding: clamp(24px, 4vw, 48px);
   border: 1px solid rgba(155, 229, 140, 0.86);
-  border-radius: 8px;
+  border-radius: 2px;
+  overflow: hidden;
   color: #07100b;
   background:
     linear-gradient(135deg, rgba(190, 255, 174, 0.98), rgba(155, 229, 140, 0.88) 52%, rgba(118, 196, 108, 0.82)),
@@ -5237,7 +5238,6 @@ select:focus-visible {
   text-decoration: none;
   box-shadow:
     0 34px 100px rgba(0, 0, 0, 0.36),
-    0 0 0 1px rgba(255, 255, 255, 0.18) inset,
     0 0 48px rgba(155, 229, 140, 0.18);
 }
 
