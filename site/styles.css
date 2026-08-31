@@ -9300,6 +9300,15 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   .explorer-stage .spec-comparative-panel {
     max-width: min(48%, 440px);
   }
+
+  /* Keep the Last Supper's social-reading statement as one meaningful phrase. */
+  .explorer-stage[data-artwork="lastSupper"][data-state="social"] .spec-panel-lastSupper-social {
+    min-width: min(42%, 350px);
+  }
+
+  html[lang="ja"] .explorer-stage[data-artwork="lastSupper"][data-state="social"] .spec-panel-lastSupper-social h3 {
+    word-break: keep-all;
+  }
 }
 
 /* Hero XR panels use the same content-driven sizing as the large Preview. */
