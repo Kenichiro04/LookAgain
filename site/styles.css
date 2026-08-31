@@ -933,7 +933,7 @@ select:focus-visible {
 .preview-layout {
   display: grid;
   grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.55fr);
-  gap: 18px;
+  gap: var(--preview-layout-gap, 18px);
   align-items: start;
   margin-top: 24px;
   width: 100%;
@@ -951,6 +951,42 @@ select:focus-visible {
   min-width: 0;
 }
 
+.preview-section {
+  --preview-layout-gap: 18px;
+  --preview-stage-inset: 18px;
+}
+
+.preview-section :is(
+  .section-heading-row p,
+  .preview-details,
+  .preview-sequence-copy,
+  .preview-reference-note,
+  .explorer-stage .edge-panel,
+  .explorer-stage .panel-target,
+  .explorer-stage .micro-evidence,
+  .explorer-stage .material-evidence,
+  .explorer-stage .comparative-evidence
+) {
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
+  text-wrap: wrap;
+}
+
+html[lang="ja"] .preview-section :is(
+  .section-heading-row p,
+  .preview-details,
+  .preview-sequence-copy,
+  .preview-reference-note,
+  .explorer-stage .edge-panel,
+  .explorer-stage .panel-target,
+  .explorer-stage .micro-evidence,
+  .explorer-stage .material-evidence,
+  .explorer-stage .comparative-evidence
+) {
+  line-break: strict;
+}
+
 .preview-lens-controls {
   display: grid;
   min-width: 0;
@@ -959,9 +995,9 @@ select:focus-visible {
 .preview-artwork-controls {
   position: absolute;
   z-index: 7;
-  left: 14px;
+  left: var(--preview-stage-inset);
   top: 56px;
-  width: min(160px, calc(100% - 28px));
+  width: min(160px, calc(100% - 36px));
   pointer-events: auto;
 }
 
@@ -1061,7 +1097,7 @@ select:focus-visible {
   align-content: start;
   gap: 18px;
   border-left: 1px solid rgba(155, 229, 140, 0.28);
-  padding: 4px 0 4px 24px;
+  padding: 4px 0 4px var(--preview-layout-gap);
   align-self: start;
 }
 
@@ -7990,7 +8026,8 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
 
   .preview-artwork-controls {
     top: 54px;
-    width: min(152px, calc(100% - 28px));
+    left: var(--preview-stage-inset);
+    width: min(152px, calc(100% - 36px));
   }
 
   .category-contrast {
@@ -8023,6 +8060,10 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
 }
 
 @media (max-width: 760px) {
+  .preview-section {
+    --preview-stage-inset: 12px;
+  }
+
   .future-title-mobile-break {
     display: block;
   }
@@ -9163,7 +9204,7 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
 
 @media (max-width: 420px) {
   .preview-heading-break {
-    display: block;
+    display: none;
   }
 
   .hero-title-focus,
@@ -9220,6 +9261,10 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
 }
 
 @media (max-width: 340px) {
+  .preview-heading-break {
+    display: block;
+  }
+
   .hero-sequence-step {
     font-size: 0.53rem;
   }

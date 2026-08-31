@@ -477,7 +477,7 @@
     preview: {
       title: 'Perspective on<br class="preview-heading-break"> <span class="heading-continuation">the artwork</span>',
       body:
-        "Select a matrix card to see its XR display at full size.",
+        'Select a matrix card to see its <span class="semantic-unit">XR display</span> at <span class="semantic-unit">full size.</span>',
       controls: {
         viewpoint: "Viewpoint",
         artwork: "Artwork"
@@ -1257,7 +1257,7 @@
     preview: {
       title: "作品上の視点",
       body:
-        "マトリクスのカードを選ぶと、そのXR表示を大きく確認できます。",
+        'マトリクスのカードを選ぶと、<span class="semantic-unit">そのXR表示を大きく確認できます。</span>',
       controls: {
         viewpoint: "視点",
         artwork: "作品"
