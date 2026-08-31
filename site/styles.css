@@ -6331,6 +6331,40 @@ select:focus-visible {
   background: #101413;
 }
 
+.matrix-grid-shell {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  width: 100%;
+  isolation: isolate;
+}
+
+.matrix-grid-shell::before,
+.matrix-grid-shell::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 12;
+  width: 6px;
+  background: linear-gradient(
+    90deg,
+    rgba(155, 229, 140, 0.66) 0 1px,
+    transparent 1px 5px,
+    rgba(155, 229, 140, 0.66) 5px 6px
+  );
+  transform: translateX(-3px);
+  pointer-events: none;
+}
+
+.matrix-grid-shell::before {
+  left: 33.333333%;
+}
+
+.matrix-grid-shell::after {
+  left: 66.666667%;
+}
+
 .matrix-column-headings,
 .matrix-grid-cells {
   display: grid;
@@ -6353,30 +6387,6 @@ select:focus-visible {
   color: var(--green);
   font-size: 1rem;
   font-weight: 760;
-}
-
-.matrix-column-heading.matrix-col-separator,
-.matrix-grid-cell.matrix-col-separator {
-  position: relative;
-}
-
-.matrix-column-heading.matrix-col-separator::before,
-.matrix-grid-cell.matrix-col-separator::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: -3px;
-  z-index: 12;
-  width: 6px;
-  background: linear-gradient(
-    90deg,
-    rgba(155, 229, 140, 0.58) 0 1px,
-    transparent 1px 4px,
-    rgba(155, 229, 140, 0.58) 4px 5px,
-    transparent 5px
-  );
-  pointer-events: none;
 }
 
 .matrix-column-heading strong,
@@ -7776,6 +7786,12 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
 
   .matrix-column-headings,
   .matrix-grid-cells {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .matrix-grid-shell {
+    width: max(100%, 948px);
     min-width: 948px;
   }
 
@@ -8761,8 +8777,13 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   .matrix-column-headings,
   .matrix-grid-cells {
     grid-template-columns: repeat(3, calc(100vw - 34px));
-    width: max-content;
-    min-width: 100%;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .matrix-grid-shell {
+    width: calc(300vw - 102px);
+    min-width: calc(300vw - 102px);
   }
 
   .matrix-column-heading {

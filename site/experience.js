@@ -2357,10 +2357,10 @@
   function renderLensMatrix() {
     const currentItem = selectedPreviewItem();
     const headings = lensOrder
-      .map((lens, index) => {
+      .map((lens) => {
         const subhead = t(`lenses.columnSubheads.${lens}`);
         return `
-          <div class="matrix-column-heading${index > 0 ? " matrix-col-separator" : ""}" role="columnheader">
+          <div class="matrix-column-heading" role="columnheader">
             <strong>${escapeHtml(t(`lenses.names.${lens}`))}</strong>
             ${subhead ? `<span>${escapeHtml(subhead)}</span>` : ""}
           </div>
@@ -2370,14 +2370,14 @@
     const cells = artworkOrder
       .map((artworkId) =>
         lensOrder
-          .map((lens, index) => {
+          .map((lens) => {
             const artwork = artworks[artworkId];
             const spec = getCueSpec(artworkId, lens);
             const selected = currentLens === lens && currentItem.artwork === artworkId;
             return `
               <button
                 type="button"
-                class="matrix-cell matrix-grid-cell matrix-preview-cell${index > 0 ? " matrix-col-separator" : ""}"
+                class="matrix-cell matrix-grid-cell matrix-preview-cell"
                 data-matrix-lens="${lens}"
                 data-matrix-artwork="${artworkId}"
                 aria-pressed="${selected}"
@@ -2396,11 +2396,13 @@
       .join("");
 
     lensMatrix.innerHTML = `
-      <div class="matrix-column-headings" role="row">
-        ${headings}
-      </div>
-      <div class="matrix-grid-cells" role="rowgroup">
-        ${cells}
+      <div class="matrix-grid-shell">
+        <div class="matrix-column-headings" role="row">
+          ${headings}
+        </div>
+        <div class="matrix-grid-cells" role="rowgroup">
+          ${cells}
+        </div>
       </div>
     `;
     scheduleMatrixConnectorPositioning();
