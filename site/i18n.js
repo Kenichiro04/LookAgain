@@ -344,7 +344,7 @@
     difference: {
       title: "What changes in the viewing experience",
       subtitle:
-        "We use a museum visit to compare four viewing experiences.",
+        "Audio explains the work. A phone moves the explanation to a screen. Look Again places an expert perspective on the real artwork.",
       existingLabel: "Current guides",
       existingMicrocopy:
         "No guide, audio, and phone each leave attention in a different place.",
@@ -1127,7 +1127,7 @@
     difference: {
       title: "鑑賞体験の何が変わるのか",
       subtitle:
-        "美術館での鑑賞を例に、4つの体験を比べます。",
+        "音声は耳から説明を届け、スマホは画面に説明を出す。Look Againは、専門家の視点を実物作品の上に重ねます。",
       existingLabel: "現状のガイド",
       existingMicrocopy:
         "ガイドなし、音声、スマホでは、注意がそれぞれ違う場所に向かう。",
