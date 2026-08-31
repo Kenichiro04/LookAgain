@@ -4606,7 +4606,6 @@ select:focus-visible {
   line-height: 1.18;
   white-space: normal;
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.32);
-  animation: futurePanelFloat 3.8s ease-in-out infinite;
 }
 
 .future-perspective-card {
