@@ -37,7 +37,31 @@ body {
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
   line-height: 1.5;
+  overflow-wrap: normal;
   text-rendering: optimizeLegibility;
+  word-break: normal;
+}
+
+p,
+li,
+small,
+figcaption,
+.edge-panel,
+.anchor-label,
+.execution-plan-cta-body {
+  text-wrap: pretty;
+}
+
+html[lang="ja"] body {
+  line-break: strict;
+  word-break: keep-all;
+  word-break: auto;
+}
+
+@supports (word-break: auto-phrase) {
+  html[lang="ja"] body {
+    word-break: auto-phrase;
+  }
 }
 
 button,
@@ -6551,7 +6575,7 @@ select:focus-visible {
   overflow: hidden;
   font-size: 0.46rem;
   line-height: 1.08;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
 }
@@ -6578,7 +6602,7 @@ select:focus-visible {
   color: rgba(244, 242, 238, 0.92);
   font-size: 0.42rem;
   line-height: 1.1;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
   white-space: normal;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
@@ -6918,7 +6942,7 @@ select:focus-visible {
   margin-top: 5px;
   font-size: 0.34rem;
   line-height: 1.18;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
 }
@@ -7508,7 +7532,7 @@ select {
   font-size: clamp(2.6rem, 7vw, 5.2rem);
   line-height: 0.96;
   font-weight: 760;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
 }
 
 .plan-page-intro {
@@ -7716,7 +7740,7 @@ html[lang="ja"] .mechanics-list p,
 html[lang="ja"] .plan-list li,
 html[lang="ja"] .metric-table span {
   line-break: strict;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
 }
 
 html[lang="ja"] .edge-panel h3 {
