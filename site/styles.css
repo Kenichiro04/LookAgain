@@ -484,10 +484,12 @@ select:focus-visible {
 
 .museum-stage.is-parallax-enabled .stage-layer--panel {
   translate: calc(var(--panel-x) + var(--panel-safe-x, 0px)) calc(var(--panel-y) + var(--panel-safe-y, 0px));
+  will-change: translate;
 }
 
 .museum-stage.is-parallax-enabled .stage-layer--overlay:not(.connector-svg):not(.room-perspective-svg) {
   translate: var(--overlay-x) var(--overlay-y);
+  will-change: translate;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -741,10 +743,12 @@ select:focus-visible {
 
 @keyframes heroSceneCut {
   0% {
-    opacity: 0.9;
+    filter: brightness(0.82) saturate(0.86);
+    transform: scale(1.006);
   }
   100% {
-    opacity: 1;
+    filter: brightness(1) saturate(1);
+    transform: scale(1);
   }
 }
 
@@ -777,13 +781,15 @@ select:focus-visible {
 
 @keyframes xrWorldOpen {
   0% {
-    opacity: 0.88;
+    filter: brightness(0.78) saturate(0.82);
+    transform: scale(0.985);
   }
   55% {
-    opacity: 1;
+    filter: brightness(1.16) saturate(1.08);
   }
   100% {
-    opacity: 1;
+    filter: brightness(1) saturate(1);
+    transform: scale(1);
   }
 }
 
@@ -809,17 +815,20 @@ select:focus-visible {
   0% {
     opacity: 0;
     clip-path: circle(0% at 50% 50%);
-    transform: translateY(-50%);
+    transform: translateY(-50%) scale(0.74);
+    filter: blur(10px);
   }
   54% {
     opacity: 1;
     clip-path: circle(76% at 50% 50%);
-    transform: translateY(-50%);
+    transform: translateY(-50%) scale(1.018);
+    filter: blur(0);
   }
   100% {
     opacity: 1;
     clip-path: circle(145% at 50% 50%);
-    transform: translateY(-50%);
+    transform: translateY(-50%) scale(1);
+    filter: blur(0);
   }
 }
 
@@ -2706,14 +2715,14 @@ html[lang="ja"] .preview-section :is(
 
 .xr-stage.is-cue-sequence .edge-panel {
   opacity: 0;
-  clip-path: circle(0 at var(--connector-origin-x, 0%) var(--connector-origin-y, 50%));
-  scale: 1;
+  clip-path: inset(0 42% 0 0 round 8px);
+  scale: 0.86 0.96;
   transform-origin: var(--connector-origin-x, left) var(--connector-origin-y, 50%);
 }
 
 .xr-stage.is-cue-sequence .edge-panel[data-panel-position^="left"],
 .xr-stage.is-cue-sequence .edge-panel[data-panel-position*="left"] {
-  clip-path: circle(0 at var(--connector-origin-x, 100%) var(--connector-origin-y, 50%));
+  clip-path: inset(0 0 0 42% round 8px);
   transform-origin: var(--connector-origin-x, right) var(--connector-origin-y, 50%);
 }
 
@@ -2800,9 +2809,11 @@ html[lang="ja"] .preview-section :is(
 @keyframes xrCueLabelAppear {
   0% {
     opacity: 0;
+    filter: blur(3px);
   }
   100% {
     opacity: 1;
+    filter: blur(0);
   }
 }
 
@@ -2831,11 +2842,19 @@ html[lang="ja"] .preview-section :is(
 @keyframes xrPanelAppearFromConnector {
   0% {
     opacity: 0;
-    clip-path: circle(0 at var(--connector-origin-x, 0%) var(--connector-origin-y, 50%));
+    clip-path: inset(0 42% 0 0 round 8px);
+    filter: blur(4px);
+    scale: 0.86 0.96;
+  }
+  42% {
+    opacity: 1;
+    clip-path: inset(0 18% 0 0 round 8px);
+    filter: blur(1.6px);
   }
   100% {
     opacity: 1;
-    clip-path: circle(150% at var(--connector-origin-x, 0%) var(--connector-origin-y, 50%));
+    clip-path: inset(0 0 0 0 round 8px);
+    filter: blur(0);
     scale: 1;
   }
 }
@@ -2843,11 +2862,19 @@ html[lang="ja"] .preview-section :is(
 @keyframes xrPanelAppearFromConnectorLeft {
   0% {
     opacity: 0;
-    clip-path: circle(0 at var(--connector-origin-x, 100%) var(--connector-origin-y, 50%));
+    clip-path: inset(0 0 0 42% round 8px);
+    filter: blur(4px);
+    scale: 0.86 0.96;
+  }
+  42% {
+    opacity: 1;
+    clip-path: inset(0 0 0 18% round 8px);
+    filter: blur(1.6px);
   }
   100% {
     opacity: 1;
-    clip-path: circle(150% at var(--connector-origin-x, 100%) var(--connector-origin-y, 50%));
+    clip-path: inset(0 0 0 0 round 8px);
+    filter: blur(0);
     scale: 1;
   }
 }
@@ -2855,12 +2882,12 @@ html[lang="ja"] .preview-section :is(
 @keyframes heroPanelAppearFromConnector {
   0% {
     opacity: 0;
-    clip-path: circle(0 at var(--connector-origin-x, 0%) var(--connector-origin-y, 50%));
-    scale: 1;
+    clip-path: inset(0 30% 0 0 round 8px);
+    scale: 0.94 0.98;
   }
   100% {
     opacity: 1;
-    clip-path: circle(150% at var(--connector-origin-x, 0%) var(--connector-origin-y, 50%));
+    clip-path: inset(0 0 0 0 round 8px);
     scale: 1;
   }
 }
@@ -2868,12 +2895,12 @@ html[lang="ja"] .preview-section :is(
 @keyframes heroPanelAppearFromConnectorLeft {
   0% {
     opacity: 0;
-    clip-path: circle(0 at var(--connector-origin-x, 100%) var(--connector-origin-y, 50%));
-    scale: 1;
+    clip-path: inset(0 0 0 30% round 8px);
+    scale: 0.94 0.98;
   }
   100% {
     opacity: 1;
-    clip-path: circle(150% at var(--connector-origin-x, 100%) var(--connector-origin-y, 50%));
+    clip-path: inset(0 0 0 0 round 8px);
     scale: 1;
   }
 }
@@ -4642,6 +4669,7 @@ html[lang="ja"] .preview-section :is(
   line-height: 1.18;
   white-space: normal;
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.32);
+  animation: futurePanelFloat 3.8s ease-in-out infinite;
 }
 
 .future-perspective-card {
