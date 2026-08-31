@@ -9288,6 +9288,20 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   }
 }
 
+/* Large Preview panels follow their rendered copy instead of a fixed width. */
+@media (min-width: 761px) {
+  .explorer-stage .edge-panel {
+    width: fit-content;
+    min-width: 0;
+    max-width: min(46%, 420px);
+  }
+
+  .explorer-stage .spec-material-panel,
+  .explorer-stage .spec-comparative-panel {
+    max-width: min(48%, 440px);
+  }
+}
+
 @media (max-width: 340px) {
   .preview-heading-break {
     display: block;
