@@ -625,7 +625,7 @@
       }
     },
     futureContexts: {
-      title: "Museum-first, not museum-only",
+      title: "Museum-first,<br class=\"future-title-mobile-break\"> not museum-only",
       intro:
         "Museums are the first proof environment because the problem is easy to see there. The same interaction pattern can later apply to nearby cultural and visual contexts: stage sets, landscape photography, and heritage sites.",
       cards: {
@@ -1408,7 +1408,7 @@
       }
     },
     futureContexts: {
-      title: "美術館から始める。美術館だけでは終わらない。",
+      title: "美術館から始める。<br class=\"future-title-mobile-break\">美術館だけでは終わらない。",
       intro:
         "美術館から始めるのは、問題が見えやすいからです。同じ体験の型は、舞台セット、風景写真、文化財・遺跡など、近い文化・視覚領域にも広げられます。",
       cards: {

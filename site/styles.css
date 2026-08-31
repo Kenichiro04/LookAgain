@@ -5215,6 +5215,14 @@ select:focus-visible {
   line-height: 1.45;
 }
 
+.future-title-mobile-break {
+  display: none;
+}
+
+#future-contexts-title {
+  white-space: nowrap;
+}
+
 .execution-plan-section {
   padding-top: 44px;
   padding-bottom: 70px;
@@ -7907,6 +7915,10 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
 }
 
 @media (max-width: 760px) {
+  .future-title-mobile-break {
+    display: block;
+  }
+
   .site-header {
     gap: 8px;
     min-height: 64px;
