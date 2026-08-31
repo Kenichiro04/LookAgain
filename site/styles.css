@@ -33,9 +33,7 @@ body {
   min-width: 320px;
   background: var(--bg);
   color: var(--ink);
-  font-family:
-    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
   line-height: 1.5;
   overflow-wrap: normal;
   text-rendering: optimizeLegibility;
@@ -53,9 +51,9 @@ figcaption,
 }
 
 html[lang="ja"] body {
+  font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", Meiryo, sans-serif;
   line-break: strict;
-  word-break: keep-all;
-  word-break: auto;
+  word-break: normal;
 }
 
 @supports (word-break: auto-phrase) {
@@ -476,12 +474,10 @@ select:focus-visible {
 
 .museum-stage.is-parallax-enabled .stage-layer--panel {
   translate: calc(var(--panel-x) + var(--panel-safe-x, 0px)) calc(var(--panel-y) + var(--panel-safe-y, 0px));
-  will-change: translate;
 }
 
 .museum-stage.is-parallax-enabled .stage-layer--overlay:not(.connector-svg):not(.room-perspective-svg) {
   translate: var(--overlay-x) var(--overlay-y);
-  will-change: translate;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -735,12 +731,10 @@ select:focus-visible {
 
 @keyframes heroSceneCut {
   0% {
-    filter: brightness(0.82) saturate(0.86);
-    transform: scale(1.006);
+    opacity: 0.9;
   }
   100% {
-    filter: brightness(1) saturate(1);
-    transform: scale(1);
+    opacity: 1;
   }
 }
 
@@ -773,15 +767,13 @@ select:focus-visible {
 
 @keyframes xrWorldOpen {
   0% {
-    filter: brightness(0.78) saturate(0.82);
-    transform: scale(0.985);
+    opacity: 0.88;
   }
   55% {
-    filter: brightness(1.16) saturate(1.08);
+    opacity: 1;
   }
   100% {
-    filter: brightness(1) saturate(1);
-    transform: scale(1);
+    opacity: 1;
   }
 }
 
@@ -807,20 +799,17 @@ select:focus-visible {
   0% {
     opacity: 0;
     clip-path: circle(0% at 50% 50%);
-    transform: translateY(-50%) scale(0.74);
-    filter: blur(10px);
+    transform: translateY(-50%);
   }
   54% {
     opacity: 1;
     clip-path: circle(76% at 50% 50%);
-    transform: translateY(-50%) scale(1.018);
-    filter: blur(0);
+    transform: translateY(-50%);
   }
   100% {
     opacity: 1;
     clip-path: circle(145% at 50% 50%);
-    transform: translateY(-50%) scale(1);
-    filter: blur(0);
+    transform: translateY(-50%);
   }
 }
 
@@ -1809,7 +1798,7 @@ select:focus-visible {
   top: 72%;
   display: grid;
   gap: 2px;
-  width: clamp(74px, 18cqw, 118px);
+  width: clamp(82px, 18cqw, 124px);
   padding: clamp(7px, 1.8cqw, 10px);
   border: 1px solid rgba(82, 75, 64, 0.18);
   border-radius: 1px;
@@ -1835,15 +1824,15 @@ select:focus-visible {
 
 .museum-label strong {
   color: rgba(26, 24, 21, 0.9);
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(0.34rem, 1.34cqw, 0.5rem);
+  font-family: inherit;
+  font-size: clamp(0.56rem, 1.46cqw, 0.64rem);
   font-weight: 700;
 }
 
 .museum-label-artist {
   margin-top: 2px;
   color: rgba(39, 35, 29, 0.76);
-  font-size: clamp(0.28rem, 1.05cqw, 0.4rem);
+  font-size: clamp(0.46rem, 1.14cqw, 0.52rem);
   font-weight: 680;
 }
 
@@ -1851,7 +1840,7 @@ select:focus-visible {
 .museum-label-size,
 .museum-label-collection {
   color: rgba(54, 49, 42, 0.62);
-  font-size: clamp(0.25rem, 0.9cqw, 0.34rem);
+  font-size: clamp(0.46rem, 0.98cqw, 0.5rem);
   font-weight: 520;
 }
 
@@ -1947,7 +1936,7 @@ select:focus-visible {
 
 .anchor-kicker {
   color: var(--green);
-  font-size: 0.52rem;
+  font-size: 0.625rem;
   font-weight: 860;
   text-transform: uppercase;
 }
@@ -2647,14 +2636,14 @@ select:focus-visible {
 
 .xr-stage.is-cue-sequence .edge-panel {
   opacity: 0;
-  clip-path: inset(0 42% 0 0 round 8px);
-  scale: 0.86 0.96;
+  clip-path: circle(0 at var(--connector-origin-x, 0%) var(--connector-origin-y, 50%));
+  scale: 1;
   transform-origin: var(--connector-origin-x, left) var(--connector-origin-y, 50%);
 }
 
 .xr-stage.is-cue-sequence .edge-panel[data-panel-position^="left"],
 .xr-stage.is-cue-sequence .edge-panel[data-panel-position*="left"] {
-  clip-path: inset(0 0 0 42% round 8px);
+  clip-path: circle(0 at var(--connector-origin-x, 100%) var(--connector-origin-y, 50%));
   transform-origin: var(--connector-origin-x, right) var(--connector-origin-y, 50%);
 }
 
@@ -2741,11 +2730,9 @@ select:focus-visible {
 @keyframes xrCueLabelAppear {
   0% {
     opacity: 0;
-    filter: blur(3px);
   }
   100% {
     opacity: 1;
-    filter: blur(0);
   }
 }
 
@@ -2774,19 +2761,11 @@ select:focus-visible {
 @keyframes xrPanelAppearFromConnector {
   0% {
     opacity: 0;
-    clip-path: inset(0 42% 0 0 round 8px);
-    filter: blur(4px);
-    scale: 0.86 0.96;
-  }
-  42% {
-    opacity: 1;
-    clip-path: inset(0 18% 0 0 round 8px);
-    filter: blur(1.6px);
+    clip-path: circle(0 at var(--connector-origin-x, 0%) var(--connector-origin-y, 50%));
   }
   100% {
     opacity: 1;
-    clip-path: inset(0 0 0 0 round 8px);
-    filter: blur(0);
+    clip-path: circle(150% at var(--connector-origin-x, 0%) var(--connector-origin-y, 50%));
     scale: 1;
   }
 }
@@ -2794,19 +2773,11 @@ select:focus-visible {
 @keyframes xrPanelAppearFromConnectorLeft {
   0% {
     opacity: 0;
-    clip-path: inset(0 0 0 42% round 8px);
-    filter: blur(4px);
-    scale: 0.86 0.96;
-  }
-  42% {
-    opacity: 1;
-    clip-path: inset(0 0 0 18% round 8px);
-    filter: blur(1.6px);
+    clip-path: circle(0 at var(--connector-origin-x, 100%) var(--connector-origin-y, 50%));
   }
   100% {
     opacity: 1;
-    clip-path: inset(0 0 0 0 round 8px);
-    filter: blur(0);
+    clip-path: circle(150% at var(--connector-origin-x, 100%) var(--connector-origin-y, 50%));
     scale: 1;
   }
 }
@@ -2814,12 +2785,12 @@ select:focus-visible {
 @keyframes heroPanelAppearFromConnector {
   0% {
     opacity: 0;
-    clip-path: inset(0 30% 0 0 round 8px);
-    scale: 0.94 0.98;
+    clip-path: circle(0 at var(--connector-origin-x, 0%) var(--connector-origin-y, 50%));
+    scale: 1;
   }
   100% {
     opacity: 1;
-    clip-path: inset(0 0 0 0 round 8px);
+    clip-path: circle(150% at var(--connector-origin-x, 0%) var(--connector-origin-y, 50%));
     scale: 1;
   }
 }
@@ -2827,12 +2798,12 @@ select:focus-visible {
 @keyframes heroPanelAppearFromConnectorLeft {
   0% {
     opacity: 0;
-    clip-path: inset(0 0 0 30% round 8px);
-    scale: 0.94 0.98;
+    clip-path: circle(0 at var(--connector-origin-x, 100%) var(--connector-origin-y, 50%));
+    scale: 1;
   }
   100% {
     opacity: 1;
-    clip-path: inset(0 0 0 0 round 8px);
+    clip-path: circle(150% at var(--connector-origin-x, 100%) var(--connector-origin-y, 50%));
     scale: 1;
   }
 }
@@ -2884,18 +2855,18 @@ select:focus-visible {
   border-radius: 999px;
   padding: 3px 7px;
   color: var(--green);
-  font-size: 0.62rem;
+  font-size: 0.68rem;
   font-weight: 820;
   line-height: 1.1;
 }
 
 .spec-edge-panel h3 {
-  font-size: 0.88rem;
+  font-size: 0.92rem;
 }
 
 .spec-edge-panel .micro-evidence {
   margin-top: 8px;
-  font-size: 0.74rem;
+  font-size: 0.78rem;
   line-height: 1.32;
 }
 
@@ -3146,13 +3117,13 @@ select:focus-visible {
 
 .material-model-copy strong {
   color: rgba(244, 242, 238, 0.92);
-  font-size: 0.68rem;
+  font-size: 0.72rem;
   line-height: 1.12;
 }
 
 .material-model-copy span {
   color: rgba(244, 242, 238, 0.66);
-  font-size: 0.6rem;
+  font-size: 0.66rem;
   line-height: 1.2;
 }
 
@@ -3168,7 +3139,7 @@ select:focus-visible {
   border-radius: 999px;
   padding: 2px 6px;
   color: rgba(244, 242, 238, 0.72);
-  font-size: 0.56rem;
+  font-size: 0.68rem;
   font-weight: 720;
   line-height: 1.15;
 }
@@ -3279,13 +3250,13 @@ select:focus-visible {
 
 .material-card figcaption strong {
   color: rgba(244, 242, 238, 0.9);
-  font-size: 0.66rem;
+  font-size: 0.7rem;
   line-height: 1.15;
 }
 
 .material-card figcaption span {
   color: rgba(244, 242, 238, 0.68);
-  font-size: 0.6rem;
+  font-size: 0.68rem;
   line-height: 1.2;
 }
 
@@ -3336,7 +3307,7 @@ select:focus-visible {
 .material-evidence.is-compact .material-model-copy strong {
   display: -webkit-box;
   overflow: hidden;
-  font-size: 0.58rem;
+  font-size: 0.68rem;
   line-height: 1.08;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -3425,13 +3396,13 @@ select:focus-visible {
 
 .comparative-card figcaption strong {
   color: rgba(244, 242, 238, 0.9);
-  font-size: 0.66rem;
+  font-size: 0.7rem;
   line-height: 1.15;
 }
 
 .comparative-card figcaption span {
   color: rgba(244, 242, 238, 0.68);
-  font-size: 0.6rem;
+  font-size: 0.64rem;
   line-height: 1.2;
 }
 
@@ -3482,11 +3453,11 @@ select:focus-visible {
 }
 
 .xr-stage[data-artwork="lastSupper"] .spec-edge-panel h3 {
-  font-size: 0.76rem;
+  font-size: 0.86rem;
 }
 
 .xr-stage[data-artwork="lastSupper"] .spec-edge-panel .micro-evidence {
-  font-size: 0.66rem;
+  font-size: 0.72rem;
 }
 
 .panel-right-outside-mural-vertically-centered,
@@ -5656,12 +5627,12 @@ select:focus-visible {
 .phone-thumb-device {
   position: absolute;
   left: 72%;
-  bottom: 8px;
+  bottom: 5px;
   z-index: 4;
-  width: 48%;
-  min-width: 64px;
-  max-width: 94px;
-  aspect-ratio: 9 / 16.7;
+  width: 54%;
+  min-width: 72px;
+  max-width: 112px;
+  aspect-ratio: 9 / 19.5;
   transform: translateX(-50%) perspective(560px) rotateX(15deg) rotateZ(-5deg);
   transform-origin: center bottom;
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -5694,10 +5665,10 @@ select:focus-visible {
   inset: 4px;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 2px;
   overflow: hidden;
   border-radius: 14px;
-  padding: 6px 5px 5px;
+  padding: 5px;
   background:
     radial-gradient(circle at 50% -15%, rgba(255, 255, 255, 0.72), transparent 32%),
     linear-gradient(180deg, rgba(255, 254, 249, 0.99), rgba(239, 234, 222, 0.95));
@@ -5750,7 +5721,7 @@ select:focus-visible {
   justify-content: space-between;
   min-height: 8px;
   color: rgba(23, 23, 23, 0.72);
-  font-size: 0.36rem;
+  font-size: 0.46rem;
   font-weight: 820;
   line-height: 1;
 }
@@ -5787,7 +5758,7 @@ select:focus-visible {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   padding-bottom: 3px;
   color: #30281d;
-  font-size: 0.42rem;
+  font-size: 0.56rem;
   font-weight: 820;
   line-height: 1.05;
 }
@@ -5804,7 +5775,7 @@ select:focus-visible {
 .phone-thumb-art {
   position: relative;
   z-index: 2;
-  flex: 0 0 28%;
+  flex: 0 0 24%;
   min-height: 0;
   overflow: hidden;
   min-height: 0;
@@ -5836,7 +5807,7 @@ select:focus-visible {
   position: relative;
   z-index: 2;
   display: grid;
-  gap: 2px;
+  gap: 1px;
   min-height: 0;
 }
 
@@ -5850,7 +5821,7 @@ select:focus-visible {
 
 .phone-thumb-kicker {
   color: #8a6724;
-  font-size: 0.33rem;
+  font-size: 0.46rem;
   font-weight: 860;
   line-height: 1.08;
   text-transform: uppercase;
@@ -5858,19 +5829,19 @@ select:focus-visible {
 
 .phone-thumb-title-ui {
   color: #151515;
-  font-size: 0.44rem;
+  font-size: 0.6rem;
   line-height: 1.06;
 }
 
 .phone-thumb-meta-ui {
   color: rgba(23, 23, 23, 0.66);
-  font-size: 0.33rem;
+  font-size: 0.46rem;
   font-weight: 650;
   line-height: 1.08;
 }
 
 .phone-thumb-chips {
-  display: flex;
+  display: none;
   flex-wrap: wrap;
   gap: 2px;
 }
@@ -5881,7 +5852,7 @@ select:focus-visible {
   padding: 1px 3px;
   background: rgba(255, 255, 255, 0.62);
   color: rgba(23, 23, 23, 0.7);
-  font-size: 0.29rem;
+  font-size: 0.4rem;
   font-weight: 780;
   line-height: 1.1;
 }
@@ -5889,13 +5860,13 @@ select:focus-visible {
 .phone-thumb-copy-ui p {
   margin: 0;
   color: rgba(23, 23, 23, 0.84);
-  font-size: 0.34rem;
+  font-size: 0.5rem;
   line-height: 1.12;
 }
 
 .phone-thumb-facts {
   display: grid;
-  gap: 2px;
+  gap: 1px;
 }
 
 .phone-thumb-facts span {
@@ -5903,8 +5874,12 @@ select:focus-visible {
   padding: 2px 3px;
   background: rgba(23, 23, 23, 0.06);
   color: rgba(23, 23, 23, 0.76);
-  font-size: 0.3rem;
+  font-size: 0.46rem;
   line-height: 1.1;
+}
+
+.phone-thumb-facts span:last-child {
+  display: none;
 }
 
 .method-copy,
@@ -6089,7 +6064,7 @@ select:focus-visible {
 
 .snapshot-question-panel span {
   color: var(--green);
-  font-size: 0.48rem;
+  font-size: 0.56rem;
   font-weight: 820;
   line-height: 1;
 }
@@ -6100,7 +6075,7 @@ select:focus-visible {
   border-radius: 999px;
   padding: 2px 6px;
   color: rgba(217, 251, 211, 0.88);
-  font-size: 0.5rem;
+  font-size: 0.58rem;
   font-style: normal;
   font-weight: 760;
   line-height: 1.1;
@@ -6108,14 +6083,14 @@ select:focus-visible {
 
 .snapshot-question-panel strong {
   color: var(--ink);
-  font-size: 0.58rem;
+  font-size: 0.68rem;
   line-height: 1.18;
 }
 
 .snapshot-question-panel p {
   margin: 0;
   color: rgba(244, 242, 238, 0.78);
-  font-size: 0.5rem;
+  font-size: 0.58rem;
   line-height: 1.24;
 }
 
@@ -6193,7 +6168,7 @@ select:focus-visible {
 
 .snapshot-material-chip span:last-child {
   color: rgba(225, 252, 218, 0.86);
-  font-size: 0.5rem;
+  font-size: 0.6rem;
   font-weight: 760;
   line-height: 1.15;
 }
@@ -6209,7 +6184,7 @@ select:focus-visible {
 
 .snapshot-detail-card span {
   color: rgba(225, 252, 218, 0.86);
-  font-size: 0.52rem;
+  font-size: 0.6rem;
   font-weight: 760;
   line-height: 1.15;
 }
@@ -6377,12 +6352,12 @@ select:focus-visible {
 
 .matrix-cell {
   display: grid;
-  grid-template-rows: minmax(242px, 1fr);
+  grid-template-rows: minmax(310px, 1fr);
   gap: 0;
   align-items: stretch;
   align-self: stretch;
   min-width: 0;
-  min-height: 270px;
+  min-height: 338px;
   border: 0;
   border-radius: 0;
   padding: 12px;
@@ -6417,7 +6392,7 @@ select:focus-visible {
 
 .matrix-cue-preview {
   position: relative;
-  min-height: 242px;
+  min-height: 310px;
   overflow: hidden;
   border: 1px solid rgba(155, 229, 140, 0.18);
   border-radius: 6px;
@@ -6436,7 +6411,7 @@ select:focus-visible {
   padding: 3px 7px;
   background: rgba(10, 14, 13, 0.62);
   color: rgba(244, 242, 238, 0.82);
-  font-size: 0.54rem;
+  font-size: 0.64rem;
   font-weight: 760;
   line-height: 1.1;
   text-overflow: ellipsis;
@@ -6459,7 +6434,7 @@ select:focus-visible {
     linear-gradient(180deg, rgba(155, 229, 140, 0.18), rgba(14, 20, 18, 0.78)),
     rgba(7, 11, 10, 0.84);
   color: rgba(236, 255, 224, 0.96);
-  font-size: 0.55rem;
+  font-size: 0.64rem;
   font-weight: 760;
   line-height: 1;
   letter-spacing: 0;
@@ -6491,16 +6466,16 @@ select:focus-visible {
 .matrix-mini-stage .spec-edge-panel {
   box-sizing: border-box;
   left: auto;
-  right: 7%;
-  top: 10%;
+  right: 5%;
+  top: 7%;
   bottom: auto;
-  width: 42%;
+  width: min(56%, 220px);
   max-width: none;
   min-height: 0;
-  max-height: calc(100% - 24px);
+  max-height: calc(100% - 38px);
   overflow: hidden;
   border-radius: 4px;
-  padding: 7px;
+  padding: 9px;
   background: rgba(16, 19, 18, 0.74);
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
   transform: none;
@@ -6509,15 +6484,15 @@ select:focus-visible {
 .matrix-mini-stage .matrix-cue-panel,
 .matrix-mini-stage.xr-stage[data-artwork="lastSupper"] .matrix-cue-panel {
   display: grid;
-  grid-template-columns: 18px minmax(0, 1fr);
+  grid-template-columns: 20px minmax(0, 1fr);
   align-items: start;
-  gap: 6px;
-  width: min(46%, 178px);
+  gap: 7px;
+  width: min(56%, 220px);
   max-width: none;
   min-height: 0;
   border-color: rgba(155, 229, 140, 0.36);
   border-radius: 6px;
-  padding: 7px;
+  padding: 9px;
   background:
     linear-gradient(180deg, rgba(155, 229, 140, 0.13), rgba(8, 12, 11, 0.5)),
     rgba(8, 12, 11, 0.72);
@@ -6538,8 +6513,8 @@ select:focus-visible {
   display: inline-grid;
   flex: 0 0 auto;
   place-items: center;
-  width: 17px;
-  height: 17px;
+  width: 20px;
+  height: 20px;
   color: var(--green);
 }
 
@@ -6551,21 +6526,21 @@ select:focus-visible {
 .matrix-mini-stage .edge-panel h3 {
   display: -webkit-box;
   overflow: hidden;
-  font-size: 0.46rem;
-  line-height: 1.08;
+  font-size: 0.7rem;
+  line-height: 1.2;
   overflow-wrap: normal;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 5;
 }
 
 .matrix-mini-stage .matrix-cue-panel h3 {
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 5;
 }
 
 .matrix-mini-stage.xr-stage[data-artwork="lastSupper"] .spec-edge-panel h3,
 .matrix-mini-stage .spec-edge-panel h3 {
-  font-size: 0.46rem;
-  line-height: 1.08;
+  font-size: 0.7rem;
+  line-height: 1.2;
 }
 
 .matrix-mini-stage .panel-target {
@@ -6578,12 +6553,12 @@ select:focus-visible {
   border: 0;
   padding: 0;
   color: rgba(244, 242, 238, 0.92);
-  font-size: 0.42rem;
-  line-height: 1.1;
+  font-size: 0.625rem;
+  line-height: 1.15;
   overflow-wrap: normal;
   white-space: normal;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
+  -webkit-line-clamp: 2;
 }
 
 .matrix-mini-stage .matrix-cue-panel .panel-target {
@@ -6593,15 +6568,19 @@ select:focus-visible {
   border-color: rgba(155, 229, 140, 0.28);
   padding: 2px 5px;
   color: var(--green);
-  font-size: 0.42rem;
-  line-height: 1.05;
+  font-size: 0.625rem;
+  line-height: 1.15;
+}
+
+.matrix-mini-stage .micro-evidence {
+  display: none;
 }
 
 .matrix-cue-evidence {
   display: grid;
   grid-column: 1 / -1;
   gap: 3px;
-  max-height: 72px;
+  max-height: 126px;
   overflow: hidden;
 }
 
@@ -6624,7 +6603,7 @@ select:focus-visible {
   display: -webkit-box;
   overflow: hidden;
   color: rgba(255, 232, 153, 0.88);
-  font-size: 0.39rem;
+  font-size: 0.625rem;
   font-weight: 760;
   line-height: 1.05;
   white-space: normal;
@@ -6673,7 +6652,7 @@ select:focus-visible {
   display: -webkit-box;
   overflow: hidden;
   color: rgba(244, 242, 238, 0.86);
-  font-size: 0.36rem;
+  font-size: 0.625rem;
   font-weight: 720;
   line-height: 1.05;
   -webkit-box-orient: vertical;
@@ -6699,10 +6678,10 @@ select:focus-visible {
   display: -webkit-box;
   overflow: hidden;
   color: rgba(255, 232, 153, 0.92);
-  font-size: 0.39rem;
+  font-size: 0.625rem;
   line-height: 1.08;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
+  -webkit-line-clamp: 2;
 }
 
 .matrix-mini-stage .material-model {
@@ -6882,7 +6861,7 @@ select:focus-visible {
 .matrix-mini-stage .comparative-evidence-title {
   display: -webkit-box;
   overflow: hidden;
-  font-size: 0.39rem;
+  font-size: 0.625rem;
   line-height: 1.08;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -6905,7 +6884,7 @@ select:focus-visible {
 .matrix-mini-stage .comparative-card figcaption strong {
   display: -webkit-box;
   overflow: hidden;
-  font-size: 0.36rem;
+  font-size: 0.625rem;
   line-height: 1.05;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -6915,35 +6894,15 @@ select:focus-visible {
   display: none;
 }
 
-.matrix-mini-stage .edge-panel p {
-  display: -webkit-box;
-  overflow: hidden;
-  margin-top: 5px;
-  font-size: 0.34rem;
-  line-height: 1.18;
-  overflow-wrap: normal;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-}
-
-.matrix-mini-stage .matrix-cue-panel p {
-  -webkit-line-clamp: 1;
-}
-
 .matrix-grid-cell:nth-child(-n + 3) .matrix-mini-stage .edge-panel h3,
 .matrix-grid-cell:nth-child(-n + 3) .matrix-mini-stage.xr-stage[data-artwork="lastSupper"] .spec-edge-panel h3,
 .matrix-grid-cell:nth-child(-n + 3) .matrix-mini-stage .spec-edge-panel h3 {
-  font-size: 0.46rem;
-  line-height: 1.08;
+  font-size: 0.7rem;
+  line-height: 1.2;
 }
 
 .matrix-grid-cell:nth-child(-n + 3) .matrix-mini-stage .panel-target {
-  font-size: 0.42rem;
-}
-
-.matrix-grid-cell:nth-child(-n + 3) .matrix-mini-stage .edge-panel p {
-  font-size: 0.34rem;
-  line-height: 1.18;
+  font-size: 0.625rem;
 }
 
 .matrix-mini-stage .source-tag,
@@ -7731,7 +7690,7 @@ html[lang="ja"] .edge-panel h3 {
 html[lang="ja"] .matrix-mini-stage .edge-panel h3,
 html[lang="ja"] .matrix-mini-stage .spec-edge-panel h3,
 html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
-  font-size: 0.46rem;
+  font-size: 0.7rem;
 }
 
 @keyframes wave {
@@ -8040,6 +7999,13 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
     padding: 16px;
   }
 
+  .hero-stage .museum-label,
+  .explorer-stage .museum-label {
+    left: calc(100% - 6px);
+    width: 82px;
+    padding: 7px;
+  }
+
   .hero-copy {
     left: 24px;
     right: 24px;
@@ -8123,8 +8089,8 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   .substate-step {
     justify-content: center;
     min-height: 32px;
-    padding: 4px 6px 5px;
-    font-size: 0.53rem;
+    padding: 4px 2px 5px;
+    font-size: 0.5rem;
     line-height: 1.05;
     white-space: normal;
   }
@@ -8535,6 +8501,16 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
     transform: translateY(-50%);
   }
 
+  .explorer-stage .edge-panel,
+  .explorer-stage[data-artwork="lastSupper"] .spec-edge-panel,
+  .explorer-stage .spec-material-panel,
+  .explorer-stage .spec-comparative-panel {
+    left: 12px;
+    right: 12px;
+    width: auto;
+    max-width: none;
+  }
+
   .explorer-stage .panel-right-of-frame-upper-middle {
     top: 46%;
   }
@@ -8589,13 +8565,13 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   }
 
   .explorer-stage .edge-panel {
-    max-height: min(31%, 224px);
+    max-height: min(36%, 286px);
   }
 
   .explorer-stage[data-artwork="girl"][data-state="restorer"] .spec-edge-panel {
     top: 53%;
     bottom: auto;
-    max-height: min(31%, 224px);
+    max-height: min(36%, 286px);
   }
 
   .panel-media {
@@ -8706,7 +8682,9 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
 
   .matrix-column-headings,
   .matrix-grid-cells {
-    min-width: 930px;
+    grid-template-columns: repeat(3, calc(100vw - 34px));
+    width: max-content;
+    min-width: 100%;
   }
 
   .matrix-column-heading {
@@ -8714,14 +8692,22 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   }
 
   .matrix-cell {
-    grid-template-rows: minmax(214px, 1fr);
-    min-height: 240px;
+    grid-template-rows: minmax(300px, 1fr);
+    min-height: 326px;
     padding: 10px;
+  }
+
+  .matrix-artwork-chip {
+    max-width: calc(39% - 8px);
+    border-radius: 6px;
+    line-height: 1.12;
+    text-overflow: clip;
+    white-space: normal;
   }
 
   .matrix-cue-preview,
   .matrix-mini-stage {
-    min-height: 214px;
+    min-height: 300px;
   }
 
   .matrix-mini-stage[data-artwork="girl"] .artwork-rig.small-framed {
@@ -8736,18 +8722,18 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
 
   .matrix-mini-stage .edge-panel {
     display: grid;
-    right: 6%;
-    width: 44%;
-    padding: 7px;
+    right: 5%;
+    width: 56%;
+    padding: 8px;
   }
 
   .matrix-mini-stage .matrix-cue-panel {
     display: grid;
-    grid-template-columns: 15px minmax(0, 1fr);
-    right: 7%;
-    width: 48%;
+    grid-template-columns: 18px minmax(0, 1fr);
+    right: 5%;
+    width: 56%;
     max-width: none;
-    padding: 6px;
+    padding: 8px;
     border-radius: 6px;
   }
 
@@ -8755,13 +8741,13 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
     right: 8px;
     bottom: 8px;
     padding: 4px 7px;
-    font-size: 0.48rem;
+    font-size: 0.64rem;
   }
 
   .matrix-mini-stage .matrix-cue-icon,
   .matrix-mini-stage .matrix-cue-icon .state-icon {
-    width: 15px;
-    height: 15px;
+    width: 18px;
+    height: 18px;
   }
 
   .matrix-mini-stage .edge-panel h3,
@@ -8769,34 +8755,27 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   .matrix-mini-stage .spec-edge-panel h3,
   .matrix-mini-stage .matrix-cue-panel h3,
   html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
-    font-size: 0.44rem;
+    font-size: 0.68rem;
   }
 
   .matrix-mini-stage .panel-target,
   .matrix-mini-stage .matrix-cue-panel .panel-target {
-    font-size: 0.4rem;
-  }
-
-  .matrix-mini-stage .edge-panel p {
-    font-size: 0.33rem;
+    font-size: 0.625rem;
+    -webkit-line-clamp: 3;
   }
 
   .matrix-grid-cell:nth-child(-n + 3) .matrix-mini-stage .edge-panel h3,
   .matrix-grid-cell:nth-child(-n + 3) .matrix-mini-stage.xr-stage[data-artwork="lastSupper"] .spec-edge-panel h3,
   .matrix-grid-cell:nth-child(-n + 3) .matrix-mini-stage .spec-edge-panel h3 {
-    font-size: 0.44rem;
+    font-size: 0.68rem;
   }
 
   .matrix-grid-cell:nth-child(-n + 3) .matrix-mini-stage .panel-target {
-    font-size: 0.4rem;
-  }
-
-  .matrix-grid-cell:nth-child(-n + 3) .matrix-mini-stage .edge-panel p {
-    font-size: 0.33rem;
+    font-size: 0.625rem;
   }
 
   .matrix-cue-evidence {
-    max-height: 92px;
+    max-height: 116px;
   }
 
   .matrix-cue-evidence .material-evidence,
@@ -8818,7 +8797,7 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   .matrix-cue-evidence .comparative-evidence-title,
   .matrix-mini-stage[data-state="restorer"] .material-evidence-title,
   .matrix-mini-stage .comparative-evidence-title {
-    font-size: 0.37rem;
+    font-size: 0.625rem;
   }
 
   .matrix-mini-stage .comparative-card-image,
@@ -8827,7 +8806,8 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   }
 
   .matrix-mini-stage .comparative-card figcaption strong {
-    font-size: 0.36rem;
+    font-size: 0.625rem;
+    -webkit-line-clamp: 3;
   }
 
   .difference-snapshot {
@@ -8854,7 +8834,7 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
     width: 100%;
     height: auto;
     aspect-ratio: 16 / 9;
-    min-height: 132px;
+    min-height: 168px;
   }
 
   .method-copy {
@@ -8877,9 +8857,16 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   .phone-thumb-device {
     left: 71%;
     bottom: 6px;
-    width: 44%;
-    min-width: 58px;
-    max-width: 72px;
+    width: 49%;
+    min-width: 72px;
+    max-width: 82px;
+  }
+
+  .phone-thumb-kicker,
+  .phone-thumb-meta-ui,
+  .phone-thumb-chips,
+  .phone-thumb-facts {
+    display: none;
   }
 
   .phone-thumb .method-copy span {
@@ -8935,7 +8922,7 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
 
   .snapshot-detail-card span,
   .snapshot-material-chip span:last-child {
-    font-size: 0.48rem;
+    font-size: 0.56rem;
   }
 
   .snapshot-comparison-rows {
@@ -9038,6 +9025,17 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   .execution-plan-cta-title {
     font-size: 2.4rem;
   }
+
+}
+
+@media (max-width: 900px) and (min-width: 761px) {
+  .phone-thumb-device {
+    max-width: 106px;
+  }
+
+  .phone-thumb-chips {
+    display: none;
+  }
 }
 
 @media (max-width: 420px) {
@@ -9129,6 +9127,10 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
     font-size: 0.66rem;
   }
 
+  .hero-substate-rail {
+    grid-template-columns: 0.9fr 0.9fr 1.2fr 1fr 1fr;
+  }
+
   .hero-title-focus,
   html[lang="ja"] .hero-title-focus {
     font-size: 1.14rem;
@@ -9145,6 +9147,16 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
 
   .plan-page h2 {
     font-size: 1.45rem;
+  }
+
+  .explorer-stage .material-model {
+    grid-template-columns: 1fr;
+  }
+
+  .explorer-stage .material-model-stage,
+  .explorer-stage .material-model-girl-restorer .material-model-stage,
+  .explorer-stage .material-model-lastSupper-restorer .material-model-stage {
+    min-height: 96px;
   }
 }
 

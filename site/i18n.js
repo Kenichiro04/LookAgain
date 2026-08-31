@@ -51,9 +51,9 @@
       title:
         '<span class="hero-title-focus">See the artwork<br>through an expert perspective.</span>',
       subcopy:
-        "Look Again turns an expert’s way of seeing into a short Android XR display on the real artwork. It appears for a few seconds, then gets out of the way.",
+        "Look\u00a0Again turns an expert’s way of seeing into a short Android XR display on the real artwork. It appears for a few seconds, then gets out of the way.",
       searchNote:
-        "Search answers a question. Look Again shows what an expert notices first.",
+        "Search answers a question. Look\u00a0Again shows what an expert notices first.",
       replay: "Replay the flow",
       explore: "See the matrix",
       principle: "The artwork does not change.<br>The perspective does.",
@@ -62,7 +62,7 @@
         existingLabel: "Today’s ways",
         existingTitle: "More explanation, but still outside the work",
         existingBody: "No guide leaves you guessing. Audio gives context without giving an entry point. Phone guides move attention to a screen.",
-        lookAgainLabel: "Look Again",
+        lookAgainLabel: "Look\u00a0Again",
         lookAgainTitle: "One expert perspective on the real artwork",
         lookAgainBody: "It places one short expert perspective on the work, then fades from view."
       },
@@ -95,7 +95,7 @@
         restorer: {
           label: "CONSERVATOR",
           short: "Conservator",
-          sequenceShort: "3. Restorer",
+          sequenceShort: "3. Conservator",
           caption: "Textiles and surface detail show how paint carries value.",
           question: "Textiles and surface detail show how paint carries value."
         },
@@ -116,7 +116,7 @@
         quiet: {
           label: "LOOK WITH YOUR OWN EYES",
           short: "Look",
-          sequenceShort: "5. Look again",
+          sequenceShort: "5. Look\u00a0again",
           caption: "The overlay fades. Keep looking at the detail it revealed.",
           question: "The overlay fades. Keep looking at the detail it revealed."
         }
@@ -157,13 +157,13 @@
           caption: "No guide → Audio → Phone"
         },
         lookagain: {
-          label: "Look Again",
+          label: "Look\u00a0Again",
           caption: "Choose a perspective → Artist → Conservator → Historian → Look with your own eyes"
         }
       }
     },
     experienceFlow: {
-      title: "How Look Again works",
+      title: "How Look\u00a0Again works",
       intro:
         "Choose a perspective. A marked detail and a short explanation appear on the artwork. When they fade, look again.",
       steps: {
@@ -188,7 +188,7 @@
     category: {
       title: "Not a longer guide.<br>A new way into the work.",
       body:
-        "Audio explains the work. A phone puts that explanation on a screen. Look Again keeps it attached to the artwork.",
+        "Audio explains the work. A phone puts that explanation on a screen. Look\u00a0Again keeps it attached to the artwork.",
       guide: {
         label: "Guide",
         body: "explains the selected work"
@@ -198,7 +198,7 @@
         body: "answers a question"
       },
       lookAgain: {
-        label: "Look Again",
+        label: "Look\u00a0Again",
         body: "ties a short explanation to the artwork"
       }
     },
@@ -221,7 +221,7 @@
       wearing: {
         label: "WEARING XR",
         short: "Wearing XR",
-        caption: "“Look Again starts from the real work.”",
+        caption: "“Look\u00a0Again starts from the real work.”",
         hud: "WEARING XR"
       },
       select: {
@@ -281,10 +281,10 @@
       }
     },
     art: {
-      girl: "Girl with a Pearl Earring",
+      girl: "Girl with a Pearl\u00a0Earring",
       arnolfini: "The Arnolfini Portrait",
       lastSupper: "The Last Supper",
-      girlAlt: "Girl with a Pearl Earring artwork source image",
+      girlAlt: "Girl with a Pearl\u00a0Earring artwork source image",
       arnolfiniAlt: "The Arnolfini Portrait artwork source image",
       lastSupperAlt: "The Last Supper artwork source image",
       pearlCropAlt: "Detail crop of the pearl highlight",
@@ -300,7 +300,7 @@
       girl: {
         app: "Gallery Guide",
         kicker: "Gallery stop 670",
-        title: "Girl with a Pearl Earring",
+        title: "Girl with a Pearl\u00a0Earring",
         meta: "Johannes Vermeer · oil painting",
         chips: ["Overview", "Light", "Materials"],
         body:
@@ -343,13 +343,13 @@
     difference: {
       title: "How viewing changes",
       subtitle:
-        "Audio explains the work. A phone moves the explanation to a screen. Look Again places an expert perspective on the real artwork.",
+        "Audio explains the work. A phone moves the explanation to a screen. Look\u00a0Again places an expert perspective on the real artwork.",
       existingLabel: "Current guides",
       existingMicrocopy:
         "No guide, audio, and phone each leave attention in a different place.",
-      lookAgainLabel: "Look Again",
+      lookAgainLabel: "Look\u00a0Again",
       lookAgainMicrocopy:
-        "Look Again marks one detail on the real artwork and explains why it matters.",
+        "Look\u00a0Again marks one detail on the real artwork and explains why it matters.",
       audioTranscript: "Light creates the illusion of the pearl.",
       audioBubble: "But where should I look?",
       noGuide: {
@@ -367,7 +367,7 @@
       phoneUi: {
         app: "Gallery Guide",
         kicker: "Gallery stop 670",
-        title: "Girl with a Pearl Earring",
+        title: "Girl with a Pearl\u00a0Earring",
         meta: "Johannes Vermeer · oil painting",
         chip1: "Overview",
         chip2: "Light",
@@ -377,7 +377,7 @@
         fact2: "The dark ground pushes the lit face toward the viewer."
       },
       xr: {
-        title: "Look Again",
+        title: "Look\u00a0Again",
         body: "A quiet perspective on the real work.",
         kicker: "DISPLAY PREVIEW",
         target: "Gaze and light",
@@ -389,7 +389,7 @@
       },
       rows: {
         existingHead: "Current guides",
-        lookAgainHead: "Look Again",
+        lookAgainHead: "Look\u00a0Again",
         contextExisting: "More explanation",
         contextLookAgain: "A perspective to begin with",
         infoExisting: "Attention can drift",
@@ -425,17 +425,17 @@
           artist: {
             target: "Vanishing point and table lines",
             question: "The painted room is built from lines converging near Christ's head.",
-            body: "Coffered ceiling, side-wall openings and bands, and table recession converge near Christ's head."
+            body: "Ceiling coffers, wall bands, and the table recede toward Christ's head."
           },
           restorer: {
             target: "Wall surface and losses",
             question: "The wall surface records loss, repainting, and repair.",
-            body: "A wall painting carries time on its surface: loss, repainting, and repair become part of what is visible."
+            body: "Loss, repainting, and repair remain visible on the wall surface."
           },
           social: {
             target: "Table, food, and seating order",
             question: "The table arrangement makes social and narrative separation visible.",
-            body: "The shared table is not neutral; placement, gesture, and separation shape the scene’s order."
+            body: "Placement and separation at the shared table structure the scene."
           }
         },
         girl: {
@@ -452,7 +452,7 @@
           social: {
             target: "Tronie pair: Pearl Girl and Young Woman",
             question: "The paired Vermeer study turns the famous image into a tronie type.",
-            body: "A same-period Vermeer head study reveals a repeated type: gaze, costume, dark ground, and viewer address."
+            body: "A paired Vermeer study reveals a type built from gaze, costume, and a dark ground."
           }
         },
         arnolfini: {
@@ -540,8 +540,8 @@
       "https://cenacolovinciano.org/en/museum/backstage/": "Cenacolo backstage",
       "https://cenacolovinciano.vivaticket.it/index.php?nvpg[festivalDetail]&id=2384&lang=en": "Cenacolo Vinciano visit information",
       "https://www.nga.gov/collection/art-object-page.46590.html": "The Last Supper study",
-      "https://www.mauritshuis.nl/en/our-collection/artworks/670-girl-with-a-pearl-earring/": "Girl with a Pearl Earring",
-      "https://www.mauritshuis.nl/en/explore/the-collection/artworks/girl-with-a-pearl-earring-670/": "Girl with a Pearl Earring",
+      "https://www.mauritshuis.nl/en/our-collection/artworks/670-girl-with-a-pearl-earring/": "Girl with a Pearl\u00a0Earring",
+      "https://www.mauritshuis.nl/en/explore/the-collection/artworks/girl-with-a-pearl-earring-670/": "Girl with a Pearl\u00a0Earring",
       "https://www.metmuseum.org/art/collection/search/437880": "Study of a Young Woman",
       "https://www.metmuseum.org/art/collection/search/437879": "Study of a Young Woman",
       "https://www.nationalgallery.org.uk/technical-bulletin/billinge_campbell1995": "Technical Bulletin on The Arnolfini Portrait",
@@ -612,7 +612,7 @@
     metrics: {
       title: "How success will be measured",
       body:
-        "Look Again only works if it helps you see the real artwork more clearly without pulling you into another screen.",
+        "Look\u00a0Again only works if it helps you see the real artwork more clearly without pulling you into another screen.",
       items: {
         discovery: "noticing previously missed details",
         question: "forming better questions after looking",
@@ -687,7 +687,7 @@
       title: "Build roadmap",
       kicker: "Reviewer execution plan",
       intro:
-        "Look Again is designed as a focused Android XR prototype, not a broad museum-platform launch. The goal is to test whether a short perspective on the real artwork can help people begin looking before they know what to ask.",
+        "Look\u00a0Again is designed as a focused Android XR prototype, not a broad museum-platform launch. The goal is to test whether a short perspective on the real artwork can help people begin looking before they know what to ask.",
       readinessTitle: "Build scope",
       readiness: {
         rapid: {
@@ -732,7 +732,7 @@
         month5: {
           label: "Month 5",
           title: "User study.",
-          body: "Compare no guide / audio-like context / phone guide / Look Again perspective."
+          body: "Compare no guide / audio-like context / phone guide / Look\u00a0Again perspective."
         },
         month6: {
           label: "Month 6",
@@ -831,9 +831,9 @@
       title:
         '<span class="hero-title-focus">専門家の視点を通して、<br>作品を見る。</span>',
       subcopy:
-        "Look Againは、専門家の見方を短い表示にして、Android XRで実物作品に重ねます。表示は数秒で消え、作品だけが残ります。",
+        "Look\u00a0Againは、専門家の見方を短い表示にして、Android XRで実物作品に重ねます。表示は数秒で消え、作品だけが残ります。",
       searchNote:
-        "検索は問いに答える。Look Againは、専門家が最初に見る場所と、その理由を示します。",
+        "検索は問いに答える。Look\u00a0Againは、専門家が最初に見る場所と、その理由を示します。",
       replay: "流れをもう一度見る",
       explore: "マトリクスを見る",
       principle: "作品は変わらない。<br>視点が変わる。",
@@ -842,7 +842,7 @@
         existingLabel: "従来のガイド",
         existingTitle: "説明は増える。でも、作品の外に留まりやすい",
         existingBody: "何もなければ手がかりがない。音声は文脈をくれるが、場所は示さない。スマホは注意を画面へ移す。",
-        lookAgainLabel: "Look Again",
+        lookAgainLabel: "Look\u00a0Again",
         lookAgainTitle: "実物作品の上に、一つの専門家視点が出る",
         lookAgainBody: "作品の上に短い専門家視点を重ね、すぐ視界から消える。"
       },
@@ -937,7 +937,7 @@
           caption: "ガイドなし → 音声 → スマホ"
         },
         lookagain: {
-          label: "Look Again",
+          label: "Look\u00a0Again",
           caption: "視点選択 → 画家の視点 → 保存修復家の視点 → 歴史家の視点 → 自分の目で見る"
         }
       }
@@ -968,7 +968,7 @@
     category: {
       title: "解説を長くするのではない。<br>作品に入るための視点をつくる。",
       body:
-        "音声は耳から説明を届ける。スマホは画面に説明を出す。Look Againは、解説を実物作品の細部に結びつける。",
+        "音声は耳から説明を届ける。スマホは画面に説明を出す。Look\u00a0Againは、解説を実物作品の細部に結びつける。",
       guide: {
         label: "ガイド",
         body: "選んだ作品を説明する"
@@ -978,7 +978,7 @@
         body: "問いに答える"
       },
       lookAgain: {
-        label: "Look Again",
+        label: "Look\u00a0Again",
         body: "短い解説を実物作品に結びつける"
       }
     },
@@ -1001,7 +1001,7 @@
       wearing: {
         label: "WEARING XR",
         short: "XR装着",
-        caption: "「Look Againは、実物作品から始まる。」",
+        caption: "「Look\u00a0Againは、実物作品から始まる。」",
         hud: "WEARING XR"
       },
       select: {
@@ -1123,13 +1123,13 @@
     difference: {
       title: "鑑賞体験の変化",
       subtitle:
-        "音声は耳から説明を届け、スマホは画面に説明を出す。Look Againは、専門家の視点を実物作品の上に重ねます。",
+        "音声は耳から説明を届け、スマホは画面に説明を出す。Look\u00a0Againは、専門家の視点を実物作品の上に重ねます。",
       existingLabel: "現状のガイド",
       existingMicrocopy:
         "ガイドなし、音声、スマホでは、注意がそれぞれ違う場所に向かう。",
-      lookAgainLabel: "Look Again",
+      lookAgainLabel: "Look\u00a0Again",
       lookAgainMicrocopy:
-        "Look Againは、実物作品の細部を示し、なぜ見るのかを短く解説する。",
+        "Look\u00a0Againは、実物作品の細部を示し、なぜ見るのかを短く解説する。",
       audioTranscript: "光が、真珠のような効果を作っています。",
       audioBubble: "でも、どこを見ればいい？",
       noGuide: {
@@ -1157,7 +1157,7 @@
         fact2: "暗い背景が、光を受けた顔を前に押し出す。"
       },
       xr: {
-        title: "Look Again",
+        title: "Look\u00a0Again",
         body: "実物の上に、静かに出る。",
         kicker: "表示プレビュー",
         target: "視線と光",
@@ -1169,7 +1169,7 @@
       },
       rows: {
         existingHead: "現状のガイド",
-        lookAgainHead: "Look Again",
+        lookAgainHead: "Look\u00a0Again",
         contextExisting: "説明が増える",
         contextLookAgain: "見始めるための視点",
         infoExisting: "注意が流れる",
@@ -1205,17 +1205,17 @@
           artist: {
             target: "消失点と食卓の線",
             question: "描かれた室内は、キリストの頭部付近へ収束する線で組まれている。",
-            body: "格天井、側壁の開口と帯、食卓の奥行きがキリストの頭部付近へ収束する。"
+            body: "格天井、側壁の帯、食卓の奥行きがキリストの頭部付近へ収束する。"
           },
           restorer: {
             target: "壁面と損失部分",
             question: "壁面には、損失・補彩・修復の履歴がそのまま見えている。",
-            body: "壁画の表面には、損失・補彩・修復の時間が残っている。"
+            body: "壁面には、損失・補彩・修復の履歴が残っている。"
           },
           social: {
             target: "食卓・食物・座る位置",
             question: "食卓の配置が、物語上のまとまりと分離を見える形にしている。",
-            body: "共有された食卓は中立ではない。配置、身振り、分離が場の秩序を作っている。"
+            body: "食卓での配置と分離が、場面の秩序を作っている。"
           }
         },
         girl: {
@@ -1232,7 +1232,7 @@
           social: {
             target: "二つのトローニー：真珠の少女と若い女性",
             question: "同時期の習作と並べると、トローニーという型として読める。",
-            body: "同時期のフェルメールの頭部習作を横に出すと、視線・衣装・暗い背景・見る者への向きという型が見えてくる。"
+            body: "同時期の習作を並べると、視線・衣装・暗い背景という型が見えてくる。"
           }
         },
         arnolfini: {
@@ -1392,7 +1392,7 @@
     metrics: {
       title: "成功の測り方",
       body:
-        "Look Againが成立するのは、別の画面に引き込まず、実物作品をよりはっきり見られる場合だけです。",
+        "Look\u00a0Againが成立するのは、別の画面に引き込まず、実物作品をよりはっきり見られる場合だけです。",
       items: {
         discovery: "それまで見落としていた細部に気づく",
         question: "見た後に、よりよい問いが生まれる",
@@ -1467,7 +1467,7 @@
       title: "実装ロードマップ",
       kicker: "審査員向け実行計画",
       intro:
-        "Look Againは、大規模な美術館プラットフォームではなく、焦点を絞ったAndroid XRプロトタイプとして設計する。目的は、実物作品の上に重ねる短い視点表示が、何を問えばいいか分かる前に作品を見始める助けになるかを検証すること。",
+        "Look\u00a0Againは、大規模な美術館プラットフォームではなく、焦点を絞ったAndroid XRプロトタイプとして設計する。目的は、実物作品の上に重ねる短い視点表示が、何を問えばいいか分かる前に作品を見始める助けになるかを検証すること。",
       readinessTitle: "実装範囲",
       readiness: {
         rapid: {
@@ -1512,7 +1512,7 @@
         month5: {
           label: "5か月目",
           title: "ユーザースタディを行う。",
-          body: "ガイドなし / 音声的文脈 / スマホガイド / Look Againの視点表示を比較する。"
+          body: "ガイドなし / 音声的文脈 / スマホガイド / Look\u00a0Againの視点表示を比較する。"
         },
         month6: {
           label: "6か月目",

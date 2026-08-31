@@ -34,9 +34,9 @@ window.LookAgainCueSpecsV23Data = [
     "edge_panel_position": "right-outside-mural, vertically centered",
     "question_en": "How is this space constructed?",
     "question_ja": "この空間はどう作られているのか？",
-    "micro_evidence_en": "The coffered ceiling, side-wall openings and bands, and table recession are drawn as orthogonals that meet near Christ's head.",
+    "micro_evidence_en": "The coffered ceiling, openings and bands on the side walls, and table recession are drawn as orthogonals that meet near Christ's head.",
     "micro_evidence_ja": "格天井、側壁の開口と帯、食卓の奥行きが、キリストの頭部付近へ集まるオルソゴナルとして組まれている。",
-    "explanation_en": "Leonardo constructs the painted room with one-point perspective: the orthogonals of the coffered ceiling, the side-wall openings and tapestry bands, and the table recession converge near Christ's head, conventionally identified around his right temple. The overlay sits on those painted objects and follows their receding edges, instead of drawing a generic X across the mural.",
+    "explanation_en": "Leonardo constructs the painted room with one\u2011point perspective: the orthogonals of the coffered ceiling, the openings and tapestry bands on the side walls, and the table recession converge near Christ's head, conventionally identified around his right temple. The overlay sits on those painted objects and follows their receding edges, instead of drawing a generic X across the mural.",
     "explanation_ja": "レオナルドは、描かれた室内を一点透視で構成している。格天井、側壁の開口とタペストリーの帯、食卓の奥行きを示すオルソゴナルが、一般にキリストの右こめかみ付近とされる一点へ収束する。この表示では、汎用的なバッテンを重ねるのではなく、描かれた対象物の上に線を置き、その奥行き方向に沿わせる。",
     "source_note_en": "Based on Cenacolo Vinciano material on Leonardo’s perspective and the mural’s architectural/compositional construction.",
     "source_note_ja": "レオナルドの遠近法と壁画の建築的・構図的構成に関するCenacolo Vincianoの解説に基づく。",
@@ -48,7 +48,7 @@ window.LookAgainCueSpecsV23Data = [
       "pure math diagram",
       "only one vanishing-point dot",
       "generic radial fan unrelated to the painted architecture",
-      "lines that do not follow the coffered ceiling, side-wall openings/tapestry bands, or table recession",
+      "lines that do not follow the coffered ceiling, openings or tapestry bands on the side walls, or table recession",
       "dense explanation",
       "room-scale vanishing lines from an off-axis viewing position"
     ]
@@ -177,7 +177,7 @@ window.LookAgainCueSpecsV23Data = [
   },
   {
     "artwork_id": "girl",
-    "artwork_title_en": "Girl with a Pearl Earring",
+    "artwork_title_en": "Girl with a Pearl\u00a0Earring",
     "artwork_title_ja": "真珠の耳飾りの少女",
     "lens_id": "artist",
     "lens_title_en": "Artist lens",
@@ -232,7 +232,7 @@ window.LookAgainCueSpecsV23Data = [
   },
   {
     "artwork_id": "girl",
-    "artwork_title_en": "Girl with a Pearl Earring",
+    "artwork_title_en": "Girl with a Pearl\u00a0Earring",
     "artwork_title_ja": "真珠の耳飾りの少女",
     "lens_id": "restorer",
     "lens_title_en": "Conservator lens",
@@ -306,7 +306,7 @@ window.LookAgainCueSpecsV23Data = [
   },
   {
     "artwork_id": "girl",
-    "artwork_title_en": "Girl with a Pearl Earring",
+    "artwork_title_en": "Girl with a Pearl\u00a0Earring",
     "artwork_title_ja": "真珠の耳飾りの少女",
     "lens_id": "social",
     "lens_title_en": "Historian / Social Context lens",
@@ -341,7 +341,7 @@ window.LookAgainCueSpecsV23Data = [
     "edge_panel_position": "right-of-frame, upper-middle",
     "question_en": "What changes when two tronies sit side by side?",
     "question_ja": "二つのトローニーを並べると何が変わるのか？",
-    "micro_evidence_en": "A same-period Vermeer head study turns the famous image from a single icon into a type: a tronie staged through gaze, costume, and display.",
+    "micro_evidence_en": "A same\u2011period Vermeer head study turns the famous image from a single icon into a type: a tronie staged through gaze, costume, and display.",
     "micro_evidence_ja": "同時期のフェルメールの頭部習作を横に出すと、この有名な像は単独のアイコンではなく、視線・衣装・見せ方で作られるトローニーの型として見えてくる。",
     "explanation_en": "Seen alone, the painting can feel like one mysterious portrait. Placed beside Vermeer’s Study of a Young Woman, made around the same years, it reads as a tronie: an image type built from pose, gaze, costume, and viewer address rather than a named sitter.",
     "explanation_ja": "単独で見ると、この絵は一人の謎めいた肖像のように感じられる。しかし同じ頃のフェルメール《若い女性の習作》と並べると、名前のある人物像ではなく、ポーズ、視線、衣装、見る者への向きで作られるトローニーという型として読める。",
@@ -351,8 +351,10 @@ window.LookAgainCueSpecsV23Data = [
     "comparative_visual_cards": [
       {
         "asset": "primary-artwork",
-        "label_en": "Girl with a Pearl Earring",
+        "label_en": "Girl with a Pearl\u00a0Earring",
         "label_ja": "真珠の耳飾りの少女",
+        "compact_label_en": "Pearl Girl",
+        "compact_label_ja": "真珠の少女",
         "body_en": "Mauritshuis describes it as a tronie, not a named portrait.",
         "body_ja": "マウリッツハイスは、名前のある肖像ではなくトローニーとして説明している。",
         "crop_x": 52,
@@ -362,13 +364,15 @@ window.LookAgainCueSpecsV23Data = [
         "asset": "met-study-young-woman",
         "label_en": "Study of a Young Woman",
         "label_ja": "若い女性の習作",
+        "compact_label_en": "Young Woman",
+        "compact_label_ja": "若い女性",
         "body_en": "Met dates this Vermeer work to ca. 1665–67, close to the Pearl Girl.",
         "body_ja": "Metはこのフェルメール作品を1665–67年頃としており、真珠の少女に近い時期である。",
         "crop_x": 48,
         "crop_y": 38
       }
     ],
-    "source_note_en": "Use Mauritshuis on Girl with a Pearl Earring as a tronie, and The Met on Vermeer’s Study of a Young Woman, ca. 1665–67, Public Domain.",
+    "source_note_en": "Use Mauritshuis on Girl with a Pearl\u00a0Earring as a tronie, and The Met on Vermeer’s Study of a Young Woman, ca. 1665–67, Public Domain.",
     "source_note_ja": "《真珠の耳飾りの少女》をトローニーとするMauritshuisの記述、およびフェルメール《若い女性の習作》（1665–67年頃、Public Domain）に関するMetの記述に基づく。",
     "source_urls": [
       "https://www.mauritshuis.nl/en/explore/the-collection/artworks/girl-with-a-pearl-earring-670/",

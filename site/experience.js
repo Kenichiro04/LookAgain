@@ -732,7 +732,6 @@
     stage.classList.toggle("is-cue-sequence", runCueSequence);
     stage.classList.toggle("has-floating-anchor", runCueSequence);
     stage.classList.remove("is-cue-sequence-active");
-    delete stage.dataset.connectorLockedFor;
     stage.dataset.cueSequenceVisible = "false";
     if (runCueSequence && reducedMotion) {
       stage.classList.add("is-cue-sequence-active");
@@ -789,7 +788,7 @@
   function renderConnectorSvg() {
     return `
       <svg class="connector-svg stage-layer--overlay" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-        <line class="connector-line-draw" x1="0" y1="0" x2="0" y2="0"></line>
+        <line x1="0" y1="0" x2="0" y2="0" pathLength="1"></line>
         <circle class="connector-start" cx="0" cy="0" r="0.55"></circle>
         <circle class="connector-end" cx="0" cy="0" r="0.45"></circle>
       </svg>
@@ -896,9 +895,10 @@
               <stop offset="100%" stop-color="#6cdeff" stop-opacity="0.95"></stop>
             </linearGradient>
           </defs>
+          <ellipse class="floor-guide-glow" cx="130" cy="102" rx="104" ry="16"></ellipse>
           <path class="floor-guide-ribbon" d="M97 14 C112 25 148 25 163 14 C151 43 148 62 151 78 L190 78 L130 116 L70 78 L109 78 C112 62 109 43 97 14 Z"></path>
+          <path class="floor-guide-centerline" d="M130 31 C130 50 130 73 130 100"></path>
         </svg>
-        <span class="viewing-position-copy">${escapeHtml(t("cueUi.stepBackHint"))}</span>
       </div>
     `;
   }
@@ -968,16 +968,16 @@
   function specLineDefinitions(spec) {
     const definitions = {
       "lastSupper-artist": [
-        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M-51.3 -132 L50.2 43.4" },
-        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M-6.6 -132 L50.2 43.4" },
-        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M106.3 -132 L50.2 43.4" },
-        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M151 -132 L50.2 43.4" },
-        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M-55 -8.3 L50.2 43.4" },
-        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M-55 9.8 L50.2 43.4" },
-        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M155 -8.5 L50.2 43.4" },
-        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M155 9.7 L50.2 43.4" },
-        { source: "table orthogonal", kind: "object", arrow: false, path: "M-55 99.7 L50.2 43.4" },
-        { source: "table orthogonal", kind: "object", arrow: false, path: "M155 99.9 L50.2 43.4" }
+        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M24 -28 L50.2 43.4" },
+        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M34 -24 L50.2 43.4" },
+        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M66 -24 L50.2 43.4" },
+        { source: "coffered ceiling orthogonal", kind: "object", arrow: false, path: "M76 -28 L50.2 43.4" },
+        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M-28 -16 L50.2 43.4" },
+        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M-28 14 L50.2 43.4" },
+        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M128 -16 L50.2 43.4" },
+        { source: "painted wall/tapestry orthogonal", kind: "object", arrow: false, path: "M128 14 L50.2 43.4" },
+        { source: "table orthogonal", kind: "object", arrow: false, path: "M-24 110 L50.2 43.4" },
+        { source: "table orthogonal", kind: "object", arrow: false, path: "M124 110 L50.2 43.4" }
       ],
       "lastSupper-social": [
         { source: "table edge", kind: "object", path: "M24 64 L82 64" },
@@ -1465,15 +1465,18 @@
     const title = cueSpecText(spec, "comparative_visual_title");
     const cards = spec.comparative_visual_cards;
     const cardMarkup = cards
-      .map((card) => `
+      .map((card) => {
+        const compactLabel = options.compact ? localizedCardText(card, "compact_label") : "";
+        return `
         <figure class="comparative-card comparative-card-${cueSpecSlug(card.asset)}">
           <span class="comparative-card-image" style="${comparativeVisualStyle(spec, card)}" aria-hidden="true"></span>
           <figcaption>
-            <strong>${escapeHtml(localizedCardText(card, "label"))}</strong>
+            <strong>${escapeHtml(compactLabel || localizedCardText(card, "label"))}</strong>
             <span>${escapeHtml(localizedCardText(card, "body"))}</span>
           </figcaption>
         </figure>
-      `)
+      `;
+      })
       .join("");
     return `
       <div class="comparative-evidence comparative-evidence-${cueSpecSlug(mode)}${options.compact ? " is-compact" : ""}">
@@ -1717,10 +1720,7 @@
   function restartCueSequence(stage) {
     if (!stage || reducedMotion || !stage.classList.contains("is-cue-sequence")) return;
     stage.classList.remove("is-cue-sequence-active");
-    delete stage.dataset.connectorLockedFor;
     void stage.offsetWidth;
-    positionConnector(stage, { force: true });
-    stage.dataset.connectorLockedFor = stage.dataset.cueSequenceKey || "active";
     requestAnimationFrame(() => {
       if (stage.classList.contains("is-cue-sequence")) {
         stage.classList.add("is-cue-sequence-active");
@@ -1750,44 +1750,28 @@
     cueSequenceObserver.observe(stage);
   }
 
-  function positionConnector(stage, options = {}) {
-    if (
-      !options.force &&
-      stage?.dataset.connectorLockedFor &&
-      stage.dataset.connectorLockedFor === (stage.dataset.cueSequenceKey || "active")
-    ) {
-      return;
-    }
+  function positionConnector(stage) {
     const scene = stage.querySelector("[data-stage-scene]");
     const svg = scene.querySelector(".connector-svg");
     if (!svg) return;
-    const lines = svg.querySelectorAll("line");
-    const line = svg.querySelector(".connector-line-draw") || lines[0];
+    const line = svg.querySelector("line");
     const start = svg.querySelector(".connector-start");
     const end = svg.querySelector(".connector-end");
-    const sourceAnchorEl = scene.querySelector(".artwork-cue-layer .anchor-target") || scene.querySelector(".anchor-target");
-    const floatingAnchorEl = scene.querySelector(".floating-anchor-target.anchor-target");
+    const anchorEl = scene.querySelector(".anchor-target");
     const panel = scene.querySelector(".edge-panel");
 
-    if (!sourceAnchorEl || !panel) {
+    if (!anchorEl || !panel) {
       svg.style.display = "none";
       return;
     }
 
     svg.style.display = "block";
+    avoidPanelAnchorOverlap(scene, panel, anchorEl);
     const sceneRect = scene.getBoundingClientRect();
-    const sourceAnchorRect = sourceAnchorEl.getBoundingClientRect();
-    const sourceAnchorCenterX = sourceAnchorRect.left + sourceAnchorRect.width / 2;
-    const sourceAnchorCenterY = sourceAnchorRect.top + sourceAnchorRect.height / 2;
-    scene.style.setProperty("--floating-anchor-x", `${(sourceAnchorCenterX - sceneRect.left).toFixed(2)}px`);
-    scene.style.setProperty("--floating-anchor-y", `${(sourceAnchorCenterY - sceneRect.top).toFixed(2)}px`);
-
-    const displayedAnchorEl = floatingAnchorEl || sourceAnchorEl;
-    avoidPanelAnchorOverlap(scene, panel, displayedAnchorEl);
-    const anchorRect = displayedAnchorEl.getBoundingClientRect();
+    const anchorRect = anchorEl.getBoundingClientRect();
+    const panelRect = panel.getBoundingClientRect();
     const anchorCenterX = anchorRect.left + anchorRect.width / 2;
     const anchorCenterY = anchorRect.top + anchorRect.height / 2;
-    const panelRect = panel.getBoundingClientRect();
     const panelConnectionX = anchorCenterX <= panelRect.left ? panelRect.left : panelRect.right;
     const panelConnectionY = Math.max(
       panelRect.top + 22,
@@ -1799,121 +1783,77 @@
     const y1 = ((anchorCenterY - sceneRect.top) / sceneRect.height) * 100;
     const x2 = ((panelConnectionX - sceneRect.left) / sceneRect.width) * 100;
     const y2 = ((panelConnectionY - sceneRect.top) / sceneRect.height) * 100;
-    const connectorPathLength = Math.hypot(panelConnectionX - anchorCenterX, panelConnectionY - anchorCenterY);
 
-    lines.forEach((connectorLine) => {
-      connectorLine.setAttribute("x1", x1.toFixed(2));
-      connectorLine.setAttribute("y1", y1.toFixed(2));
-      connectorLine.setAttribute("x2", x2.toFixed(2));
-      connectorLine.setAttribute("y2", y2.toFixed(2));
-    });
-    svg.style.setProperty("--connector-path-length", `${connectorPathLength.toFixed(2)}px`);
+    line.setAttribute("x1", x1.toFixed(2));
+    line.setAttribute("y1", y1.toFixed(2));
+    line.setAttribute("x2", x2.toFixed(2));
+    line.setAttribute("y2", y2.toFixed(2));
     start.setAttribute("cx", x1.toFixed(2));
     start.setAttribute("cy", y1.toFixed(2));
     end.setAttribute("cx", x2.toFixed(2));
     end.setAttribute("cy", y2.toFixed(2));
+    scene.style.setProperty("--floating-anchor-x", `${(anchorCenterX - sceneRect.left).toFixed(2)}px`);
+    scene.style.setProperty("--floating-anchor-y", `${(anchorCenterY - sceneRect.top).toFixed(2)}px`);
     panel.style.setProperty("--connector-origin-x", panelOriginX);
     panel.style.setProperty("--connector-origin-y", `${panelOriginY.toFixed(2)}%`);
-    syncPreviewPanelScrollHint(stage);
-  }
-
-  function syncPreviewPanelScrollHint(stage) {
-    if (!stage || !stage.classList.contains("explorer-stage")) return;
-    const panel = stage.querySelector(".edge-panel");
-    if (!panel) return;
-
-    const update = () => {
-      const hasOverflow = panel.scrollHeight > panel.clientHeight + 2;
-      panel.dataset.scrollable = hasOverflow ? "true" : "false";
-      if (!hasOverflow) return;
-
-      const trackInset = 10;
-      const trackHeight = Math.max(36, panel.clientHeight - trackInset * 2);
-      const thumbHeight = Math.max(28, Math.min(trackHeight, trackHeight * (panel.clientHeight / panel.scrollHeight)));
-      const maxScroll = Math.max(1, panel.scrollHeight - panel.clientHeight);
-      const maxThumbOffset = Math.max(0, trackHeight - thumbHeight);
-      const thumbOffset = (panel.scrollTop / maxScroll) * maxThumbOffset;
-
-      panel.style.setProperty("--preview-scroll-track-top", `${(panel.scrollTop + trackInset).toFixed(2)}px`);
-      panel.style.setProperty("--preview-scroll-track-height", `${trackHeight.toFixed(2)}px`);
-      panel.style.setProperty("--preview-scroll-thumb-top", `${(panel.scrollTop + trackInset + thumbOffset).toFixed(2)}px`);
-      panel.style.setProperty("--preview-scroll-thumb-height", `${thumbHeight.toFixed(2)}px`);
-    };
-
-    if (panel.dataset.scrollHintBound !== "true") {
-      panel.dataset.scrollHintBound = "true";
-      panel.addEventListener("scroll", () => {
-        window.requestAnimationFrame(update);
-      }, { passive: true });
-    }
-
-    update();
   }
 
   function avoidPanelAnchorOverlap(scene, panel, anchorEl) {
     const sceneRect = scene.getBoundingClientRect();
     panel.style.setProperty("--panel-safe-x", "0px");
     panel.style.setProperty("--panel-safe-y", "0px");
-    const labelAnchor = scene.querySelector(".floating-anchor-target.anchor-target") || anchorEl;
-    new Set([anchorEl, labelAnchor]).forEach((target) => {
-      target.style.setProperty("--anchor-label-safe-x", "0px");
-      target.style.setProperty("--anchor-label-safe-y", "0px");
-      target.classList.remove("is-anchor-label-minimized");
-    });
+    anchorEl.style.setProperty("--anchor-label-safe-x", "0px");
+    anchorEl.style.setProperty("--anchor-label-safe-y", "0px");
+    anchorEl.classList.remove("is-anchor-label-minimized");
 
     const panelRect = panel.getBoundingClientRect();
-    const anchorRect = inflateRect(labelAnchor.getBoundingClientRect(), 8);
-    const label = labelAnchor.querySelector(".anchor-label");
+    const anchorRect = inflateRect(anchorEl.getBoundingClientRect(), 8);
+    const label = anchorEl.querySelector(".anchor-label");
     const labelRect = label ? label.getBoundingClientRect() : null;
     const safeGap = 18;
     const padding = 12;
     const initialTargetRect = labelRect ? unionRects(anchorRect, labelRect) : anchorRect;
-    const initialPanelOverlap = overlapArea(panelRect, initialTargetRect, safeGap);
-    if (!initialPanelOverlap) return;
+    if (!rectsOverlap(panelRect, initialTargetRect, safeGap)) return;
 
     if (labelRect) {
       const labelCandidates = [
         [0, 0],
-        [0, -54],
-        [0, 54],
-        [-58, 0],
-        [58, 0],
-        [-58, -42],
-        [58, -42],
-        [-58, 42],
-        [58, 42]
+        [0, -68],
+        [0, 68],
+        [-112, 0],
+        [112, 0],
+        [-112, -56],
+        [112, -56],
+        [-112, 56],
+        [112, 56],
+        [0, -104],
+        [0, 104]
       ];
       const bestLabel = labelCandidates
         .map(([x, y]) => {
           const shiftedLabel = shiftRect(labelRect, x, y);
           const targetRect = unionRects(anchorRect, shiftedLabel);
-          const panelOverlap = overlapArea(panelRect, targetRect, safeGap);
           return {
             x,
             y,
-            panelOverlap,
+            overlap: overlapArea(panelRect, targetRect, safeGap),
             boundsPenalty: rectWithinScenePenalty(targetRect, sceneRect, padding),
             distance: Math.abs(x) + Math.abs(y) * 1.08
           };
         })
         .sort((a, b) =>
           a.boundsPenalty - b.boundsPenalty ||
-          a.panelOverlap - b.panelOverlap ||
+          a.overlap - b.overlap ||
           a.distance - b.distance
         )[0];
 
-      if (
-        bestLabel &&
-        bestLabel.boundsPenalty === 0 &&
-        (bestLabel.panelOverlap < initialPanelOverlap || bestLabel.distance === 0)
-      ) {
-        labelAnchor.style.setProperty("--anchor-label-safe-x", `${bestLabel.x.toFixed(2)}px`);
-        labelAnchor.style.setProperty("--anchor-label-safe-y", `${bestLabel.y.toFixed(2)}px`);
-        if (bestLabel.panelOverlap === 0) return;
+      if (bestLabel && bestLabel.overlap === 0 && bestLabel.boundsPenalty === 0) {
+        anchorEl.style.setProperty("--anchor-label-safe-x", `${bestLabel.x.toFixed(2)}px`);
+        anchorEl.style.setProperty("--anchor-label-safe-y", `${bestLabel.y.toFixed(2)}px`);
+        return;
       }
 
-      if (!initialPanelOverlap) return;
-      labelAnchor.classList.add("is-anchor-label-minimized");
+      anchorEl.classList.add("is-anchor-label-minimized");
       if (!rectsOverlap(panelRect, anchorRect, safeGap)) return;
     }
 
@@ -2075,37 +2015,37 @@
     });
   }
 
-  const PARALLAX_LERP = 0.42;
-  const PARALLAX_REST_THRESHOLD = 0.01;
+  const PARALLAX_LERP = 0.16;
   const PARALLAX_RANGE = {
-    roomX: 2.4,
-    roomY: 1.6,
-    overlayX: 4.8,
-    overlayY: 2.8,
-    panelX: 3.8,
-    panelY: 2.35,
-    phoneX: 10,
-    phoneY: 6,
-    phoneRotate: 0.8
+    roomX: 3.2,
+    roomY: 2.2,
+    overlayX: 7.2,
+    overlayY: 4.2,
+    panelX: 4.8,
+    panelY: 3,
+    phoneX: 14,
+    phoneY: 8.4,
+    phoneRotate: 1.2
   };
 
   function setStageParallax(stage, x, y) {
     if (!stage) return;
     const clampedX = Math.max(-1, Math.min(1, x));
     const clampedY = Math.max(-1, Math.min(1, y));
-    const xrResponseCurve = (value) => value * (0.92 + Math.abs(value) * 0.08);
-    const easedX = xrResponseCurve(clampedX);
-    const easedY = xrResponseCurve(clampedY);
+    const easedX = Math.sin(clampedX * Math.PI / 2);
+    const easedY = Math.sin(clampedY * Math.PI / 2);
+    const devicePixelRatio = Math.max(1, window.devicePixelRatio || 1);
+    const snapToDevicePixel = (value) => Math.round(value * devicePixelRatio) / devicePixelRatio;
     stage.style.setProperty("--look-x", easedX.toFixed(3));
     stage.style.setProperty("--look-y", easedY.toFixed(3));
     stage.style.setProperty("--room-x", `${(-easedX * PARALLAX_RANGE.roomX).toFixed(2)}px`);
     stage.style.setProperty("--room-y", `${(-easedY * PARALLAX_RANGE.roomY).toFixed(2)}px`);
     stage.style.setProperty("--art-x", `${(-easedX * PARALLAX_RANGE.roomX).toFixed(2)}px`);
     stage.style.setProperty("--art-y", `${(-easedY * PARALLAX_RANGE.roomY).toFixed(2)}px`);
-    stage.style.setProperty("--overlay-x", `${(-easedX * PARALLAX_RANGE.overlayX).toFixed(2)}px`);
-    stage.style.setProperty("--overlay-y", `${(-easedY * PARALLAX_RANGE.overlayY).toFixed(2)}px`);
-    stage.style.setProperty("--panel-x", `${(-easedX * PARALLAX_RANGE.panelX).toFixed(2)}px`);
-    stage.style.setProperty("--panel-y", `${(-easedY * PARALLAX_RANGE.panelY).toFixed(2)}px`);
+    stage.style.setProperty("--overlay-x", `${snapToDevicePixel(-easedX * PARALLAX_RANGE.overlayX)}px`);
+    stage.style.setProperty("--overlay-y", `${snapToDevicePixel(-easedY * PARALLAX_RANGE.overlayY)}px`);
+    stage.style.setProperty("--panel-x", `${snapToDevicePixel(-easedX * PARALLAX_RANGE.panelX)}px`);
+    stage.style.setProperty("--panel-y", `${snapToDevicePixel(-easedY * PARALLAX_RANGE.panelY)}px`);
     stage.style.setProperty("--phone-x", `${(-easedX * PARALLAX_RANGE.phoneX).toFixed(2)}px`);
     stage.style.setProperty("--phone-y", `${(-easedY * PARALLAX_RANGE.phoneY).toFixed(2)}px`);
     stage.style.setProperty("--phone-rotate", `${(easedX * PARALLAX_RANGE.phoneRotate).toFixed(2)}deg`);
@@ -2147,14 +2087,11 @@
       const dy = state.targetY - state.currentY;
       state.currentX += dx * PARALLAX_LERP;
       state.currentY += dy * PARALLAX_LERP;
-      if (Math.abs(dx) < PARALLAX_REST_THRESHOLD) state.currentX = state.targetX;
-      if (Math.abs(dy) < PARALLAX_REST_THRESHOLD) state.currentY = state.targetY;
+      if (Math.abs(dx) < 0.002) state.currentX = state.targetX;
+      if (Math.abs(dy) < 0.002) state.currentY = state.targetY;
       setStageParallax(stage, state.currentX, state.currentY);
       positionConnector(stage);
-      if (
-        Math.abs(state.targetX - state.currentX) > PARALLAX_REST_THRESHOLD ||
-        Math.abs(state.targetY - state.currentY) > PARALLAX_REST_THRESHOLD
-      ) {
+      if (Math.abs(state.targetX - state.currentX) > 0.002 || Math.abs(state.targetY - state.currentY) > 0.002) {
         state.frame = window.requestAnimationFrame(animate);
       }
     };
@@ -2714,8 +2651,8 @@
       button.addEventListener("click", () => setLanguage(button.dataset.langButton));
     });
     window.addEventListener("resize", () => {
-      positionConnector(heroStage, { force: true });
-      positionConnector(explorerStage, { force: true });
+      positionConnector(heroStage);
+      positionConnector(explorerStage);
       scheduleMatrixConnectorPositioning();
     });
   }
