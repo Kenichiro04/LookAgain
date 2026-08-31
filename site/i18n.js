@@ -51,7 +51,7 @@
       title:
         '<span class="hero-title-focus">See the artwork<br>through an expert perspective.</span>',
       subcopy:
-        "Look\u00a0Again turns an expert’s way of seeing into a short Android XR display on the real artwork. It appears for a few seconds, then gets out of the way.",
+        "Look\u00a0Again turns an expert’s way of seeing into a short Android\u00a0XR display on the real artwork. It appears for a few seconds, then gets out of the way.",
       searchNote:
         "Search answers a question. Look\u00a0Again shows what an expert notices first.",
       replay: "Replay the flow",
@@ -165,7 +165,7 @@
     experienceFlow: {
       title: "How Look\u00a0Again works",
       intro:
-        "Choose a perspective. A marked detail and a short explanation appear on the artwork. When they fade, look again.",
+        'Choose a perspective. A marked detail and a short explanation appear on the artwork. <span class="semantic-unit">When they fade,</span> look again.',
       steps: {
         choose: {
           title: "Choose a perspective",
@@ -401,7 +401,7 @@
     lenses: {
       title: "Perspective Matrix",
       body:
-        "The same artwork looks different depending on who is looking: Artist, Conservator, or Historian.",
+        'The same artwork looks different depending on who is looking: <span class="semantic-unit">Artist, Conservator, or Historian.</span>',
       explanation:
         "Read across to compare experts. Read down to compare artworks.",
       footerLine:
@@ -475,7 +475,7 @@
       }
     },
     preview: {
-      title: "Perspective on<br class=\"heading-narrow-break\"> the artwork",
+      title: 'Perspective on<br class="preview-heading-break"> <span class="heading-continuation">the artwork</span>',
       body:
         "Select a matrix card to see its XR display at full size.",
       controls: {
@@ -550,7 +550,7 @@
     xrOnly: {
       title: "Why this needs XR",
       intro:
-        "A phone makes you look away from the artwork. XR can keep the marked detail and its explanation in the same view.",
+        'A phone makes you look away from the artwork. XR can keep the marked detail and its explanation in <span class="semantic-unit">the same view.</span>',
       items: {
         pointing: {
           title: "Marks a real detail",
@@ -582,7 +582,7 @@
         "Museums are where the problem is easiest to see, not where the product must end. The broader category is opening a first question before search in real places."
     },
     aura: {
-      title: "Android XR hardware test",
+      title: "Android\u00a0XR hardware test",
       body:
         "The XR value above only matters if the real artwork remains clear. The hardware test checks the few conditions that decide that.",
       statement:
@@ -602,7 +602,7 @@
         "The first build is deliberately narrow: can a short perspective on the real artwork help you begin looking better than audio or phone guidance?",
       items: {
         artworks: "Start with 3–5 public-domain artworks.",
-        native: "Build a native Android XR prototype.",
+        native: "Build a native Android\u00a0XR prototype.",
         selection: "Select works by artwork number or QR code.",
         scope:
           "Keep the MVP focused: no museum-wide navigation, no heavy 3D reconstruction, no museum partnership claim.",
@@ -624,9 +624,9 @@
       }
     },
     futureContexts: {
-      title: "Museum-first,<br class=\"future-title-mobile-break\"> not museum-only",
+      title: 'Museum-first,<br class="future-title-mobile-break"> <span class="heading-continuation">not museum-only</span>',
       intro:
-        "Museums are the first proof environment because the problem is easy to see there. The same interaction pattern can later apply to nearby cultural and visual contexts: stage sets, landscape photography, and heritage sites.",
+        'Museums are the first proof environment because the problem is easy to see there. The same interaction pattern can later apply to nearby cultural and visual contexts: <span class="semantic-unit">stage sets,</span> <span class="semantic-unit">landscape photography,</span> and <span class="semantic-unit">heritage sites.</span>',
       cards: {
         opera: {
           status: "Scenographer view",
@@ -669,7 +669,7 @@
       exampleNote:
         "The artworks are examples for the prototype. Future use would require rights review for each artwork and display context.",
       disclaimer:
-        "Prototype visualization. Native Android XR implementation is not complete. No museum partnership is claimed. Museum scenes are approximate visualizations, not exact reconstructions.",
+        "Prototype visualization. Native Android\u00a0XR implementation is not complete. No museum partnership is claimed. Museum scenes are approximate visualizations, not exact reconstructions.",
       contactHtml:
         "Builders: Kenichiro Eda / Yuka Nabeshima<br>Contact: ciaoken16@gmail.com",
       copyright: "© 2026 Kenichiro Eda",
@@ -677,7 +677,7 @@
     },
     executionPlanCta: {
       kicker: "Reviewer page",
-      title: "Execution plan<br class=\"heading-narrow-break\"> and roadmap",
+      title: 'Execution plan<span class="cta-conjunction"> and </span><span class="cta-roadmap-inline">roadmap</span><br class="cta-heading-break"><span class="cta-roadmap-break">Roadmap</span>',
       body:
         "Build scope, six-month roadmap, validation plan, grant use, team, and current status are separated for review.",
       action: "Open plan"
@@ -687,37 +687,37 @@
       title: "Build roadmap",
       kicker: "Reviewer execution plan",
       intro:
-        "Look\u00a0Again is designed as a focused Android XR prototype, not a broad museum-platform launch. The goal is to test whether a short perspective on the real artwork can help people begin looking before they know what to ask.",
+        '<span class="semantic-unit">Look\u00a0Again is designed as</span> <span class="semantic-unit">a focused Android\u00a0XR prototype,</span> <span class="semantic-unit">not a broad museum-platform launch.</span> The goal is to test whether a short perspective on the real artwork can help people begin looking before they know what to ask.',
       readinessTitle: "Build scope",
       readiness: {
         rapid: {
           title: "Rapid prototype",
-          body: "Browser prototype now, native Android XR prototype next."
+          body: 'Browser prototype now; <span class="semantic-unit">native Android\u00a0XR prototype next.</span>'
         },
         measurable: {
           title: "Measurable interaction",
-          body: "Test first-question clarity, phone comparison, and do-not-remove-glasses rate."
+          body: 'Test <span class="semantic-unit">question clarity,</span> <span class="semantic-unit">phone comparison,</span> and whether people <span class="semantic-unit">keep the glasses on.</span>'
         },
         source: {
           title: "Source-grounded content",
-          body: "Use public-domain artworks and vetted source notes; AI routes perspectives, not invented interpretations."
+          body: 'Use <span class="semantic-unit">public-domain artworks</span> and <span class="semantic-unit">vetted source notes.</span> <span class="semantic-unit">AI routes perspectives;</span> it does not invent interpretations.'
         },
         small: {
           title: "Small enough to ship",
-          body: "The MVP avoids museum-wide navigation, heavy 3D reconstruction, and partnership dependency."
+          body: 'The MVP omits <span class="semantic-unit">museum-wide navigation,</span> <span class="semantic-unit">heavy 3D reconstruction,</span> and <span class="semantic-unit">partnership dependency.</span>'
         }
       },
       roadmapTitle: "Six-month roadmap",
       roadmap: {
         month1: {
           label: "Month 1",
-          title: "Native Android XR project setup.",
-          body: "Port the browser perspective model into an Android / Jetpack XR prototype."
+          title: "Native Android\u00a0XR<wbr> project setup.",
+          body: 'Port the browser perspective model to a <span class="semantic-unit">Jetpack\u00a0XR prototype</span> for <span class="semantic-unit">Android\u00a0XR.</span>'
         },
         month2: {
           label: "Month 2",
           title: "Artwork recognition / selection flow.",
-          body: "Implement 3 public-domain artwork packs."
+          body: "Implement three public-domain artwork packs."
         },
         month3: {
           label: "Month 3",
@@ -726,8 +726,8 @@
         },
         month4: {
           label: "Month 4",
-          title: "Android XR hardware validation.",
-          body: "Brightness, color fidelity, comfort, distraction, placement; include XREAL Project Aura if supplied through Catalyst."
+          title: "Android\u00a0XR hardware validation.",
+          body: "Brightness, color fidelity, comfort, distraction, placement; include XREAL\u00a0Project\u00a0Aura if supplied through Catalyst."
         },
         month5: {
           label: "Month 5",
@@ -737,14 +737,14 @@
         month6: {
           label: "Month 6",
           title: "Closed test package.",
-          body: "Demo video, Google Play closed testing readiness, public documentation."
+          body: "Demo video, Google\u00a0Play closed testing readiness, public documentation."
         }
       },
       grantTitle: "Grant use",
       grantIntro: "If funding is awarded, it would support focused prototype validation.",
       grant: {
-        native: "Native Android XR prototype",
-        aura: "Android XR hardware validation, including XREAL Project Aura if supplied through Catalyst",
+        native: "Native Android\u00a0XR prototype",
+        aura: "Android\u00a0XR hardware validation, including XREAL\u00a0Project\u00a0Aura if supplied through Catalyst",
         content: "Public-domain content and source audit",
         testing: "User testing",
         assets: "Demo video and submission assets"
@@ -753,7 +753,7 @@
       beyondBody1:
         "Museums are the first proof environment because the problem is visible there: people can be looking at the real thing and still not know how to enter the work.",
       beyondBody2:
-        "The larger vision is a pre-search perspective layer for the physical world. Before a person knows what to ask, Android XR can reveal one meaningful detail, open one grounded question, and disappear.",
+        "The larger vision is a pre-search perspective layer for the physical world. Before a person knows what to ask, Android\u00a0XR can reveal one meaningful detail, open one grounded question, and disappear.",
       futureTitle: "Future contexts",
       future: {
         cultural: "cultural sites",
@@ -772,7 +772,7 @@
       status: {
         concept: "Prototype visualization.",
         browser: "Browser prototype / prototype visualization exists.",
-        native: "Native Android XR implementation is not complete.",
+        native: "Native Android\u00a0XR implementation is not complete.",
         partnership: "No museum partnership is claimed.",
         scenes: "Display scenes are display-informed approximations, not exact museum reconstructions."
       }
@@ -831,7 +831,7 @@
       title:
         '<span class="hero-title-focus">専門家の視点を通して、<br>作品を見る。</span>',
       subcopy:
-        "Look\u00a0Againは、専門家の見方を短い表示にして、Android XRで実物作品に重ねます。表示は数秒で消え、作品だけが残ります。",
+        "Look\u00a0Againは、専門家の見方を短い表示にして、Android\u00a0XRで実物作品に重ねます。表示は数秒で消え、作品だけが残ります。",
       searchNote:
         "検索は問いに答える。Look\u00a0Againは、専門家が最初に見る場所と、その理由を示します。",
       replay: "流れをもう一度見る",
@@ -945,7 +945,7 @@
     experienceFlow: {
       title: "体験の流れ",
       intro:
-        "視点を選ぶと、作品上に短い解説が出る。表示が消えたら、その細部を自分で見直す。",
+        '視点を選ぶと、<span class="semantic-unit">作品上に短い解説が出る。</span><span class="semantic-unit">表示が消えたら、</span>その細部を自分で見直す。',
       steps: {
         choose: {
           title: "視点を選ぶ",
@@ -1123,7 +1123,7 @@
     difference: {
       title: "鑑賞体験の変化",
       subtitle:
-        "音声は耳から説明を届け、スマホは画面に説明を出す。Look\u00a0Againは、専門家の視点を実物作品の上に重ねます。",
+        '音声は耳から説明を届け、スマホは画面に説明を出す。Look\u00a0Againは、専門家の視点を<span class="semantic-unit">実物作品の上に</span>重ねます。',
       existingLabel: "現状のガイド",
       existingMicrocopy:
         "ガイドなし、音声、スマホでは、注意がそれぞれ違う場所に向かう。",
@@ -1181,7 +1181,7 @@
     lenses: {
       title: "視点マトリクス",
       body:
-        "同じ作品でも、画家、保存修復家、歴史家が最初に見る場所は違う。9つの画面で比べます。",
+        '同じ作品でも、画家、保存修復家、歴史家が最初に見る場所は違う。<span class="semantic-unit">9つの画面で比べます。</span>',
       explanation:
         "横に見ると専門家の違い、縦に見ると作品ごとの違いが分かります。",
       footerLine:
@@ -1330,7 +1330,7 @@
     xrOnly: {
       title: "なぜXRなのか",
       intro:
-        "スマホでは、作品と画面を交互に見る。XRなら、作品の細部と解説を同じ視界に置けます。",
+        'スマホでは、作品と画面を交互に見る。XRなら、作品の細部と解説を<span class="semantic-unit">同じ視界</span>に置けます。',
       items: {
         pointing: {
           title: "実物の細部を示す",
@@ -1362,7 +1362,7 @@
         "美術館は問題が最も見えやすい場所であり、プロダクトがそこで終わるという意味ではありません。より大きなカテゴリは、検索前に現実の場所で最初の問いを開く体験です。"
     },
     aura: {
-      title: "Android XR実機検証",
+      title: "Android\u00a0XR実機検証",
       body:
         "上で述べたXRの価値は、実物作品がはっきり見え続ける場合にだけ成立する。実機検証では、その成立条件だけを確かめる。",
       statement:
@@ -1382,7 +1382,7 @@
         "最初の実装範囲は意図的に絞る。実物作品の上に重ねる短い視点表示は、音声やスマホガイドよりも、作品を見始める助けになるのかを実証する。",
       items: {
         artworks: "3〜5点のパブリックドメイン作品から始める。",
-        native: "ネイティブAndroid XRプロトタイプを実装する。",
+        native: "ネイティブAndroid\u00a0XRプロトタイプを実装する。",
         selection: "作品番号またはQRコードで作品を選択する。",
         scope:
           "MVPは絞る。館内ナビ、重い3D再構成、美術館提携の主張は入れない。",
@@ -1404,9 +1404,9 @@
       }
     },
     futureContexts: {
-      title: "美術館から始める。<br class=\"future-title-mobile-break\">美術館だけでは終わらない。",
+      title: '美術館から始める。<br class="future-title-mobile-break"><span class="heading-continuation">美術館だけでは終わらない。</span>',
       intro:
-        "美術館から始めるのは、問題が見えやすいからです。同じ体験の型は、舞台セット、風景写真、文化財・遺跡など、近い文化・視覚領域にも広げられます。",
+        '美術館から始めるのは、<span class="semantic-unit">問題が見えやすいからです。</span>同じ体験の型は、<span class="semantic-unit">舞台セット、</span><span class="semantic-unit">風景写真、</span><span class="semantic-unit">文化財・遺跡</span>など、<span class="semantic-unit">近い文化・視覚領域</span>にも広げられます。',
       cards: {
         opera: {
           status: "舞台美術家の見方",
@@ -1449,7 +1449,7 @@
       exampleNote:
         "ここで使う作品はプロトタイプ用の例です。今後の利用では、作品ごと・展示文脈ごとに権利確認が必要です。",
       disclaimer:
-        "プロトタイプの可視化です。ネイティブAndroid XR実装は未完了です。美術館との提携は主張していません。美術館シーンは近似的な表現であり、正確な再現ではありません。",
+        "プロトタイプの可視化です。ネイティブAndroid\u00a0XR実装は未完了です。美術館との提携は主張していません。美術館シーンは近似的な表現であり、正確な再現ではありません。",
       contactHtml:
         "制作: 江田健一郎 / 鍋島優歌<br>連絡先: ciaoken16@gmail.com",
       copyright: "© 2026 Kenichiro Eda",
@@ -1457,7 +1457,7 @@
     },
     executionPlanCta: {
       kicker: "審査員向けページ",
-      title: "実行計画と<br class=\"heading-narrow-break\">ロードマップ",
+      title: '実行計画<span class="cta-conjunction">と</span><span class="cta-roadmap-inline">ロードマップ</span><br class="cta-heading-break"><span class="cta-roadmap-break">ロードマップ</span>',
       body:
         "実装範囲、6か月ロードマップ、検証計画、助成金の使途、チーム、現在の状態を審査用に分けて整理しています。",
       action: "実行計画を開く"
@@ -1467,37 +1467,37 @@
       title: "実装ロードマップ",
       kicker: "審査員向け実行計画",
       intro:
-        "Look\u00a0Againは、大規模な美術館プラットフォームではなく、焦点を絞ったAndroid XRプロトタイプとして設計する。目的は、実物作品の上に重ねる短い視点表示が、何を問えばいいか分かる前に作品を見始める助けになるかを検証すること。",
+        '<span class="semantic-unit">Look\u00a0Againは、</span><span class="semantic-unit">大規模な美術館</span><span class="semantic-unit">プラットフォームではなく、</span><span class="semantic-unit">焦点を絞った</span><span class="semantic-unit">Android\u00a0XRプロトタイプとして</span><span class="semantic-unit">設計する。</span>目的は、実物作品の上に重ねる短い視点表示が、何を問えばいいか分かる前に作品を見始める助けになるかを検証すること。',
       readinessTitle: "実装範囲",
       readiness: {
         rapid: {
           title: "高速プロトタイプ",
-          body: "現在はブラウザプロトタイプ。次にネイティブAndroid XRプロトタイプへ進む。"
+          body: '現在はブラウザプロトタイプ。<span class="semantic-unit">次にネイティブAndroid\u00a0XR</span><span class="semantic-unit">プロトタイプへ進む。</span>'
         },
         measurable: {
           title: "測定できる体験",
-          body: "最初の問いの明確さ、スマホ比較、グラスを外したくならない率を測る。"
+          body: '<span class="semantic-unit">最初の問いの明確さ、</span><span class="semantic-unit">スマホ比較、</span><span class="semantic-unit">グラスを外したくならない率</span>を測る。'
         },
         source: {
           title: "出典に基づくコンテンツ",
-          body: "パブリックドメイン作品と確認済み出典を使う。AIは解釈を作るのではなく、視点を選ぶ。"
+          body: '<span class="semantic-unit">パブリックドメイン作品と</span><span class="semantic-unit">確認済み出典を使う。</span><span class="semantic-unit">AIは解釈を作るのではなく、</span><span class="semantic-unit">視点を選ぶ。</span>'
         },
         small: {
           title: "出せる範囲に絞る",
-          body: "MVPでは館内ナビ、重い3D再構成、美術館提携依存を避ける。"
+          body: 'MVPでは<span class="semantic-unit">館内ナビ、</span><span class="semantic-unit">重い3D再構成、</span><span class="semantic-unit">美術館提携依存</span>を避ける。'
         }
       },
       roadmapTitle: "6か月ロードマップ",
       roadmap: {
         month1: {
           label: "1か月目",
-          title: "Android XRプロジェクトを開始。",
-          body: "ブラウザ版の視点モデルをAndroid / Jetpack XRプロトタイプへ移植する。"
+          title: "Android\u00a0XR<wbr>プロジェクトを開始。",
+          body: 'ブラウザ版の視点モデルを、<span class="semantic-unit">Jetpack\u00a0XR</span>による<span class="semantic-unit">Android\u00a0XRプロトタイプ</span>へ移植する。'
         },
         month2: {
           label: "2か月目",
           title: "作品認識 / 選択フローを作る。",
-          body: "3点のパブリックドメイン作品パックを実装する。"
+          body: "パブリックドメイン作品3点を実装する。"
         },
         month3: {
           label: "3か月目",
@@ -1506,8 +1506,8 @@
         },
         month4: {
           label: "4か月目",
-          title: "Android XR実機で検証する。",
-          body: "明るさ、色の見え方、快適さ、邪魔にならなさ、表示位置を確認する。Catalystで提供される場合はXREAL Project Auraを含む。"
+          title: "Android\u00a0XR実機で検証する。",
+          body: "明るさ、色の見え方、快適さ、邪魔にならなさ、表示位置を確認する。Catalystで提供される場合はXREAL\u00a0Project\u00a0Auraを含む。"
         },
         month5: {
           label: "5か月目",
@@ -1517,14 +1517,14 @@
         month6: {
           label: "6か月目",
           title: "クローズドテスト版をまとめる。",
-          body: "デモ動画、Google Playクローズドテスト準備、公開ドキュメントを整える。"
+          body: "デモ動画、Google\u00a0Playクローズドテスト準備、公開ドキュメントを整える。"
         }
       },
       grantTitle: "助成金の使途",
       grantIntro: "採択された場合、助成金は焦点を絞ったプロトタイプ検証に使う。",
       grant: {
-        native: "ネイティブAndroid XRプロトタイプ",
-        aura: "Android XR実機での実証。Catalystで提供される場合はXREAL Project Auraを含む",
+        native: "ネイティブAndroid\u00a0XRプロトタイプ",
+        aura: "Android\u00a0XR実機での実証。Catalystで提供される場合はXREAL\u00a0Project\u00a0Auraを含む",
         content: "パブリックドメイン作品と出典監査",
         testing: "ユーザーテスト",
         assets: "デモ動画と提出用素材"
@@ -1533,7 +1533,7 @@
       beyondBody1:
         "美術館は、この問題が見えやすい最初の検証環境である。人は実物を見ていても、どこを見ればいいか分からないことがある。",
       beyondBody2:
-        "より大きな構想は、現実世界のための検索前の視点レイヤーである。人が何を問えばいいか分かる前に、Android XRが意味のある一点を見えるようにし、出典に基づく問いを一つだけ開いて、すぐ消える。",
+        "より大きな構想は、現実世界のための検索前の視点レイヤーである。人が何を問えばいいか分かる前に、Android\u00a0XRが意味のある一点を見えるようにし、出典に基づく問いを一つだけ開いて、すぐ消える。",
       futureTitle: "今後の文脈",
       future: {
         cultural: "文化遺産・史跡",
@@ -1552,7 +1552,7 @@
       status: {
         concept: "プロトタイプの可視化です。",
         browser: "ブラウザプロトタイプ / プロトタイプ可視化は存在する。",
-        native: "ネイティブAndroid XR実装は未完了。",
+        native: "ネイティブAndroid\u00a0XR実装は未完了。",
         partnership: "美術館との提携は主張しない。",
         scenes: "展示シーンは実展示を参照した近似であり、正確な再現ではない。"
       }
