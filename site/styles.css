@@ -7791,7 +7791,7 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   }
 
   .matrix-grid-shell {
-    width: max(100%, 948px);
+    width: 100%;
     min-width: 948px;
   }
 
