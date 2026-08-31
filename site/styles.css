@@ -18,6 +18,7 @@
   --danger-muted: #cc9b5f;
   --shadow: 0 26px 80px rgba(0, 0, 0, 0.34);
   --max: 1180px;
+  --sticky-offset: 84px;
 }
 
 * {
@@ -26,6 +27,9 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-block-start: var(--sticky-offset);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
@@ -38,6 +42,9 @@ body {
   overflow-wrap: normal;
   text-rendering: optimizeLegibility;
   word-break: normal;
+  font-kerning: normal;
+  font-synthesis: none;
+  font-variant-ligatures: common-ligatures;
 }
 
 p,
@@ -90,7 +97,24 @@ img {
 }
 
 .semantic-unit {
-  white-space: nowrap;
+  white-space: normal;
+}
+
+:where(
+  h1,
+  h2,
+  h3,
+  p,
+  li,
+  small,
+  figcaption,
+  .panel-target,
+  .anchor-label,
+  .execution-plan-cta-title,
+  .execution-plan-cta-body
+) {
+  min-inline-size: 0;
+  max-inline-size: 100%;
 }
 
 .cta-roadmap-break {
@@ -994,6 +1018,22 @@ html[lang="ja"] .preview-section :is(
   .explorer-stage .comparative-evidence
 ) {
   line-break: strict;
+}
+
+@supports (word-break: auto-phrase) {
+  html[lang="ja"] .preview-section :is(
+    .section-heading-row p,
+    .preview-details,
+    .preview-sequence-copy,
+    .preview-reference-note,
+    .explorer-stage .edge-panel,
+    .explorer-stage .panel-target,
+    .explorer-stage .micro-evidence,
+    .explorer-stage .material-evidence,
+    .explorer-stage .comparative-evidence
+  ) {
+    word-break: auto-phrase;
+  }
 }
 
 .preview-lens-controls {
@@ -2843,18 +2883,15 @@ html[lang="ja"] .preview-section :is(
   0% {
     opacity: 0;
     clip-path: inset(0 42% 0 0 round 8px);
-    filter: blur(4px);
     scale: 0.86 0.96;
   }
   42% {
     opacity: 1;
     clip-path: inset(0 18% 0 0 round 8px);
-    filter: blur(1.6px);
   }
   100% {
     opacity: 1;
     clip-path: inset(0 0 0 0 round 8px);
-    filter: blur(0);
     scale: 1;
   }
 }
@@ -2863,18 +2900,15 @@ html[lang="ja"] .preview-section :is(
   0% {
     opacity: 0;
     clip-path: inset(0 0 0 42% round 8px);
-    filter: blur(4px);
     scale: 0.86 0.96;
   }
   42% {
     opacity: 1;
     clip-path: inset(0 0 0 18% round 8px);
-    filter: blur(1.6px);
   }
   100% {
     opacity: 1;
     clip-path: inset(0 0 0 0 round 8px);
-    filter: blur(0);
     scale: 1;
   }
 }
@@ -5269,10 +5303,6 @@ html[lang="ja"] .preview-section :is(
   display: none;
 }
 
-#future-contexts-title {
-  white-space: nowrap;
-}
-
 #experience-flow-title,
 #difference-title,
 #lenses-title,
@@ -5295,9 +5325,40 @@ html[lang="ja"] .preview-section :is(
 .roadmap-list h3,
 .future-contexts h3,
 .execution-plan-cta-title {
+  max-inline-size: 100%;
   overflow-wrap: normal;
-  white-space: nowrap;
-  word-break: keep-all;
+  white-space: normal;
+  word-break: normal;
+  text-wrap: balance;
+}
+
+@supports (word-break: auto-phrase) {
+  html[lang="ja"] :is(
+    #experience-flow-title,
+    #difference-title,
+    #lenses-title,
+    #preview-title,
+    #xr-only-title,
+    #plan-page-title,
+    #plan-readiness-title,
+    #hardware-validation-title,
+    #implementation-validation-title,
+    #plan-roadmap-title,
+    #plan-grant-title,
+    #plan-builder-title,
+    #plan-beyond-title,
+    #plan-status-title,
+    #plan-contact-title,
+    .experience-flow-steps h3,
+    .mechanics-list h3,
+    .future-context-card-copy h3,
+    .plan-card-grid h3,
+    .roadmap-list h3,
+    .future-contexts h3,
+    .execution-plan-cta-title
+  ) {
+    word-break: auto-phrase;
+  }
 }
 
 .execution-plan-section {
@@ -9288,22 +9349,23 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   }
 }
 
-/* Large Preview panels follow their rendered copy instead of a fixed width. */
+/* Production panel sizing: copy-led widths with a stable, stage-safe measure. */
 @media (min-width: 761px) {
   .explorer-stage .edge-panel {
-    width: fit-content;
-    min-width: 0;
-    max-width: min(46%, 420px);
+    inline-size: fit-content;
+    min-inline-size: min(12.5rem, 31%);
+    max-inline-size: min(46%, 26.25rem);
   }
 
   .explorer-stage .spec-material-panel,
   .explorer-stage .spec-comparative-panel {
-    max-width: min(48%, 440px);
+    min-inline-size: min(14rem, 35%);
+    max-inline-size: min(48%, 27.5rem);
   }
 
   /* Keep the Last Supper's social-reading statement as one meaningful phrase. */
   .explorer-stage[data-artwork="lastSupper"][data-state="social"] .spec-panel-lastSupper-social {
-    min-width: min(42%, 350px);
+    min-inline-size: min(42%, 21.875rem);
   }
 
   html[lang="ja"] .explorer-stage[data-artwork="lastSupper"][data-state="social"] .spec-panel-lastSupper-social h3 {
@@ -9311,17 +9373,41 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   }
 }
 
-/* Hero XR panels use the same content-driven sizing as the large Preview. */
+/* Hero panels use the same copy-led measure without changing the stage geometry. */
 @media (min-width: 761px) {
   .hero-stage .spec-edge-panel.hero-question-panel,
   .hero-stage[data-artwork="lastSupper"] .spec-edge-panel.hero-question-panel {
-    width: fit-content;
-    min-width: 0;
-    max-width: min(44%, 380px);
+    inline-size: fit-content;
+    min-inline-size: min(13.75rem, 28%);
+    max-inline-size: min(44%, 23.75rem);
   }
 
   .hero-stage[data-artwork="lastSupper"] .spec-edge-panel.hero-question-panel {
-    max-width: min(42%, 360px);
+    max-inline-size: min(42%, 22.5rem);
+  }
+}
+
+/* XR cards are short explanations, not display labels: preserve an even reading rhythm. */
+.hero-stage .spec-edge-panel.hero-question-panel h3,
+.explorer-stage .spec-edge-panel h3 {
+  text-wrap: pretty;
+}
+
+.hero-stage .spec-edge-panel.hero-question-panel .micro-evidence,
+.explorer-stage .spec-edge-panel .micro-evidence {
+  text-wrap: pretty;
+}
+
+/* Keep long links legible without allowing normal editorial copy to split mid-word. */
+.source-footnotes a,
+.footer-contact a,
+.footer-plan-link a {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 760px) {
+  :root {
+    --sticky-offset: 72px;
   }
 }
 

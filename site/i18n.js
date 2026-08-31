@@ -711,7 +711,7 @@
       roadmap: {
         month1: {
           label: "Month 1",
-          title: "Native Android\u00a0XR<wbr> project setup.",
+          title: "Native Android\u00a0XR project setup.",
           body: 'Port the browser perspective model to a <span class="semantic-unit">Jetpack\u00a0XR prototype</span> for <span class="semantic-unit">Android\u00a0XR.</span>'
         },
         month2: {
@@ -1491,7 +1491,7 @@
       roadmap: {
         month1: {
           label: "1か月目",
-          title: "Android\u00a0XR<wbr>プロジェクトを開始。",
+          title: "Android\u00a0XRプロジェクトを開始。",
           body: 'ブラウザ版の視点モデルを、<span class="semantic-unit">Jetpack\u00a0XR</span>による<span class="semantic-unit">Android\u00a0XRプロトタイプ</span>へ移植する。'
         },
         month2: {
