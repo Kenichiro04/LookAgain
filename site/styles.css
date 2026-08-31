@@ -1429,7 +1429,25 @@ select:focus-visible {
 }
 
 .hero-viewpoint-option .state-icon {
+  width: 22px;
+  height: 22px;
+  border: 1px solid rgba(155, 229, 140, 0.28);
+  border-radius: 6px;
+  background: rgba(155, 229, 140, 0.08);
   color: var(--green);
+}
+
+.hero-viewpoint-option .state-icon svg {
+  display: block;
+  width: 16px;
+  height: 16px;
+  overflow: visible;
+  stroke-width: 1.7;
+}
+
+.hero-viewpoint-option.is-selected .state-icon {
+  border-color: rgba(155, 229, 140, 0.68);
+  background: rgba(155, 229, 140, 0.16);
 }
 
 .hero-viewpoint-option-check {

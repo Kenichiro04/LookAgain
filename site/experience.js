@@ -582,6 +582,15 @@
     return `<span class="state-icon">${icons[id] || icons.looking}</span>`;
   }
 
+  function heroViewpointIcon(id) {
+    const icons = {
+      artist: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.8 12s3.2-5.2 9.2-5.2S21.2 12 21.2 12s-3.2 5.2-9.2 5.2S2.8 12 2.8 12Z"></path><circle cx="12" cy="12" r="2.7"></circle></svg>',
+      restorer: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="5.2"></circle><path d="m14.4 14.4 5.1 5.1"></path><path d="M8.5 10.5h4"></path><path d="M10.5 8.5v4"></path></svg>',
+      social: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 5.4c3.2-.7 5.8.2 8.5 2.1v11.7c-2.7-1.9-5.3-2.8-8.5-2.1V5.4Z"></path><path d="M20.5 5.4c-3.2-.7-5.8.2-8.5 2.1v11.7c2.7-1.9 5.3-2.8 8.5-2.1V5.4Z"></path></svg>'
+    };
+    return `<span class="state-icon hero-viewpoint-icon">${icons[id] || icons.artist}</span>`;
+  }
+
   function heroExampleDuration(example) {
     if (!example) return 4000;
     return example.durationMs || heroTimingMs[example.stateId] || 4000;
@@ -673,7 +682,7 @@
             aria-current="${selected}"
             style="--segment-duration: ${selected ? status.duration : 0}ms"
           >
-            ${stateIcon(example.stateId)}
+            ${["artist", "restorer", "social"].includes(example.stateId) ? heroViewpointIcon(example.stateId) : stateIcon(example.stateId)}
             <span>${t(`hero.lookAgainExamples.${example.key}.sequenceShort`)}</span>
           </button>
         `;
@@ -1283,7 +1292,7 @@
         const selected = lens === selectedLens;
         return `
         <span class="hero-viewpoint-option hero-viewpoint-option-${escapeAttr(lens)}${selected ? " is-selected" : ""}" aria-current="${selected}">
-          ${stateIcon(lens)}
+          ${heroViewpointIcon(lens)}
           <span>${escapeHtml(t(`hero.viewpointSelector.options.${lens}`))}</span>
           ${selected ? '<span class="hero-viewpoint-option-check" aria-hidden="true"></span>' : ""}
         </span>
