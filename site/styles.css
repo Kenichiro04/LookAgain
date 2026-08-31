@@ -9266,6 +9266,220 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   }
 }
 
+/* Keep the large Preview panels legible and visually contained at every size. */
+.explorer-stage .edge-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  min-width: 0;
+  padding: 14px;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  font-kerning: normal;
+  letter-spacing: 0;
+}
+
+.explorer-stage .edge-panel > *,
+.explorer-stage .material-evidence,
+.explorer-stage .material-model,
+.explorer-stage .material-card-grid,
+.explorer-stage .comparative-evidence,
+.explorer-stage .comparative-card-grid {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.explorer-stage .panel-target {
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 0 8px;
+  padding: 4px 8px;
+  font-size: 0.66rem;
+  line-height: 1.35;
+  letter-spacing: 0;
+}
+
+.explorer-stage .spec-edge-panel h3 {
+  margin: 0;
+  font-size: 0.86rem;
+  line-height: 1.44;
+  letter-spacing: 0;
+}
+
+.explorer-stage .spec-edge-panel .micro-evidence {
+  margin: 8px 0 0;
+  font-size: 0.74rem;
+  line-height: 1.52;
+  letter-spacing: 0;
+}
+
+html[lang="ja"] .explorer-stage .spec-edge-panel h3 {
+  font-size: 0.86rem;
+  line-height: 1.55;
+  letter-spacing: 0;
+}
+
+html[lang="ja"] .explorer-stage .spec-edge-panel .micro-evidence {
+  line-height: 1.62;
+  letter-spacing: 0;
+}
+
+.explorer-stage .material-evidence,
+.explorer-stage .comparative-evidence {
+  gap: 7px;
+  margin: 0 0 10px;
+}
+
+.explorer-stage .material-evidence-title,
+.explorer-stage .comparative-evidence-title {
+  font-size: 0.65rem;
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+
+.explorer-stage .material-model {
+  gap: 8px;
+  padding: 9px;
+}
+
+.explorer-stage .material-model-copy {
+  gap: 5px;
+}
+
+.explorer-stage .material-model-copy strong,
+.explorer-stage .material-card figcaption strong,
+.explorer-stage .comparative-card figcaption strong {
+  font-size: 0.68rem;
+  line-height: 1.38;
+  letter-spacing: 0;
+}
+
+.explorer-stage .material-evidence.is-compact .material-model-copy strong {
+  font-size: 0.66rem;
+  line-height: 1.4;
+}
+
+.explorer-stage .material-model-copy span,
+.explorer-stage .material-card figcaption span,
+.explorer-stage .comparative-card figcaption span {
+  font-size: 0.63rem;
+  line-height: 1.48;
+  letter-spacing: 0;
+}
+
+.explorer-stage .material-card figcaption,
+.explorer-stage .comparative-card figcaption {
+  gap: 3px;
+}
+
+.explorer-stage .material-model-label {
+  font-size: 0.64rem;
+  line-height: 1.35;
+  letter-spacing: 0;
+}
+
+@media (max-width: 1080px) {
+  .explorer-stage .edge-panel {
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(155, 229, 140, 0.56) transparent;
+  }
+
+  .explorer-stage .edge-panel::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .explorer-stage .edge-panel::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .explorer-stage .edge-panel::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: rgba(155, 229, 140, 0.56);
+  }
+
+  .explorer-stage .material-model-stage,
+  .explorer-stage .material-model-arnolfini-restorer .material-model-stage {
+    min-height: 88px;
+  }
+
+  .explorer-stage .material-model-girl-restorer .material-model-stage,
+  .explorer-stage .material-model-lastSupper-restorer .material-model-stage {
+    min-height: 96px;
+  }
+
+  .explorer-stage .material-card-image {
+    min-height: 64px;
+  }
+
+  .explorer-stage .comparative-card-image {
+    min-height: 70px;
+  }
+
+  .explorer-stage[data-artwork="girl"][data-state="restorer"] .spec-edge-panel {
+    max-height: min(68%, 420px);
+  }
+}
+
+@media (max-width: 760px) {
+  .explorer-stage .edge-panel,
+  .explorer-stage[data-artwork="girl"][data-state="restorer"] .spec-edge-panel {
+    top: auto;
+    bottom: 16px;
+    max-height: min(46%, 386px);
+    padding: 11px 12px 12px;
+    transform: none;
+  }
+
+  .explorer-stage .panel-target {
+    margin-bottom: 7px;
+    padding: 3px 7px;
+    font-size: 0.62rem;
+  }
+
+  .explorer-stage .spec-edge-panel h3,
+  html[lang="ja"] .explorer-stage .spec-edge-panel h3 {
+    font-size: 0.82rem;
+  }
+
+  .explorer-stage .spec-edge-panel .micro-evidence {
+    margin-top: 7px;
+    font-size: 0.7rem;
+  }
+
+  .explorer-stage .material-model {
+    grid-template-columns: minmax(96px, 0.82fr) minmax(0, 1fr);
+    gap: 7px;
+    padding: 8px;
+  }
+
+  .explorer-stage .material-model-stage,
+  .explorer-stage .material-model-arnolfini-restorer .material-model-stage {
+    min-height: 82px;
+  }
+
+  .explorer-stage .material-model-girl-restorer .material-model-stage,
+  .explorer-stage .material-model-lastSupper-restorer .material-model-stage {
+    min-height: 90px;
+  }
+
+  .explorer-stage .material-card-image {
+    min-height: 58px;
+  }
+
+  .explorer-stage .comparative-card-image {
+    min-height: 64px;
+  }
+}
+
+@media (max-width: 340px) {
+  .explorer-stage .material-model {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
