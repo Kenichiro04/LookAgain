@@ -9302,6 +9302,20 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   }
 }
 
+/* Hero XR panels use the same content-driven sizing as the large Preview. */
+@media (min-width: 761px) {
+  .hero-stage .spec-edge-panel.hero-question-panel,
+  .hero-stage[data-artwork="lastSupper"] .spec-edge-panel.hero-question-panel {
+    width: fit-content;
+    min-width: 0;
+    max-width: min(44%, 380px);
+  }
+
+  .hero-stage[data-artwork="lastSupper"] .spec-edge-panel.hero-question-panel {
+    max-width: min(42%, 360px);
+  }
+}
+
 @media (max-width: 340px) {
   .preview-heading-break {
     display: block;
