@@ -1085,7 +1085,8 @@ select:focus-visible {
 }
 
 .preview-sequence-list {
-  --sequence-rail-x: 15px;
+  --sequence-node-size: 40px;
+  --sequence-axis-x: calc(var(--sequence-node-size) / 2);
   display: grid;
   position: relative;
   gap: 0;
@@ -1099,7 +1100,7 @@ select:focus-visible {
   position: absolute;
   top: 16px;
   bottom: -16px;
-  left: var(--sequence-rail-x);
+  left: calc(var(--sequence-axis-x) - 1px);
   z-index: 0;
   width: 2px;
   background: linear-gradient(
@@ -1115,7 +1116,7 @@ select:focus-visible {
   display: grid;
   position: relative;
   z-index: 1;
-  grid-template-columns: 32px minmax(0, 1fr);
+  grid-template-columns: var(--sequence-node-size) minmax(0, 1fr);
   gap: 13px;
   align-items: start;
   padding: 0 0 26px;
@@ -1124,7 +1125,7 @@ select:focus-visible {
 .preview-sequence-item:not(:last-child)::after {
   content: "";
   position: absolute;
-  left: calc(var(--sequence-rail-x) - 4px);
+  left: calc(var(--sequence-axis-x) - 5px);
   bottom: 9px;
   z-index: 2;
   width: 10px;
@@ -1135,12 +1136,13 @@ select:focus-visible {
 }
 
 .preview-sequence-index {
-  display: grid;
+  display: flex;
   position: relative;
   z-index: 3;
-  place-items: center;
-  width: 32px;
-  height: 32px;
+  align-items: center;
+  justify-content: center;
+  width: var(--sequence-node-size);
+  height: var(--sequence-node-size);
   border: 1px solid rgba(155, 229, 140, 0.66);
   border-radius: 999px;
   color: #d9fbd3;
@@ -1150,9 +1152,12 @@ select:focus-visible {
   box-shadow:
     0 0 0 4px #080b0c,
     0 8px 20px rgba(0, 0, 0, 0.26);
-  font-size: 0.61rem;
+  font-size: 0.78rem;
   font-weight: 820;
   line-height: 1;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  text-align: center;
 }
 
 .preview-sequence-copy {
@@ -8334,22 +8339,12 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   }
 
   .preview-sequence-item {
-    grid-template-columns: 34px minmax(0, 1fr);
+    grid-template-columns: var(--sequence-node-size) minmax(0, 1fr);
     gap: 14px;
     padding-bottom: 28px;
   }
 
-  .preview-sequence-list {
-    --sequence-rail-x: 16px;
-  }
-
-  .preview-sequence-index {
-    width: 34px;
-    height: 34px;
-  }
-
   .preview-sequence-item:not(:last-child)::after {
-    left: 12px;
     bottom: 10px;
   }
 
