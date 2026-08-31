@@ -12,7 +12,6 @@
       auxiliaryLinePrefix: "Guide line:",
       vanishingPoint: "Vanishing point",
       sharedVanishingPoint: "painting + room vanishing point",
-      stepBackHint: "Step back to see the vanishing point.",
       matrixGuideLabels: {
         lastSupperArtist: "Lines show perspective converging on Christ",
         girlArtist: "Arrow shows the gaze and light path",
@@ -75,7 +74,7 @@
         selectArtist: {
           label: "WEARING XR",
           short: "Choose a perspective",
-          sequenceShort: "1. Choose a perspective",
+          sequenceShort: "1. Choose",
           caption: "After wearing the glasses, the perspective menu appears on the artwork. The Artist perspective is selected.",
           question: "Artist perspective selected."
         },
@@ -96,7 +95,7 @@
         restorer: {
           label: "CONSERVATOR",
           short: "Conservator",
-          sequenceShort: "3. Conservator",
+          sequenceShort: "3. Restorer",
           caption: "Textiles and surface detail show how paint carries value.",
           question: "Textiles and surface detail show how paint carries value."
         },
@@ -117,7 +116,7 @@
         quiet: {
           label: "LOOK WITH YOUR OWN EYES",
           short: "Look",
-          sequenceShort: "5. Look with your own eyes",
+          sequenceShort: "5. Look again",
           caption: "The overlay fades. Keep looking at the detail it revealed.",
           question: "The overlay fades. Keep looking at the detail it revealed."
         }
@@ -476,7 +475,7 @@
       }
     },
     preview: {
-      title: "Perspective on the artwork",
+      title: "Perspective on<br class=\"heading-narrow-break\"> the artwork",
       body:
         "Select a matrix card to see its XR display at full size.",
       controls: {
@@ -678,7 +677,7 @@
     },
     executionPlanCta: {
       kicker: "Reviewer page",
-      title: "Execution plan and roadmap",
+      title: "Execution plan<br class=\"heading-narrow-break\"> and roadmap",
       body:
         "Build scope, six-month roadmap, validation plan, grant use, team, and current status are separated for review.",
       action: "Open plan"
@@ -709,8 +708,6 @@
         }
       },
       roadmapTitle: "Six-month roadmap",
-      roadmapReleaseTarget:
-        "The six-month milestone is a closed-test MVP. The nine-month target is an Android XR release candidate.",
       roadmap: {
         month1: {
           label: "Month 1",
@@ -758,12 +755,12 @@
       beyondBody2:
         "The larger vision is a pre-search perspective layer for the physical world. Before a person knows what to ask, Android XR can reveal one meaningful detail, open one grounded question, and disappear.",
       futureTitle: "Future contexts",
-      futureBody:
-        "Future directions may include cultural sites, architecture, and field learning. These are not part of the MVP.",
       future: {
         cultural: "cultural sites",
-        architecture: "architecture",
-        field: "field learning"
+        architecture: "architect perspective",
+        field: "botanist perspective",
+        performance: "skeletal review for dance",
+        training: "training environments"
       },
       builderTitle: "Team",
       builderMemberKenichiro: "Kenichiro Eda — Builder",
@@ -795,7 +792,6 @@
       auxiliaryLinePrefix: "補助線:",
       vanishingPoint: "消失点",
       sharedVanishingPoint: "絵と部屋の消失点",
-      stepBackHint: "少し後ろへ。消失点が見える位置へ。",
       matrixGuideLabels: {
         lastSupperArtist: "線はキリストへ収束する遠近法",
         girlArtist: "矢印は視線と光の流れ",
@@ -865,7 +861,7 @@
         artist: {
           label: "画家の視点",
           short: "画家の視点",
-          sequenceShort: "2. 画家の視点",
+          sequenceShort: "2. 画家",
           caption: "鏡、手、人物配置が、この場面の見え方を組み立てている。",
           question: "鏡、手、人物配置が、この場面の見え方を組み立てている。"
         },
@@ -879,7 +875,7 @@
         restorer: {
           label: "保存修復家の視点",
           short: "保存修復家の視点",
-          sequenceShort: "3. 保存修復家の視点",
+          sequenceShort: "3. 保存修復家",
           caption: "布地と表面の細部が、絵具で価値を担っている。",
           question: "布地と表面の細部が、絵具で価値を担っている。"
         },
@@ -893,14 +889,14 @@
         social: {
           label: "歴史家の視点",
           short: "歴史家の視点",
-          sequenceShort: "4. 歴史家の視点",
+          sequenceShort: "4. 歴史家",
           caption: "凸面鏡と署名が、室内を社会的な場として見せる。",
           question: "凸面鏡と署名が、室内を社会的な場として見せる。"
         },
         quiet: {
           label: "自分の目で見る",
           short: "自分の目で見る",
-          sequenceShort: "5. 自分の目で見る",
+          sequenceShort: "5. 見直す",
           caption: "表示が消えたら、示された細部をもう一度見る。",
           question: "表示が消えたら、示された細部をもう一度見る。"
         }
@@ -1461,7 +1457,7 @@
     },
     executionPlanCta: {
       kicker: "審査員向けページ",
-      title: "実行計画とロードマップ",
+      title: "実行計画と<br class=\"heading-narrow-break\">ロードマップ",
       body:
         "実装範囲、6か月ロードマップ、検証計画、助成金の使途、チーム、現在の状態を審査用に分けて整理しています。",
       action: "実行計画を開く"
@@ -1492,8 +1488,6 @@
         }
       },
       roadmapTitle: "6か月ロードマップ",
-      roadmapReleaseTarget:
-        "6か月時点ではクローズドテスト用MVPをまとめ、9か月時点ではAndroid XR向け公開候補版を目指します。",
       roadmap: {
         month1: {
           label: "1か月目",
@@ -1541,12 +1535,12 @@
       beyondBody2:
         "より大きな構想は、現実世界のための検索前の視点レイヤーである。人が何を問えばいいか分かる前に、Android XRが意味のある一点を見えるようにし、出典に基づく問いを一つだけ開いて、すぐ消える。",
       futureTitle: "今後の文脈",
-      futureBody:
-        "将来的には、文化財、建築、フィールド学習などへの応用を検討します。ただし、これらは現在のMVP範囲には含めません。",
       future: {
-        cultural: "文化財",
-        architecture: "建築",
-        field: "フィールド学習"
+        cultural: "文化遺産・史跡",
+        architecture: "建築家視点",
+        field: "植物学者視点",
+        performance: "ダンスの骨格レビュー",
+        training: "トレーニング環境"
       },
       builderTitle: "Team",
       builderMemberKenichiro: "江田健一郎 — Builder",
