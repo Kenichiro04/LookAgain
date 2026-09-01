@@ -19,8 +19,13 @@
   };
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const parallaxStages = new WeakMap();
+  const stageRenderGenerations = new WeakMap();
+  const stageLabelLayoutFrames = new WeakMap();
+  const stageObservedPanels = new WeakMap();
   const cueSequenceObservedStages = new WeakSet();
   let cueSequenceObserver = null;
+  let stageLayoutFrame = 0;
+  let stageResizeObserver = null;
   const heroLookAgainExamples = [
     { key: "selectArtist", stateId: "select", lens: "artist", selectedLens: "artist", artwork: "arnolfini", durationMs: 1900 },
     { key: "artist", stateId: "artist", lens: "artist", artwork: "arnolfini" },
@@ -127,7 +132,7 @@
       altKey: "art.pearlCropAlt"
     },
     technical: {
-      src: "../assets/details/girl_technical_crop.jpg",
+      src: "../assets/details/girl_pearl_crop.jpg",
       altKey: "art.technicalCropAlt"
     },
     mirrorSignature: {
@@ -320,6 +325,8 @@
   let currentLensItem = 0;
   let cueSpecs = [];
   let cueSpecsByKey = new Map();
+  let sourceRegistry = [];
+  let sourcesById = new Map();
 
   const heroExperience = document.querySelector("[data-hero-experience]");
   const heroStage = document.querySelector('[data-xr-stage="hero"]');
@@ -379,6 +386,53 @@
       .replace(/"/g, "&quot;");
   }
 
+  function escapePhraseHtml(value, breakAfter = []) {
+    const source = String(value || "");
+    if (!source || !Array.isArray(breakAfter) || !breakAfter.length) {
+      return escapeHtml(source);
+    }
+
+    const breakpoints = new Set();
+    breakAfter.forEach((phrase) => {
+      if (!phrase) return;
+      let cursor = 0;
+      while (cursor < source.length) {
+        const index = source.indexOf(phrase, cursor);
+        if (index < 0) break;
+        const breakpoint = index + phrase.length;
+        if (breakpoint > 0 && breakpoint < source.length) breakpoints.add(breakpoint);
+        cursor = breakpoint;
+      }
+    });
+
+    if (!breakpoints.size) return escapeHtml(source);
+    const ordered = [...breakpoints].sort((a, b) => a - b);
+    let cursor = 0;
+    return ordered
+      .map((breakpoint) => {
+        const segment = escapeHtml(source.slice(cursor, breakpoint));
+        cursor = breakpoint;
+        return `${segment}<wbr>`;
+      })
+      .join("") + escapeHtml(source.slice(cursor));
+  }
+
+  function sequenceShortHtml(value) {
+    const source = String(value || "");
+    const match = source.match(/^(\d+\.)\s*(.+)$/u);
+    if (!match) return `<span class="hero-sequence-label">${escapeHtml(source)}</span>`;
+    const label = match[2]
+      .replace(/\u00a0/g, " ")
+      .split(/\s+/u)
+      .map((word) => escapeHtml(word))
+      .join("<wbr> ");
+    return `<span class="hero-sequence-copy"><span class="hero-sequence-index">${escapeHtml(match[1])}</span><wbr> <span class="hero-sequence-label">${label}</span></span>`;
+  }
+
+  function cuePhraseHtml(spec, value, kind = "cueTitleBreaks") {
+    return escapeHtml(value);
+  }
+
   function percentNumber(value, fallback = "50%") {
     return String(value || fallback).replace("%", "");
   }
@@ -403,7 +457,34 @@
     return String(template || "").replace(/\{([a-zA-Z0-9_]+)\}/g, (_, key) => values[key] ?? "");
   }
 
+  function sourceId(source) {
+    return source?.source_id || source?.id || "";
+  }
+
+  function cueSpecCitationIds(spec, claims = []) {
+    const requestedClaims = Array.isArray(claims) ? claims : [claims];
+    const citations = spec?.citations && typeof spec.citations === "object" ? spec.citations : null;
+    if (citations) {
+      const keys = requestedClaims.filter(Boolean).length ? requestedClaims.filter(Boolean) : Object.keys(citations);
+      const ids = keys.flatMap((key) => Array.isArray(citations[key]) ? citations[key] : []).filter(Boolean);
+      if (ids.length) return [...new Set(ids)];
+    }
+    const urls = Array.isArray(spec?.source_urls) ? spec.source_urls.filter(Boolean) : [];
+    return urls
+      .map((url) => sourceRegistry.find((source) => source.url === url || source.canonical_url === url))
+      .map(sourceId)
+      .filter(Boolean);
+  }
+
   function cueSpecSourceUrls(spec) {
+    const ids = cueSpecCitationIds(spec);
+    if (ids.length) {
+      return ids
+        .map((id) => sourcesById.get(id))
+        .filter(Boolean)
+        .map((source) => source.url || source.canonical_url)
+        .filter(Boolean);
+    }
     return Array.isArray(spec?.source_urls) ? spec.source_urls.filter(Boolean) : [];
   }
 
@@ -415,7 +496,9 @@
     }
   }
 
-  function sourceLabel(url) {
+  function sourceLabel(url, source = null) {
+    const localizedTitle = source?.[`title_${lang}`] || source?.title_en;
+    if (localizedTitle) return localizedTitle;
     const labels = dict().sourceLabels || {};
     const titles = dict().sourceTitles || {};
     const host = sourceHost(url);
@@ -424,11 +507,33 @@
   }
 
   function sourceFootnoteEntries() {
+    if (sourceRegistry.length) {
+      return [...sourceRegistry]
+        .sort((a, b) => Number(a.display_order || 0) - Number(b.display_order || 0))
+        .map((source, index) => {
+          const id = sourceId(source);
+          const usedBy = cueSpecs
+            .filter((spec) => cueSpecCitationIds(spec).includes(id))
+            .map((spec) => ({
+              artwork: cueSpecText(spec, "artwork_title"),
+              viewpoint: cueSpecText(spec, "lens_title")
+            }));
+          return {
+            id,
+            index: Number(source.display_order) || index + 1,
+            url: source.url || source.canonical_url,
+            label: sourceLabel(source.url || source.canonical_url, source),
+            institution: source.institution || "",
+            usedBy
+          };
+        });
+    }
     const entries = new Map();
     cueSpecs.forEach((spec) => {
       cueSpecSourceUrls(spec).forEach((url) => {
         if (!entries.has(url)) {
           entries.set(url, {
+            id: `legacy-${entries.size + 1}`,
             index: entries.size + 1,
             url,
             label: sourceLabel(url),
@@ -436,8 +541,11 @@
           });
         }
         const entry = entries.get(url);
-        const usedBy = `${cueSpecText(spec, "artwork_title")} / ${cueSpecText(spec, "lens_title")}`;
-        if (usedBy.trim() && !entry.usedBy.includes(usedBy)) {
+        const usedBy = {
+          artwork: cueSpecText(spec, "artwork_title"),
+          viewpoint: cueSpecText(spec, "lens_title")
+        };
+        if (usedBy.artwork.trim() && !entry.usedBy.some((item) => item.artwork === usedBy.artwork && item.viewpoint === usedBy.viewpoint)) {
           entry.usedBy.push(usedBy);
         }
       });
@@ -445,16 +553,18 @@
     return [...entries.values()];
   }
 
-  function sourceFootnoteNumber(spec) {
-    const primaryUrl = cueSpecSourceUrls(spec)[0];
-    if (!primaryUrl) return null;
-    return sourceFootnoteEntries().find((entry) => entry.url === primaryUrl)?.index || null;
-  }
-
-  function sourceFootnoteMark(spec) {
-    const number = sourceFootnoteNumber(spec);
-    if (!number) return "";
-    return `<sup class="source-footnote-mark"><a href="#source-footnote-${number}" aria-label="${escapeAttr(t("sourceFootnotes.kicker"))} ${number}">[${number}]</a></sup>`;
+  function sourceFootnoteMark(spec, claims = []) {
+    const citationIds = cueSpecCitationIds(spec, claims);
+    const entries = sourceFootnoteEntries();
+    const citedEntries = citationIds.length
+      ? citationIds.map((id) => entries.find((entry) => entry.id === id)).filter(Boolean)
+      : cueSpecSourceUrls(spec).map((url) => entries.find((entry) => entry.url === url)).filter(Boolean);
+    if (!citedEntries.length) return "";
+    const marks = citedEntries
+      .sort((a, b) => a.index - b.index)
+      .map((entry) => `<a href="#source-footnote-${escapeAttr(cueSpecSlug(entry.id))}" aria-label="${escapeAttr(t("sourceFootnotes.kicker"))} ${entry.index}">[${entry.index}]</a>`)
+      .join("");
+    return `<sup class="source-footnote-mark">${marks}</sup>`;
   }
 
   function localizedCardText(card, field) {
@@ -495,12 +605,38 @@
     return cueSpecsByKey.get(cueSpecKey(artworkId, lensId));
   }
 
-  function fallbackCueSpecs() {
-    return Array.isArray(window.LookAgainCueSpecsV23Data) ? window.LookAgainCueSpecsV23Data : null;
+  function normalizeCuePayload(payload) {
+    if (Array.isArray(payload)) {
+      return {
+        viewpoints: payload,
+        sources: Array.isArray(window.LookAgainCueSourcesV23Data) ? window.LookAgainCueSourcesV23Data : []
+      };
+    }
+    if (payload && typeof payload === "object") {
+      return {
+        viewpoints: Array.isArray(payload.viewpoints)
+          ? payload.viewpoints
+          : Array.isArray(payload.cue_specs)
+            ? payload.cue_specs
+            : [],
+        sources: Array.isArray(payload.sources) ? payload.sources : []
+      };
+    }
+    return null;
   }
 
-  function applyCueSpecs(specs) {
-    cueSpecs = specs;
+  function fallbackCueSpecs() {
+    return normalizeCuePayload(window.LookAgainCueSpecsV23Data);
+  }
+
+  function applyCueSpecs(payload) {
+    const normalized = normalizeCuePayload(payload);
+    if (!normalized || normalized.viewpoints.length !== artworkOrder.length * lensOrder.length) {
+      throw new Error("Cue spec payload must contain exactly nine viewpoints.");
+    }
+    cueSpecs = normalized.viewpoints;
+    sourceRegistry = normalized.sources;
+    sourcesById = new Map(sourceRegistry.map((source) => [source.source_id || source.id, source]));
     cueSpecsByKey = new Map(cueSpecs.map((spec) => [cueSpecKey(spec.artwork_id, spec.lens_id), spec]));
     lensOrder.forEach((lens) => {
       lensItems[lens] = artworkOrder
@@ -509,6 +645,7 @@
         .map(cueSpecToItem);
     });
     window.LookAgainCueSpecsV23 = cueSpecs;
+    window.LookAgainCueSourcesV23 = sourceRegistry;
   }
 
   async function fetchCueSpecs() {
@@ -573,9 +710,9 @@
       phone: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2.8" width="10" height="18.4" rx="2.1"></rect><path d="M10.3 5.6h3.4"></path><circle cx="12" cy="18" r=".7"></circle></svg>',
       wearing: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 10.5h6.2l1.2 2.4h2.2l1.2-2.4h6.2"></path><path d="M5 10.5l1 6h3.4l1.5-3.6"></path><path d="M19 10.5l-1 6h-3.4l-1.5-3.6"></path></svg>',
       select: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 10.5h6.2l1.2 2.4h2.2l1.2-2.4h6.2"></path><path d="M5 10.5l1 6h3.4l1.5-3.6"></path><path d="M19 10.5l-1 6h-3.4l-1.5-3.6"></path></svg>',
-      artist: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v14H3V5Z"></path><path d="M3 5l9 7 9-7"></path><path d="M3 19l9-7 9 7"></path><circle cx="12" cy="12" r="1.4"></circle></svg>',
+      artist: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.8 12s3.2-5.2 9.2-5.2S21.2 12 21.2 12s-3.2 5.2-9.2 5.2S2.8 12 2.8 12Z"></path><circle cx="12" cy="12" r="2.7"></circle></svg>',
       restorer: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="5.2"></circle><path d="m14.4 14.4 5.1 5.1"></path><path d="M8.5 10.7h4"></path><path d="M10.5 8.7v4"></path></svg>',
-      social: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="7" cy="13" r="2.4"></circle><circle cx="16.5" cy="8" r="2"></circle><circle cx="17" cy="17" r="2.2"></circle><path d="M9.2 12 14.7 9"></path><path d="M9.2 14.1l5.8 2"></path></svg>',
+      social: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 5.4c3.2-.7 5.8.2 8.5 2.1v11.7c-2.7-1.9-5.3-2.8-8.5-2.1V5.4Z"></path><path d="M20.5 5.4c-3.2-.7-5.8.2-8.5 2.1v11.7c2.7-1.9 5.3-2.8 8.5-2.1V5.4Z"></path></svg>',
       museum: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16"></path><path d="M4 12h16"></path><path d="M4 18h16"></path><circle cx="8" cy="6" r="1.5"></circle><circle cx="13" cy="12" r="1.5"></circle><circle cx="17" cy="18" r="1.5"></circle></svg>',
       quiet: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7"></circle></svg>'
     };
@@ -661,7 +798,7 @@
             style="--segment-duration: ${selected ? status.duration : 0}ms"
           >
             ${stateIcon(id)}
-            <span>${t(`states.${id}.short`)}</span>
+            ${sequenceShortHtml(t(`states.${id}.short`))}
           </button>
         `;
       })
@@ -683,7 +820,7 @@
             style="--segment-duration: ${selected ? status.duration : 0}ms"
           >
             ${["artist", "restorer", "social"].includes(example.stateId) ? heroViewpointIcon(example.stateId) : stateIcon(example.stateId)}
-            <span>${t(`hero.lookAgainExamples.${example.key}.sequenceShort`)}</span>
+            ${sequenceShortHtml(t(`hero.lookAgainExamples.${example.key}.sequenceShort`))}
           </button>
         `;
       })
@@ -729,27 +866,30 @@
     const artwork = artworks[config.artwork];
     const scene = stage.querySelector("[data-stage-scene]");
     const runCueSequence = Boolean(config.panel && config.cue);
+    const previousArtwork = stage.dataset.artwork || "";
+    const renderGeneration = (stageRenderGenerations.get(stage) || 0) + 1;
+    stageRenderGenerations.set(stage, renderGeneration);
     stage.dataset.state = stateId;
     stage.dataset.artwork = config.artwork;
     stage.dataset.scene = artwork.scene;
     stage.dataset.scale = artwork.scaleClass;
+    stage.dataset.layoutPhase = "rendering";
+    stage.dataset.renderGeneration = String(renderGeneration);
     stage.dataset.cueSpecId = config.cueSpecId || "";
     stage.dataset.cueSequenceKey = runCueSequence
       ? `${stateId}:${config.artwork}:${config.cueSpecId || config.cue}`
       : "";
     stage.classList.remove("is-stage-changing", "is-xr-reveal");
     stage.classList.toggle("is-cue-sequence", runCueSequence);
-    stage.classList.toggle("has-floating-anchor", runCueSequence);
+    stage.classList.remove("has-floating-anchor");
     stage.classList.remove("is-cue-sequence-active");
     stage.dataset.cueSequenceVisible = "false";
-    if (runCueSequence && reducedMotion) {
-      stage.classList.add("is-cue-sequence-active");
-    }
     if (runCueSequence) {
       ensureCueSequenceObserver(stage);
     }
-    void stage.offsetWidth;
-    stage.classList.add("is-stage-changing");
+    if (previousArtwork && previousArtwork !== config.artwork) {
+      stage.classList.add("is-stage-changing");
+    }
     if (stateId === "wearing" || stateId === "select") {
       stage.classList.add("is-xr-reveal");
     }
@@ -757,41 +897,81 @@
     const caption = config.captionKey ? t(config.captionKey) : t(`states.${stateId}.caption`);
     stage.querySelector("[data-stage-label]").innerHTML = `${stateIcon(config.stageIcon || stateId)}<span>${label}</span>`;
     stage.querySelector("[data-stage-caption]").textContent = caption;
-    scene.className = `stage-scene stage-layer--room scene-${artwork.scene} stage--${artwork.stageClass}`;
+    scene.className = `stage-scene scene-${artwork.scene} stage--${artwork.stageClass}`;
+    scene.dataset.layoutReady = "false";
 
-    scene.innerHTML = `
+    const worldKey = `${config.artwork}:${config.oblique ? "oblique" : "front"}:${lang}`;
+    const worldMarkup = `
+      <div class="xr-world-layer stage-layer--room scene-${artwork.scene} stage--${artwork.stageClass}">
+        ${renderStagePerspective(config)}
+        ${renderArtwork(artwork, config)}
+      </div>
+    `;
+    const opticalMarkup = `
       ${config.panel && config.cue ? renderConnectorSvg() : ""}
-      ${renderStagePerspective(config)}
-      ${renderArtwork(artwork, config)}
       ${renderViewingPositionHint(config)}
-      ${config.uncertainFocus ? '<div class="uncertain-focus-layer stage-layer--overlay" aria-hidden="true"></div>' : ""}
-      ${config.phone ? '<div class="phone-focus-veil stage-layer--overlay" aria-hidden="true"></div>' : ""}
+      ${config.uncertainFocus ? '<div class="uncertain-focus-layer" aria-hidden="true"></div>' : ""}
+      ${config.phone ? '<div class="phone-focus-veil" aria-hidden="true"></div>' : ""}
       ${config.audio ? renderAudioCue(config) : ""}
       ${config.phone ? renderPhoneMock(artwork) : ""}
       ${config.wearing ? renderWearingHud() : ""}
       ${config.viewpointSelect ? renderViewpointSelector(config.viewpointSelectedLens) : ""}
-      ${runCueSequence ? renderFloatingAnchor(config) : ""}
       ${config.panel ? renderPanel(config) : ""}
       ${config.quiet ? renderQuietMessage() : ""}
     `;
+    const existingWorld = scene.querySelector(".xr-world-layer");
+    const existingOptical = scene.querySelector(".xr-optical-layer");
+    if (existingWorld && existingOptical && scene.dataset.worldKey === worldKey) {
+      const cueLayer = existingWorld.querySelector(".artwork-cue-layer");
+      if (cueLayer) cueLayer.innerHTML = renderCue(config);
+      existingOptical.innerHTML = opticalMarkup;
+    } else {
+      scene.innerHTML = `${worldMarkup}<div class="xr-optical-layer stage-layer--overlay">${opticalMarkup}</div>`;
+      scene.dataset.worldKey = worldKey;
+    }
 
     resetStageParallax(stage, { immediate: true });
-    const sequenceKey = stage.dataset.cueSequenceKey;
-    const startCueSequenceIfVisible = (force = false) => {
-      if (!runCueSequence || stage.dataset.cueSequenceKey !== sequenceKey) return;
-      positionConnector(stage);
-      if (cueStageIsVisible(stage) && (force || !stage.classList.contains("is-cue-sequence-active"))) {
-        restartCueSequence(stage);
-      }
-    };
-    requestAnimationFrame(() => {
-      startCueSequenceIfVisible(true);
+    finalizeStageRender(stage, scene, renderGeneration, runCueSequence);
+  }
+
+  function waitForAnimationFrames(count = 2) {
+    return new Promise((resolve) => {
+      const next = (remaining) => {
+        if (remaining <= 0) {
+          resolve();
+          return;
+        }
+        window.requestAnimationFrame(() => next(remaining - 1));
+      };
+      next(count);
     });
-    if (runCueSequence && !reducedMotion) {
-      [280, 920].forEach((delay) => {
-        window.setTimeout(() => startCueSequenceIfVisible(false), delay);
+  }
+
+  async function finalizeStageRender(stage, scene, renderGeneration, runCueSequence) {
+    const imagePromises = [...scene.querySelectorAll("img")].map((image) => {
+      if (image.complete && image.naturalWidth) return Promise.resolve();
+      if (typeof image.decode === "function") return image.decode().catch(() => undefined);
+      return new Promise((resolve) => {
+        image.addEventListener("load", resolve, { once: true });
+        image.addEventListener("error", resolve, { once: true });
       });
+    });
+    await Promise.all([
+      ...imagePromises,
+      document.fonts?.ready || Promise.resolve()
+    ]);
+    await waitForAnimationFrames(2);
+    if (stageRenderGenerations.get(stage) !== renderGeneration || scene !== stage.querySelector("[data-stage-scene]")) return;
+
+    stage.dataset.layoutPhase = "ready";
+    scene.dataset.layoutReady = "true";
+    layoutStage(stage);
+    if (!runCueSequence) return;
+    if (reducedMotion) {
+      stage.classList.add("is-cue-sequence-active");
+      return;
     }
+    if (cueStageIsVisible(stage)) restartCueSequence(stage);
   }
 
   function renderConnectorSvg() {
@@ -804,51 +984,12 @@
     `;
   }
 
-  function renderFloatingAnchor(config) {
-    const pointerClass = pointerDirectionClass(config.pointerDirection);
-    const targetLabel = config.cueSpec
-      ? cueSpecText(config.cueSpec, "target_label")
-      : (config.targetLabel || t("cueUi.discoveryPoint"));
-    return `
-      <div class="floating-anchor-layer stage-layer--overlay" aria-hidden="true">
-        <span class="floating-anchor-proxy pointer-cue ${pointerClass}"></span>
-        <span class="floating-anchor-target anchor-target" data-pointer-direction="${escapeAttr(config.pointerDirection || "")}">
-          <span class="anchor-label">
-            <span class="anchor-kicker">${escapeHtml(t("cueUi.discoveryPoint"))}</span>
-            <span>${escapeHtml(targetLabel)}</span>
-          </span>
-        </span>
-      </div>
-    `;
-  }
-
-  function renderStaticStageMarkup(stateId, overrides = {}) {
-    const config = stageConfigFor(stateId, overrides);
-    const artwork = artworks[config.artwork];
-    const anchorX = percentNumber(config.anchorX);
-    const anchorY = percentNumber(config.anchorY);
-    const connectorEndX = 54;
-    const connectorEndY = 34;
-    return `
-      <div class="xr-stage matrix-mini-stage" data-state="${stateId}" data-artwork="${config.artwork}" data-scene="${artwork.scene}" data-scale="${artwork.scaleClass}">
-        <div class="stage-scene scene-${artwork.scene} stage--${artwork.stageClass}">
-          <svg class="connector-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-            <line x1="${anchorX}" y1="${anchorY}" x2="${connectorEndX}" y2="${connectorEndY}" pathLength="1"></line>
-            <circle class="connector-start" cx="${anchorX}" cy="${anchorY}" r="0.55"></circle>
-            <circle class="connector-end" cx="${connectorEndX}" cy="${connectorEndY}" r="0.45"></circle>
-          </svg>
-          ${renderStagePerspective(config)}
-          ${renderArtwork(artwork, config)}
-          ${renderViewingPositionHint(config)}
-          ${config.panel ? renderPanel(config) : ""}
-        </div>
-      </div>
-    `;
-  }
-
   function renderArtwork(artwork, config) {
     const obliqueClass = config.oblique ? " is-oblique" : "";
-    const label = renderMuseumLabel(artwork);
+    const label = config.matrixPreview ? "" : renderMuseumLabel(artwork);
+    const artworkSurface = artwork.frameClass === "wall-mural"
+      ? `<span class="artwork-background-surface" role="img" aria-label="${escapeAttr(t(artwork.altKey))}"></span>`
+      : `<img src="${artwork.src}" alt="${escapeAttr(t(artwork.altKey))}">`;
     return `
       <div
         class="artwork-rig stage-layer--artwork ${artwork.frameClass} ${artwork.scaleClass}${obliqueClass}"
@@ -856,7 +997,7 @@
         style="--art-ratio: ${artwork.ratio}; --art-left: ${config.artLeft || "39%"}; --art-top: ${config.artTop || "44%"}; --art-width: ${config.artWidth || artwork.width}; --art-mobile-width: ${config.artMobileWidth || artwork.mobileWidth};"
       >
         <div class="artwork-frame">
-          <img src="${artwork.src}" alt="${escapeAttr(t(artwork.altKey))}">
+          ${artworkSurface}
           <div class="artwork-cue-layer">
             ${renderCue(config)}
           </div>
@@ -1214,12 +1355,7 @@
         class="anchor-target"
         style="--anchor-x: ${config.anchorX || "50%"}; --anchor-y: ${config.anchorY || "50%"};"
         aria-label="${escapeAttr(`${t("cueUi.discoveryPoint")}: ${targetLabel}`)}"
-      >
-        <span class="anchor-label">
-          <span class="anchor-kicker">${escapeHtml(t("cueUi.discoveryPoint"))}</span>
-          <span>${escapeHtml(targetLabel)}</span>
-        </span>
-      </span>
+      ></span>
     `;
   }
 
@@ -1534,8 +1670,8 @@
         >
           ${spec.lens_id === "restorer" ? renderMaterialEvidence(spec, { compact: true }) : ""}
           ${comparativeEvidence}
-          <span class="panel-target">${escapeHtml(target)}</span>
-          <h3>${escapeHtml(title)}</h3>
+          <span class="panel-target phrase-controlled">${escapeHtml(target)}</span>
+          <h3 class="phrase-controlled">${escapeHtml(title)}${sourceFootnoteMark(spec, ["question", "micro_evidence"])}</h3>
           <p class="micro-evidence">${escapeHtml(microEvidence)}</p>
         </aside>
       `;
@@ -1550,8 +1686,8 @@
         >
           <span class="matrix-cue-icon" aria-hidden="true">${stateIcon(spec.lens_id)}</span>
           <span class="matrix-cue-copy">
-            <span class="panel-target">${escapeHtml(target)}</span>
-            <h3>${escapeHtml(title)}</h3>
+            <span class="panel-target phrase-controlled">${escapeHtml(target)}</span>
+            <h3 class="phrase-controlled">${escapeHtml(title)}${sourceFootnoteMark(spec, ["target", "question"])}</h3>
             <p class="micro-evidence">${escapeHtml(microEvidence)}</p>
           </span>
           ${matrixEvidence ? `<div class="matrix-cue-evidence">${matrixEvidence}</div>` : ""}
@@ -1568,8 +1704,8 @@
         ${crop}
         ${materialEvidence}
         ${comparativeEvidence}
-        <span class="panel-target">${escapeHtml(target)}</span>
-        <h3>${escapeHtml(title)}${sourceFootnoteMark(spec)}</h3>
+        <span class="panel-target phrase-controlled">${escapeHtml(target)}</span>
+        <h3 class="phrase-controlled">${escapeHtml(title)}${sourceFootnoteMark(spec, ["question", "micro_evidence", "explanation"])}</h3>
         <p class="micro-evidence">${escapeHtml(microEvidence)}</p>
       </aside>
     `;
@@ -1727,11 +1863,18 @@
   }
 
   function restartCueSequence(stage) {
-    if (!stage || reducedMotion || !stage.classList.contains("is-cue-sequence")) return;
+    if (!stage || !stage.classList.contains("is-cue-sequence")) return;
+    const scene = stage.querySelector("[data-stage-scene]");
+    if (scene?.dataset.layoutReady !== "true") return;
+    if (reducedMotion) {
+      stage.classList.add("is-cue-sequence-active");
+      return;
+    }
+    const renderGeneration = stageRenderGenerations.get(stage);
     stage.classList.remove("is-cue-sequence-active");
     void stage.offsetWidth;
     requestAnimationFrame(() => {
-      if (stage.classList.contains("is-cue-sequence")) {
+      if (stage.classList.contains("is-cue-sequence") && stageRenderGenerations.get(stage) === renderGeneration) {
         stage.classList.add("is-cue-sequence-active");
       }
     });
@@ -1747,7 +1890,8 @@
           if (entry.isIntersecting && entry.intersectionRatio >= 0.22) {
             if (cueStage.dataset.cueSequenceVisible !== "true") {
               cueStage.dataset.cueSequenceVisible = "true";
-              restartCueSequence(cueStage);
+              const scene = cueStage.querySelector("[data-stage-scene]");
+              if (scene?.dataset.layoutReady === "true") restartCueSequence(cueStage);
             }
           } else {
             cueStage.dataset.cueSequenceVisible = "false";
@@ -1760,14 +1904,16 @@
   }
 
   function positionConnector(stage) {
+    if (!stage) return;
     const scene = stage.querySelector("[data-stage-scene]");
+    if (!scene) return;
     const svg = scene.querySelector(".connector-svg");
     if (!svg) return;
     const line = svg.querySelector("line");
     const start = svg.querySelector(".connector-start");
     const end = svg.querySelector(".connector-end");
-    const anchorEl = scene.querySelector(".anchor-target");
-    const panel = scene.querySelector(".edge-panel");
+    const anchorEl = scene.querySelector(".xr-world-layer .artwork-cue-layer .anchor-target") || scene.querySelector(".artwork-cue-layer .anchor-target");
+    const panel = scene.querySelector(".xr-optical-layer .edge-panel") || scene.querySelector(".edge-panel");
 
     if (!anchorEl || !panel) {
       svg.style.display = "none";
@@ -1775,7 +1921,6 @@
     }
 
     svg.style.display = "block";
-    avoidPanelAnchorOverlap(scene, panel, anchorEl);
     const sceneRect = scene.getBoundingClientRect();
     const anchorRect = anchorEl.getBoundingClientRect();
     const panelRect = panel.getBoundingClientRect();
@@ -1801,115 +1946,379 @@
     start.setAttribute("cy", y1.toFixed(2));
     end.setAttribute("cx", x2.toFixed(2));
     end.setAttribute("cy", y2.toFixed(2));
-    scene.style.setProperty("--floating-anchor-x", `${(anchorCenterX - sceneRect.left).toFixed(2)}px`);
-    scene.style.setProperty("--floating-anchor-y", `${(anchorCenterY - sceneRect.top).toFixed(2)}px`);
     panel.style.setProperty("--connector-origin-x", panelOriginX);
     panel.style.setProperty("--connector-origin-y", `${panelOriginY.toFixed(2)}%`);
   }
 
-  function avoidPanelAnchorOverlap(scene, panel, anchorEl) {
-    const sceneRect = scene.getBoundingClientRect();
-    panel.style.setProperty("--panel-safe-x", "0px");
-    panel.style.setProperty("--panel-safe-y", "0px");
-    anchorEl.style.setProperty("--anchor-label-safe-x", "0px");
-    anchorEl.style.setProperty("--anchor-label-safe-y", "0px");
-    anchorEl.classList.remove("is-anchor-label-minimized");
+  function layoutStage(stage) {
+    if (!stage) return;
+    const scene = stage.querySelector("[data-stage-scene]");
+    const panel = scene?.querySelector(".xr-optical-layer .edge-panel") || scene?.querySelector(".edge-panel");
+    if (panel) {
+      panel.style.removeProperty("--panel-safe-x");
+      panel.style.removeProperty("--panel-safe-y");
+      panel.style.removeProperty("translate");
+      delete panel.dataset.layoutOffsetX;
+      delete panel.dataset.layoutOffsetY;
+      panel.dataset.layoutPlacement = panel.dataset.panelPosition || "fixed-lane";
+    }
+    positionConnector(stage);
+  }
 
-    const panelRect = panel.getBoundingClientRect();
-    const anchorRect = inflateRect(anchorEl.getBoundingClientRect(), 8);
+  function layoutAnchorLabel(scene, panel, anchorEl) {
     const label = anchorEl.querySelector(".anchor-label");
-    const labelRect = label ? label.getBoundingClientRect() : null;
-    const safeGap = 18;
-    const padding = 12;
-    const initialTargetRect = labelRect ? unionRects(anchorRect, labelRect) : anchorRect;
-    if (!rectsOverlap(panelRect, initialTargetRect, safeGap)) return;
+    if (!label) return;
 
-    if (labelRect) {
-      const labelCandidates = [
-        [0, 0],
-        [0, -68],
-        [0, 68],
-        [-112, 0],
-        [112, 0],
-        [-112, -56],
-        [112, -56],
-        [-112, 56],
-        [112, 56],
-        [0, -104],
-        [0, 104]
-      ];
-      const bestLabel = labelCandidates
-        .map(([x, y]) => {
-          const shiftedLabel = shiftRect(labelRect, x, y);
-          const targetRect = unionRects(anchorRect, shiftedLabel);
-          return {
-            x,
-            y,
-            overlap: overlapArea(panelRect, targetRect, safeGap),
-            boundsPenalty: rectWithinScenePenalty(targetRect, sceneRect, padding),
-            distance: Math.abs(x) + Math.abs(y) * 1.08
-          };
-        })
-        .sort((a, b) =>
-          a.boundsPenalty - b.boundsPenalty ||
-          a.overlap - b.overlap ||
-          a.distance - b.distance
-        )[0];
+    const labelRect = visibleRect(label);
+    if (labelRect) positionAnchorLabel(scene, panel, anchorEl, labelRect);
+  }
 
-      if (bestLabel && bestLabel.overlap === 0 && bestLabel.boundsPenalty === 0) {
-        anchorEl.style.setProperty("--anchor-label-safe-x", `${bestLabel.x.toFixed(2)}px`);
-        anchorEl.style.setProperty("--anchor-label-safe-y", `${bestLabel.y.toFixed(2)}px`);
-        return;
-      }
+  function numericCssValue(value) {
+    const parsed = Number.parseFloat(value);
+    return Number.isFinite(parsed) ? parsed : 0;
+  }
 
-      anchorEl.classList.add("is-anchor-label-minimized");
-      if (!rectsOverlap(panelRect, anchorRect, safeGap)) return;
+  function renderedTranslate(element) {
+    const value = getComputedStyle(element).translate;
+    if (!value || value === "none") return { x: 0, y: 0 };
+    const parts = value.split(/\s+/);
+    return {
+      x: numericCssValue(parts[0]),
+      y: numericCssValue(parts[1] || "0")
+    };
+  }
+
+  function untranslatedRect(element) {
+    const rect = stableLayoutRect(element);
+    const translate = renderedTranslate(element);
+    return shiftRect(rect, -translate.x, -translate.y);
+  }
+
+  function panelTargetRect(panel) {
+    const baseRect = untranslatedRect(panel);
+    const style = getComputedStyle(panel);
+    const panelX = numericCssValue(style.getPropertyValue("--panel-x"));
+    const panelY = numericCssValue(style.getPropertyValue("--panel-y"));
+    const safeX = numericCssValue(panel.dataset.layoutOffsetX);
+    const safeY = numericCssValue(panel.dataset.layoutOffsetY);
+    return shiftRect(baseRect, panelX + safeX, panelY + safeY);
+  }
+
+  function setPanelOffset(panel, x, y) {
+    const numericX = Number(x);
+    const numericY = Number(y);
+    const safeX = `${numericX.toFixed(2)}px`;
+    const safeY = `${numericY.toFixed(2)}px`;
+    const translatedX = numericX < 0
+      ? `calc(var(--panel-x, 0px) - ${Math.abs(numericX).toFixed(2)}px)`
+      : `calc(var(--panel-x, 0px) + ${numericX.toFixed(2)}px)`;
+    const translatedY = numericY < 0
+      ? `calc(var(--panel-y, 0px) - ${Math.abs(numericY).toFixed(2)}px)`
+      : `calc(var(--panel-y, 0px) + ${numericY.toFixed(2)}px)`;
+    panel.style.setProperty("--panel-safe-x", safeX);
+    panel.style.setProperty("--panel-safe-y", safeY);
+    panel.style.translate = `${translatedX} ${translatedY}`;
+    panel.dataset.layoutOffsetX = numericX.toFixed(2);
+    panel.dataset.layoutOffsetY = numericY.toFixed(2);
+  }
+
+  function setAnchorLabelOffset(anchorEl, x, y) {
+    const safeX = `${Number(x).toFixed(2)}px`;
+    const safeY = `${Number(y).toFixed(2)}px`;
+    anchorEl.style.setProperty("--anchor-label-safe-x", safeX);
+    anchorEl.style.setProperty("--anchor-label-safe-y", safeY);
+    const label = anchorEl.querySelector(".anchor-label");
+    if (label) label.style.translate = `${safeX} ${safeY}`;
+    anchorEl.dataset.labelOffsetX = Number(x).toFixed(2);
+    anchorEl.dataset.labelOffsetY = Number(y).toFixed(2);
+  }
+
+  function avoidPanelAnchorOverlap(scene, panel, anchorEl, labelAnchorEl = anchorEl) {
+    const sceneRect = scene.getBoundingClientRect();
+    labelAnchorEl.classList.remove("is-anchor-label-minimized");
+
+    if (window.matchMedia("(max-width: 760px)").matches) {
+      panel.dataset.layoutPlacement = "mobile-lane";
+      return;
     }
 
+    const panelStyle = getComputedStyle(panel);
+    const panelRect = shiftRect(
+      untranslatedRect(panel),
+      numericCssValue(panelStyle.getPropertyValue("--panel-x")),
+      numericCssValue(panelStyle.getPropertyValue("--panel-y"))
+    );
+    const anchorRect = inflateRect(anchorEl.getBoundingClientRect(), 10);
+    const label = labelAnchorEl.querySelector(".anchor-label");
+    const labelRect = visibleRect(label);
+    const padding = 12;
     const minX = sceneRect.left + padding - panelRect.left;
     const maxX = sceneRect.right - padding - panelRect.right;
     const minY = sceneRect.top + padding - panelRect.top;
     const maxY = sceneRect.bottom - padding - panelRect.bottom;
-    const maxNudgeX = 92;
-    const maxNudgeY = 92;
-    const rawCandidates = [
-      [0, 0],
-      [0, -maxNudgeY],
-      [0, maxNudgeY],
-      [-maxNudgeX, 0],
-      [maxNudgeX, 0],
-      [-maxNudgeX, -maxNudgeY],
-      [maxNudgeX, -maxNudgeY],
-      [-maxNudgeX, maxNudgeY],
-      [maxNudgeX, maxNudgeY]
+    const xCandidates = candidateOffsets(minX, maxX, [0, -96, 96, -192, 192, -320, 320]);
+    const yCandidates = candidateOffsets(minY, maxY, [0, -72, 72, -144, 144, -220, 220, -300, 300]);
+    const protectedRects = panelProtectedRects(scene, anchorRect);
+    const candidates = [];
+
+    xCandidates.forEach((x) => {
+      yCandidates.forEach((y) => {
+        const shifted = shiftRect(panelRect, x, y);
+        const penalties = protectedRects.reduce((score, protectedRect) => {
+          const area = overlapArea(shifted, protectedRect.rect, protectedRect.gap || 0);
+          if (protectedRect.kind === "hard") score.hard += area * protectedRect.weight;
+          if (protectedRect.kind === "subject") score.subject += area * protectedRect.weight;
+          if (protectedRect.kind === "artwork") score.artwork += area * protectedRect.weight;
+          return score;
+        }, { hard: 0, subject: 0, artwork: 0 });
+        candidates.push({
+          x,
+          y,
+          ...penalties,
+          bounds: rectWithinScenePenalty(shifted, sceneRect, padding),
+          distance: Math.abs(x) * 1.08 + Math.abs(y)
+        });
+      });
+    });
+
+    candidates.sort((a, b) =>
+      a.bounds - b.bounds ||
+      a.hard - b.hard ||
+      a.subject - b.subject ||
+      a.artwork - b.artwork ||
+      a.distance - b.distance
+    );
+
+    const best = candidates[0];
+    if (best) {
+      const contained = containPanelWithinScene(scene, panel, panelRect, best.x, best.y, padding);
+      panel.dataset.layoutPlacement = `${contained.x.toFixed(0)},${contained.y.toFixed(0)}`;
+      panel.dataset.layoutOverlapScore = (best.hard + best.subject + best.artwork).toFixed(0);
+    }
+
+    if (labelRect) {
+      positionAnchorLabel(scene, panel, labelAnchorEl, labelRect);
+    }
+  }
+
+  function containPanelWithinScene(scene, panel, basePanelRect, safeX, safeY, padding) {
+    const sceneRect = scene.getBoundingClientRect();
+    let x = safeX;
+    let y = safeY;
+    let panelRect = shiftRect(basePanelRect, x, y);
+
+    if (panelRect.left < sceneRect.left + padding) x += sceneRect.left + padding - panelRect.left;
+    if (panelRect.right > sceneRect.right - padding) x += sceneRect.right - padding - panelRect.right;
+    if (panelRect.top < sceneRect.top + padding) y += sceneRect.top + padding - panelRect.top;
+    if (panelRect.bottom > sceneRect.bottom - padding) y += sceneRect.bottom - padding - panelRect.bottom;
+
+    panelRect = shiftRect(basePanelRect, x, y);
+    if (panelRect.width <= sceneRect.width - padding * 2) {
+      if (panelRect.left < sceneRect.left + padding) x += sceneRect.left + padding - panelRect.left;
+      if (panelRect.right > sceneRect.right - padding) x += sceneRect.right - padding - panelRect.right;
+    }
+    if (panelRect.height <= sceneRect.height - padding * 2) {
+      if (panelRect.top < sceneRect.top + padding) y += sceneRect.top + padding - panelRect.top;
+      if (panelRect.bottom > sceneRect.bottom - padding) y += sceneRect.bottom - padding - panelRect.bottom;
+    }
+
+    setPanelOffset(panel, x, y);
+    return { x, y };
+  }
+
+  function candidateOffsets(min, max, preferred) {
+    if (min > max) return [0];
+    const values = [min, max, ...preferred]
+      .map((value) => clamp(value, min, max))
+      .filter((value, index, list) => list.findIndex((item) => Math.abs(item - value) < 0.5) === index);
+    return values;
+  }
+
+  function visibleRect(element) {
+    if (!element) return null;
+    const style = window.getComputedStyle(element);
+    if (style.display === "none" || style.visibility === "hidden") return null;
+    const rect = element.getBoundingClientRect();
+    return rect.width && rect.height ? rect : null;
+  }
+
+  function stableLayoutRect(element) {
+    const rect = element.getBoundingClientRect();
+    const width = element.offsetWidth || rect.width;
+    const height = element.offsetHeight || rect.height;
+    if (!width || !height) return rect;
+
+    const scaleX = rect.width / width;
+    const scaleY = rect.height / height;
+    if (Math.abs(scaleX - 1) < 0.002 && Math.abs(scaleY - 1) < 0.002) return rect;
+
+    const origin = getComputedStyle(element).transformOrigin.split(/\s+/).map(Number.parseFloat);
+    const originX = Number.isFinite(origin[0]) ? origin[0] : width / 2;
+    const originY = Number.isFinite(origin[1]) ? origin[1] : height / 2;
+    const left = rect.left - originX * (1 - scaleX);
+    const top = rect.top - originY * (1 - scaleY);
+    return {
+      left,
+      top,
+      right: left + width,
+      bottom: top + height,
+      width,
+      height
+    };
+  }
+
+  function normalizedRect(baseRect, x, y, width, height) {
+    return {
+      left: baseRect.left + baseRect.width * x,
+      top: baseRect.top + baseRect.height * y,
+      right: baseRect.left + baseRect.width * (x + width),
+      bottom: baseRect.top + baseRect.height * (y + height),
+      width: baseRect.width * width,
+      height: baseRect.height * height
+    };
+  }
+
+  function panelProtectedRects(scene, anchorRect) {
+    const stage = scene.closest(".xr-stage");
+    const artworkId = stage?.dataset.artwork || "";
+    const protectedRects = [
+      { rect: anchorRect, kind: "hard", weight: 24, gap: 18 }
     ];
-    const candidates = rawCandidates
-      .map(([x, y]) => ({
-        x: clamp(x, minX, maxX),
-        y: clamp(y, minY, maxY)
-      }))
-      .filter((candidate, index, list) =>
-        list.findIndex((item) => Math.abs(item.x - candidate.x) < 0.5 && Math.abs(item.y - candidate.y) < 0.5) === index
-      );
+    const artworkRect = visibleRect(scene.querySelector(".artwork-rig"));
+    if (artworkRect) {
+      if (artworkId === "lastSupper") {
+        protectedRects.push({
+          rect: normalizedRect(artworkRect, 0.07, 0.42, 0.86, 0.48),
+          kind: "subject",
+          weight: 8,
+          gap: 12
+        });
+        protectedRects.push({ rect: artworkRect, kind: "artwork", weight: 1.5, gap: 10 });
+      } else {
+        protectedRects.push({ rect: artworkRect, kind: "artwork", weight: 4, gap: 16 });
+      }
+    }
 
-    const scored = candidates
-      .map((candidate) => {
-        const shifted = shiftRect(panelRect, candidate.x, candidate.y);
-        const overlap = overlapArea(shifted, anchorRect, safeGap);
-        const distance = Math.abs(candidate.x) * 1.18 + Math.abs(candidate.y);
-        const boundsPenalty = rectWithinScenePenalty(shifted, sceneRect, padding);
-        return { ...candidate, overlap, distance, boundsPenalty };
-      })
-      .sort((a, b) =>
-        a.boundsPenalty - b.boundsPenalty ||
-        a.overlap - b.overlap ||
-        a.distance - b.distance
-      );
+    const controls = [
+      stage?.querySelector(".stage-bar"),
+      stage?.closest("section")?.querySelector(".preview-artwork-controls"),
+      stage?.querySelector(".hero-viewpoint-selector"),
+      stage?.closest("[data-hero-experience]")?.querySelector(".hero-substate-lines"),
+      stage?.closest(".hero")?.querySelector(".hero-copy")
+    ];
+    controls.forEach((element) => {
+      const rect = visibleRect(element);
+      if (rect) protectedRects.push({ rect, kind: "hard", weight: 12, gap: 10 });
+    });
+    return protectedRects;
+  }
 
-    const best = scored[0];
+  function subjectProtectedRects(scene) {
+    const stage = scene.closest(".xr-stage");
+    const artworkRect = visibleRect(scene.querySelector(".artwork-rig"));
+    if (!artworkRect) return [];
+    const artworkId = stage?.dataset.artwork;
+    if (artworkId === "girl") {
+      return [normalizedRect(artworkRect, 0.12, 0.04, 0.76, 0.62)];
+    }
+    if (artworkId === "arnolfini") {
+      return [normalizedRect(artworkRect, 0.08, 0.18, 0.82, 0.7)];
+    }
+    if (artworkId === "lastSupper") {
+      return [normalizedRect(artworkRect, 0.1, 0.34, 0.8, 0.56)];
+    }
+    return [];
+  }
+
+  function positionAnchorLabel(scene, panel, anchorEl, fallbackLabelRect = null) {
+    const label = anchorEl.querySelector(".anchor-label");
+    if (!label) return;
+
+    anchorEl.classList.remove("is-anchor-label-minimized");
+    const currentLabelRect = visibleRect(label) || fallbackLabelRect;
+    if (!currentLabelRect) return;
+    const labelTranslate = renderedTranslate(label);
+    const labelRect = shiftRect(currentLabelRect, -labelTranslate.x, -labelTranslate.y);
+    if (!labelRect) return;
+
+    const sceneRect = scene.getBoundingClientRect();
+    const panelRect = panelTargetRect(panel);
+    const subjects = subjectProtectedRects(scene);
+    const anchorRect = inflateRect(anchorEl.getBoundingClientRect(), 4);
+    const padding = 12;
+    const panelLeft = panelRect.left - 12 - labelRect.right;
+    const panelRight = panelRect.right + 12 - labelRect.left;
+    const panelAbove = panelRect.top - 12 - labelRect.bottom;
+    const panelBelow = panelRect.bottom + 12 - labelRect.top;
+    const offsets = [
+      [0, 0],
+      [0, -48],
+      [0, 48],
+      [-72, 0],
+      [72, 0],
+      [-92, -44],
+      [92, -44],
+      [-92, 44],
+      [92, 44],
+      [-120, -44],
+      [120, -44],
+      [-120, 44],
+      [120, 44],
+      [-160, -44],
+      [160, -44],
+      [-160, 44],
+      [160, 44],
+      [0, -88],
+      [0, 88],
+      [0, -120],
+      [0, 120],
+      [panelLeft, 0],
+      [panelRight, 0],
+      [0, panelAbove],
+      [0, panelBelow],
+      [panelLeft, panelAbove],
+      [panelRight, panelAbove],
+      [panelLeft, panelBelow],
+      [panelRight, panelBelow]
+    ].filter(([x, y], index, list) =>
+      list.findIndex(([candidateX, candidateY]) =>
+        Math.abs(candidateX - x) < 0.5 && Math.abs(candidateY - y) < 0.5
+      ) === index
+    );
+    const candidates = offsets.map(([x, y]) => {
+      const shifted = shiftRect(labelRect, x, y);
+      return {
+        x,
+        y,
+        bounds: rectWithinScenePenalty(shifted, sceneRect, padding),
+        panel: overlapArea(panelRect, shifted, 12),
+        anchor: overlapArea(anchorRect, shifted, 4),
+        subject: subjects.reduce((total, rect) => total + overlapArea(shifted, rect, 4), 0),
+        distance: Math.abs(x) + Math.abs(y) * 1.08
+      };
+    });
+    candidates.sort((a, b) =>
+      a.bounds - b.bounds ||
+      a.panel - b.panel ||
+      a.anchor - b.anchor ||
+      a.subject - b.subject ||
+      a.distance - b.distance
+    );
+    const best = candidates[0];
     if (!best) return;
-    panel.style.setProperty("--panel-safe-x", `${best.x.toFixed(2)}px`);
-    panel.style.setProperty("--panel-safe-y", `${best.y.toFixed(2)}px`);
+    let x = best.x;
+    let y = best.y;
+    const applyOffset = () => {
+      setAnchorLabelOffset(anchorEl, x, y);
+    };
+    applyOffset();
+    const finalLabelRect = shiftRect(labelRect, x, y);
+    const finalPanelOverlap = overlapArea(panelRect, finalLabelRect, 12);
+    const finalSubjectOverlap = finalLabelRect
+      ? subjects.reduce((total, rect) => total + overlapArea(finalLabelRect, rect, 4), 0)
+      : 0;
+    anchorEl.dataset.labelLayoutPlacement = `${x.toFixed(0)},${y.toFixed(0)}`;
+    anchorEl.dataset.labelLayoutOverlapScore = (finalPanelOverlap + finalSubjectOverlap).toFixed(0);
   }
 
   function unionRects(a, b) {
@@ -2022,6 +2431,46 @@
       positionMatrixConnectors();
       requestAnimationFrame(positionMatrixConnectors);
     });
+  }
+
+  function scheduleStageLayout() {
+    if (stageLayoutFrame) window.cancelAnimationFrame(stageLayoutFrame);
+    stageLayoutFrame = window.requestAnimationFrame(() => {
+      stageLayoutFrame = 0;
+      layoutStage(heroStage);
+      layoutStage(explorerStage);
+      scheduleMatrixConnectorPositioning();
+      window.requestAnimationFrame(() => {
+        layoutStage(heroStage);
+        layoutStage(explorerStage);
+      });
+    });
+  }
+
+  function observeStagePanel(stage) {
+    if (!stageResizeObserver || !stage) return;
+    const previousPanel = stageObservedPanels.get(stage);
+    const nextPanel = stage.querySelector(".edge-panel");
+    if (previousPanel === nextPanel) return;
+    if (previousPanel) stageResizeObserver.unobserve(previousPanel);
+    if (nextPanel) {
+      stageResizeObserver.observe(nextPanel);
+      stageObservedPanels.set(stage, nextPanel);
+    } else {
+      stageObservedPanels.delete(stage);
+    }
+  }
+
+  function bindStageLayoutObservers() {
+    if ("ResizeObserver" in window) {
+      stageResizeObserver = new ResizeObserver(scheduleStageLayout);
+      [heroStage, explorerStage].filter(Boolean).forEach((stage) => {
+        stageResizeObserver.observe(stage);
+      });
+    }
+    if (document.fonts?.ready) {
+      document.fonts.ready.then(scheduleStageLayout);
+    }
   }
 
   const PARALLAX_LERP = 0.16;
@@ -2354,77 +2803,89 @@
 
   function renderLensMatrix() {
     const currentItem = selectedPreviewItem();
-    const headings = lensOrder
-      .map((lens) => {
-        const subhead = t(`lenses.columnSubheads.${lens}`);
-        return `
-          <div class="matrix-column-heading" role="columnheader">
-            <strong>${escapeHtml(t(`lenses.names.${lens}`))}</strong>
-            ${subhead ? `<span>${escapeHtml(subhead)}</span>` : ""}
+    const groups = artworkOrder.map((artworkId) => {
+      const artwork = artworks[artworkId];
+      const cards = lensOrder
+        .map((lens) => renderMatrixCell(artworkId, lens, currentLens === lens && currentItem.artwork === artworkId))
+        .join("");
+      return `
+        <section class="matrix-artwork-group" data-matrix-artwork-group="${escapeAttr(artworkId)}" aria-labelledby="matrix-artwork-${escapeAttr(artworkId)}">
+          <header class="matrix-artwork-header">
+            <h3 id="matrix-artwork-${escapeAttr(artworkId)}">${escapeHtml(t(artwork.labelKey))}</h3>
+            <span>${escapeHtml(artwork.displaySize)}</span>
+          </header>
+          <div class="matrix-card-grid">
+            ${cards}
           </div>
-        `;
-      })
-      .join("");
-    const cells = artworkOrder
-      .map((artworkId) =>
-        lensOrder
-          .map((lens) => {
-            const artwork = artworks[artworkId];
-            const spec = getCueSpec(artworkId, lens);
-            const selected = currentLens === lens && currentItem.artwork === artworkId;
-            return `
-              <button
-                type="button"
-                class="matrix-cell matrix-grid-cell matrix-preview-cell"
-                data-matrix-lens="${lens}"
-                data-matrix-artwork="${artworkId}"
-                aria-pressed="${selected}"
-                aria-label="${escapeAttr(`${t(artwork.labelKey)} / ${t(`lenses.names.${lens}`)} / ${spec ? cueSpecText(spec, "target_label") : ""}`)}"
-              >
-                ${renderMatrixCell(artworkId, lens)}
-                <span class="matrix-preview-cta">
-                  <span>${escapeHtml(t("lenses.previewCta"))}</span>
-                  <span aria-hidden="true">↓</span>
-                </span>
-              </button>
-            `;
-          })
-          .join("")
-      )
-      .join("");
+        </section>
+      `;
+    }).join("");
 
     lensMatrix.innerHTML = `
-      <div class="matrix-grid-shell">
-        <div class="matrix-column-headings" role="row">
-          ${headings}
-        </div>
-        <div class="matrix-grid-cells" role="rowgroup">
-          ${cells}
+      <div class="matrix-artwork-groups">
+        ${groups}
+      </div>
+    `;
+  }
+
+  function renderMatrixThumbnail(artworkId, lens) {
+    const item = lensItems[lens].find((candidate) => candidate.artwork === artworkId);
+    const config = stageConfigFor(lens, {
+      ...(item || { artwork: artworkId }),
+      panel: false,
+      matrixPreview: true
+    });
+    const artwork = artworks[artworkId];
+    return `
+      <div class="xr-stage matrix-mini-stage" data-state="${escapeAttr(lens)}" data-artwork="${escapeAttr(artworkId)}" data-scene="${escapeAttr(artwork.scene)}" data-scale="${escapeAttr(artwork.scaleClass)}">
+        <div class="stage-scene scene-${escapeAttr(artwork.scene)} stage--${escapeAttr(artwork.stageClass)}" data-layout-ready="true">
+          <div class="xr-world-layer stage-layer--room scene-${escapeAttr(artwork.scene)} stage--${escapeAttr(artwork.stageClass)}">
+            ${renderStagePerspective(config)}
+            ${renderArtwork(artwork, config)}
+          </div>
         </div>
       </div>
     `;
-    scheduleMatrixConnectorPositioning();
   }
 
-  function renderMatrixPreview(artworkId, lens) {
-    const item = lensItems[lens].find((candidate) => candidate.artwork === artworkId);
-    return renderStaticStageMarkup(lens, {
-      ...(item || { artwork: artworkId }),
-      panel: true,
-      matrixPreview: true,
-      panelTitleKey: `lenses.matrix.${artworkId}.${lens}.body`,
-      panelBodyKey: `lenses.matrix.${artworkId}.${lens}.body`
-    });
-  }
-
-  function renderMatrixCell(artworkId, lens) {
+  function renderMatrixCell(artworkId, lens, selected = false) {
     const spec = getCueSpec(artworkId, lens);
     if (!spec) return "";
+    const cardId = `matrix-card-${artworkId}-${lens}`;
+    const target = cueSpecText(spec, "target_label");
+    const question = cueSpecText(spec, "question");
     return `
-      <div class="matrix-cue-preview" aria-hidden="true">
-        ${renderMatrixPreview(artworkId, lens)}
-        <span class="matrix-artwork-chip">${escapeHtml(t(artworks[artworkId].labelKey))}</span>
-      </div>
+      <article class="matrix-cell matrix-preview-cell${selected ? " is-selected" : ""}" data-matrix-artwork="${escapeAttr(artworkId)}" data-matrix-lens="${escapeAttr(lens)}" aria-labelledby="${escapeAttr(cardId)}">
+        <header class="matrix-card-heading">
+          <span class="matrix-card-icon" aria-hidden="true">${heroViewpointIcon(lens)}</span>
+          <span>
+            <strong id="${escapeAttr(cardId)}">${escapeHtml(t(`lenses.names.${lens}`))}</strong>
+            <small>${escapeHtml(t(`lenses.columnSubheads.${lens}`))}</small>
+          </span>
+        </header>
+        <div class="matrix-cue-preview" aria-hidden="true">
+          ${renderMatrixThumbnail(artworkId, lens)}
+        </div>
+        <div class="matrix-card-copy">
+          <div class="matrix-card-target">
+            <span>${escapeHtml(t("lenses.matrixTargetLabel"))}</span>
+            <strong>${escapeHtml(target)}</strong>
+          </div>
+          <div class="matrix-card-question">
+            <span>${escapeHtml(t("lenses.matrixQuestionLabel"))}</span>
+            <p>${escapeHtml(question)}</p>
+          </div>
+          <div class="matrix-card-sources">${escapeHtml(lang === "ja" ? "出典" : "Sources")} ${sourceFootnoteMark(spec, ["target", "question"])}</div>
+        </div>
+        <button
+          type="button"
+          class="matrix-card-cta matrix-preview-cta"
+          data-matrix-lens="${escapeAttr(lens)}"
+          data-matrix-artwork="${escapeAttr(artworkId)}"
+          aria-pressed="${selected}"
+          aria-label="${escapeAttr(`${t(artworks[artworkId].labelKey)} / ${t(`lenses.names.${lens}`)} / ${target}`)}"
+        >${escapeHtml(t("lenses.previewCta"))}</button>
+      </article>
     `;
   }
 
@@ -2458,12 +2919,13 @@
       }
     ];
     previewDetails.innerHTML = `
-      <h3>${escapeHtml(t("preview.mechanics.title"))}</h3>
+      <h3 class="phrase-controlled">${t("preview.mechanics.title")}</h3>
       <ol class="preview-sequence-list">
         ${mechanismItems
           .map((entry, index) => `
             <li class="preview-sequence-item preview-sequence-item-${escapeAttr(entry.key)}">
-              <span class="preview-sequence-index">${String(index + 1).padStart(2, "0")}</span>
+              <span class="preview-step-index">${String(index + 1).padStart(2, "0")}</span>
+              <span class="preview-step-divider" aria-hidden="true"></span>
               <span class="preview-sequence-copy">
                 <strong>${escapeHtml(entry.label)}</strong>
                 <span>${escapeHtml(entry.body)}</span>
@@ -2472,32 +2934,30 @@
           `)
           .join("")}
       </ol>
+      ${renderPreviewReference(spec)}
     `;
   }
 
   function renderPreviewReference(spec) {
-    const note = cueSpecText(spec, "source_note");
-    const urls = Array.isArray(spec.source_urls) ? spec.source_urls.slice(0, 2) : [];
-    if (!note && !urls.length) return "";
-    const label = lang === "ja" ? "参照" : "References";
-    const links = urls
-      .map((url, index) => `
-        <a href="${escapeAttr(url)}" target="_blank" rel="noopener noreferrer">
-          ${escapeHtml(lang === "ja" ? `資料${index + 1}` : `Source ${index + 1}`)}
-        </a>
-      `)
-      .join("");
+    const ids = cueSpecCitationIds(spec);
+    const entries = sourceFootnoteEntries().filter((entry) => ids.includes(entry.id) || cueSpecSourceUrls(spec).includes(entry.url));
+    if (!entries.length) return "";
+    const label = lang === "ja" ? "出典" : "Sources";
     return `
       <div class="preview-reference-note">
         <span>${escapeHtml(label)}</span>
-        ${note ? `<p>${escapeHtml(note)}</p>` : ""}
-        ${links ? `<p class="preview-reference-links">${links}</p>` : ""}
+        <p class="preview-reference-links">
+          ${entries
+            .map((entry) => `<a href="#source-footnote-${escapeAttr(cueSpecSlug(entry.id))}">[${entry.index}] ${escapeHtml(entry.institution || entry.label)}</a>`)
+            .join("")}
+        </p>
       </div>
     `;
   }
 
   function renderSourceFootnotes() {
     if (!sourceFootnotes) return;
+    sourceFootnotes.setAttribute("aria-label", lang === "ja" ? "出典と脚注" : "Sources and footnotes");
     const entries = sourceFootnoteEntries();
     if (!entries.length) {
       sourceFootnotes.hidden = true;
@@ -2512,12 +2972,16 @@
         <ol>
           ${entries
             .map((entry) => `
-              <li id="source-footnote-${entry.index}">
+              <li id="source-footnote-${escapeAttr(cueSpecSlug(entry.id))}">
                 <a href="${escapeAttr(entry.url)}" target="_blank" rel="noopener noreferrer">
                   <span class="source-footnote-number">[${entry.index}]</span>
                   <span>${escapeHtml(entry.label)}</span>
                 </a>
-                <small>${escapeHtml(t("sourceFootnotes.itemPrefix"))}: ${escapeHtml(entry.usedBy.join(" / "))}</small>
+                <ul class="source-footnote-uses" aria-label="${escapeAttr(t("sourceFootnotes.itemPrefix"))}">
+                  ${entry.usedBy
+                    .map((use) => `<li><span class="source-footnote-artwork">${escapeHtml(use.artwork)}</span><span class="source-footnote-separator" aria-hidden="true">·</span><span class="source-footnote-viewpoint">${escapeHtml(use.viewpoint)}</span></li>`)
+                    .join("")}
+                </ul>
               </li>
             `)
             .join("")}
@@ -2623,6 +3087,7 @@
   function bindEvents() {
     initStageParallax(heroStage);
     initStageParallax(explorerStage);
+    bindStageLayoutObservers();
     document.querySelector('[data-action="replay"]').addEventListener("click", replayHero);
     document.querySelector('[data-action="explore-lenses"]').addEventListener("click", () => {
       document.querySelector("#lenses").scrollIntoView({ behavior: "smooth", block: "start" });
@@ -2659,11 +3124,7 @@
     document.querySelectorAll("[data-lang-button]").forEach((button) => {
       button.addEventListener("click", () => setLanguage(button.dataset.langButton));
     });
-    window.addEventListener("resize", () => {
-      positionConnector(heroStage);
-      positionConnector(explorerStage);
-      scheduleMatrixConnectorPositioning();
-    });
+    window.addEventListener("resize", scheduleStageLayout);
   }
 
   function applyQueryParams() {
