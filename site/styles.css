@@ -19,6 +19,17 @@
   --shadow: 0 26px 80px rgba(0, 0, 0, 0.34);
   --max: 1180px;
   --sticky-offset: 84px;
+  --font-sans-en: Helvetica, Arial, sans-serif;
+  --font-sans-ja: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", Meiryo, sans-serif;
+  --type-body-size: 1rem;
+  --type-body-leading: 1.55;
+  --type-card-title-size: 0.875rem;
+  --type-card-title-leading: 1.43;
+  --type-card-body-size: 0.8125rem;
+  --type-card-body-leading: 1.54;
+  --type-ui-label-size: 0.6875rem;
+  --measure-body-en: 66ch;
+  --measure-body-ja: 38em;
 }
 
 * {
@@ -37,8 +48,9 @@ body {
   min-width: 320px;
   background: var(--bg);
   color: var(--ink);
-  font-family: Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+  font-family: var(--font-sans-en);
+  font-size: var(--type-body-size);
+  line-height: var(--type-body-leading);
   overflow-wrap: normal;
   text-rendering: optimizeLegibility;
   word-break: normal;
@@ -50,23 +62,14 @@ body {
 p,
 li,
 small,
-figcaption,
-.edge-panel,
-.anchor-label,
-.execution-plan-cta-body {
+figcaption {
   text-wrap: pretty;
 }
 
 html[lang="ja"] body {
-  font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", Meiryo, sans-serif;
+  font-family: var(--font-sans-ja);
   line-break: strict;
   word-break: normal;
-}
-
-@supports (word-break: auto-phrase) {
-  html[lang="ja"] body {
-    word-break: auto-phrase;
-  }
 }
 
 button,
@@ -97,7 +100,38 @@ img {
 }
 
 .semantic-unit {
+  white-space: nowrap;
+}
+
+html[lang="ja"] .semantic-unit {
+  display: inline;
+  max-inline-size: none;
+  line-break: strict;
+  word-break: normal;
+  white-space: nowrap;
+}
+
+p .semantic-unit,
+li .semantic-unit {
   white-space: normal;
+}
+
+html[lang="ja"] p .semantic-unit,
+html[lang="ja"] li .semantic-unit {
+  white-space: normal;
+}
+
+.phrase-controlled {
+  max-inline-size: 100%;
+  overflow-wrap: normal;
+  white-space: normal;
+  word-break: normal;
+  text-wrap: wrap;
+}
+
+html[lang="ja"] .phrase-controlled {
+  line-break: strict;
+  word-break: keep-all;
 }
 
 :where(
@@ -1018,22 +1052,6 @@ html[lang="ja"] .preview-section :is(
   .explorer-stage .comparative-evidence
 ) {
   line-break: strict;
-}
-
-@supports (word-break: auto-phrase) {
-  html[lang="ja"] .preview-section :is(
-    .section-heading-row p,
-    .preview-details,
-    .preview-sequence-copy,
-    .preview-reference-note,
-    .explorer-stage .edge-panel,
-    .explorer-stage .panel-target,
-    .explorer-stage .micro-evidence,
-    .explorer-stage .material-evidence,
-    .explorer-stage .comparative-evidence
-  ) {
-    word-break: auto-phrase;
-  }
 }
 
 .preview-lens-controls {
@@ -2042,7 +2060,7 @@ html[lang="ja"] .preview-section :is(
   font-weight: 760;
   line-height: 1.08;
   text-align: center;
-  text-wrap: balance;
+  text-wrap: wrap;
   translate: var(--anchor-label-safe-x, 0px) var(--anchor-label-safe-y, 0px);
   transform: translateX(-50%);
   backdrop-filter: blur(8px);
@@ -2064,7 +2082,7 @@ html[lang="ja"] .preview-section :is(
 .pointer-from-lower-right-toward-head-turban-area + .anchor-target .anchor-label {
   top: calc(100% + 30px);
   bottom: auto;
-  left: calc(50% + 100px);
+  left: calc(50% - 76px);
   transform: translateX(-50%);
 }
 
@@ -2078,26 +2096,26 @@ html[lang="ja"] .preview-section :is(
 .pointer-from-lower-right-toward-center + .anchor-target .anchor-label {
   top: calc(100% + 34px);
   bottom: auto;
-  left: calc(50% + 124px);
+  left: calc(50% - 72px);
   transform: translateX(-50%);
 }
 
 .pointer-from-right-toward-pearl + .anchor-target .anchor-label {
   top: calc(100% + 18px);
   bottom: auto;
-  left: calc(50% + 20px);
+  left: calc(50% - 64px);
   transform: translateX(-50%);
 }
 
 .pointer-from-right-toward-central-mirror + .anchor-target .anchor-label {
   top: calc(100% + 18px);
   bottom: auto;
-  left: calc(50% + 132px);
+  left: calc(50% - 72px);
   transform: translateX(-50%);
 }
 
 .pointer-from-right-toward-lower-textile-area + .anchor-target .anchor-label {
-  top: 50%;
+  top: calc(50% - 48px);
   bottom: auto;
   left: calc(50% - 124px);
   transform: translate(-50%, -50%);
@@ -2106,20 +2124,20 @@ html[lang="ja"] .preview-section :is(
 .pointer-from-right-toward-left-center-wall-area + .anchor-target .anchor-label {
   top: calc(100% + 20px);
   bottom: auto;
-  left: calc(50% + 116px);
+  left: calc(50% - 72px);
   transform: translateX(-50%);
 }
 
 .pointer-from-upper-right-toward-table-center + .anchor-target .anchor-label {
-  top: calc(100% + 18px);
-  bottom: auto;
-  left: calc(50% - 96px);
+  top: auto;
+  bottom: calc(100% + 18px);
+  left: calc(50% - 72px);
   transform: translateX(-50%);
 }
 
 .pointer-from-right-toward-object-cluster + .anchor-target .anchor-label {
   bottom: calc(100% + 42px);
-  left: calc(50% + 40px);
+  left: calc(50% - 72px);
   transform: translateX(-50%);
 }
 
@@ -4306,6 +4324,21 @@ html[lang="ja"] .preview-section :is(
   line-height: 1.15;
 }
 
+.hero-sequence-copy {
+  min-width: 0;
+  text-align: center;
+  white-space: normal;
+}
+
+.hero-sequence-index {
+  white-space: nowrap;
+}
+
+.hero-sequence-label {
+  white-space: normal;
+  word-break: keep-all;
+}
+
 .section {
   padding: 84px 32px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -5301,64 +5334,6 @@ html[lang="ja"] .preview-section :is(
 
 .future-title-mobile-break {
   display: none;
-}
-
-#experience-flow-title,
-#difference-title,
-#lenses-title,
-#preview-title,
-#xr-only-title,
-#plan-page-title,
-#plan-readiness-title,
-#hardware-validation-title,
-#implementation-validation-title,
-#plan-roadmap-title,
-#plan-grant-title,
-#plan-builder-title,
-#plan-beyond-title,
-#plan-status-title,
-#plan-contact-title,
-.experience-flow-steps h3,
-.mechanics-list h3,
-.future-context-card-copy h3,
-.plan-card-grid h3,
-.roadmap-list h3,
-.future-contexts h3,
-.execution-plan-cta-title {
-  max-inline-size: 100%;
-  overflow-wrap: normal;
-  white-space: normal;
-  word-break: normal;
-  text-wrap: balance;
-}
-
-@supports (word-break: auto-phrase) {
-  html[lang="ja"] :is(
-    #experience-flow-title,
-    #difference-title,
-    #lenses-title,
-    #preview-title,
-    #xr-only-title,
-    #plan-page-title,
-    #plan-readiness-title,
-    #hardware-validation-title,
-    #implementation-validation-title,
-    #plan-roadmap-title,
-    #plan-grant-title,
-    #plan-builder-title,
-    #plan-beyond-title,
-    #plan-status-title,
-    #plan-contact-title,
-    .experience-flow-steps h3,
-    .mechanics-list h3,
-    .future-context-card-copy h3,
-    .plan-card-grid h3,
-    .roadmap-list h3,
-    .future-contexts h3,
-    .execution-plan-cta-title
-  ) {
-    word-break: auto-phrase;
-  }
 }
 
 .execution-plan-section {
@@ -6440,7 +6415,8 @@ html[lang="ja"] .preview-section :is(
 }
 
 .lens-section .section-inner {
-  overflow-x: clip;
+  overflow-x: hidden;
+  contain: inline-size;
 }
 
 .lens-matrix {
@@ -6451,6 +6427,7 @@ html[lang="ja"] .preview-section :is(
   width: 100%;
   max-width: 100%;
   overflow: hidden;
+  contain: inline-size layout paint;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: #101413;
@@ -8779,7 +8756,7 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   .hero-stage .spec-edge-panel.hero-question-panel,
   .hero-stage[data-artwork="lastSupper"] .spec-edge-panel.hero-question-panel,
   .hero-stage[data-state="restorer"] .spec-edge-panel.hero-question-panel {
-    bottom: clamp(64px, 8vh, 78px);
+    bottom: clamp(98px, 12vh, 112px);
   }
 
   .hero-stage .spec-edge-panel.hero-question-panel,
@@ -8921,8 +8898,8 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   }
 
   .matrix-cell {
-    grid-template-rows: minmax(300px, 1fr);
-    min-height: 326px;
+    grid-template-rows: minmax(max(300px, 18.75rem), 1fr);
+    min-height: max(326px, 20.375rem);
     padding: 10px;
   }
 
@@ -8936,7 +8913,7 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
 
   .matrix-cue-preview,
   .matrix-mini-stage {
-    min-height: 300px;
+    min-height: max(300px, 18.75rem);
   }
 
   .matrix-mini-stage[data-artwork="girl"] .artwork-rig.small-framed {
@@ -8963,8 +8940,8 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
     grid-template-columns: 18px minmax(0, 1fr);
     right: 5%;
     top: 14%;
-    width: 56%;
-    max-width: none;
+    width: max(56%, 7rem);
+    max-width: calc(100% - 24px);
     max-height: calc(100% - 54px);
     padding: 8px;
     border-radius: 6px;
@@ -9349,158 +9326,93 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   }
 }
 
-/* Production panel sizing: copy-led widths with a stable, stage-safe measure. */
-@media (min-width: 761px) {
-  .explorer-stage .edge-panel {
-    inline-size: fit-content;
-    min-inline-size: min(12.5rem, 31%);
-    max-inline-size: min(46%, 26.25rem);
-  }
-
-  .explorer-stage .spec-material-panel,
-  .explorer-stage .spec-comparative-panel {
-    min-inline-size: min(14rem, 35%);
-    max-inline-size: min(48%, 27.5rem);
-  }
-
-  /* Keep the Last Supper's social-reading statement as one meaningful phrase. */
-  .explorer-stage[data-artwork="lastSupper"][data-state="social"] .spec-panel-lastSupper-social {
-    min-inline-size: min(42%, 21.875rem);
-  }
-
-  html[lang="ja"] .explorer-stage[data-artwork="lastSupper"][data-state="social"] .spec-panel-lastSupper-social h3 {
-    word-break: keep-all;
-  }
+/* Typography layer: deterministic phrase boundaries and stable editorial measure. */
+:is(
+  .section-heading-row p,
+  .experience-flow-copy p,
+  .xr-only-intro,
+  .large-copy,
+  .plan-page-intro,
+  .plan-simple-section p,
+  .execution-plan-cta-body
+) {
+  max-inline-size: var(--measure-body-en);
+  font-size: var(--type-body-size);
+  line-height: var(--type-body-leading);
 }
 
-/* Hero panels use the same copy-led measure without changing the stage geometry. */
-@media (min-width: 761px) {
-  .hero-stage .spec-edge-panel.hero-question-panel,
-  .hero-stage[data-artwork="lastSupper"] .spec-edge-panel.hero-question-panel {
-    inline-size: fit-content;
-    min-inline-size: min(13.75rem, 28%);
-    max-inline-size: min(44%, 23.75rem);
-  }
-
-  .hero-stage[data-artwork="lastSupper"] .spec-edge-panel.hero-question-panel {
-    max-inline-size: min(42%, 22.5rem);
-  }
+html[lang="ja"] :is(
+  .section-heading-row p,
+  .experience-flow-copy p,
+  .xr-only-intro,
+  .large-copy,
+  .plan-page-intro,
+  .plan-simple-section p,
+  .execution-plan-cta-body
+) {
+  max-inline-size: var(--measure-body-ja);
+  line-break: strict;
+  word-break: normal;
 }
 
-/* XR cards are short explanations, not display labels: preserve an even reading rhythm. */
-.hero-stage .spec-edge-panel.hero-question-panel h3,
-.explorer-stage .spec-edge-panel h3 {
-  text-wrap: pretty;
+.anchor-label,
+.hero-stage .spec-edge-panel,
+.explorer-stage .spec-edge-panel {
+  text-wrap: wrap;
 }
 
-.hero-stage .spec-edge-panel.hero-question-panel .micro-evidence,
-.explorer-stage .spec-edge-panel .micro-evidence {
-  text-wrap: pretty;
-}
-
-/* Keep long links legible without allowing normal editorial copy to split mid-word. */
 .source-footnotes a,
+.footer-contact,
 .footer-contact a,
-.footer-plan-link a {
+.footer-plan-link a,
+.plan-contact-section a {
   overflow-wrap: anywhere;
 }
 
-@media (max-width: 760px) {
-  :root {
-    --sticky-offset: 72px;
+/* Stage-card layer: dimensions resolve against the rendered stage, not the viewport. */
+.stage-scene {
+  container-name: xr-stage-scene;
+  container-type: inline-size;
+}
+
+.hero-stage[data-artwork] .spec-edge-panel.hero-question-panel,
+.explorer-stage[data-artwork] .spec-edge-panel {
+  min-inline-size: 0;
+  width: auto;
+  max-inline-size: calc(100% - 24px);
+  max-inline-size: calc(100cqi - 24px);
+  font-kerning: normal;
+  letter-spacing: 0;
+}
+
+@media (min-width: 761px) {
+  .hero-stage[data-artwork] .spec-edge-panel.hero-question-panel,
+  .hero-stage[data-artwork="lastSupper"] .spec-edge-panel.hero-question-panel {
+    width: clamp(18rem, 34%, 23rem);
+    inline-size: clamp(18rem, 34%, 23rem);
+    inline-size: clamp(18rem, 34cqi, 23rem);
+  }
+
+  .explorer-stage[data-artwork] .spec-edge-panel {
+    width: clamp(18.5rem, 37%, 23.5rem);
+    inline-size: clamp(18.5rem, 37%, 23.5rem);
+    inline-size: clamp(18.5rem, 37cqi, 23.5rem);
+  }
+
+  .explorer-stage[data-artwork] .spec-material-panel,
+  .explorer-stage[data-artwork] .spec-comparative-panel {
+    width: clamp(21rem, 43%, 27rem);
+    inline-size: clamp(21rem, 43%, 27rem);
+    inline-size: clamp(21rem, 43cqi, 27rem);
+  }
+
+  .explorer-stage[data-artwork="lastSupper"][data-state="social"] .spec-panel-lastSupper-social {
+    width: clamp(20rem, 40%, 24rem);
+    inline-size: clamp(20rem, 40%, 24rem);
+    inline-size: clamp(20rem, 40cqi, 24rem);
   }
 }
 
-@media (max-width: 340px) {
-  .preview-heading-break {
-    display: block;
-  }
-
-  .hero-sequence-step {
-    font-size: 0.53rem;
-  }
-
-  .cta-heading-break {
-    display: block;
-  }
-
-  .cta-conjunction,
-  .cta-roadmap-inline {
-    display: none;
-  }
-
-  .cta-roadmap-break {
-    display: inline;
-  }
-
-  .execution-plan-cta-title {
-    line-height: 1.15;
-  }
-
-  .site-header {
-    gap: 6px;
-  }
-
-  .brand {
-    gap: 6px;
-    font-size: 0.82rem;
-  }
-
-  .brand-mark {
-    width: 20px;
-    height: 20px;
-  }
-
-  .header-plan-link {
-    padding: 5px 6px;
-    font-size: 0.62rem;
-  }
-
-  .lang-switch {
-    gap: 3px;
-    padding: 3px;
-  }
-
-  .lang-switch button {
-    min-width: 36px;
-    padding: 5px 4px;
-    font-size: 0.66rem;
-  }
-
-  .hero-substate-rail {
-    grid-template-columns: 0.88fr 0.88fr 1.2fr 1fr 1.04fr;
-  }
-
-  .hero-title-focus,
-  html[lang="ja"] .hero-title-focus {
-    font-size: 1.14rem;
-  }
-
-  html[lang="ja"] .hero-title-focus {
-    font-size: 1.42rem;
-  }
-
-  .plan-page h1,
-  html[lang="ja"] .plan-page h1 {
-    font-size: 2.1rem;
-  }
-
-  .plan-page h2 {
-    font-size: 1.45rem;
-  }
-
-  .explorer-stage .material-model {
-    grid-template-columns: 1fr;
-  }
-
-  .explorer-stage .material-model-stage,
-  .explorer-stage .material-model-girl-restorer .material-model-stage,
-  .explorer-stage .material-model-lastSupper-restorer .material-model-stage {
-    min-height: 96px;
-  }
-}
-
-/* Keep the large Preview panels legible and visually contained at every size. */
 .explorer-stage .edge-panel {
   display: flex;
   flex-direction: column;
@@ -9509,9 +9421,6 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   padding: 14px;
   overflow-x: hidden;
   overscroll-behavior: contain;
-  scrollbar-gutter: stable;
-  font-kerning: normal;
-  letter-spacing: 0;
 }
 
 .explorer-stage .edge-panel > *,
@@ -9525,38 +9434,29 @@ html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
   min-width: 0;
 }
 
+.hero-stage .spec-edge-panel h3,
+.explorer-stage .spec-edge-panel h3 {
+  margin: 0;
+  font-size: var(--type-card-title-size);
+  line-height: var(--type-card-title-leading);
+  letter-spacing: 0;
+}
+
+.hero-stage .spec-edge-panel .micro-evidence,
+.explorer-stage .spec-edge-panel .micro-evidence {
+  margin: 8px 0 0;
+  font-size: var(--type-card-body-size);
+  line-height: var(--type-card-body-leading);
+  letter-spacing: 0;
+}
+
 .explorer-stage .panel-target {
   width: fit-content;
   max-width: 100%;
   margin: 0 0 8px;
   padding: 4px 8px;
-  font-size: 0.66rem;
-  line-height: 1.35;
-  letter-spacing: 0;
-}
-
-.explorer-stage .spec-edge-panel h3 {
-  margin: 0;
-  font-size: 0.86rem;
-  line-height: 1.44;
-  letter-spacing: 0;
-}
-
-.explorer-stage .spec-edge-panel .micro-evidence {
-  margin: 8px 0 0;
-  font-size: 0.74rem;
-  line-height: 1.52;
-  letter-spacing: 0;
-}
-
-html[lang="ja"] .explorer-stage .spec-edge-panel h3 {
-  font-size: 0.86rem;
-  line-height: 1.55;
-  letter-spacing: 0;
-}
-
-html[lang="ja"] .explorer-stage .spec-edge-panel .micro-evidence {
-  line-height: 1.62;
+  font-size: var(--type-ui-label-size);
+  line-height: 1.36;
   letter-spacing: 0;
 }
 
@@ -9568,8 +9468,8 @@ html[lang="ja"] .explorer-stage .spec-edge-panel .micro-evidence {
 
 .explorer-stage .material-evidence-title,
 .explorer-stage .comparative-evidence-title {
-  font-size: 0.65rem;
-  line-height: 1.4;
+  font-size: 0.6875rem;
+  line-height: 1.36;
   letter-spacing: 0;
 }
 
@@ -9585,20 +9485,15 @@ html[lang="ja"] .explorer-stage .spec-edge-panel .micro-evidence {
 .explorer-stage .material-model-copy strong,
 .explorer-stage .material-card figcaption strong,
 .explorer-stage .comparative-card figcaption strong {
-  font-size: 0.68rem;
-  line-height: 1.38;
-  letter-spacing: 0;
-}
-
-.explorer-stage .material-evidence.is-compact .material-model-copy strong {
-  font-size: 0.66rem;
+  font-size: 0.6875rem;
   line-height: 1.4;
+  letter-spacing: 0;
 }
 
 .explorer-stage .material-model-copy span,
 .explorer-stage .material-card figcaption span,
 .explorer-stage .comparative-card figcaption span {
-  font-size: 0.63rem;
+  font-size: 0.65625rem;
   line-height: 1.48;
   letter-spacing: 0;
 }
@@ -9609,14 +9504,40 @@ html[lang="ja"] .explorer-stage .spec-edge-panel .micro-evidence {
 }
 
 .explorer-stage .material-model-label {
-  font-size: 0.64rem;
-  line-height: 1.35;
+  font-size: 0.65625rem;
+  line-height: 1.36;
   letter-spacing: 0;
 }
 
+@media (min-width: 1081px) {
+  .explorer-stage[data-artwork] .edge-panel {
+    max-block-size: calc(100% - 120px);
+    overflow-x: clip;
+    overflow-y: auto;
+    scrollbar-gutter: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(155, 229, 140, 0.56) transparent;
+  }
+
+  .explorer-stage[data-artwork] .edge-panel::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .explorer-stage[data-artwork] .edge-panel::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .explorer-stage[data-artwork] .edge-panel::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: rgba(155, 229, 140, 0.56);
+  }
+}
+
+/* Mobile-card layer: reserve the lower lane and expose one internal scrollbar only when needed. */
 @media (max-width: 1080px) {
   .explorer-stage .edge-panel {
     overflow-y: auto;
+    scrollbar-gutter: stable;
     scrollbar-width: thin;
     scrollbar-color: rgba(155, 229, 140, 0.56) transparent;
   }
@@ -9651,36 +9572,44 @@ html[lang="ja"] .explorer-stage .spec-edge-panel .micro-evidence {
   .explorer-stage .comparative-card-image {
     min-height: 70px;
   }
-
-  .explorer-stage[data-artwork="girl"][data-state="restorer"] .spec-edge-panel {
-    max-height: min(68%, 420px);
-  }
 }
 
 @media (max-width: 760px) {
+  :root {
+    --sticky-offset: 72px;
+  }
+
+  .hero-stage .spec-edge-panel.hero-question-panel,
+  .hero-stage[data-artwork="lastSupper"] .spec-edge-panel.hero-question-panel,
+  .hero-stage[data-state="restorer"] .spec-edge-panel.hero-question-panel {
+    left: clamp(22px, 7vw, 34px);
+    right: clamp(22px, 7vw, 34px);
+    top: auto;
+    bottom: clamp(98px, 12vh, 112px);
+    inline-size: auto;
+    max-inline-size: none;
+    max-height: min(38%, 286px);
+    overflow-y: auto;
+    transform: none;
+  }
+
   .explorer-stage .edge-panel,
   .explorer-stage[data-artwork="girl"][data-state="restorer"] .spec-edge-panel {
+    left: 12px;
+    right: 12px;
     top: auto;
     bottom: 16px;
-    max-height: min(46%, 386px);
+    inline-size: auto;
+    max-inline-size: none;
+    max-height: min(36%, 286px);
     padding: 11px 12px 12px;
+    overflow-y: auto;
     transform: none;
   }
 
   .explorer-stage .panel-target {
     margin-bottom: 7px;
     padding: 3px 7px;
-    font-size: 0.62rem;
-  }
-
-  .explorer-stage .spec-edge-panel h3,
-  html[lang="ja"] .explorer-stage .spec-edge-panel h3 {
-    font-size: 0.82rem;
-  }
-
-  .explorer-stage .spec-edge-panel .micro-evidence {
-    margin-top: 7px;
-    font-size: 0.7rem;
   }
 
   .explorer-stage .material-model {
@@ -9709,8 +9638,221 @@ html[lang="ja"] .explorer-stage .spec-edge-panel .micro-evidence {
 }
 
 @media (max-width: 340px) {
+  .preview-heading-break,
+  .cta-heading-break {
+    display: block;
+  }
+
+  .cta-conjunction,
+  .cta-roadmap-inline {
+    display: none;
+  }
+
+  .cta-roadmap-break {
+    display: inline;
+  }
+
+  .hero-sequence-step {
+    font-size: 0.53rem;
+  }
+
+  .preview-lens-controls .preview-control-button {
+    padding-inline: 6px;
+    font-size: 0.74rem;
+  }
+
+  .execution-plan-cta-title {
+    line-height: 1.15;
+  }
+
+  .site-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 6px;
+  }
+
+  .brand {
+    flex: 1 0 max-content;
+    gap: 6px;
+    font-size: 0.82rem;
+  }
+
+  .header-plan-link,
+  .lang-switch {
+    flex: 0 0 auto;
+  }
+
+  .lang-switch {
+    margin-left: auto;
+  }
+
+  .brand-mark {
+    width: 20px;
+    height: 20px;
+  }
+
+  .header-plan-link {
+    padding: 5px 6px;
+    font-size: 0.62rem;
+  }
+
+  .lang-switch {
+    gap: 3px;
+    padding: 3px;
+  }
+
+  .lang-switch button {
+    min-width: 36px;
+    padding: 5px 4px;
+    font-size: 0.66rem;
+  }
+
+  .hero-substate-rail {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+  }
+
+  .hero-substate-rail .hero-sequence-step {
+    flex: 1 0 max-content;
+  }
+
+  .preview-control-group-lens .preview-control-row {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .preview-lens-controls .preview-control-button {
+    flex: 1 0 max-content;
+  }
+
+  .hero-stage,
+  .hero-stage[data-state="artist"],
+  .hero-stage[data-state="restorer"],
+  .hero-stage[data-state="social"],
+  .hero-stage[data-state="museum"],
+  .hero-stage[data-state="select"],
+  .hero-stage[data-state="wearing"] {
+    min-height: max(700px, 44rem);
+  }
+
+  .hero-title-focus,
+  html[lang="ja"] .hero-title-focus {
+    font-size: 1.14rem;
+  }
+
+  html[lang="ja"] .hero-title-focus {
+    font-size: 1.42rem;
+  }
+
+  .plan-page h1,
+  html[lang="ja"] .plan-page h1 {
+    font-size: min(2.1rem, 14vw);
+  }
+
+  .plan-page h2 {
+    font-size: 1.45rem;
+  }
+
   .explorer-stage .material-model {
     grid-template-columns: 1fr;
+  }
+
+  .explorer-stage .material-model-stage,
+  .explorer-stage .material-model-girl-restorer .material-model-stage,
+  .explorer-stage .material-model-lastSupper-restorer .material-model-stage {
+    min-height: 96px;
+  }
+}
+
+/* Matrix layer: retain miniature density while using the same curated break opportunities. */
+.matrix-mini-stage .phrase-controlled {
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+html[lang="ja"] .matrix-mini-stage .phrase-controlled {
+  line-break: strict;
+  word-break: keep-all;
+}
+
+.matrix-mini-stage .matrix-cue-panel h3,
+html[lang="ja"] .matrix-mini-stage .matrix-cue-panel h3 {
+  -webkit-line-clamp: 5;
+}
+
+.matrix-mini-stage .matrix-cue-panel .panel-target {
+  width: auto;
+  min-width: 0;
+  justify-self: stretch;
+}
+
+@container xr-stage-scene (max-width: 720px) {
+  .hero-stage .spec-edge-panel.hero-question-panel,
+  .hero-stage[data-artwork="lastSupper"] .spec-edge-panel.hero-question-panel,
+  .hero-stage[data-state="restorer"] .spec-edge-panel.hero-question-panel {
+    left: clamp(22px, 7vw, 34px);
+    right: clamp(22px, 7vw, 34px);
+    top: auto;
+    bottom: clamp(98px, 12vh, 112px);
+    inline-size: auto;
+    max-inline-size: none;
+    max-height: min(38%, 286px);
+    overflow-y: auto;
+    transform: none;
+  }
+
+  .explorer-stage .edge-panel,
+  .explorer-stage[data-artwork="girl"][data-state="restorer"] .spec-edge-panel {
+    left: 12px;
+    right: 12px;
+    top: auto;
+    bottom: 16px;
+    inline-size: auto;
+    max-inline-size: none;
+    max-height: min(36%, 286px);
+    overflow-y: auto;
+    transform: none;
+  }
+}
+
+@media (min-width: 761px) and (max-width: 900px) {
+  .hero-stage .spec-edge-panel.hero-question-panel,
+  .hero-stage[data-artwork="lastSupper"] .spec-edge-panel.hero-question-panel,
+  .hero-stage[data-state="restorer"] .spec-edge-panel.hero-question-panel {
+    bottom: 100px;
+  }
+
+  .hero-stage[data-state="restorer"] .spec-edge-panel.hero-question-panel {
+    left: auto;
+    right: 12px;
+    width: min(47%, 20.5rem);
+    inline-size: min(47%, 20.5rem);
+    max-inline-size: calc(100% - 68px);
+  }
+}
+
+@media (max-width: 760px) {
+  .hero-copy > div,
+  .hero h1,
+  .hero-title-focus,
+  .section-heading-row > div {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .hero h1,
+  .hero-title-focus {
+    white-space: normal;
+  }
+
+  .matrix-mini-stage.xr-stage[data-artwork] .matrix-cue-panel,
+  .matrix-mini-stage .matrix-cue-panel {
+    width: max(56%, 7rem);
+    max-width: calc(100% - 24px);
   }
 }
 
@@ -9719,8 +9861,52 @@ html[lang="ja"] .explorer-stage .spec-edge-panel .micro-evidence {
   *::before,
   *::after {
     animation-duration: 0.001ms !important;
+    animation-delay: 0s !important;
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: 0.001ms !important;
+    transition-delay: 0s !important;
+  }
+
+  .xr-stage.is-cue-sequence :is(
+    .spec-material-scan,
+    .spec-light-edge,
+    .spec-color-wash,
+    .spec-object-ring,
+    .anchor-target,
+    .anchor-label,
+    .spec-aux-legend,
+    .spec-aux-lines path,
+    .connector-svg line,
+    .connector-svg circle,
+    .edge-panel
+  ) {
+    animation: none !important;
+  }
+
+  .xr-stage.is-cue-sequence :is(
+    .spec-material-scan,
+    .spec-light-edge,
+    .spec-color-wash,
+    .spec-object-ring,
+    .anchor-target,
+    .anchor-label,
+    .spec-aux-legend,
+    .spec-aux-lines path,
+    .connector-svg line,
+    .connector-svg circle,
+    .edge-panel
+  ) {
+    opacity: 1;
+  }
+
+  .xr-stage.is-cue-sequence .spec-aux-lines path,
+  .xr-stage.is-cue-sequence .connector-svg line {
+    stroke-dashoffset: 0;
+  }
+
+  .xr-stage.is-cue-sequence .edge-panel {
+    clip-path: none;
+    scale: 1;
   }
 }

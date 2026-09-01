@@ -1,5 +1,10 @@
 (function () {
   const en = {
+    layout: {
+      cueTitleBreaks: {},
+      cueTargetBreaks: {},
+      matrixTitleBreaks: {}
+    },
     nav: {
       difference: "What changes",
       lenses: "Perspective Matrix",
@@ -626,7 +631,7 @@
     futureContexts: {
       title: 'Museum-first,<br class="future-title-mobile-break"> <span class="heading-continuation">not museum-only</span>',
       intro:
-        'Museums are the first proof environment because the problem is easy to see there. The same interaction pattern can later apply to nearby cultural and visual contexts: <span class="semantic-unit">stage sets,</span> <span class="semantic-unit">landscape photography,</span> and <span class="semantic-unit">heritage sites.</span>',
+        'Museums are the first proof environment because the problem is easy to see there. The same interaction pattern can later apply to nearby cultural and visual contexts: <span class="semantic-unit">stage sets,</span> <span class="semantic-unit">landscape</span> <span class="semantic-unit">photography,</span> and <span class="semantic-unit">heritage sites.</span>',
       cards: {
         opera: {
           status: "Scenographer view",
@@ -707,7 +712,7 @@
           body: 'The MVP omits <span class="semantic-unit">museum-wide navigation,</span> <span class="semantic-unit">heavy 3D reconstruction,</span> and <span class="semantic-unit">partnership dependency.</span>'
         }
       },
-      roadmapTitle: "Six-month roadmap",
+      roadmapTitle: "Six-month<wbr> roadmap",
       roadmap: {
         month1: {
           label: "Month 1",
@@ -727,7 +732,7 @@
         month4: {
           label: "Month 4",
           title: "Android\u00a0XR hardware validation.",
-          body: "Brightness, color fidelity, comfort, distraction, placement; include XREAL\u00a0Project\u00a0Aura if supplied through Catalyst."
+          body: "Brightness, color fidelity, comfort, distraction, placement;<wbr> include XREAL<wbr> Project\u00a0Aura<wbr> if supplied through Catalyst."
         },
         month5: {
           label: "Month 5",
@@ -744,7 +749,7 @@
       grantIntro: "If funding is awarded, it would support focused prototype validation.",
       grant: {
         native: "Native Android\u00a0XR prototype",
-        aura: "Android\u00a0XR hardware validation, including XREAL\u00a0Project\u00a0Aura if supplied through Catalyst",
+        aura: "Android\u00a0XR hardware validation,<wbr> including XREAL<wbr> Project\u00a0Aura<wbr> if supplied through Catalyst",
         content: "Public-domain content and source audit",
         testing: "User testing",
         assets: "Demo video and submission assets"
@@ -780,6 +785,41 @@
   };
 
   const ja = {
+    layout: {
+      cueTitleBreaks: {
+        "lastSupper:artist": ["格天井、", "側壁の", "開口と帯、", "食卓の奥行きが、", "キリストの", "頭部付近へ", "集まる", "オルソゴナル", "として", "組まれている。"],
+        "lastSupper:restorer": ["壁画の表面には、", "損失・補彩・", "修復の時間が", "残っている。"],
+        "lastSupper:social": ["共有された食卓は", "中立ではない。", "配置、身振り、分離が", "場の秩序を作っている。"],
+        "girl:artist": ["視線、", "柔らかな光の境界、", "色の対比が、", "小さな像を"],
+        "girl:restorer": ["少数の明るい絵具と", "周囲の暗さが、", "真珠のように見える効果を"],
+        "girl:social": ["同時期のフェルメールの", "頭部習作を横に出すと、", "この有名な像は", "単独のアイコンではなく、", "視線・衣装・見せ方で", "作られる"],
+        "arnolfini:artist": ["鏡と人物配置が、", "見る側を", "画面内の関係に", "鏡、手、人物配置が、", "この場面の見え方を"],
+        "arnolfini:restorer": ["板に描かれた油彩、", "細密な布地、", "小さな筆触が、", "富を素材の精度として"],
+        "arnolfini:social": ["鏡と署名が、", "室内を", "「見られ、記録された場」に"]
+      },
+      cueTargetBreaks: {
+        "lastSupper:artist": ["消失点と", "食卓の線"],
+        "lastSupper:restorer": ["壁面と", "損失部分"],
+        "lastSupper:social": ["食卓・食物・", "座る位置"],
+        "girl:artist": ["視線と光"],
+        "girl:restorer": ["真珠の", "ハイライト"],
+        "girl:social": ["二つのトローニー：", "真珠の少女と", "若い女性"],
+        "arnolfini:artist": ["鏡と構図"],
+        "arnolfini:restorer": ["布地と", "表面の細部"],
+        "arnolfini:social": ["凸面鏡と", "壁の署名"]
+      },
+      matrixTitleBreaks: {
+        "lastSupper:artist": ["格天井、", "側壁の帯、", "食卓の奥行きが", "キリストの", "頭部付近へ"],
+        "lastSupper:restorer": ["壁面には、", "損失・補彩・", "修復の履歴が"],
+        "lastSupper:social": ["食卓での", "配置と分離が、", "場面の秩序を"],
+        "girl:artist": ["視線、", "柔らかな光の", "境界、", "色の対比が、", "小さな像を"],
+        "girl:restorer": ["真珠は、", "少数の", "明るい跡と", "周囲の暗さで"],
+        "girl:social": ["同時期の習作を", "並べると、", "視線・衣装・", "暗い背景という"],
+        "arnolfini:artist": ["鏡、視線の方向、", "人物配置が", "「見る/見られる」", "を絵の主題に"],
+        "arnolfini:restorer": ["板に描かれた", "油彩、", "細密な布地、", "小さな筆触が、", "富を素材の", "精度として"],
+        "arnolfini:social": ["この部屋は", "所有されている", "だけでなく、", "見られ、", "記録され、"]
+      }
+    },
     nav: {
       difference: "何が変わるか",
       lenses: "視点マトリクス",
@@ -829,7 +869,7 @@
     },
     hero: {
       title:
-        '<span class="hero-title-focus">専門家の視点を通して、<br>作品を見る。</span>',
+        '<span class="hero-title-focus">専門家の<wbr>視点を<wbr>通して、<br>作品を見る。</span>',
       subcopy:
         "Look\u00a0Againは、専門家の見方を短い表示にして、Android\u00a0XRで実物作品に重ねます。表示は数秒で消え、作品だけが残ります。",
       searchNote:
@@ -945,22 +985,22 @@
     experienceFlow: {
       title: "体験の流れ",
       intro:
-        '視点を選ぶと、<span class="semantic-unit">作品上に短い解説が出る。</span><span class="semantic-unit">表示が消えたら、</span>その細部を自分で見直す。',
+        '視点を選ぶと、<span class="semantic-unit">作品上に</span><span class="semantic-unit">短い解説が出る。</span><span class="semantic-unit">表示が消えたら、</span>その細部を自分で見直す。',
       steps: {
         choose: {
-          title: "視点を選ぶ",
+          title: "視点を<wbr>選ぶ",
           body: "画家、保存修復家、歴史家から選ぶ。"
         },
         see: {
-          title: "作品上で見る",
+          title: "作品上で<wbr>見る",
           body: "実物作品の細部に印と短い解説が出る。"
         },
         fade: {
-          title: "表示が消える",
+          title: "表示が<wbr>消える",
           body: "数秒後に表示が消える。"
         },
         look: {
-          title: "自分の目で見る",
+          title: "自分の目で<wbr>見る",
           body: "示された細部をもう一度見る。"
         }
       }
@@ -1121,7 +1161,7 @@
       }
     },
     difference: {
-      title: "鑑賞体験の変化",
+      title: "鑑賞体験の<wbr>変化",
       subtitle:
         '音声は耳から説明を届け、スマホは画面に説明を出す。Look\u00a0Againは、専門家の視点を<span class="semantic-unit">実物作品の上に</span>重ねます。',
       existingLabel: "現状のガイド",
@@ -1179,7 +1219,7 @@
       }
     },
     lenses: {
-      title: "視点マトリクス",
+      title: "視点<wbr>マトリクス",
       body:
         '同じ作品でも、画家、保存修復家、歴史家が最初に見る場所は違う。<span class="semantic-unit">9つの画面で比べます。</span>',
       explanation:
@@ -1255,16 +1295,16 @@
       }
     },
     preview: {
-      title: "作品上の視点",
+      title: "作品上の<wbr>視点",
       body:
-        'マトリクスのカードを選ぶと、<span class="semantic-unit">そのXR表示を大きく確認できます。</span>',
+        'マトリクスのカードを選ぶと、<span class="semantic-unit">そのXR表示を</span><span class="semantic-unit">大きく確認できます。</span>',
       controls: {
         viewpoint: "視点",
         artwork: "作品"
       },
       mechanics: {
         kicker: "表示される内容",
-        title: "表示の流れ",
+        title: "表示の<wbr>流れ",
         body: "",
         items: {
           target: {
@@ -1328,7 +1368,7 @@
       "https://www.nationalgallery.org.uk/paintings/jan-van-eyck-the-arnolfini-portrait": "《アルノルフィーニ夫妻像》"
     },
     xrOnly: {
-      title: "なぜXRなのか",
+      title: "なぜ<wbr>XRなのか",
       intro:
         'スマホでは、作品と画面を交互に見る。XRなら、作品の細部と解説を<span class="semantic-unit">同じ視界</span>に置けます。',
       items: {
@@ -1341,15 +1381,15 @@
           body: "表示は浮いたラベルではなく、見えている細部に結びつく。"
         },
         connector: {
-          title: "細部と解説をつなぐ",
+          title: "細部と解説を<wbr>つなぐ",
           body: "示された細部が、視界の端にある短い解説へつながる。"
         },
         body: {
-          title: "見る角度に合わせる",
+          title: "見る角度に<wbr>合わせる",
           body: "斜めから見る表現は、素材や表面を見る時だけ使う。"
         },
         disappear: {
-          title: "作品だけの視界に戻す",
+          title: "作品だけの視界に<wbr>戻す",
           body: "表示は短く現れ、注意を作品へ戻す。"
         }
       }
@@ -1362,7 +1402,7 @@
         "美術館は問題が最も見えやすい場所であり、プロダクトがそこで終わるという意味ではありません。より大きなカテゴリは、検索前に現実の場所で最初の問いを開く体験です。"
     },
     aura: {
-      title: "Android\u00a0XR実機検証",
+      title: "Android\u00a0XR<wbr>実機検証",
       body:
         "上で述べたXRの価値は、実物作品がはっきり見え続ける場合にだけ成立する。実機検証では、その成立条件だけを確かめる。",
       statement:
@@ -1377,7 +1417,7 @@
       }
     },
     plan: {
-      title: "実装・実証計画",
+      title: "実装・実証<wbr>計画",
       body:
         "最初の実装範囲は意図的に絞る。実物作品の上に重ねる短い視点表示は、音声やスマホガイドよりも、作品を見始める助けになるのかを実証する。",
       items: {
@@ -1404,9 +1444,9 @@
       }
     },
     futureContexts: {
-      title: '美術館から始める。<br class="future-title-mobile-break"><span class="heading-continuation">美術館だけでは終わらない。</span>',
+      title: '美術館から<wbr>始める。<br class="future-title-mobile-break"><span class="heading-continuation">美術館だけでは<wbr>終わらない。</span>',
       intro:
-        '美術館から始めるのは、<span class="semantic-unit">問題が見えやすいからです。</span>同じ体験の型は、<span class="semantic-unit">舞台セット、</span><span class="semantic-unit">風景写真、</span><span class="semantic-unit">文化財・遺跡</span>など、<span class="semantic-unit">近い文化・視覚領域</span>にも広げられます。',
+        '美術館から始めるのは、<span class="semantic-unit">問題が</span><span class="semantic-unit">見えやすい</span><span class="semantic-unit">からです。</span>同じ体験の型は、<span class="semantic-unit">舞台セット、</span><span class="semantic-unit">風景写真、</span><span class="semantic-unit">文化財・遺跡</span>など、<span class="semantic-unit">近い文化・</span><span class="semantic-unit">視覚領域</span>にも広げられます。',
       cards: {
         opera: {
           status: "舞台美術家の見方",
@@ -1464,7 +1504,7 @@
     },
     planPage: {
       home: "ホーム",
-      title: "実装ロードマップ",
+      title: "実装<wbr>ロードマップ",
       kicker: "審査員向け実行計画",
       intro:
         '<span class="semantic-unit">Look\u00a0Againは、</span><span class="semantic-unit">大規模な美術館</span><span class="semantic-unit">プラットフォームではなく、</span><span class="semantic-unit">焦点を絞った</span><span class="semantic-unit">Android\u00a0XRプロトタイプとして</span><span class="semantic-unit">設計する。</span>目的は、実物作品の上に重ねる短い視点表示が、何を問えばいいか分かる前に作品を見始める助けになるかを検証すること。',
@@ -1479,7 +1519,7 @@
           body: '<span class="semantic-unit">最初の問いの明確さ、</span><span class="semantic-unit">スマホ比較、</span><span class="semantic-unit">グラスを外したくならない率</span>を測る。'
         },
         source: {
-          title: "出典に基づくコンテンツ",
+          title: "出典に基づく<wbr>コンテンツ",
           body: '<span class="semantic-unit">パブリックドメイン作品と</span><span class="semantic-unit">確認済み出典を使う。</span><span class="semantic-unit">AIは解釈を作るのではなく、</span><span class="semantic-unit">視点を選ぶ。</span>'
         },
         small: {
@@ -1487,36 +1527,36 @@
           body: 'MVPでは<span class="semantic-unit">館内ナビ、</span><span class="semantic-unit">重い3D再構成、</span><span class="semantic-unit">美術館提携依存</span>を避ける。'
         }
       },
-      roadmapTitle: "6か月ロードマップ",
+      roadmapTitle: "6か月<wbr>ロードマップ",
       roadmap: {
         month1: {
           label: "1か月目",
-          title: "Android\u00a0XRプロジェクトを開始。",
+          title: "Android\u00a0XR<wbr>プロジェクトを<wbr>開始。",
           body: 'ブラウザ版の視点モデルを、<span class="semantic-unit">Jetpack\u00a0XR</span>による<span class="semantic-unit">Android\u00a0XRプロトタイプ</span>へ移植する。'
         },
         month2: {
           label: "2か月目",
-          title: "作品認識 / 選択フローを作る。",
+          title: "作品認識 /<wbr> 選択フローを<wbr>作る。",
           body: "パブリックドメイン作品3点を実装する。"
         },
         month3: {
           label: "3か月目",
-          title: "空間視点表示を実装する。",
+          title: "空間視点表示を<wbr>実装する。",
           body: "表示、パルス、コネクタ、周辺パネル、初期状態では消える挙動を作る。"
         },
         month4: {
           label: "4か月目",
-          title: "Android\u00a0XR実機で検証する。",
-          body: "明るさ、色の見え方、快適さ、邪魔にならなさ、表示位置を確認する。Catalystで提供される場合はXREAL\u00a0Project\u00a0Auraを含む。"
+          title: "Android\u00a0XR<wbr>実機で<wbr>検証する。",
+          body: "明るさ、色の見え方、快適さ、邪魔にならなさ、表示位置を確認する。<wbr>Catalystで提供される場合は<wbr>XREAL<wbr> Project\u00a0Auraを含む。"
         },
         month5: {
           label: "5か月目",
-          title: "ユーザースタディを行う。",
+          title: "ユーザー<wbr>スタディを<wbr>行う。",
           body: "ガイドなし / 音声的文脈 / スマホガイド / Look\u00a0Againの視点表示を比較する。"
         },
         month6: {
           label: "6か月目",
-          title: "クローズドテスト版をまとめる。",
+          title: "クローズド<wbr>テスト版を<wbr>まとめる。",
           body: "デモ動画、Google\u00a0Playクローズドテスト準備、公開ドキュメントを整える。"
         }
       },
@@ -1524,7 +1564,7 @@
       grantIntro: "採択された場合、助成金は焦点を絞ったプロトタイプ検証に使う。",
       grant: {
         native: "ネイティブAndroid\u00a0XRプロトタイプ",
-        aura: "Android\u00a0XR実機での実証。Catalystで提供される場合はXREAL\u00a0Project\u00a0Auraを含む",
+        aura: "Android\u00a0XR実機での実証。<wbr>Catalystで<wbr>提供される場合は<wbr>XREAL<wbr> Project\u00a0Auraを含む",
         content: "パブリックドメイン作品と出典監査",
         testing: "ユーザーテスト",
         assets: "デモ動画と提出用素材"

@@ -19,8 +19,12 @@
   };
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const parallaxStages = new WeakMap();
+  const stageLabelLayoutFrames = new WeakMap();
+  const stageObservedPanels = new WeakMap();
   const cueSequenceObservedStages = new WeakSet();
   let cueSequenceObserver = null;
+  let stageLayoutFrame = 0;
+  let stageResizeObserver = null;
   const heroLookAgainExamples = [
     { key: "selectArtist", stateId: "select", lens: "artist", selectedLens: "artist", artwork: "arnolfini", durationMs: 1900 },
     { key: "artist", stateId: "artist", lens: "artist", artwork: "arnolfini" },
@@ -379,6 +383,54 @@
       .replace(/"/g, "&quot;");
   }
 
+  function escapePhraseHtml(value, breakAfter = []) {
+    const source = String(value || "");
+    if (!source || !Array.isArray(breakAfter) || !breakAfter.length) {
+      return escapeHtml(source);
+    }
+
+    const breakpoints = new Set();
+    breakAfter.forEach((phrase) => {
+      if (!phrase) return;
+      let cursor = 0;
+      while (cursor < source.length) {
+        const index = source.indexOf(phrase, cursor);
+        if (index < 0) break;
+        const breakpoint = index + phrase.length;
+        if (breakpoint > 0 && breakpoint < source.length) breakpoints.add(breakpoint);
+        cursor = breakpoint;
+      }
+    });
+
+    if (!breakpoints.size) return escapeHtml(source);
+    const ordered = [...breakpoints].sort((a, b) => a - b);
+    let cursor = 0;
+    return ordered
+      .map((breakpoint) => {
+        const segment = escapeHtml(source.slice(cursor, breakpoint));
+        cursor = breakpoint;
+        return `${segment}<wbr>`;
+      })
+      .join("") + escapeHtml(source.slice(cursor));
+  }
+
+  function sequenceShortHtml(value) {
+    const source = String(value || "");
+    const match = source.match(/^(\d+\.)\s*(.+)$/u);
+    if (!match) return `<span class="hero-sequence-label">${escapeHtml(source)}</span>`;
+    const label = match[2]
+      .replace(/\u00a0/g, " ")
+      .split(/\s+/u)
+      .map((word) => escapeHtml(word))
+      .join("<wbr> ");
+    return `<span class="hero-sequence-copy"><span class="hero-sequence-index">${escapeHtml(match[1])}</span><wbr> <span class="hero-sequence-label">${label}</span></span>`;
+  }
+
+  function cuePhraseHtml(spec, value, kind = "cueTitleBreaks") {
+    const breakAfter = dict().layout?.[kind]?.[cueSpecKey(spec.artwork_id, spec.lens_id)] || [];
+    return escapePhraseHtml(value, breakAfter);
+  }
+
   function percentNumber(value, fallback = "50%") {
     return String(value || fallback).replace("%", "");
   }
@@ -661,7 +713,7 @@
             style="--segment-duration: ${selected ? status.duration : 0}ms"
           >
             ${stateIcon(id)}
-            <span>${t(`states.${id}.short`)}</span>
+            ${sequenceShortHtml(t(`states.${id}.short`))}
           </button>
         `;
       })
@@ -683,7 +735,7 @@
             style="--segment-duration: ${selected ? status.duration : 0}ms"
           >
             ${["artist", "restorer", "social"].includes(example.stateId) ? heroViewpointIcon(example.stateId) : stateIcon(example.stateId)}
-            <span>${t(`hero.lookAgainExamples.${example.key}.sequenceShort`)}</span>
+            ${sequenceShortHtml(t(`hero.lookAgainExamples.${example.key}.sequenceShort`))}
           </button>
         `;
       })
@@ -774,12 +826,13 @@
       ${config.panel ? renderPanel(config) : ""}
       ${config.quiet ? renderQuietMessage() : ""}
     `;
+    observeStagePanel(stage);
 
     resetStageParallax(stage, { immediate: true });
     const sequenceKey = stage.dataset.cueSequenceKey;
     const startCueSequenceIfVisible = (force = false) => {
       if (!runCueSequence || stage.dataset.cueSequenceKey !== sequenceKey) return;
-      positionConnector(stage);
+      layoutStage(stage);
       if (cueStageIsVisible(stage) && (force || !stage.classList.contains("is-cue-sequence-active"))) {
         restartCueSequence(stage);
       }
@@ -787,8 +840,9 @@
     requestAnimationFrame(() => {
       startCueSequenceIfVisible(true);
     });
-    if (runCueSequence && !reducedMotion) {
-      [280, 920].forEach((delay) => {
+    if (runCueSequence) {
+      const layoutDelays = reducedMotion ? [0, 24, 48] : [280, 920, 1280];
+      layoutDelays.forEach((delay) => {
         window.setTimeout(() => startCueSequenceIfVisible(false), delay);
       });
     }
@@ -1534,8 +1588,8 @@
         >
           ${spec.lens_id === "restorer" ? renderMaterialEvidence(spec, { compact: true }) : ""}
           ${comparativeEvidence}
-          <span class="panel-target">${escapeHtml(target)}</span>
-          <h3>${escapeHtml(title)}</h3>
+          <span class="panel-target phrase-controlled">${cuePhraseHtml(spec, target, "cueTargetBreaks")}</span>
+          <h3 class="phrase-controlled">${cuePhraseHtml(spec, title)}</h3>
           <p class="micro-evidence">${escapeHtml(microEvidence)}</p>
         </aside>
       `;
@@ -1550,8 +1604,8 @@
         >
           <span class="matrix-cue-icon" aria-hidden="true">${stateIcon(spec.lens_id)}</span>
           <span class="matrix-cue-copy">
-            <span class="panel-target">${escapeHtml(target)}</span>
-            <h3>${escapeHtml(title)}</h3>
+            <span class="panel-target phrase-controlled">${cuePhraseHtml(spec, target, "cueTargetBreaks")}</span>
+            <h3 class="phrase-controlled">${cuePhraseHtml(spec, title, "matrixTitleBreaks")}</h3>
             <p class="micro-evidence">${escapeHtml(microEvidence)}</p>
           </span>
           ${matrixEvidence ? `<div class="matrix-cue-evidence">${matrixEvidence}</div>` : ""}
@@ -1568,8 +1622,8 @@
         ${crop}
         ${materialEvidence}
         ${comparativeEvidence}
-        <span class="panel-target">${escapeHtml(target)}</span>
-        <h3>${escapeHtml(title)}${sourceFootnoteMark(spec)}</h3>
+        <span class="panel-target phrase-controlled">${cuePhraseHtml(spec, target, "cueTargetBreaks")}</span>
+        <h3 class="phrase-controlled">${cuePhraseHtml(spec, title)}${sourceFootnoteMark(spec)}</h3>
         <p class="micro-evidence">${escapeHtml(microEvidence)}</p>
       </aside>
     `;
@@ -1733,6 +1787,7 @@
     requestAnimationFrame(() => {
       if (stage.classList.contains("is-cue-sequence")) {
         stage.classList.add("is-cue-sequence-active");
+        window.setTimeout(() => layoutStage(stage), 940);
       }
     });
   }
@@ -1760,7 +1815,9 @@
   }
 
   function positionConnector(stage) {
+    if (!stage) return;
     const scene = stage.querySelector("[data-stage-scene]");
+    if (!scene) return;
     const svg = scene.querySelector(".connector-svg");
     if (!svg) return;
     const line = svg.querySelector("line");
@@ -1775,7 +1832,6 @@
     }
 
     svg.style.display = "block";
-    avoidPanelAnchorOverlap(scene, panel, anchorEl);
     const sceneRect = scene.getBoundingClientRect();
     const anchorRect = anchorEl.getBoundingClientRect();
     const panelRect = panel.getBoundingClientRect();
@@ -1807,109 +1863,385 @@
     panel.style.setProperty("--connector-origin-y", `${panelOriginY.toFixed(2)}%`);
   }
 
-  function avoidPanelAnchorOverlap(scene, panel, anchorEl) {
-    const sceneRect = scene.getBoundingClientRect();
-    panel.style.setProperty("--panel-safe-x", "0px");
-    panel.style.setProperty("--panel-safe-y", "0px");
-    anchorEl.style.setProperty("--anchor-label-safe-x", "0px");
-    anchorEl.style.setProperty("--anchor-label-safe-y", "0px");
-    anchorEl.classList.remove("is-anchor-label-minimized");
+  function layoutStage(stage) {
+    if (!stage) return;
+    positionConnector(stage);
+    const scene = stage.querySelector("[data-stage-scene]");
+    const panel = scene?.querySelector(".edge-panel");
+    const sourceAnchor = scene?.querySelector(".artwork-cue-layer .anchor-target") || scene?.querySelector(".anchor-target");
+    const displayAnchor = scene?.querySelector(".floating-anchor-target.anchor-target") || sourceAnchor;
+    if (scene && panel && sourceAnchor && displayAnchor) {
+      avoidPanelAnchorOverlap(scene, panel, sourceAnchor, displayAnchor);
+    }
+    positionConnector(stage);
+    if (scene && panel && displayAnchor) {
+      layoutAnchorLabel(scene, panel, displayAnchor);
+      positionConnector(stage);
+      const pendingFrame = stageLabelLayoutFrames.get(stage);
+      if (pendingFrame) window.cancelAnimationFrame(pendingFrame);
+      const frame = window.requestAnimationFrame(() => {
+        layoutAnchorLabel(scene, panel, displayAnchor);
+        positionConnector(stage);
+        stageLabelLayoutFrames.delete(stage);
+      });
+      stageLabelLayoutFrames.set(stage, frame);
+    }
+  }
 
-    const panelRect = panel.getBoundingClientRect();
-    const anchorRect = inflateRect(anchorEl.getBoundingClientRect(), 8);
+  function layoutAnchorLabel(scene, panel, anchorEl) {
     const label = anchorEl.querySelector(".anchor-label");
-    const labelRect = label ? label.getBoundingClientRect() : null;
-    const safeGap = 18;
-    const padding = 12;
-    const initialTargetRect = labelRect ? unionRects(anchorRect, labelRect) : anchorRect;
-    if (!rectsOverlap(panelRect, initialTargetRect, safeGap)) return;
+    if (!label) return;
 
-    if (labelRect) {
-      const labelCandidates = [
-        [0, 0],
-        [0, -68],
-        [0, 68],
-        [-112, 0],
-        [112, 0],
-        [-112, -56],
-        [112, -56],
-        [-112, 56],
-        [112, 56],
-        [0, -104],
-        [0, 104]
-      ];
-      const bestLabel = labelCandidates
-        .map(([x, y]) => {
-          const shiftedLabel = shiftRect(labelRect, x, y);
-          const targetRect = unionRects(anchorRect, shiftedLabel);
-          return {
-            x,
-            y,
-            overlap: overlapArea(panelRect, targetRect, safeGap),
-            boundsPenalty: rectWithinScenePenalty(targetRect, sceneRect, padding),
-            distance: Math.abs(x) + Math.abs(y) * 1.08
-          };
-        })
-        .sort((a, b) =>
-          a.boundsPenalty - b.boundsPenalty ||
-          a.overlap - b.overlap ||
-          a.distance - b.distance
-        )[0];
+    const labelRect = visibleRect(label);
+    if (labelRect) positionAnchorLabel(scene, panel, anchorEl, labelRect);
+  }
 
-      if (bestLabel && bestLabel.overlap === 0 && bestLabel.boundsPenalty === 0) {
-        anchorEl.style.setProperty("--anchor-label-safe-x", `${bestLabel.x.toFixed(2)}px`);
-        anchorEl.style.setProperty("--anchor-label-safe-y", `${bestLabel.y.toFixed(2)}px`);
-        return;
-      }
+  function numericCssValue(value) {
+    const parsed = Number.parseFloat(value);
+    return Number.isFinite(parsed) ? parsed : 0;
+  }
 
-      anchorEl.classList.add("is-anchor-label-minimized");
-      if (!rectsOverlap(panelRect, anchorRect, safeGap)) return;
+  function renderedTranslate(element) {
+    const value = getComputedStyle(element).translate;
+    if (!value || value === "none") return { x: 0, y: 0 };
+    const parts = value.split(/\s+/);
+    return {
+      x: numericCssValue(parts[0]),
+      y: numericCssValue(parts[1] || "0")
+    };
+  }
+
+  function untranslatedRect(element) {
+    const rect = stableLayoutRect(element);
+    const translate = renderedTranslate(element);
+    return shiftRect(rect, -translate.x, -translate.y);
+  }
+
+  function panelTargetRect(panel) {
+    const baseRect = untranslatedRect(panel);
+    const style = getComputedStyle(panel);
+    const panelX = numericCssValue(style.getPropertyValue("--panel-x"));
+    const panelY = numericCssValue(style.getPropertyValue("--panel-y"));
+    const safeX = numericCssValue(panel.dataset.layoutOffsetX);
+    const safeY = numericCssValue(panel.dataset.layoutOffsetY);
+    return shiftRect(baseRect, panelX + safeX, panelY + safeY);
+  }
+
+  function setPanelOffset(panel, x, y) {
+    const numericX = Number(x);
+    const numericY = Number(y);
+    const safeX = `${numericX.toFixed(2)}px`;
+    const safeY = `${numericY.toFixed(2)}px`;
+    const translatedX = numericX < 0
+      ? `calc(var(--panel-x, 0px) - ${Math.abs(numericX).toFixed(2)}px)`
+      : `calc(var(--panel-x, 0px) + ${numericX.toFixed(2)}px)`;
+    const translatedY = numericY < 0
+      ? `calc(var(--panel-y, 0px) - ${Math.abs(numericY).toFixed(2)}px)`
+      : `calc(var(--panel-y, 0px) + ${numericY.toFixed(2)}px)`;
+    panel.style.setProperty("--panel-safe-x", safeX);
+    panel.style.setProperty("--panel-safe-y", safeY);
+    panel.style.translate = `${translatedX} ${translatedY}`;
+    panel.dataset.layoutOffsetX = numericX.toFixed(2);
+    panel.dataset.layoutOffsetY = numericY.toFixed(2);
+  }
+
+  function setAnchorLabelOffset(anchorEl, x, y) {
+    const safeX = `${Number(x).toFixed(2)}px`;
+    const safeY = `${Number(y).toFixed(2)}px`;
+    anchorEl.style.setProperty("--anchor-label-safe-x", safeX);
+    anchorEl.style.setProperty("--anchor-label-safe-y", safeY);
+    const label = anchorEl.querySelector(".anchor-label");
+    if (label) label.style.translate = `${safeX} ${safeY}`;
+    anchorEl.dataset.labelOffsetX = Number(x).toFixed(2);
+    anchorEl.dataset.labelOffsetY = Number(y).toFixed(2);
+  }
+
+  function avoidPanelAnchorOverlap(scene, panel, anchorEl, labelAnchorEl = anchorEl) {
+    const sceneRect = scene.getBoundingClientRect();
+    labelAnchorEl.classList.remove("is-anchor-label-minimized");
+
+    if (window.matchMedia("(max-width: 760px)").matches) {
+      panel.dataset.layoutPlacement = "mobile-lane";
+      return;
     }
 
+    const panelStyle = getComputedStyle(panel);
+    const panelRect = shiftRect(
+      untranslatedRect(panel),
+      numericCssValue(panelStyle.getPropertyValue("--panel-x")),
+      numericCssValue(panelStyle.getPropertyValue("--panel-y"))
+    );
+    const anchorRect = inflateRect(anchorEl.getBoundingClientRect(), 10);
+    const label = labelAnchorEl.querySelector(".anchor-label");
+    const labelRect = visibleRect(label);
+    const padding = 12;
     const minX = sceneRect.left + padding - panelRect.left;
     const maxX = sceneRect.right - padding - panelRect.right;
     const minY = sceneRect.top + padding - panelRect.top;
     const maxY = sceneRect.bottom - padding - panelRect.bottom;
-    const maxNudgeX = 92;
-    const maxNudgeY = 92;
-    const rawCandidates = [
-      [0, 0],
-      [0, -maxNudgeY],
-      [0, maxNudgeY],
-      [-maxNudgeX, 0],
-      [maxNudgeX, 0],
-      [-maxNudgeX, -maxNudgeY],
-      [maxNudgeX, -maxNudgeY],
-      [-maxNudgeX, maxNudgeY],
-      [maxNudgeX, maxNudgeY]
+    const xCandidates = candidateOffsets(minX, maxX, [0, -96, 96, -192, 192, -320, 320]);
+    const yCandidates = candidateOffsets(minY, maxY, [0, -72, 72, -144, 144, -220, 220, -300, 300]);
+    const protectedRects = panelProtectedRects(scene, anchorRect);
+    const candidates = [];
+
+    xCandidates.forEach((x) => {
+      yCandidates.forEach((y) => {
+        const shifted = shiftRect(panelRect, x, y);
+        const penalties = protectedRects.reduce((score, protectedRect) => {
+          const area = overlapArea(shifted, protectedRect.rect, protectedRect.gap || 0);
+          if (protectedRect.kind === "hard") score.hard += area * protectedRect.weight;
+          if (protectedRect.kind === "subject") score.subject += area * protectedRect.weight;
+          if (protectedRect.kind === "artwork") score.artwork += area * protectedRect.weight;
+          return score;
+        }, { hard: 0, subject: 0, artwork: 0 });
+        candidates.push({
+          x,
+          y,
+          ...penalties,
+          bounds: rectWithinScenePenalty(shifted, sceneRect, padding),
+          distance: Math.abs(x) * 1.08 + Math.abs(y)
+        });
+      });
+    });
+
+    candidates.sort((a, b) =>
+      a.bounds - b.bounds ||
+      a.hard - b.hard ||
+      a.subject - b.subject ||
+      a.artwork - b.artwork ||
+      a.distance - b.distance
+    );
+
+    const best = candidates[0];
+    if (best) {
+      const contained = containPanelWithinScene(scene, panel, panelRect, best.x, best.y, padding);
+      panel.dataset.layoutPlacement = `${contained.x.toFixed(0)},${contained.y.toFixed(0)}`;
+      panel.dataset.layoutOverlapScore = (best.hard + best.subject + best.artwork).toFixed(0);
+    }
+
+    if (labelRect) {
+      positionAnchorLabel(scene, panel, labelAnchorEl, labelRect);
+    }
+  }
+
+  function containPanelWithinScene(scene, panel, basePanelRect, safeX, safeY, padding) {
+    const sceneRect = scene.getBoundingClientRect();
+    let x = safeX;
+    let y = safeY;
+    let panelRect = shiftRect(basePanelRect, x, y);
+
+    if (panelRect.left < sceneRect.left + padding) x += sceneRect.left + padding - panelRect.left;
+    if (panelRect.right > sceneRect.right - padding) x += sceneRect.right - padding - panelRect.right;
+    if (panelRect.top < sceneRect.top + padding) y += sceneRect.top + padding - panelRect.top;
+    if (panelRect.bottom > sceneRect.bottom - padding) y += sceneRect.bottom - padding - panelRect.bottom;
+
+    panelRect = shiftRect(basePanelRect, x, y);
+    if (panelRect.width <= sceneRect.width - padding * 2) {
+      if (panelRect.left < sceneRect.left + padding) x += sceneRect.left + padding - panelRect.left;
+      if (panelRect.right > sceneRect.right - padding) x += sceneRect.right - padding - panelRect.right;
+    }
+    if (panelRect.height <= sceneRect.height - padding * 2) {
+      if (panelRect.top < sceneRect.top + padding) y += sceneRect.top + padding - panelRect.top;
+      if (panelRect.bottom > sceneRect.bottom - padding) y += sceneRect.bottom - padding - panelRect.bottom;
+    }
+
+    setPanelOffset(panel, x, y);
+    return { x, y };
+  }
+
+  function candidateOffsets(min, max, preferred) {
+    if (min > max) return [0];
+    const values = [min, max, ...preferred]
+      .map((value) => clamp(value, min, max))
+      .filter((value, index, list) => list.findIndex((item) => Math.abs(item - value) < 0.5) === index);
+    return values;
+  }
+
+  function visibleRect(element) {
+    if (!element) return null;
+    const style = window.getComputedStyle(element);
+    if (style.display === "none" || style.visibility === "hidden") return null;
+    const rect = element.getBoundingClientRect();
+    return rect.width && rect.height ? rect : null;
+  }
+
+  function stableLayoutRect(element) {
+    const rect = element.getBoundingClientRect();
+    const width = element.offsetWidth || rect.width;
+    const height = element.offsetHeight || rect.height;
+    if (!width || !height) return rect;
+
+    const scaleX = rect.width / width;
+    const scaleY = rect.height / height;
+    if (Math.abs(scaleX - 1) < 0.002 && Math.abs(scaleY - 1) < 0.002) return rect;
+
+    const origin = getComputedStyle(element).transformOrigin.split(/\s+/).map(Number.parseFloat);
+    const originX = Number.isFinite(origin[0]) ? origin[0] : width / 2;
+    const originY = Number.isFinite(origin[1]) ? origin[1] : height / 2;
+    const left = rect.left - originX * (1 - scaleX);
+    const top = rect.top - originY * (1 - scaleY);
+    return {
+      left,
+      top,
+      right: left + width,
+      bottom: top + height,
+      width,
+      height
+    };
+  }
+
+  function normalizedRect(baseRect, x, y, width, height) {
+    return {
+      left: baseRect.left + baseRect.width * x,
+      top: baseRect.top + baseRect.height * y,
+      right: baseRect.left + baseRect.width * (x + width),
+      bottom: baseRect.top + baseRect.height * (y + height),
+      width: baseRect.width * width,
+      height: baseRect.height * height
+    };
+  }
+
+  function panelProtectedRects(scene, anchorRect) {
+    const stage = scene.closest(".xr-stage");
+    const artworkId = stage?.dataset.artwork || "";
+    const protectedRects = [
+      { rect: anchorRect, kind: "hard", weight: 24, gap: 18 }
     ];
-    const candidates = rawCandidates
-      .map(([x, y]) => ({
-        x: clamp(x, minX, maxX),
-        y: clamp(y, minY, maxY)
-      }))
-      .filter((candidate, index, list) =>
-        list.findIndex((item) => Math.abs(item.x - candidate.x) < 0.5 && Math.abs(item.y - candidate.y) < 0.5) === index
-      );
+    const artworkRect = visibleRect(scene.querySelector(".artwork-rig"));
+    if (artworkRect) {
+      if (artworkId === "lastSupper") {
+        protectedRects.push({
+          rect: normalizedRect(artworkRect, 0.07, 0.42, 0.86, 0.48),
+          kind: "subject",
+          weight: 8,
+          gap: 12
+        });
+        protectedRects.push({ rect: artworkRect, kind: "artwork", weight: 1.5, gap: 10 });
+      } else {
+        protectedRects.push({ rect: artworkRect, kind: "artwork", weight: 4, gap: 16 });
+      }
+    }
 
-    const scored = candidates
-      .map((candidate) => {
-        const shifted = shiftRect(panelRect, candidate.x, candidate.y);
-        const overlap = overlapArea(shifted, anchorRect, safeGap);
-        const distance = Math.abs(candidate.x) * 1.18 + Math.abs(candidate.y);
-        const boundsPenalty = rectWithinScenePenalty(shifted, sceneRect, padding);
-        return { ...candidate, overlap, distance, boundsPenalty };
-      })
-      .sort((a, b) =>
-        a.boundsPenalty - b.boundsPenalty ||
-        a.overlap - b.overlap ||
-        a.distance - b.distance
-      );
+    const controls = [
+      stage?.querySelector(".stage-bar"),
+      stage?.closest("section")?.querySelector(".preview-artwork-controls"),
+      stage?.querySelector(".hero-viewpoint-selector"),
+      stage?.closest("[data-hero-experience]")?.querySelector(".hero-substate-lines"),
+      stage?.closest(".hero")?.querySelector(".hero-copy")
+    ];
+    controls.forEach((element) => {
+      const rect = visibleRect(element);
+      if (rect) protectedRects.push({ rect, kind: "hard", weight: 12, gap: 10 });
+    });
+    return protectedRects;
+  }
 
-    const best = scored[0];
+  function subjectProtectedRects(scene) {
+    const stage = scene.closest(".xr-stage");
+    const artworkRect = visibleRect(scene.querySelector(".artwork-rig"));
+    if (!artworkRect) return [];
+    const artworkId = stage?.dataset.artwork;
+    if (artworkId === "girl") {
+      return [normalizedRect(artworkRect, 0.12, 0.04, 0.76, 0.62)];
+    }
+    if (artworkId === "arnolfini") {
+      return [normalizedRect(artworkRect, 0.08, 0.18, 0.82, 0.7)];
+    }
+    if (artworkId === "lastSupper") {
+      return [normalizedRect(artworkRect, 0.1, 0.34, 0.8, 0.56)];
+    }
+    return [];
+  }
+
+  function positionAnchorLabel(scene, panel, anchorEl, fallbackLabelRect = null) {
+    const label = anchorEl.querySelector(".anchor-label");
+    if (!label) return;
+
+    anchorEl.classList.remove("is-anchor-label-minimized");
+    const currentLabelRect = visibleRect(label) || fallbackLabelRect;
+    if (!currentLabelRect) return;
+    const labelTranslate = renderedTranslate(label);
+    const labelRect = shiftRect(currentLabelRect, -labelTranslate.x, -labelTranslate.y);
+    if (!labelRect) return;
+
+    const sceneRect = scene.getBoundingClientRect();
+    const panelRect = panelTargetRect(panel);
+    const subjects = subjectProtectedRects(scene);
+    const anchorRect = inflateRect(anchorEl.getBoundingClientRect(), 4);
+    const padding = 12;
+    const panelLeft = panelRect.left - 12 - labelRect.right;
+    const panelRight = panelRect.right + 12 - labelRect.left;
+    const panelAbove = panelRect.top - 12 - labelRect.bottom;
+    const panelBelow = panelRect.bottom + 12 - labelRect.top;
+    const offsets = [
+      [0, 0],
+      [0, -48],
+      [0, 48],
+      [-72, 0],
+      [72, 0],
+      [-92, -44],
+      [92, -44],
+      [-92, 44],
+      [92, 44],
+      [-120, -44],
+      [120, -44],
+      [-120, 44],
+      [120, 44],
+      [-160, -44],
+      [160, -44],
+      [-160, 44],
+      [160, 44],
+      [0, -88],
+      [0, 88],
+      [0, -120],
+      [0, 120],
+      [panelLeft, 0],
+      [panelRight, 0],
+      [0, panelAbove],
+      [0, panelBelow],
+      [panelLeft, panelAbove],
+      [panelRight, panelAbove],
+      [panelLeft, panelBelow],
+      [panelRight, panelBelow]
+    ].filter(([x, y], index, list) =>
+      list.findIndex(([candidateX, candidateY]) =>
+        Math.abs(candidateX - x) < 0.5 && Math.abs(candidateY - y) < 0.5
+      ) === index
+    );
+    const candidates = offsets.map(([x, y]) => {
+      const shifted = shiftRect(labelRect, x, y);
+      return {
+        x,
+        y,
+        bounds: rectWithinScenePenalty(shifted, sceneRect, padding),
+        panel: overlapArea(panelRect, shifted, 12),
+        anchor: overlapArea(anchorRect, shifted, 4),
+        subject: subjects.reduce((total, rect) => total + overlapArea(shifted, rect, 4), 0),
+        distance: Math.abs(x) + Math.abs(y) * 1.08
+      };
+    });
+    candidates.sort((a, b) =>
+      a.bounds - b.bounds ||
+      a.panel - b.panel ||
+      a.anchor - b.anchor ||
+      a.subject - b.subject ||
+      a.distance - b.distance
+    );
+    const best = candidates[0];
     if (!best) return;
-    panel.style.setProperty("--panel-safe-x", `${best.x.toFixed(2)}px`);
-    panel.style.setProperty("--panel-safe-y", `${best.y.toFixed(2)}px`);
+    let x = best.x;
+    let y = best.y;
+    const applyOffset = () => {
+      setAnchorLabelOffset(anchorEl, x, y);
+    };
+    applyOffset();
+    const finalLabelRect = shiftRect(labelRect, x, y);
+    const finalPanelOverlap = overlapArea(panelRect, finalLabelRect, 12);
+    const finalSubjectOverlap = finalLabelRect
+      ? subjects.reduce((total, rect) => total + overlapArea(finalLabelRect, rect, 4), 0)
+      : 0;
+    anchorEl.dataset.labelLayoutPlacement = `${x.toFixed(0)},${y.toFixed(0)}`;
+    anchorEl.dataset.labelLayoutOverlapScore = (finalPanelOverlap + finalSubjectOverlap).toFixed(0);
   }
 
   function unionRects(a, b) {
@@ -2022,6 +2354,48 @@
       positionMatrixConnectors();
       requestAnimationFrame(positionMatrixConnectors);
     });
+  }
+
+  function scheduleStageLayout() {
+    if (stageLayoutFrame) window.cancelAnimationFrame(stageLayoutFrame);
+    stageLayoutFrame = window.requestAnimationFrame(() => {
+      stageLayoutFrame = 0;
+      layoutStage(heroStage);
+      layoutStage(explorerStage);
+      scheduleMatrixConnectorPositioning();
+      window.requestAnimationFrame(() => {
+        layoutStage(heroStage);
+        layoutStage(explorerStage);
+      });
+    });
+  }
+
+  function observeStagePanel(stage) {
+    if (!stageResizeObserver || !stage) return;
+    const previousPanel = stageObservedPanels.get(stage);
+    const nextPanel = stage.querySelector(".edge-panel");
+    if (previousPanel === nextPanel) return;
+    if (previousPanel) stageResizeObserver.unobserve(previousPanel);
+    if (nextPanel) {
+      stageResizeObserver.observe(nextPanel);
+      stageObservedPanels.set(stage, nextPanel);
+    } else {
+      stageObservedPanels.delete(stage);
+    }
+  }
+
+  function bindStageLayoutObservers() {
+    if ("ResizeObserver" in window) {
+      stageResizeObserver = new ResizeObserver(scheduleStageLayout);
+      [heroStage, explorerStage].filter(Boolean).forEach((stage) => {
+        stageResizeObserver.observe(stage);
+        observeStagePanel(stage);
+      });
+    }
+    if (document.fonts?.ready) {
+      document.fonts.ready.then(scheduleStageLayout);
+      document.fonts.addEventListener?.("loadingdone", scheduleStageLayout);
+    }
   }
 
   const PARALLAX_LERP = 0.16;
@@ -2458,7 +2832,7 @@
       }
     ];
     previewDetails.innerHTML = `
-      <h3>${escapeHtml(t("preview.mechanics.title"))}</h3>
+      <h3 class="phrase-controlled">${t("preview.mechanics.title")}</h3>
       <ol class="preview-sequence-list">
         ${mechanismItems
           .map((entry, index) => `
@@ -2623,6 +2997,7 @@
   function bindEvents() {
     initStageParallax(heroStage);
     initStageParallax(explorerStage);
+    bindStageLayoutObservers();
     document.querySelector('[data-action="replay"]').addEventListener("click", replayHero);
     document.querySelector('[data-action="explore-lenses"]').addEventListener("click", () => {
       document.querySelector("#lenses").scrollIntoView({ behavior: "smooth", block: "start" });
@@ -2659,11 +3034,7 @@
     document.querySelectorAll("[data-lang-button]").forEach((button) => {
       button.addEventListener("click", () => setLanguage(button.dataset.langButton));
     });
-    window.addEventListener("resize", () => {
-      positionConnector(heroStage);
-      positionConnector(explorerStage);
-      scheduleMatrixConnectorPositioning();
-    });
+    window.addEventListener("resize", scheduleStageLayout);
   }
 
   function applyQueryParams() {
