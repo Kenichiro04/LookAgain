@@ -2254,7 +2254,6 @@
     panel.dataset.layoutSizeLane = "";
     const stage = scene.closest(".explorer-stage");
     if (!stage || window.matchMedia("(max-width: 760px)").matches || stage.dataset.artwork === "lastSupper") return;
-    if (window.matchMedia("(min-width: 1024px)").matches && !document.documentElement.matches('.is-text-resized, .is-text-spaced')) return;
 
     const sceneRect = scene.getBoundingClientRect();
     const artworkRect = visibleRect(scene.querySelector(".physical-world-layer .artwork-rig"));
@@ -2265,6 +2264,7 @@
       panel.style.width = `${sideWidth}px`;
       panel.style.inlineSize = `${sideWidth}px`;
     }
+    if (window.matchMedia("(min-width: 1024px)").matches && !document.documentElement.matches('.is-text-resized, .is-text-spaced')) return;
     const panelWidth = panel.offsetWidth;
     const controls = visibleControlElements(scene).map(visibleRect).filter(Boolean);
     const sideLanes = [
@@ -2548,6 +2548,15 @@
     );
     let best = candidates[0];
     if (!best) return;
+    if (best.connector) {
+      const controls = visibleControlElements(scene).map(visibleRect).filter(Boolean);
+      // Prefer a clear connector over extra mask padding, never over content or controls.
+      const separated = candidates.find(candidate =>
+        !candidate.bounds && !candidate.connector && !candidate.subject &&
+        !candidate.panel && !candidate.obstacle && !candidate.anchor &&
+        !controls.some(rect => overlapArea(candidate.rect, rect, 6)));
+      if (separated) best = separated;
+    }
     if (best.connector && document.documentElement.classList.contains('is-text-resized')) {
       const controls = visibleControlElements(scene).filter(element => !element.matches('.museum-label')).map(visibleRect).filter(Boolean);
       for (const candidate of candidates) {

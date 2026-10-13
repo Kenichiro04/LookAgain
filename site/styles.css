@@ -10704,6 +10704,12 @@ html.is-text-resized .plan-page h1 {
   }
 }
 
+@media (min-width: 761px) and (max-width: 1023px) {
+  html.is-text-spaced .hero-stage {
+    min-height: 740px;
+  }
+}
+
 @media (min-width: 1024px) {
   html:not(.is-text-resized):not(.is-text-spaced) :is(.hero-stage, .explorer-stage)[data-artwork] .spec-edge-panel {
     width: min(340px, calc(100% - 32px));
@@ -10718,7 +10724,7 @@ html.is-text-resized .plan-page h1 {
   }
 
   html:not(.is-text-resized):not(.is-text-spaced) .explorer-stage[data-artwork="girl"] {
-    min-height: 840px;
+    min-height: 1000px;
   }
 
   html:not(.is-text-resized):not(.is-text-spaced) .explorer-stage[data-artwork="arnolfini"] .spec-edge-panel {
