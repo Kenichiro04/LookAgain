@@ -642,7 +642,8 @@
 
   async function loadCueSpecs() {
     const fallback = fallbackCueSpecs();
-    if (window.location.protocol === "file:" && fallback) {
+    // The generated bundle matches the JSON and must not wait on a second request.
+    if (fallback) {
       applyCueSpecs(fallback);
       window.LookAgainCueSpecsV23Source = "inline-fallback";
       document.body.dataset.cueSpecSource = "inline-fallback";
