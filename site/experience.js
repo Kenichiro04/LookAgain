@@ -2165,9 +2165,12 @@
     const maxX = sceneRect.right - padding - panelRect.right;
     const minY = sceneRect.top + padding - panelRect.top;
     const maxY = sceneRect.bottom - padding - panelRect.bottom;
-    const xCandidates = candidateOffsets(minX, maxX, [0, -96, 96, -192, 192, -320, 320]);
-    const yCandidates = candidateOffsets(minY, maxY, [0, -72, 72, -144, 144, -220, 220, -300, 300]);
     const protectedRects = panelProtectedRects(scene, anchorRect);
+    // Include exact obstacle edges so narrow safe spaces are not skipped.
+    const xCandidates = candidateOffsets(minX, maxX, [0, -96, 96, -192, 192, -320, 320,
+      ...protectedRects.flatMap(({ rect, gap = 0 }) => [rect.left - gap - panelRect.right - 2, rect.right + gap - panelRect.left + 2])]);
+    const yCandidates = candidateOffsets(minY, maxY, [0, -72, 72, -144, 144, -220, 220, -300, 300,
+      ...protectedRects.flatMap(({ rect, gap = 0 }) => [rect.top - gap - panelRect.bottom - 2, rect.bottom + gap - panelRect.top + 2])]);
     const candidates = [];
 
     xCandidates.forEach((x) => {
@@ -2251,6 +2254,7 @@
     panel.dataset.layoutSizeLane = "";
     const stage = scene.closest(".explorer-stage");
     if (!stage || window.matchMedia("(max-width: 760px)").matches || stage.dataset.artwork === "lastSupper") return;
+    if (window.matchMedia("(min-width: 1024px)").matches && !document.documentElement.matches('.is-text-resized, .is-text-spaced')) return;
 
     const sceneRect = scene.getBoundingClientRect();
     const artworkRect = visibleRect(scene.querySelector(".physical-world-layer .artwork-rig"));
@@ -2287,9 +2291,11 @@
     if (!lane || lane.size < 112) return;
 
     const maxHeight = Math.min(lane.size, sceneRect.height - 24);
-    panel.style.maxHeight = `${maxHeight.toFixed(2)}px`;
-    panel.style.maxBlockSize = `${maxHeight.toFixed(2)}px`;
-    panel.style.overflowY = "auto";
+    if (window.matchMedia("(max-width: 1023px)").matches || panel.scrollHeight > sceneRect.height - 24) {
+      panel.style.maxHeight = `${maxHeight.toFixed(2)}px`;
+      panel.style.maxBlockSize = `${maxHeight.toFixed(2)}px`;
+      panel.style.overflowY = "auto";
+    }
     panel.dataset.layoutSizeLane = lane.name;
   }
 
@@ -2449,6 +2455,37 @@
     const panelRect = panelTargetRect(panel);
     const targetRect = anchorEl.getBoundingClientRect();
     const { subjectRects, obstacleRects } = labelProtectedRects(scene, targetRect);
+    const targetX = (targetRect.left + targetRect.right) / 2;
+    const targetY = (targetRect.top + targetRect.bottom) / 2;
+    const connection = nearestPanelConnection(targetX, targetY, panelRect);
+    // Test the actual connector corridor, not just the direction of the card.
+    const crossesConnector = (rect, endpoint = connection) => {
+      const protectedRect = inflateRect(rect, 5);
+      let entry = 0;
+      let exit = 1;
+      for (const [origin, delta, min, max] of [
+        [targetX, endpoint.x - targetX, protectedRect.left, protectedRect.right],
+        [targetY, endpoint.y - targetY, protectedRect.top, protectedRect.bottom]
+      ]) {
+        if (Math.abs(delta) < 0.001) {
+          if (origin < min || origin > max) return false;
+        } else {
+          const first = (min - origin) / delta;
+          const last = (max - origin) / delta;
+          entry = Math.max(entry, Math.min(first, last));
+          exit = Math.min(exit, Math.max(first, last));
+          if (entry > exit) return false;
+        }
+      }
+      return true;
+    };
+    const cardX = (panelRect.left + panelRect.right) / 2 - targetX;
+    const cardY = (panelRect.top + panelRect.bottom) / 2 - targetY;
+    const cardDistance = Math.hypot(cardX, cardY) || 1;
+    // Keep the entire label on the opposite side of the target from the card.
+    const cardSidePenalty = (rect) => Math.max(0,
+      ...[rect.left, rect.right].flatMap((x) => [rect.top, rect.bottom].map((y) =>
+        ((x - targetX) * cardX + (y - targetY) * cardY) / cardDistance)));
     const anchorRect = inflateRect(targetRect, 4);
     const padding = 1;
     const placements = ["above", "below", "right", "left"];
@@ -2478,14 +2515,18 @@
           const labelGap = rectGap(shifted, targetRect);
           if (labelGap < 8 || labelGap > 32) return;
           candidates.push({
+            rect: shifted,
             placement,
             labelWidth,
             x,
             y,
             bounds: rectWithinScenePenalty(shifted, sceneRect, padding),
-            collision: [...subjectRects, ...obstacleRects, panelRect].reduce((total, rect) => total + overlapArea(shifted, rect), 0),
+            collision: [...subjectRects, panelRect].reduce((total, rect) => total + overlapArea(shifted, rect, 2), 0) +
+              obstacleRects.reduce((total, rect) => total + overlapArea(shifted, rect, 6), 0),
             panel: overlapArea(panelRect, shifted, 2),
             anchor: overlapArea(anchorRect, shifted, 6),
+            cardSide: cardSidePenalty(shifted),
+            connector: Number(crossesConnector(shifted)),
             subject: subjectRects.reduce((total, rect) => total + overlapArea(shifted, rect, 2), 0),
             obstacle: obstacleRects.reduce((total, rect) => total + overlapArea(shifted, rect, 2), 0),
             distance: Math.abs(offset) + radialOffset + labelGap * 0.25 + placements.indexOf(placement) * 0.1 + widthIndex
@@ -2497,14 +2538,31 @@
     candidates.sort((a, b) =>
       a.bounds - b.bounds ||
       a.collision - b.collision ||
+      a.connector - b.connector ||
       a.subject - b.subject ||
       a.panel - b.panel ||
       a.obstacle - b.obstacle ||
       a.anchor - b.anchor ||
+      a.cardSide - b.cardSide ||
       a.distance - b.distance
     );
-    const best = candidates[0];
+    let best = candidates[0];
     if (!best) return;
+    if (best.connector && document.documentElement.classList.contains('is-text-resized')) {
+      const controls = visibleControlElements(scene).filter(element => !element.matches('.museum-label')).map(visibleRect).filter(Boolean);
+      for (const candidate of candidates) {
+        if (candidate.bounds || candidate.subject || candidate.obstacle || candidate.anchor) continue;
+        const dy = Math.max(0, candidate.rect.bottom + 8 - panelRect.top);
+        if (dy > 96) continue;
+        const shiftedPanel = shiftRect(panelRect, 0, dy);
+        if (rectWithinScenePenalty(shiftedPanel, sceneRect, 8)) continue;
+        if ([...subjectRects, ...controls, targetRect, candidate.rect].some(rect => overlapArea(shiftedPanel, rect, 2))) continue;
+        if (crossesConnector(candidate.rect, nearestPanelConnection(targetX, targetY, shiftedPanel))) continue;
+        setPanelOffset(panel, numericCssValue(panel.dataset.layoutOffsetX), numericCssValue(panel.dataset.layoutOffsetY) + dy);
+        best = candidate;
+        break;
+      }
+    }
     label.style.inlineSize = best.labelWidth ? `${best.labelWidth}px` : '';
     anchorEl.dataset.labelPlacement = best.placement;
     setAnchorLabelOffset(anchorEl, best.x, best.y);
@@ -2731,8 +2789,8 @@
   const PARALLAX_RANGE = {
     worldX: 3.2,
     worldY: 2.2,
-    xrDeltaX: 0.8,
-    xrDeltaY: 0.5,
+    xrDeltaX: 1.6,
+    xrDeltaY: 1,
     phoneX: 9,
     phoneY: 5.4,
     phoneRotate: 0.7

@@ -9574,7 +9574,8 @@ html[lang="ja"] :is(
 
 @media (min-width: 1081px) {
   .explorer-stage[data-artwork] .edge-panel {
-    max-block-size: calc(100% - 120px);
+    max-height: none;
+    max-block-size: none;
     overflow-x: clip;
     overflow-y: auto;
     scrollbar-gutter: auto;
@@ -9596,7 +9597,7 @@ html[lang="ja"] :is(
   }
 
   .explorer-stage[data-artwork="lastSupper"] .edge-panel.spec-edge-panel {
-    max-block-size: min(42%, 13.75rem);
+    max-block-size: none;
   }
 }
 
@@ -10700,5 +10701,44 @@ html.is-text-resized .plan-page h1 {
   html.is-text-spaced .explorer-stage[data-artwork] .spec-comparative-panel {
     width: min(70cqi, 240px);
     inline-size: min(70cqi, 240px);
+  }
+}
+
+@media (min-width: 1024px) {
+  html:not(.is-text-resized):not(.is-text-spaced) :is(.hero-stage, .explorer-stage)[data-artwork] .spec-edge-panel {
+    width: min(340px, calc(100% - 32px));
+    inline-size: min(340px, calc(100% - 32px));
+    max-height: none;
+    max-block-size: none;
+    overflow: visible;
+  }
+
+  html:not(.is-text-resized):not(.is-text-spaced) .explorer-stage {
+    min-height: 760px;
+  }
+
+  html:not(.is-text-resized):not(.is-text-spaced) .explorer-stage[data-artwork="girl"] {
+    min-height: 840px;
+  }
+
+  html:not(.is-text-resized):not(.is-text-spaced) .explorer-stage[data-artwork="arnolfini"] .spec-edge-panel {
+    width: min(300px, calc(100% - 32px));
+    inline-size: min(300px, calc(100% - 32px));
+  }
+
+  html:not(.is-text-resized):not(.is-text-spaced) .hero-stage {
+    min-height: 720px;
+  }
+
+  html:not(.is-text-resized):not(.is-text-spaced) :is(.hero-stage, .explorer-stage) .spec-edge-panel h3 {
+    font-size: 0.875rem;
+    line-height: 1.43;
+    letter-spacing: 0;
+  }
+
+  html:not(.is-text-resized):not(.is-text-spaced) :is(.hero-stage, .explorer-stage) .spec-edge-panel .micro-evidence {
+    font-size: 0.8125rem;
+    line-height: 1.54;
+    letter-spacing: 0;
   }
 }
