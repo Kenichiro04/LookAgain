@@ -2,8 +2,7 @@
   const en = {
     layout: {
       cueTitleBreaks: {},
-      cueTargetBreaks: {},
-      matrixTitleBreaks: {}
+      cueTargetBreaks: {}
     },
     nav: {
       difference: "What changes",
@@ -552,6 +551,36 @@
       "https://www.nationalgallery.org.uk/technical-bulletin/billinge_campbell1995": "Technical Bulletin on The Arnolfini Portrait",
       "https://www.nationalgallery.org.uk/paintings/jan-van-eyck-the-arnolfini-portrait": "The Arnolfini Portrait"
     },
+    sourceLabelsById: {
+      cenacolo_last_supper_work: {
+        publisher: "Cenacolo Vinciano",
+        title: "The Last Supper"
+      },
+      cenacolo_theatrical_machine: {
+        publisher: "Cenacolo Vinciano",
+        title: "A powerful theatrical machine"
+      },
+      cenacolo_backstage_conservation: {
+        publisher: "Cenacolo Vinciano",
+        title: "Cenacolo backstage"
+      },
+      mauritshuis_girl_pearl_earring: {
+        publisher: "Mauritshuis",
+        title: "Girl with a Pearl\u00a0Earring"
+      },
+      met_study_young_woman: {
+        publisher: "The Met",
+        title: "Study of a Young Woman"
+      },
+      national_gallery_arnolfini_portrait: {
+        publisher: "The National Gallery",
+        title: "The Arnolfini Portrait"
+      },
+      national_gallery_arnolfini_technical_bulletin: {
+        publisher: "The National Gallery",
+        title: "Technical Bulletin on The Arnolfini Portrait"
+      }
+    },
     xrOnly: {
       title: "Why this needs XR",
       intro:
@@ -807,17 +836,6 @@
         "arnolfini:artist": ["鏡と構図"],
         "arnolfini:restorer": ["布地と", "表面の細部"],
         "arnolfini:social": ["凸面鏡と", "壁の署名"]
-      },
-      matrixTitleBreaks: {
-        "lastSupper:artist": ["格天井、", "側壁の帯、", "食卓の奥行きが", "キリストの", "頭部付近へ"],
-        "lastSupper:restorer": ["壁面には、", "損失・補彩・", "修復の履歴が"],
-        "lastSupper:social": ["食卓での", "配置と分離が、", "場面の秩序を"],
-        "girl:artist": ["視線、", "柔らかな光の", "境界、", "色の対比が、", "小さな像を"],
-        "girl:restorer": ["真珠は、", "少数の", "明るい跡と", "周囲の暗さで"],
-        "girl:social": ["同時期の習作を", "並べると、", "視線・衣装・", "暗い背景という"],
-        "arnolfini:artist": ["鏡、視線の方向、", "人物配置が", "「見る/見られる」", "を絵の主題に"],
-        "arnolfini:restorer": ["板に描かれた", "油彩、", "細密な布地、", "小さな筆触が、", "富を素材の", "精度として"],
-        "arnolfini:social": ["この部屋は", "所有されている", "だけでなく、", "見られ、", "記録され、"]
       }
     },
     nav: {
@@ -1219,7 +1237,7 @@
       }
     },
     lenses: {
-      title: "視点<wbr>マトリクス",
+      title: "視点マトリクス",
       body:
         '同じ作品でも、画家、保存修復家、歴史家が最初に見る場所は違う。<span class="semantic-unit">9つの画面で比べます。</span>',
       explanation:
@@ -1367,6 +1385,36 @@
       "https://www.nationalgallery.org.uk/technical-bulletin/billinge_campbell1995": "《アルノルフィーニ夫妻像》技術研究",
       "https://www.nationalgallery.org.uk/paintings/jan-van-eyck-the-arnolfini-portrait": "《アルノルフィーニ夫妻像》"
     },
+    sourceLabelsById: {
+      cenacolo_last_supper_work: {
+        publisher: "Cenacolo Vinciano",
+        title: "《最後の晩餐》"
+      },
+      cenacolo_theatrical_machine: {
+        publisher: "Cenacolo Vinciano",
+        title: "強い劇場的装置としての《最後の晩餐》"
+      },
+      cenacolo_backstage_conservation: {
+        publisher: "Cenacolo Vinciano",
+        title: "Cenacolo 修復・舞台裏"
+      },
+      mauritshuis_girl_pearl_earring: {
+        publisher: "Mauritshuis",
+        title: "《真珠の耳飾りの少女》"
+      },
+      met_study_young_woman: {
+        publisher: "The Met",
+        title: "《若い女性の習作》"
+      },
+      national_gallery_arnolfini_portrait: {
+        publisher: "The National Gallery",
+        title: "《アルノルフィーニ夫妻像》"
+      },
+      national_gallery_arnolfini_technical_bulletin: {
+        publisher: "The National Gallery",
+        title: "《アルノルフィーニ夫妻像》技術研究"
+      }
+    },
     xrOnly: {
       title: "なぜ<wbr>XRなのか",
       intro:
@@ -1504,7 +1552,7 @@
     },
     planPage: {
       home: "ホーム",
-      title: "実装<wbr>ロードマップ",
+      title: '実装<wbr><span class="plan-title-term">ロード<wbr>マップ</span>',
       kicker: "審査員向け実行計画",
       intro:
         '<span class="semantic-unit">Look\u00a0Againは、</span><span class="semantic-unit">大規模な美術館</span><span class="semantic-unit">プラットフォームではなく、</span><span class="semantic-unit">焦点を絞った</span><span class="semantic-unit">Android\u00a0XRプロトタイプとして</span><span class="semantic-unit">設計する。</span>目的は、実物作品の上に重ねる短い視点表示が、何を問えばいいか分かる前に作品を見始める助けになるかを検証すること。',
@@ -1600,4 +1648,42 @@
   };
 
   window.LookAgainI18n = { en, ja };
+})();
+
+(function trackTextResizeMode() {
+  const root = document.documentElement;
+  let frame = 0;
+
+  function update() {
+    frame = 0;
+    const rootSize = Number.parseFloat(window.getComputedStyle(root).fontSize || "16");
+    const bodyStyle = document.body ? window.getComputedStyle(document.body) : null;
+    const letterSpacing = Number.parseFloat(bodyStyle?.letterSpacing || "0");
+    const wordSpacing = Number.parseFloat(bodyStyle?.wordSpacing || "0");
+    root.classList.toggle("is-text-resized", Number.isFinite(rootSize) && rootSize >= 24);
+    root.classList.toggle(
+      "is-text-spaced",
+      (Number.isFinite(letterSpacing) && letterSpacing >= 1.25) ||
+        (Number.isFinite(wordSpacing) && wordSpacing >= 1.25)
+    );
+  }
+
+  function schedule() {
+    if (frame) window.cancelAnimationFrame(frame);
+    frame = window.requestAnimationFrame(update);
+  }
+
+  update();
+  window.addEventListener("resize", schedule, { passive: true });
+  document.fonts?.ready.then(schedule).catch(() => {});
+
+  if (document.head && "MutationObserver" in window) {
+    const observer = new MutationObserver(schedule);
+    observer.observe(document.head, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["disabled", "media"]
+    });
+  }
 })();

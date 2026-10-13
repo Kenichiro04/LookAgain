@@ -1,5 +1,71 @@
 // Generated from ../data/lens_cue_specs_v23.json for Safari/file:// preview fallback.
-window.LookAgainCueSpecsV23Data = [
+window.LookAgainCueSpecsV23Data = {
+  "sources": [
+    {
+      "source_id": "cenacolo_last_supper_work",
+      "display_order": 1,
+      "url": "https://cenacolovinciano.org/en/museum/the-works/the-last-supper-leonardo-da-vinci-1452-1519/",
+      "publisher": "Cenacolo Vinciano",
+      "title_en": "The Last Supper",
+      "title_ja": "《最後の晩餐》",
+      "used_cells": ["lastSupper:artist", "lastSupper:restorer", "lastSupper:social"]
+    },
+    {
+      "source_id": "cenacolo_theatrical_machine",
+      "display_order": 2,
+      "url": "https://cenacolovinciano.org/en/story/a-powerful-theatrical-machine/",
+      "publisher": "Cenacolo Vinciano",
+      "title_en": "A powerful theatrical machine",
+      "title_ja": "強い劇場的装置としての《最後の晩餐》",
+      "used_cells": ["lastSupper:artist", "lastSupper:social"]
+    },
+    {
+      "source_id": "cenacolo_backstage_conservation",
+      "display_order": 3,
+      "url": "https://cenacolovinciano.org/en/museum/backstage/",
+      "publisher": "Cenacolo Vinciano",
+      "title_en": "Cenacolo backstage",
+      "title_ja": "Cenacolo 修復・舞台裏",
+      "used_cells": ["lastSupper:restorer"]
+    },
+    {
+      "source_id": "mauritshuis_girl_pearl_earring",
+      "display_order": 4,
+      "url": "https://www.mauritshuis.nl/en/explore/the-collection/artworks/girl-with-a-pearl-earring-670/",
+      "publisher": "Mauritshuis",
+      "title_en": "Girl with a Pearl Earring",
+      "title_ja": "《真珠の耳飾りの少女》",
+      "used_cells": ["girl:artist", "girl:restorer", "girl:social"]
+    },
+    {
+      "source_id": "met_study_young_woman",
+      "display_order": 5,
+      "url": "https://www.metmuseum.org/art/collection/search/437879",
+      "publisher": "The Met",
+      "title_en": "Study of a Young Woman",
+      "title_ja": "《若い女性の習作》",
+      "used_cells": ["girl:social"]
+    },
+    {
+      "source_id": "national_gallery_arnolfini_portrait",
+      "display_order": 6,
+      "url": "https://www.nationalgallery.org.uk/paintings/jan-van-eyck-the-arnolfini-portrait",
+      "publisher": "The National Gallery",
+      "title_en": "The Arnolfini Portrait",
+      "title_ja": "《アルノルフィーニ夫妻像》",
+      "used_cells": ["arnolfini:artist", "arnolfini:restorer", "arnolfini:social"]
+    },
+    {
+      "source_id": "national_gallery_arnolfini_technical_bulletin",
+      "display_order": 7,
+      "url": "https://www.nationalgallery.org.uk/technical-bulletin/billinge_campbell1995",
+      "publisher": "The National Gallery",
+      "title_en": "Technical Bulletin on The Arnolfini Portrait",
+      "title_ja": "《アルノルフィーニ夫妻像》技術研究",
+      "used_cells": ["arnolfini:restorer"]
+    }
+  ],
+  "viewpoints": [
   {
     "artwork_id": "lastSupper",
     "artwork_title_en": "The Last Supper",
@@ -43,6 +109,10 @@ window.LookAgainCueSpecsV23Data = [
     "source_urls": [
       "https://cenacolovinciano.org/en/museum/the-works/the-last-supper-leonardo-da-vinci-1452-1519/",
       "https://cenacolovinciano.org/en/story/a-powerful-theatrical-machine/"
+    ],
+    "source_ids": [
+      "cenacolo_last_supper_work",
+      "cenacolo_theatrical_machine"
     ],
     "do_not_show": [
       "pure math diagram",
@@ -113,6 +183,10 @@ window.LookAgainCueSpecsV23Data = [
       "https://cenacolovinciano.org/en/museum/backstage/",
       "https://cenacolovinciano.org/en/museum/the-works/the-last-supper-leonardo-da-vinci-1452-1519/"
     ],
+    "source_ids": [
+      "cenacolo_backstage_conservation",
+      "cenacolo_last_supper_work"
+    ],
     "do_not_show": [
       "generic zoom only",
       "fake scientific scan",
@@ -166,6 +240,10 @@ window.LookAgainCueSpecsV23Data = [
     "source_urls": [
       "https://cenacolovinciano.org/en/story/a-powerful-theatrical-machine/",
       "https://cenacolovinciano.org/en/museum/the-works/the-last-supper-leonardo-da-vinci-1452-1519/"
+    ],
+    "source_ids": [
+      "cenacolo_theatrical_machine",
+      "cenacolo_last_supper_work"
     ],
     "do_not_show": [
       "generic religious summary",
@@ -222,6 +300,7 @@ window.LookAgainCueSpecsV23Data = [
     "source_urls": [
       "https://www.mauritshuis.nl/en/explore/the-collection/artworks/girl-with-a-pearl-earring-670/"
     ],
+    "source_ids": ["mauritshuis_girl_pearl_earring"],
     "do_not_show": [
       "perspective lines",
       "geometry grid",
@@ -296,6 +375,7 @@ window.LookAgainCueSpecsV23Data = [
     "source_urls": [
       "https://www.mauritshuis.nl/en/explore/the-collection/artworks/girl-with-a-pearl-earring-670/"
     ],
+    "source_ids": ["mauritshuis_girl_pearl_earring"],
     "do_not_show": [
       "claiming the pearl is materially real",
       "fake microscope interface",
@@ -378,6 +458,10 @@ window.LookAgainCueSpecsV23Data = [
       "https://www.mauritshuis.nl/en/explore/the-collection/artworks/girl-with-a-pearl-earring-670/",
       "https://www.metmuseum.org/art/collection/search/437879"
     ],
+    "source_ids": [
+      "mauritshuis_girl_pearl_earring",
+      "met_study_young_woman"
+    ],
     "do_not_show": [
       "fixed sitter identity claim",
       "only luxury symbolism",
@@ -432,6 +516,7 @@ window.LookAgainCueSpecsV23Data = [
     "source_urls": [
       "https://www.nationalgallery.org.uk/paintings/jan-van-eyck-the-arnolfini-portrait"
     ],
+    "source_ids": ["national_gallery_arnolfini_portrait"],
     "do_not_show": [
       "perspective grid",
       "only mirror circle with no sightline logic",
@@ -511,6 +596,10 @@ window.LookAgainCueSpecsV23Data = [
       "https://www.nationalgallery.org.uk/paintings/jan-van-eyck-the-arnolfini-portrait",
       "https://www.nationalgallery.org.uk/technical-bulletin/billinge_campbell1995"
     ],
+    "source_ids": [
+      "national_gallery_arnolfini_portrait",
+      "national_gallery_arnolfini_technical_bulletin"
+    ],
     "do_not_show": [
       "generic fabric zoom",
       "fake conservation data",
@@ -563,6 +652,7 @@ window.LookAgainCueSpecsV23Data = [
     "source_urls": [
       "https://www.nationalgallery.org.uk/paintings/jan-van-eyck-the-arnolfini-portrait"
     ],
+    "source_ids": ["national_gallery_arnolfini_portrait"],
     "do_not_show": [
       "listing every object",
       "symbolism trivia",
@@ -571,4 +661,5 @@ window.LookAgainCueSpecsV23Data = [
       "claiming one fixed interpretation"
     ]
   }
-];
+  ]
+};

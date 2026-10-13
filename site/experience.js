@@ -6,6 +6,15 @@
   const defaultHeroArtwork = "arnolfini";
   const lensOrder = ["artist", "restorer", "social"];
   const artworkOrder = ["lastSupper", "girl", "arnolfini"];
+  const SOURCE_ID_ORDER = [
+    "cenacolo_last_supper_work",
+    "cenacolo_theatrical_machine",
+    "cenacolo_backstage_conservation",
+    "mauritshuis_girl_pearl_earring",
+    "met_study_young_woman",
+    "national_gallery_arnolfini_portrait",
+    "national_gallery_arnolfini_technical_bulletin"
+  ];
   const heroTimingMs = {
     looking: 3200,
     audio: 3600,
@@ -20,6 +29,7 @@
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const parallaxStages = new WeakMap();
   const stageLabelLayoutFrames = new WeakMap();
+  const cueSequenceFinalLayoutTimers = new WeakMap();
   const stageObservedPanels = new WeakMap();
   const cueSequenceObservedStages = new WeakSet();
   let cueSequenceObserver = null;
@@ -323,6 +333,7 @@
   let currentLens = "artist";
   let currentLensItem = 0;
   let cueSpecs = [];
+  let sourceRegistry = [];
   let cueSpecsByKey = new Map();
 
   const heroExperience = document.querySelector("[data-hero-experience]");
@@ -459,6 +470,10 @@
     return Array.isArray(spec?.source_urls) ? spec.source_urls.filter(Boolean) : [];
   }
 
+  function cueSpecSourceIds(spec) {
+    return Array.isArray(spec?.source_ids) ? spec.source_ids.filter(Boolean) : [];
+  }
+
   function sourceHost(url) {
     try {
       return new URL(url).hostname;
@@ -476,37 +491,79 @@
   }
 
   function sourceFootnoteEntries() {
-    const entries = new Map();
+    const registryById = new Map(sourceRegistry.map((entry) => [entry.source_id, entry]));
+    const entries = new Map(SOURCE_ID_ORDER.map((id, index) => {
+      const registry = registryById.get(id) || {};
+      const localized = dict().sourceLabelsById?.[id] || {};
+      return [id, {
+        id,
+        index: index + 1,
+        url: registry.url || "",
+        label: registry[`title_${lang}`] || localized.title || "",
+        publisher: registry.publisher || localized.publisher || "",
+        usedBy: []
+      }];
+    }));
     cueSpecs.forEach((spec) => {
-      cueSpecSourceUrls(spec).forEach((url) => {
-        if (!entries.has(url)) {
-          entries.set(url, {
-            index: entries.size + 1,
-            url,
-            label: sourceLabel(url),
-            usedBy: []
-          });
-        }
-        const entry = entries.get(url);
+      const urls = cueSpecSourceUrls(spec);
+      cueSpecSourceIds(spec).forEach((id, sourceIndex) => {
+        const entry = entries.get(id);
+        if (!entry) return;
+        const localized = dict().sourceLabelsById?.[id] || {};
+        entry.url ||= urls[sourceIndex] || "";
+        entry.publisher ||= localized.publisher || sourceHost(entry.url);
+        entry.label ||= localized.title || sourceLabel(entry.url);
         const usedBy = `${cueSpecText(spec, "artwork_title")} / ${cueSpecText(spec, "lens_title")}`;
         if (usedBy.trim() && !entry.usedBy.includes(usedBy)) {
           entry.usedBy.push(usedBy);
         }
       });
     });
-    return [...entries.values()];
+    return [...entries.values()].filter((entry) => entry.url && entry.usedBy.length);
   }
 
-  function sourceFootnoteNumber(spec) {
-    const primaryUrl = cueSpecSourceUrls(spec)[0];
-    if (!primaryUrl) return null;
-    return sourceFootnoteEntries().find((entry) => entry.url === primaryUrl)?.index || null;
+  function sourceFootnoteNumber(sourceId) {
+    const index = SOURCE_ID_ORDER.indexOf(sourceId);
+    return index >= 0 ? index + 1 : null;
   }
 
-  function sourceFootnoteMark(spec) {
-    const number = sourceFootnoteNumber(spec);
-    if (!number) return "";
-    return `<sup class="source-footnote-mark"><a href="#source-footnote-${number}" aria-label="${escapeAttr(t("sourceFootnotes.kicker"))} ${number}">[${number}]</a></sup>`;
+  function sourceReferenceId(spec, sourceId, context) {
+    return `source-ref-${cueSpecSlug(context || "cue")}-${cueSpecSlug(spec.artwork_id)}-${cueSpecSlug(spec.lens_id)}-${cueSpecSlug(sourceId)}`;
+  }
+
+  function sourceFootnoteMark(spec, context = "cue") {
+    const links = cueSpecSourceIds(spec)
+      .map((sourceId) => ({ sourceId, number: sourceFootnoteNumber(sourceId) }))
+      .filter((entry) => entry.number)
+      .map((entry) => `
+        <a
+          id="${escapeAttr(sourceReferenceId(spec, entry.sourceId, context))}"
+          class="source-footnote-link"
+          data-source-id="${escapeAttr(entry.sourceId)}"
+          href="#source-footnote-${escapeAttr(entry.sourceId)}"
+          aria-label="${escapeAttr(`${t("sourceFootnotes.kicker")} ${entry.number}`)}"
+        >${entry.number}</a>
+      `);
+    if (!links.length) return "";
+    return `<sup class="source-footnote-mark" aria-label="${escapeAttr(t("sourceFootnotes.kicker"))}">[${links.join('<span aria-hidden="true">, </span>')}]</sup>`;
+  }
+
+  function sourceFootnotedCueHtml(spec, value, context, phraseKind = null) {
+    const source = String(value || "");
+    const mark = sourceFootnoteMark(spec, context);
+    if (!mark) return phraseKind ? cuePhraseHtml(spec, source, phraseKind) : escapeHtml(source);
+
+    const spaced = source.match(/^(.*\s)(\S+)$/u);
+    let lead = spaced?.[1] || "";
+    let tail = spaced?.[2] || "";
+    if (!tail) {
+      const characters = [...source];
+      const tailLength = Math.min(4, characters.length);
+      lead = characters.slice(0, -tailLength).join("");
+      tail = characters.slice(-tailLength).join("");
+    }
+    const leadHtml = phraseKind ? cuePhraseHtml(spec, lead, phraseKind) : escapeHtml(lead);
+    return `${leadHtml}<span class="source-footnote-bind">${escapeHtml(tail)}${mark}</span>`;
   }
 
   function localizedCardText(card, field) {
@@ -547,12 +604,23 @@
     return cueSpecsByKey.get(cueSpecKey(artworkId, lensId));
   }
 
-  function fallbackCueSpecs() {
-    return Array.isArray(window.LookAgainCueSpecsV23Data) ? window.LookAgainCueSpecsV23Data : null;
+  function normalizeCuePayload(payload) {
+    if (Array.isArray(payload)) return { viewpoints: payload, sources: [] };
+    return {
+      viewpoints: Array.isArray(payload?.viewpoints) ? payload.viewpoints : [],
+      sources: Array.isArray(payload?.sources) ? payload.sources : []
+    };
   }
 
-  function applyCueSpecs(specs) {
-    cueSpecs = specs;
+  function fallbackCueSpecs() {
+    const payload = normalizeCuePayload(window.LookAgainCueSpecsV23Data);
+    return payload.viewpoints.length ? payload : null;
+  }
+
+  function applyCueSpecs(payload) {
+    const normalized = normalizeCuePayload(payload);
+    cueSpecs = normalized.viewpoints;
+    sourceRegistry = [...normalized.sources].sort((a, b) => a.display_order - b.display_order);
     cueSpecsByKey = new Map(cueSpecs.map((spec) => [cueSpecKey(spec.artwork_id, spec.lens_id), spec]));
     lensOrder.forEach((lens) => {
       lensItems[lens] = artworkOrder
@@ -561,6 +629,7 @@
         .map(cueSpecToItem);
     });
     window.LookAgainCueSpecsV23 = cueSpecs;
+    window.LookAgainSourceRegistryV23 = sourceRegistry;
   }
 
   async function fetchCueSpecs() {
@@ -777,7 +846,13 @@
 
   function renderStage(stage, stateId, overrides = {}) {
     if (!stage) return;
+    const pendingFinalLayout = cueSequenceFinalLayoutTimers.get(stage);
+    if (pendingFinalLayout) {
+      window.clearTimeout(pendingFinalLayout);
+      cueSequenceFinalLayoutTimers.delete(stage);
+    }
     const config = stageConfigFor(stateId, overrides);
+    config.sourceContext = stage === heroStage ? "hero" : "preview";
     const artwork = artworks[config.artwork];
     const scene = stage.querySelector("[data-stage-scene]");
     const runCueSequence = Boolean(config.panel && config.cue);
@@ -789,9 +864,11 @@
     stage.dataset.cueSequenceKey = runCueSequence
       ? `${stateId}:${config.artwork}:${config.cueSpecId || config.cue}`
       : "";
+    stage.dataset.layoutReady = runCueSequence ? "false" : "true";
+    stage.dataset.cueSequencePlayed = "false";
     stage.classList.remove("is-stage-changing", "is-xr-reveal");
     stage.classList.toggle("is-cue-sequence", runCueSequence);
-    stage.classList.toggle("has-floating-anchor", runCueSequence);
+    stage.classList.remove("has-floating-anchor");
     stage.classList.remove("is-cue-sequence-active");
     stage.dataset.cueSequenceVisible = "false";
     if (runCueSequence && reducedMotion) {
@@ -812,38 +889,47 @@
     scene.className = `stage-scene stage-layer--room scene-${artwork.scene} stage--${artwork.stageClass}`;
 
     scene.innerHTML = `
-      ${config.panel && config.cue ? renderConnectorSvg() : ""}
       ${renderStagePerspective(config)}
-      ${renderArtwork(artwork, config)}
-      ${renderViewingPositionHint(config)}
+      <div class="physical-world-layer">
+        <div class="physical-world-backdrop scene-${artwork.scene} stage--${artwork.stageClass}" aria-hidden="true"></div>
+        ${renderArtwork(artwork, config, { includeCue: false })}
+      </div>
       ${config.uncertainFocus ? '<div class="uncertain-focus-layer stage-layer--overlay" aria-hidden="true"></div>' : ""}
       ${config.phone ? '<div class="phone-focus-veil stage-layer--overlay" aria-hidden="true"></div>' : ""}
       ${config.audio ? renderAudioCue(config) : ""}
       ${config.phone ? renderPhoneMock(artwork) : ""}
-      ${config.wearing ? renderWearingHud() : ""}
-      ${config.viewpointSelect ? renderViewpointSelector(config.viewpointSelectedLens) : ""}
-      ${runCueSequence ? renderFloatingAnchor(config) : ""}
-      ${config.panel ? renderPanel(config) : ""}
-      ${config.quiet ? renderQuietMessage() : ""}
+      <div class="xr-overlay-layer">
+        ${config.panel && config.cue ? renderConnectorSvg() : ""}
+        ${config.cue ? renderArtworkOverlayPlane(artwork, config) : ""}
+        ${renderViewingPositionHint(config)}
+        ${config.wearing ? renderWearingHud() : ""}
+        ${config.viewpointSelect ? renderViewpointSelector(config.viewpointSelectedLens) : ""}
+        ${config.panel ? renderPanel(config) : ""}
+        ${config.quiet ? renderQuietMessage() : ""}
+      </div>
     `;
     observeStagePanel(stage);
 
     resetStageParallax(stage, { immediate: true });
     const sequenceKey = stage.dataset.cueSequenceKey;
-    const startCueSequenceIfVisible = (force = false) => {
+    const startCueSequenceIfVisible = () => {
       if (!runCueSequence || stage.dataset.cueSequenceKey !== sequenceKey) return;
       layoutStage(stage);
-      if (cueStageIsVisible(stage) && (force || !stage.classList.contains("is-cue-sequence-active"))) {
+      if (stage.dataset.layoutReady === "true" && cueStageIsVisible(stage)) {
         restartCueSequence(stage);
       }
     };
-    requestAnimationFrame(() => {
-      startCueSequenceIfVisible(true);
-    });
     if (runCueSequence) {
-      const layoutDelays = reducedMotion ? [0, 24, 48] : [280, 920, 1280];
-      layoutDelays.forEach((delay) => {
-        window.setTimeout(() => startCueSequenceIfVisible(false), delay);
+      layoutStage(stage);
+      requestAnimationFrame(() => {
+        if (stage.dataset.cueSequenceKey !== sequenceKey) return;
+        layoutStage(stage);
+        requestAnimationFrame(() => {
+          if (stage.dataset.cueSequenceKey !== sequenceKey) return;
+          layoutStage(stage);
+          stage.dataset.layoutReady = "true";
+          startCueSequenceIfVisible();
+        });
       });
     }
   }
@@ -858,64 +944,71 @@
     `;
   }
 
-  function renderFloatingAnchor(config) {
-    const pointerClass = pointerDirectionClass(config.pointerDirection);
-    const targetLabel = config.cueSpec
-      ? cueSpecText(config.cueSpec, "target_label")
-      : (config.targetLabel || t("cueUi.discoveryPoint"));
-    return `
-      <div class="floating-anchor-layer stage-layer--overlay" aria-hidden="true">
-        <span class="floating-anchor-proxy pointer-cue ${pointerClass}"></span>
-        <span class="floating-anchor-target anchor-target" data-pointer-direction="${escapeAttr(config.pointerDirection || "")}">
-          <span class="anchor-label">
-            <span class="anchor-kicker">${escapeHtml(t("cueUi.discoveryPoint"))}</span>
-            <span>${escapeHtml(targetLabel)}</span>
-          </span>
-        </span>
-      </div>
-    `;
-  }
-
   function renderStaticStageMarkup(stateId, overrides = {}) {
     const config = stageConfigFor(stateId, overrides);
+    config.sourceContext = "matrix";
     const artwork = artworks[config.artwork];
     const anchorX = percentNumber(config.anchorX);
     const anchorY = percentNumber(config.anchorY);
     const connectorEndX = 54;
     const connectorEndY = 34;
     return `
-      <div class="xr-stage matrix-mini-stage" data-state="${stateId}" data-artwork="${config.artwork}" data-scene="${artwork.scene}" data-scale="${artwork.scaleClass}">
+      <div class="xr-stage matrix-mini-stage" data-layout-ready="false" data-state="${stateId}" data-artwork="${config.artwork}" data-scene="${artwork.scene}" data-scale="${artwork.scaleClass}">
         <div class="stage-scene scene-${artwork.scene} stage--${artwork.stageClass}">
-          <svg class="connector-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-            <line x1="${anchorX}" y1="${anchorY}" x2="${connectorEndX}" y2="${connectorEndY}" pathLength="1"></line>
-            <circle class="connector-start" cx="${anchorX}" cy="${anchorY}" r="0.55"></circle>
-            <circle class="connector-end" cx="${connectorEndX}" cy="${connectorEndY}" r="0.45"></circle>
-          </svg>
           ${renderStagePerspective(config)}
-          ${renderArtwork(artwork, config)}
-          ${renderViewingPositionHint(config)}
-          ${config.panel ? renderPanel(config) : ""}
+          <div class="physical-world-layer">
+            <div class="physical-world-backdrop scene-${artwork.scene} stage--${artwork.stageClass}" aria-hidden="true"></div>
+            ${renderArtwork(artwork, config, { includeCue: false })}
+          </div>
+          <div class="xr-overlay-layer">
+            <svg class="connector-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+              <line x1="${anchorX}" y1="${anchorY}" x2="${connectorEndX}" y2="${connectorEndY}" pathLength="1"></line>
+              <circle class="connector-start" cx="${anchorX}" cy="${anchorY}" r="0.55"></circle>
+              <circle class="connector-end" cx="${connectorEndX}" cy="${connectorEndY}" r="0.45"></circle>
+            </svg>
+            ${renderArtworkOverlayPlane(artwork, config)}
+            ${renderViewingPositionHint(config)}
+            ${config.panel ? renderPanel(config) : ""}
+          </div>
         </div>
       </div>
     `;
   }
 
-  function renderArtwork(artwork, config) {
+  function artworkInlineStyle(artwork, config) {
+    return `--art-ratio: ${artwork.ratio}; --art-left: ${config.artLeft || "39%"}; --art-top: ${config.artTop || "44%"}; --art-width: ${config.artWidth || artwork.width}; --art-mobile-width: ${config.artMobileWidth || artwork.mobileWidth};`;
+  }
+
+  function renderArtwork(artwork, config, options = {}) {
     const obliqueClass = config.oblique ? " is-oblique" : "";
     const label = renderMuseumLabel(artwork);
+    const includeCue = options.includeCue !== false;
     return `
       <div
         class="artwork-rig stage-layer--artwork ${artwork.frameClass} ${artwork.scaleClass}${obliqueClass}"
         data-display-size="${escapeAttr(artwork.displaySize)}"
-        style="--art-ratio: ${artwork.ratio}; --art-left: ${config.artLeft || "39%"}; --art-top: ${config.artTop || "44%"}; --art-width: ${config.artWidth || artwork.width}; --art-mobile-width: ${config.artMobileWidth || artwork.mobileWidth};"
+        style="${artworkInlineStyle(artwork, config)}"
       >
         <div class="artwork-frame">
           <img src="${artwork.src}" alt="${escapeAttr(t(artwork.altKey))}">
-          <div class="artwork-cue-layer">
-            ${renderCue(config)}
-          </div>
+          ${includeCue ? `<div class="artwork-cue-layer">${renderCue(config)}</div>` : ""}
         </div>
         ${label}
+      </div>
+    `;
+  }
+
+  function renderArtworkOverlayPlane(artwork, config) {
+    const obliqueClass = config.oblique ? " is-oblique" : "";
+    return `
+      <div
+        class="artwork-rig xr-artwork-plane ${artwork.frameClass} ${artwork.scaleClass}${obliqueClass}"
+        style="${artworkInlineStyle(artwork, config)}"
+        aria-hidden="true"
+      >
+        <div class="artwork-frame">
+          <div class="artwork-cue-layer">${renderCue(config)}</div>
+        </div>
       </div>
     `;
   }
@@ -1589,23 +1682,24 @@
           ${spec.lens_id === "restorer" ? renderMaterialEvidence(spec, { compact: true }) : ""}
           ${comparativeEvidence}
           <span class="panel-target phrase-controlled">${cuePhraseHtml(spec, target, "cueTargetBreaks")}</span>
-          <h3 class="phrase-controlled">${cuePhraseHtml(spec, title)}</h3>
+          <h3 class="phrase-controlled">${sourceFootnotedCueHtml(spec, title, config.sourceContext, "cueTitleBreaks")}</h3>
           <p class="micro-evidence">${escapeHtml(microEvidence)}</p>
         </aside>
       `;
     }
     if (config.matrixPreview) {
       const matrixEvidence = [materialEvidence, comparativeEvidence].filter(Boolean).join("");
+      const matrixDensityClass = matrixEvidence ? " matrix-card--evidence" : " matrix-card--compact";
       return `
         <aside
-          class="edge-panel spec-edge-panel matrix-cue-panel stage-layer--panel ${positionClass}${panelKindClass}"
+          class="edge-panel spec-edge-panel matrix-cue-panel stage-layer--panel ${positionClass}${panelKindClass}${matrixDensityClass}"
           data-panel-position="${escapeAttr(spec.edge_panel_position)}"
           aria-label="${escapeAttr(`${cueSpecText(spec, "lens_title")} / ${cueSpecText(spec, "target_label")} / ${title}`)}"
         >
           <span class="matrix-cue-icon" aria-hidden="true">${stateIcon(spec.lens_id)}</span>
           <span class="matrix-cue-copy">
-            <span class="panel-target phrase-controlled">${cuePhraseHtml(spec, target, "cueTargetBreaks")}</span>
-            <h3 class="phrase-controlled">${cuePhraseHtml(spec, title, "matrixTitleBreaks")}</h3>
+            <span class="panel-target">${escapeHtml(target)}</span>
+            <h3>${sourceFootnotedCueHtml(spec, title, config.sourceContext)}</h3>
             <p class="micro-evidence">${escapeHtml(microEvidence)}</p>
           </span>
           ${matrixEvidence ? `<div class="matrix-cue-evidence">${matrixEvidence}</div>` : ""}
@@ -1623,7 +1717,7 @@
         ${materialEvidence}
         ${comparativeEvidence}
         <span class="panel-target phrase-controlled">${cuePhraseHtml(spec, target, "cueTargetBreaks")}</span>
-        <h3 class="phrase-controlled">${cuePhraseHtml(spec, title)}${sourceFootnoteMark(spec)}</h3>
+        <h3 class="phrase-controlled">${sourceFootnotedCueHtml(spec, title, config.sourceContext, "cueTitleBreaks")}</h3>
         <p class="micro-evidence">${escapeHtml(microEvidence)}</p>
       </aside>
     `;
@@ -1781,13 +1875,31 @@
   }
 
   function restartCueSequence(stage) {
-    if (!stage || reducedMotion || !stage.classList.contains("is-cue-sequence")) return;
+    if (
+      !stage ||
+      reducedMotion ||
+      !stage.classList.contains("is-cue-sequence") ||
+      stage.dataset.layoutReady !== "true" ||
+      stage.dataset.cueSequencePlayed === "true"
+    ) return;
+    stage.dataset.cueSequencePlayed = "true";
     stage.classList.remove("is-cue-sequence-active");
     void stage.offsetWidth;
     requestAnimationFrame(() => {
       if (stage.classList.contains("is-cue-sequence")) {
         stage.classList.add("is-cue-sequence-active");
-        window.setTimeout(() => layoutStage(stage), 940);
+        const sequenceKey = stage.dataset.cueSequenceKey;
+        const finalLayoutTimer = window.setTimeout(() => {
+          cueSequenceFinalLayoutTimers.delete(stage);
+          if (
+            stage.dataset.cueSequenceKey === sequenceKey &&
+            stage.dataset.layoutReady === "true" &&
+            stage.classList.contains("is-cue-sequence-active")
+          ) {
+            layoutStage(stage);
+          }
+        }, 520);
+        cueSequenceFinalLayoutTimers.set(stage, finalLayoutTimer);
       }
     });
   }
@@ -1802,7 +1914,7 @@
           if (entry.isIntersecting && entry.intersectionRatio >= 0.22) {
             if (cueStage.dataset.cueSequenceVisible !== "true") {
               cueStage.dataset.cueSequenceVisible = "true";
-              restartCueSequence(cueStage);
+              if (cueStage.dataset.layoutReady === "true") restartCueSequence(cueStage);
             }
           } else {
             cueStage.dataset.cueSequenceVisible = "false";
@@ -1818,13 +1930,14 @@
     if (!stage) return;
     const scene = stage.querySelector("[data-stage-scene]");
     if (!scene) return;
-    const svg = scene.querySelector(".connector-svg");
+    const coordinateRoot = scene.querySelector(".xr-overlay-layer") || scene;
+    const svg = coordinateRoot.querySelector(".connector-svg");
     if (!svg) return;
     const line = svg.querySelector("line");
     const start = svg.querySelector(".connector-start");
     const end = svg.querySelector(".connector-end");
-    const anchorEl = scene.querySelector(".anchor-target");
-    const panel = scene.querySelector(".edge-panel");
+    const anchorEl = coordinateRoot.querySelector(".anchor-target");
+    const panel = coordinateRoot.querySelector(".edge-panel");
 
     if (!anchorEl || !panel) {
       svg.style.display = "none";
@@ -1832,17 +1945,15 @@
     }
 
     svg.style.display = "block";
-    const sceneRect = scene.getBoundingClientRect();
+    const sceneRect = coordinateRoot.getBoundingClientRect();
     const anchorRect = anchorEl.getBoundingClientRect();
-    const panelRect = panel.getBoundingClientRect();
+    const panelRect = panelTargetRect(panel);
     const anchorCenterX = anchorRect.left + anchorRect.width / 2;
     const anchorCenterY = anchorRect.top + anchorRect.height / 2;
-    const panelConnectionX = anchorCenterX <= panelRect.left ? panelRect.left : panelRect.right;
-    const panelConnectionY = Math.max(
-      panelRect.top + 22,
-      Math.min(anchorCenterY, panelRect.bottom - 22)
-    );
-    const panelOriginX = panelConnectionX === panelRect.left ? "left" : "right";
+    const connection = nearestPanelConnection(anchorCenterX, anchorCenterY, panelRect);
+    const panelConnectionX = connection.x;
+    const panelConnectionY = connection.y;
+    const panelOriginX = ((panelConnectionX - panelRect.left) / panelRect.width) * 100;
     const panelOriginY = ((panelConnectionY - panelRect.top) / panelRect.height) * 100;
     const x1 = ((anchorCenterX - sceneRect.left) / sceneRect.width) * 100;
     const y1 = ((anchorCenterY - sceneRect.top) / sceneRect.height) * 100;
@@ -1857,19 +1968,60 @@
     start.setAttribute("cy", y1.toFixed(2));
     end.setAttribute("cx", x2.toFixed(2));
     end.setAttribute("cy", y2.toFixed(2));
-    scene.style.setProperty("--floating-anchor-x", `${(anchorCenterX - sceneRect.left).toFixed(2)}px`);
-    scene.style.setProperty("--floating-anchor-y", `${(anchorCenterY - sceneRect.top).toFixed(2)}px`);
-    panel.style.setProperty("--connector-origin-x", panelOriginX);
+    clearConnectorBehindLabel(svg, anchorEl.querySelector(".anchor-label"), stage);
+    panel.dataset.connectorSide = connection.side;
+    panel.style.setProperty("--connector-origin-x", `${panelOriginX.toFixed(2)}%`);
     panel.style.setProperty("--connector-origin-y", `${panelOriginY.toFixed(2)}%`);
+  }
+
+  function clearConnectorBehindLabel(svg, label, stage) {
+    if (!label) return;
+    const matrix = svg.getScreenCTM();
+    if (!matrix) return;
+    const inverse = matrix.inverse();
+    const rect = label.getBoundingClientRect();
+    const padding = 5;
+    const start = new DOMPoint(rect.left - padding, rect.top - padding).matrixTransform(inverse);
+    const end = new DOMPoint(rect.right + padding, rect.bottom + padding).matrixTransform(inverse);
+    const id = `connector-label-clearance-${stage.dataset.xrStage}`;
+    let hole = svg.querySelector('[data-label-clearance]');
+    if (!hole) {
+      const ns = "http://www.w3.org/2000/svg";
+      const defs = document.createElementNS(ns, "defs");
+      const mask = document.createElementNS(ns, "mask");
+      mask.id = id;
+      mask.setAttribute("maskUnits", "userSpaceOnUse");
+      mask.setAttribute("x", "0");
+      mask.setAttribute("y", "0");
+      mask.setAttribute("width", "100");
+      mask.setAttribute("height", "100");
+      const field = document.createElementNS(ns, "rect");
+      field.setAttribute("width", "100");
+      field.setAttribute("height", "100");
+      field.setAttribute("fill", "white");
+      hole = document.createElementNS(ns, "rect");
+      hole.setAttribute("data-label-clearance", "");
+      hole.setAttribute("fill", "black");
+      mask.append(field, hole);
+      defs.append(mask);
+      svg.prepend(defs);
+      svg.querySelector("line").setAttribute("mask", `url(#${id})`);
+    }
+    // Clear only the label's footprint; keep the target, line ends and motion intact.
+    hole.setAttribute("x", start.x.toFixed(4));
+    hole.setAttribute("y", start.y.toFixed(4));
+    hole.setAttribute("width", (end.x - start.x).toFixed(4));
+    hole.setAttribute("height", (end.y - start.y).toFixed(4));
   }
 
   function layoutStage(stage) {
     if (!stage) return;
-    positionConnector(stage);
     const scene = stage.querySelector("[data-stage-scene]");
     const panel = scene?.querySelector(".edge-panel");
-    const sourceAnchor = scene?.querySelector(".artwork-cue-layer .anchor-target") || scene?.querySelector(".anchor-target");
-    const displayAnchor = scene?.querySelector(".floating-anchor-target.anchor-target") || sourceAnchor;
+    if (scene && panel) fitExplorerPanelToArtworkLane(scene, panel);
+    positionConnector(stage);
+    const sourceAnchor = scene?.querySelector(".xr-artwork-plane .anchor-target") || scene?.querySelector(".anchor-target");
+    const displayAnchor = sourceAnchor;
     if (scene && panel && sourceAnchor && displayAnchor) {
       avoidPanelAnchorOverlap(scene, panel, sourceAnchor, displayAnchor);
     }
@@ -1919,12 +2071,9 @@
 
   function panelTargetRect(panel) {
     const baseRect = untranslatedRect(panel);
-    const style = getComputedStyle(panel);
-    const panelX = numericCssValue(style.getPropertyValue("--panel-x"));
-    const panelY = numericCssValue(style.getPropertyValue("--panel-y"));
     const safeX = numericCssValue(panel.dataset.layoutOffsetX);
     const safeY = numericCssValue(panel.dataset.layoutOffsetY);
-    return shiftRect(baseRect, panelX + safeX, panelY + safeY);
+    return shiftRect(baseRect, safeX, safeY);
   }
 
   function setPanelOffset(panel, x, y) {
@@ -1932,15 +2081,9 @@
     const numericY = Number(y);
     const safeX = `${numericX.toFixed(2)}px`;
     const safeY = `${numericY.toFixed(2)}px`;
-    const translatedX = numericX < 0
-      ? `calc(var(--panel-x, 0px) - ${Math.abs(numericX).toFixed(2)}px)`
-      : `calc(var(--panel-x, 0px) + ${numericX.toFixed(2)}px)`;
-    const translatedY = numericY < 0
-      ? `calc(var(--panel-y, 0px) - ${Math.abs(numericY).toFixed(2)}px)`
-      : `calc(var(--panel-y, 0px) + ${numericY.toFixed(2)}px)`;
     panel.style.setProperty("--panel-safe-x", safeX);
     panel.style.setProperty("--panel-safe-y", safeY);
-    panel.style.translate = `${translatedX} ${translatedY}`;
+    panel.style.translate = `${safeX} ${safeY}`;
     panel.dataset.layoutOffsetX = numericX.toFixed(2);
     panel.dataset.layoutOffsetY = numericY.toFixed(2);
   }
@@ -1961,16 +2104,58 @@
     labelAnchorEl.classList.remove("is-anchor-label-minimized");
 
     if (window.matchMedia("(max-width: 760px)").matches) {
-      panel.dataset.layoutPlacement = "mobile-lane";
+      setPanelOffset(panel, 0, 0);
+      const panelRect = untranslatedRect(panel);
+      const mobileControls = [
+        scene.closest("[data-hero-experience]")?.querySelector(".hero-substate-lines"),
+        scene.closest("section")?.querySelector(".preview-artwork-controls"),
+        scene.closest("section")?.querySelector(".preview-lens-controls")
+      ].map(visibleRect).filter(Boolean);
+      const safeBottom = mobileControls.reduce((limit, rect) => {
+        const overlapsVertically = panelRect.top < rect.bottom && panelRect.bottom > rect.top;
+        const overlapsHorizontally = panelRect.left < rect.right && panelRect.right > rect.left;
+        return overlapsVertically && overlapsHorizontally ? Math.min(limit, rect.top - 10) : limit;
+      }, panelRect.bottom);
+      const controlSafeY = safeBottom < panelRect.bottom ? safeBottom - panelRect.bottom : 0;
+      const anchorRect = inflateRect(anchorEl.getBoundingClientRect(), 10);
+      const protectedRects = panelProtectedRects(scene, anchorRect);
+      const padding = 12;
+      const minY = sceneRect.top + padding - panelRect.top;
+      const maxY = sceneRect.bottom - padding - panelRect.bottom;
+      const yCandidates = candidateOffsets(minY, maxY, [controlSafeY, controlSafeY - 48, controlSafeY - 96, controlSafeY - 144, controlSafeY - 220]);
+      const candidates = yCandidates.map((y) => {
+        const shifted = shiftRect(panelRect, 0, y);
+        const penalties = protectedRects.reduce((score, protectedRect) => {
+          const area = overlapArea(shifted, protectedRect.rect, protectedRect.gap || 0);
+          if (protectedRect.kind === "hard") score.hard += area * protectedRect.weight;
+          if (protectedRect.kind === "subject") score.subject += area * protectedRect.weight;
+          if (protectedRect.kind === "artwork") score.artwork += area * protectedRect.weight;
+          return score;
+        }, { hard: 0, subject: 0, artwork: 0 });
+        return {
+          y,
+          ...penalties,
+          bounds: rectWithinScenePenalty(shifted, sceneRect, padding),
+          distance: Math.abs(y - controlSafeY)
+        };
+      });
+      candidates.sort((a, b) =>
+        a.bounds - b.bounds ||
+        a.hard - b.hard ||
+        a.subject - b.subject ||
+        a.artwork - b.artwork ||
+        a.distance - b.distance
+      );
+      const best = candidates[0];
+      if (best) {
+        const contained = containPanelWithinScene(scene, panel, panelRect, 0, best.y, padding);
+        panel.dataset.layoutPlacement = `mobile-lane:${contained.y.toFixed(0)}`;
+        panel.dataset.layoutOverlapScore = (best.hard + best.subject + best.artwork).toFixed(0);
+      }
       return;
     }
 
-    const panelStyle = getComputedStyle(panel);
-    const panelRect = shiftRect(
-      untranslatedRect(panel),
-      numericCssValue(panelStyle.getPropertyValue("--panel-x")),
-      numericCssValue(panelStyle.getPropertyValue("--panel-y"))
-    );
+    const panelRect = untranslatedRect(panel);
     const anchorRect = inflateRect(anchorEl.getBoundingClientRect(), 10);
     const label = labelAnchorEl.querySelector(".anchor-label");
     const labelRect = visibleRect(label);
@@ -2057,6 +2242,56 @@
     return values;
   }
 
+  function fitExplorerPanelToArtworkLane(scene, panel) {
+    panel.style.removeProperty("max-height");
+    panel.style.removeProperty("max-block-size");
+    panel.style.removeProperty("width");
+    panel.style.removeProperty("inline-size");
+    panel.dataset.layoutSizeLane = "";
+    const stage = scene.closest(".explorer-stage");
+    if (!stage || window.matchMedia("(max-width: 760px)").matches || stage.dataset.artwork === "lastSupper") return;
+
+    const sceneRect = scene.getBoundingClientRect();
+    const artworkRect = visibleRect(scene.querySelector(".physical-world-layer .artwork-rig"));
+    if (!artworkRect) return;
+    const gap = 20;
+    const sideWidth = Math.max(artworkRect.left - sceneRect.left, sceneRect.right - artworkRect.right) - gap - 12;
+    if (sideWidth >= 240 && panel.offsetWidth > sideWidth) {
+      panel.style.width = `${sideWidth}px`;
+      panel.style.inlineSize = `${sideWidth}px`;
+    }
+    const panelWidth = panel.offsetWidth;
+    const controls = visibleControlElements(scene).map(visibleRect).filter(Boolean);
+    const sideLanes = [
+      { name: "left-of-artwork", left: sceneRect.left + 12, right: artworkRect.left - gap },
+      { name: "right-of-artwork", left: artworkRect.right + gap, right: sceneRect.right - 12 }
+    ].filter((lane) => lane.right - lane.left >= panelWidth).flatMap((lane) => {
+      const occupied = controls.filter((rect) => rect.left < lane.right && rect.right > lane.left)
+        .sort((a, b) => a.top - b.top);
+      let top = sceneRect.top + 12;
+      const spaces = [];
+      occupied.forEach((rect) => {
+        spaces.push({ name: lane.name, size: rect.top - gap - top });
+        top = Math.max(top, rect.bottom + gap);
+      });
+      spaces.push({ name: lane.name, size: sceneRect.bottom - 12 - top });
+      return spaces;
+    });
+    const lanes = [
+      ...sideLanes,
+      { name: "below-artwork", size: sceneRect.bottom - artworkRect.bottom - gap },
+      { name: "above-artwork", size: artworkRect.top - sceneRect.top - gap }
+    ].sort((a, b) => b.size - a.size);
+    const lane = lanes[0];
+    if (!lane || lane.size < 112) return;
+
+    const maxHeight = Math.min(lane.size, sceneRect.height - 24);
+    panel.style.maxHeight = `${maxHeight.toFixed(2)}px`;
+    panel.style.maxBlockSize = `${maxHeight.toFixed(2)}px`;
+    panel.style.overflowY = "auto";
+    panel.dataset.layoutSizeLane = lane.name;
+  }
+
   function visibleRect(element) {
     if (!element) return null;
     const style = window.getComputedStyle(element);
@@ -2110,25 +2345,23 @@
     const artworkRect = visibleRect(scene.querySelector(".artwork-rig"));
     if (artworkRect) {
       if (artworkId === "lastSupper") {
-        protectedRects.push({
-          rect: normalizedRect(artworkRect, 0.07, 0.42, 0.86, 0.48),
-          kind: "subject",
-          weight: 8,
-          gap: 12
-        });
         protectedRects.push({ rect: artworkRect, kind: "artwork", weight: 1.5, gap: 10 });
       } else {
         protectedRects.push({ rect: artworkRect, kind: "artwork", weight: 4, gap: 16 });
       }
     }
 
-    const controls = [
-      stage?.querySelector(".stage-bar"),
-      stage?.closest("section")?.querySelector(".preview-artwork-controls"),
-      stage?.querySelector(".hero-viewpoint-selector"),
-      stage?.closest("[data-hero-experience]")?.querySelector(".hero-substate-lines"),
-      stage?.closest(".hero")?.querySelector(".hero-copy")
-    ];
+    subjectProtectedRects(scene).forEach((rect) => {
+      protectedRects.push({ rect, kind: "subject", weight: 10, gap: 10 });
+    });
+    scene.querySelectorAll(
+      ".xr-artwork-plane .spec-material-scan, .xr-artwork-plane .spec-light-edge, .xr-artwork-plane .spec-color-wash, .xr-artwork-plane .spec-object-ring"
+    ).forEach((element) => {
+      const rect = visibleRect(element);
+      if (rect) protectedRects.push({ rect, kind: "hard", weight: 14, gap: 8 });
+    });
+
+    const controls = visibleControlElements(scene);
     controls.forEach((element) => {
       const rect = visibleRect(element);
       if (rect) protectedRects.push({ rect, kind: "hard", weight: 12, gap: 10 });
@@ -2142,15 +2375,67 @@
     if (!artworkRect) return [];
     const artworkId = stage?.dataset.artwork;
     if (artworkId === "girl") {
-      return [normalizedRect(artworkRect, 0.12, 0.04, 0.76, 0.62)];
+      return [normalizedRect(artworkRect, 0.29, 0.3, 0.35, 0.3)];
     }
     if (artworkId === "arnolfini") {
-      return [normalizedRect(artworkRect, 0.08, 0.18, 0.82, 0.7)];
+      return [
+        normalizedRect(artworkRect, 0.2, 0.16, 0.17, 0.18),
+        normalizedRect(artworkRect, 0.62, 0.18, 0.17, 0.18)
+      ];
     }
     if (artworkId === "lastSupper") {
-      return [normalizedRect(artworkRect, 0.1, 0.34, 0.8, 0.56)];
+      return [normalizedRect(artworkRect, 0.06, 0.38, 0.88, 0.27)];
     }
     return [];
+  }
+
+  function labelProtectedRects(scene, targetRect = null) {
+    const stage = scene.closest(".xr-stage");
+    const artworkRect = visibleRect(scene.querySelector(".physical-world-layer .artwork-rig") || scene.querySelector(".artwork-rig"));
+    const subjectRects = artworkRect ? subjectProtectedRects(scene) : [];
+    const obstacleRects = [];
+    scene.querySelectorAll(
+      ".xr-artwork-plane .spec-material-scan, .xr-artwork-plane .spec-light-edge, .xr-artwork-plane .spec-color-wash, .xr-artwork-plane .spec-object-ring"
+    ).forEach((element) => {
+      const rect = visibleRect(element);
+      const containsTarget = rect && targetRect &&
+        targetRect.left >= rect.left && targetRect.right <= rect.right &&
+        targetRect.top >= rect.top && targetRect.bottom <= rect.bottom;
+      if (rect && !containsTarget) obstacleRects.push(rect);
+    });
+    visibleControlElements(scene).forEach((element) => {
+      const rect = visibleRect(element);
+      if (rect) obstacleRects.push(rect);
+    });
+    return { subjectRects, obstacleRects };
+  }
+
+  function visibleControlElements(scene) {
+    const stage = scene.closest(".xr-stage");
+    const section = stage?.closest("section");
+    const heroExperience = stage?.closest("[data-hero-experience]");
+    const elements = [
+      ...stage?.querySelectorAll(".stage-bar .state-label, .stage-bar .state-caption") || [],
+      scene.querySelector(".physical-world-layer .museum-label"),
+      section?.querySelector(".preview-artwork-controls .preview-control-group"),
+      ...section?.querySelectorAll(".preview-lens-controls .preview-control-group > span, .preview-lens-controls .preview-control-button") || [],
+      stage?.querySelector(".hero-viewpoint-selector"),
+      heroExperience?.querySelector(".hero-substate-line > span"),
+      ...heroExperience?.querySelectorAll(".hero-substate-rail .hero-sequence-step") || [],
+      stage?.closest(".hero")?.querySelector(".hero-copy")
+    ];
+    return elements.filter((element) => visibleRect(element));
+  }
+
+  function rectFromEdges(left, top, right, bottom) {
+    return {
+      left,
+      top,
+      right,
+      bottom,
+      width: right - left,
+      height: bottom - top
+    };
   }
 
   function positionAnchorLabel(scene, panel, anchorEl, fallbackLabelRect = null) {
@@ -2158,89 +2443,77 @@
     if (!label) return;
 
     anchorEl.classList.remove("is-anchor-label-minimized");
-    const currentLabelRect = visibleRect(label) || fallbackLabelRect;
-    if (!currentLabelRect) return;
-    const labelTranslate = renderedTranslate(label);
-    const labelRect = shiftRect(currentLabelRect, -labelTranslate.x, -labelTranslate.y);
-    if (!labelRect) return;
-
-    const sceneRect = scene.getBoundingClientRect();
+    const coordinateRoot = scene.querySelector(".xr-overlay-layer") || scene;
+    const sceneRect = coordinateRoot.getBoundingClientRect();
     const panelRect = panelTargetRect(panel);
-    const subjects = subjectProtectedRects(scene);
-    const anchorRect = inflateRect(anchorEl.getBoundingClientRect(), 4);
-    const padding = 12;
-    const panelLeft = panelRect.left - 12 - labelRect.right;
-    const panelRight = panelRect.right + 12 - labelRect.left;
-    const panelAbove = panelRect.top - 12 - labelRect.bottom;
-    const panelBelow = panelRect.bottom + 12 - labelRect.top;
-    const offsets = [
-      [0, 0],
-      [0, -48],
-      [0, 48],
-      [-72, 0],
-      [72, 0],
-      [-92, -44],
-      [92, -44],
-      [-92, 44],
-      [92, 44],
-      [-120, -44],
-      [120, -44],
-      [-120, 44],
-      [120, 44],
-      [-160, -44],
-      [160, -44],
-      [-160, 44],
-      [160, 44],
-      [0, -88],
-      [0, 88],
-      [0, -120],
-      [0, 120],
-      [panelLeft, 0],
-      [panelRight, 0],
-      [0, panelAbove],
-      [0, panelBelow],
-      [panelLeft, panelAbove],
-      [panelRight, panelAbove],
-      [panelLeft, panelBelow],
-      [panelRight, panelBelow]
-    ].filter(([x, y], index, list) =>
-      list.findIndex(([candidateX, candidateY]) =>
-        Math.abs(candidateX - x) < 0.5 && Math.abs(candidateY - y) < 0.5
-      ) === index
-    );
-    const candidates = offsets.map(([x, y]) => {
-      const shifted = shiftRect(labelRect, x, y);
-      return {
-        x,
-        y,
-        bounds: rectWithinScenePenalty(shifted, sceneRect, padding),
-        panel: overlapArea(panelRect, shifted, 12),
-        anchor: overlapArea(anchorRect, shifted, 4),
-        subject: subjects.reduce((total, rect) => total + overlapArea(shifted, rect, 4), 0),
-        distance: Math.abs(x) + Math.abs(y) * 1.08
-      };
+    const targetRect = anchorEl.getBoundingClientRect();
+    const { subjectRects, obstacleRects } = labelProtectedRects(scene, targetRect);
+    const anchorRect = inflateRect(targetRect, 4);
+    const padding = 1;
+    const placements = ["above", "below", "right", "left"];
+    const tangentOffsets = Array.from({ length: 129 }, (_, index) => index * 2 - 128);
+    const radialOffsets = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 21, 22];
+    const candidates = [];
+    const labelWidths = document.documentElement.classList.contains('is-text-resized')
+      ? [200, 160, 240, 128, 96] : [null];
+    labelWidths.forEach((labelWidth, widthIndex) => {
+      label.style.inlineSize = labelWidth ? `${labelWidth}px` : '';
+    placements.forEach((placement) => {
+      anchorEl.dataset.labelPlacement = placement;
+      setAnchorLabelOffset(anchorEl, 0, 0);
+      const measured = visibleRect(label) || fallbackLabelRect;
+      if (!measured) return;
+      // Include the actual border, padding and responsive label geometry.
+      const baseRect = measured;
+      tangentOffsets.forEach((offset) => {
+        radialOffsets.forEach((radialOffset) => {
+          const x = placement === "above" || placement === "below"
+            ? offset
+            : placement === "right" ? radialOffset : -radialOffset;
+          const y = placement === "left" || placement === "right"
+            ? offset
+            : placement === "below" ? radialOffset : -radialOffset;
+          const shifted = shiftRect(baseRect, x, y);
+          const labelGap = rectGap(shifted, targetRect);
+          if (labelGap < 8 || labelGap > 32) return;
+          candidates.push({
+            placement,
+            labelWidth,
+            x,
+            y,
+            bounds: rectWithinScenePenalty(shifted, sceneRect, padding),
+            collision: [...subjectRects, ...obstacleRects, panelRect].reduce((total, rect) => total + overlapArea(shifted, rect), 0),
+            panel: overlapArea(panelRect, shifted, 2),
+            anchor: overlapArea(anchorRect, shifted, 6),
+            subject: subjectRects.reduce((total, rect) => total + overlapArea(shifted, rect, 2), 0),
+            obstacle: obstacleRects.reduce((total, rect) => total + overlapArea(shifted, rect, 2), 0),
+            distance: Math.abs(offset) + radialOffset + labelGap * 0.25 + placements.indexOf(placement) * 0.1 + widthIndex
+          });
+        });
+      });
+    });
     });
     candidates.sort((a, b) =>
       a.bounds - b.bounds ||
-      a.panel - b.panel ||
-      a.anchor - b.anchor ||
+      a.collision - b.collision ||
       a.subject - b.subject ||
+      a.panel - b.panel ||
+      a.obstacle - b.obstacle ||
+      a.anchor - b.anchor ||
       a.distance - b.distance
     );
     const best = candidates[0];
     if (!best) return;
-    let x = best.x;
-    let y = best.y;
-    const applyOffset = () => {
-      setAnchorLabelOffset(anchorEl, x, y);
-    };
-    applyOffset();
-    const finalLabelRect = shiftRect(labelRect, x, y);
-    const finalPanelOverlap = overlapArea(panelRect, finalLabelRect, 12);
+    label.style.inlineSize = best.labelWidth ? `${best.labelWidth}px` : '';
+    anchorEl.dataset.labelPlacement = best.placement;
+    setAnchorLabelOffset(anchorEl, best.x, best.y);
+    const finalLabelRect = visibleRect(label);
+    const finalPanelOverlap = finalLabelRect ? overlapArea(panelRect, finalLabelRect) : 0;
     const finalSubjectOverlap = finalLabelRect
-      ? subjects.reduce((total, rect) => total + overlapArea(finalLabelRect, rect, 4), 0)
+      ? subjectRects.reduce((total, rect) => total + overlapArea(finalLabelRect, rect), 0) +
+        obstacleRects.reduce((total, rect) => total + overlapArea(finalLabelRect, rect), 0)
       : 0;
-    anchorEl.dataset.labelLayoutPlacement = `${x.toFixed(0)},${y.toFixed(0)}`;
+    anchorEl.dataset.labelLayoutPlacement = `${best.placement}:${best.x.toFixed(0)},${best.y.toFixed(0)}`;
     anchorEl.dataset.labelLayoutOverlapScore = (finalPanelOverlap + finalSubjectOverlap).toFixed(0);
   }
 
@@ -2290,6 +2563,12 @@
     return overlapWidth * overlapHeight;
   }
 
+  function rectGap(a, b) {
+    const x = Math.max(a.left - b.right, b.left - a.right, 0);
+    const y = Math.max(a.top - b.bottom, b.top - a.bottom, 0);
+    return Math.hypot(x, y);
+  }
+
   function rectWithinScenePenalty(rect, sceneRect, padding) {
     const x = Math.max(0, sceneRect.left + padding - rect.left) + Math.max(0, rect.right - sceneRect.right + padding);
     const y = Math.max(0, sceneRect.top + padding - rect.top) + Math.max(0, rect.bottom - sceneRect.bottom + padding);
@@ -2300,10 +2579,38 @@
     return Math.max(min, Math.min(max, value));
   }
 
+  function nearestPanelConnection(anchorX, anchorY, panelRect, edgePadding = 22) {
+    const padX = Math.min(edgePadding, panelRect.width / 2);
+    const padY = Math.min(edgePadding, panelRect.height / 2);
+    const safeX = clamp(anchorX, panelRect.left + padX, panelRect.right - padX);
+    const safeY = clamp(anchorY, panelRect.top + padY, panelRect.bottom - padY);
+    const candidates = [
+      { side: "left", x: panelRect.left, y: safeY },
+      { side: "right", x: panelRect.right, y: safeY },
+      { side: "top", x: safeX, y: panelRect.top },
+      { side: "bottom", x: safeX, y: panelRect.bottom }
+    ];
+    return candidates.reduce((best, candidate) => {
+      const distance = Math.hypot(candidate.x - anchorX, candidate.y - anchorY);
+      return !best || distance < best.distance ? { ...candidate, distance } : best;
+    }, null);
+  }
+
   function positionMatrixConnector(stage) {
     const scene = stage.querySelector(".stage-scene");
     const svg = scene?.querySelector(".connector-svg");
     if (!scene || !svg) return;
+    // The camera region and explanation region have different heights. Derive
+    // the XR plane from the real artwork, including responsive artwork rules.
+    const artwork = scene.querySelector('.physical-world-layer .artwork-rig');
+    const overlayPlane = scene.querySelector('.xr-artwork-plane');
+    if (artwork && overlayPlane) {
+      const geometry = getComputedStyle(artwork);
+      for (const property of ['left', 'top', 'width', 'height']) {
+        overlayPlane.style[property] = geometry[property];
+      }
+      overlayPlane.style.top = `${parseFloat(geometry.top) + artwork.parentElement.offsetTop}px`;
+    }
     const line = svg.querySelector("line");
     const start = svg.querySelector(".connector-start");
     const end = svg.querySelector(".connector-end");
@@ -2323,9 +2630,10 @@
 
     const anchorCenterX = anchorRect.left + anchorRect.width / 2;
     const anchorCenterY = anchorRect.top + anchorRect.height / 2;
-    const panelConnectionX = anchorCenterX <= panelRect.left ? panelRect.left : panelRect.right;
-    const panelConnectionY = panelRect.top + panelRect.height / 2;
-    const panelOriginX = panelConnectionX === panelRect.left ? "left" : "right";
+    const connection = nearestPanelConnection(anchorCenterX, anchorCenterY, panelRect, 10);
+    const panelConnectionX = connection.x;
+    const panelConnectionY = connection.y;
+    const panelOriginX = ((panelConnectionX - panelRect.left) / panelRect.width) * 100;
     const panelOriginY = ((panelConnectionY - panelRect.top) / panelRect.height) * 100;
     const x1 = ((anchorCenterX - sceneRect.left) / sceneRect.width) * 100;
     const y1 = ((anchorCenterY - sceneRect.top) / sceneRect.height) * 100;
@@ -2340,12 +2648,33 @@
     start.setAttribute("cy", y1.toFixed(2));
     end.setAttribute("cx", x2.toFixed(2));
     end.setAttribute("cy", y2.toFixed(2));
-    panel.style.setProperty("--connector-origin-x", panelOriginX);
+    panel.dataset.connectorSide = connection.side;
+    panel.style.setProperty("--connector-origin-x", `${panelOriginX.toFixed(2)}%`);
     panel.style.setProperty("--connector-origin-y", `${panelOriginY.toFixed(2)}%`);
   }
 
   function positionMatrixConnectors() {
     const stages = lensMatrix ? lensMatrix.querySelectorAll(".matrix-mini-stage") : [];
+    // Content, not an arbitrary fixed card height, determines each artwork row.
+    // The physical scene remains 310px tall in every cell.
+    artworkOrder.forEach((artworkId) => {
+      const row = [...stages].filter((stage) => stage.dataset.artwork === artworkId);
+      const cameraTop = Math.max(48, ...row.map((stage) => {
+        const chip = stage.closest('.matrix-cell').querySelector('.matrix-artwork-chip');
+        return chip ? chip.offsetHeight + 24 : 0;
+      }));
+      const panelHeight = Math.max(0, ...row.map((stage) => {
+        const panel = stage.querySelector(".matrix-cue-panel");
+        return panel ? panel.scrollHeight + 2 : 0;
+      }));
+      row.forEach((stage) => {
+        const cell = stage.closest(".matrix-cell");
+        const style = getComputedStyle(cell);
+        const padding = numericCssValue(style.paddingTop) + numericCssValue(style.paddingBottom);
+        cell.style.setProperty('--matrix-camera-top', `${cameraTop}px`);
+        cell.style.blockSize = `${Math.max(530, cameraTop + 320 + panelHeight + 12 + padding + 2)}px`;
+      });
+    });
     stages.forEach(positionMatrixConnector);
   }
 
@@ -2398,18 +2727,16 @@
     }
   }
 
-  const PARALLAX_LERP = 0.16;
   const PARALLAX_RANGE = {
-    roomX: 3.2,
-    roomY: 2.2,
-    overlayX: 7.2,
-    overlayY: 4.2,
-    panelX: 4.8,
-    panelY: 3,
-    phoneX: 14,
-    phoneY: 8.4,
-    phoneRotate: 1.2
+    worldX: 3.2,
+    worldY: 2.2,
+    xrDeltaX: 0.8,
+    xrDeltaY: 0.5,
+    phoneX: 9,
+    phoneY: 5.4,
+    phoneRotate: 0.7
   };
+  const PARALLAX_SETTLE_TAU_MS = 40;
 
   function setStageParallax(stage, x, y) {
     if (!stage) return;
@@ -2419,14 +2746,20 @@
     const easedY = Math.sin(clampedY * Math.PI / 2);
     stage.style.setProperty("--look-x", easedX.toFixed(3));
     stage.style.setProperty("--look-y", easedY.toFixed(3));
-    stage.style.setProperty("--room-x", `${(-easedX * PARALLAX_RANGE.roomX).toFixed(2)}px`);
-    stage.style.setProperty("--room-y", `${(-easedY * PARALLAX_RANGE.roomY).toFixed(2)}px`);
-    stage.style.setProperty("--art-x", `${(-easedX * PARALLAX_RANGE.roomX).toFixed(2)}px`);
-    stage.style.setProperty("--art-y", `${(-easedY * PARALLAX_RANGE.roomY).toFixed(2)}px`);
-    stage.style.setProperty("--overlay-x", `${(-easedX * PARALLAX_RANGE.overlayX).toFixed(2)}px`);
-    stage.style.setProperty("--overlay-y", `${(-easedY * PARALLAX_RANGE.overlayY).toFixed(2)}px`);
-    stage.style.setProperty("--panel-x", `${(-easedX * PARALLAX_RANGE.panelX).toFixed(2)}px`);
-    stage.style.setProperty("--panel-y", `${(-easedY * PARALLAX_RANGE.panelY).toFixed(2)}px`);
+    const worldX = -easedX * PARALLAX_RANGE.worldX;
+    const worldY = -easedY * PARALLAX_RANGE.worldY;
+    const xrX = worldX - easedX * PARALLAX_RANGE.xrDeltaX;
+    const xrY = worldY - easedY * PARALLAX_RANGE.xrDeltaY;
+    stage.style.setProperty("--world-x", `${worldX.toFixed(2)}px`);
+    stage.style.setProperty("--world-y", `${worldY.toFixed(2)}px`);
+    stage.style.setProperty("--xr-x", `${xrX.toFixed(2)}px`);
+    stage.style.setProperty("--xr-y", `${xrY.toFixed(2)}px`);
+    stage.style.setProperty("--art-x", `${worldX.toFixed(2)}px`);
+    stage.style.setProperty("--art-y", `${worldY.toFixed(2)}px`);
+    stage.style.setProperty("--overlay-x", "0px");
+    stage.style.setProperty("--overlay-y", "0px");
+    stage.style.setProperty("--panel-x", "0px");
+    stage.style.setProperty("--panel-y", "0px");
     stage.style.setProperty("--phone-x", `${(-easedX * PARALLAX_RANGE.phoneX).toFixed(2)}px`);
     stage.style.setProperty("--phone-y", `${(-easedY * PARALLAX_RANGE.phoneY).toFixed(2)}px`);
     stage.style.setProperty("--phone-rotate", `${(easedX * PARALLAX_RANGE.phoneRotate).toFixed(2)}deg`);
@@ -2447,9 +2780,6 @@
         state.targetY = 0;
       }
       setStageParallax(stage, 0, 0);
-      if (!options.immediate) {
-        requestAnimationFrame(() => positionConnector(stage));
-      }
     }
   }
 
@@ -2459,21 +2789,33 @@
     }
     stage.classList.add("is-parallax-enabled");
     resetStageParallax(stage, { immediate: true });
-    const state = { frame: 0, currentX: 0, currentY: 0, targetX: 0, targetY: 0, wake: null };
+    const state = {
+      frame: 0,
+      currentX: 0,
+      currentY: 0,
+      targetX: 0,
+      targetY: 0,
+      lastTime: 0,
+      wake: null
+    };
     parallaxStages.set(stage, state);
 
-    const animate = () => {
+    const animate = (time) => {
       state.frame = 0;
+      const elapsed = state.lastTime ? Math.min(64, time - state.lastTime) : 16.67;
+      state.lastTime = time;
+      const smoothing = 1 - Math.exp(-elapsed / PARALLAX_SETTLE_TAU_MS);
       const dx = state.targetX - state.currentX;
       const dy = state.targetY - state.currentY;
-      state.currentX += dx * PARALLAX_LERP;
-      state.currentY += dy * PARALLAX_LERP;
-      if (Math.abs(dx) < 0.002) state.currentX = state.targetX;
-      if (Math.abs(dy) < 0.002) state.currentY = state.targetY;
+      state.currentX += dx * smoothing;
+      state.currentY += dy * smoothing;
+      if (Math.abs(dx) < 0.001) state.currentX = state.targetX;
+      if (Math.abs(dy) < 0.001) state.currentY = state.targetY;
       setStageParallax(stage, state.currentX, state.currentY);
-      positionConnector(stage);
-      if (Math.abs(state.targetX - state.currentX) > 0.002 || Math.abs(state.targetY - state.currentY) > 0.002) {
+      if (Math.abs(state.targetX - state.currentX) > 0.001 || Math.abs(state.targetY - state.currentY) > 0.001) {
         state.frame = window.requestAnimationFrame(animate);
+      } else {
+        state.lastTime = 0;
       }
     };
 
@@ -2490,34 +2832,10 @@
       state.wake();
     };
 
-    const updateTargetIfInside = (event) => {
-      const rect = stage.getBoundingClientRect();
-      if (
-        event.clientX < rect.left ||
-        event.clientX > rect.right ||
-        event.clientY < rect.top ||
-        event.clientY > rect.bottom
-      ) {
-        return;
-      }
-      updateTargetFromPoint(event.clientX, event.clientY);
-    };
-
     stage.addEventListener("pointermove", (event) => {
       if (event.pointerType === "touch" && event.pressure === 0) return;
       updateTargetFromPoint(event.clientX, event.clientY);
     }, { passive: true });
-
-    stage.addEventListener("mousemove", (event) => {
-      updateTargetFromPoint(event.clientX, event.clientY);
-    }, { passive: true });
-
-    document.addEventListener("pointermove", (event) => {
-      if (event.pointerType === "touch" && event.pressure === 0) return;
-      updateTargetIfInside(event);
-    }, { passive: true });
-
-    document.addEventListener("mousemove", updateTargetIfInside, { passive: true });
 
     stage.addEventListener("pointerleave", () => resetStageParallax(stage), { passive: true });
     stage.addEventListener("pointercancel", () => resetStageParallax(stage), { passive: true });
@@ -2777,6 +3095,10 @@
         </div>
       </div>
     `;
+    lensMatrix.querySelectorAll(".matrix-mini-stage").forEach((stage) => {
+      positionMatrixConnector(stage);
+      stage.dataset.layoutReady = "true";
+    });
     scheduleMatrixConnectorPositioning();
   }
 
@@ -2885,15 +3207,24 @@
         <h2>${escapeHtml(t("sourceFootnotes.title"))}</h2>
         <ol>
           ${entries
-            .map((entry) => `
-              <li id="source-footnote-${entry.index}">
+            .map((entry) => {
+              const backlinks = [...document.querySelectorAll(`.source-footnote-link[data-source-id="${entry.id}"]`)]
+                .filter((link) => link.id)
+                .map((link, index) => `
+                  <a class="source-footnote-backlink" href="#${escapeAttr(link.id)}" aria-label="${escapeAttr(`${entry.label} ${index + 1}`)}">↩ ${index + 1}</a>
+                `)
+                .join("");
+              return `
+              <li id="source-footnote-${escapeAttr(entry.id)}">
                 <a href="${escapeAttr(entry.url)}" target="_blank" rel="noopener noreferrer">
                   <span class="source-footnote-number">[${entry.index}]</span>
-                  <span>${escapeHtml(entry.label)}</span>
+                  <span><strong>${escapeHtml(entry.publisher)}</strong>: ${escapeHtml(entry.label)}</span>
                 </a>
                 <small>${escapeHtml(t("sourceFootnotes.itemPrefix"))}: ${escapeHtml(entry.usedBy.join(" / "))}</small>
+                ${backlinks ? `<span class="source-footnote-backlinks" aria-label="${escapeAttr(t("sourceFootnotes.kicker"))}">${backlinks}</span>` : ""}
               </li>
-            `)
+            `;
+            })
             .join("")}
         </ol>
       </div>
